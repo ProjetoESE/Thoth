@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 /**
  * Class to represent the Exclusion Criteria;
  */
-class Exclusion_Criteria extends Crietria{
+class Exclusion_Criteria extends Criteria {
 
 	/**
 	 * Exclusion_Criteria constructor for data in the database and new registry.

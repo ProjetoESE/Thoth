@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 /**
  * Class to represent the Inclusion Criteria;
  */
-class Inclusion_Criteria extends Crietria{
+class Inclusion_Criteria extends Criteria {
 
 	/**
 	 * Inclusion_Criteria constructor for data in the database and new registry.
