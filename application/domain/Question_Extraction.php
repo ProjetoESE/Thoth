@@ -12,6 +12,9 @@ class Question_Extraction extends Question{
 	 * Question_Extraction constructor for data in the database and new registry.
 	 * @param $options
 	 * @param $type
+	 * @param $description
+	 * @param $id
+	 *
 	 */
 	public function __construct($id, $description ,$options, $type){
 		Question::__construct($id, $description);

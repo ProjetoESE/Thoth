@@ -31,6 +31,8 @@ class Paper{
   private $status_selection;
   private $status_extraction;
   private $reding_priority;
+  private $score;
+  private $quality_score;
 
 	/**
 	 * Paper constructor for data in database.
@@ -60,8 +62,10 @@ class Paper{
 	 * @param Status_Selection_Type $status_selection
 	 * @param Status_Extraction_Type $status_extraction
 	 * @param Reading_Priority_Type $reding_priority
+	 * @param float $score
+	 * @param Quality_Score $quality_score
 	 */
-	public function __construct($title, $author, $abstract, $year, $keywords, $document_type, $publication_type, $publisher, $journal, $pages, $volume, $doi, $url, $affiliation, $issn, $language, $note, $bibtex_key, $added_by, $updated_by, $added_at, $updated_at, $database, $status_selection, $status_extraction, $reding_priority)
+	public function __construct($title, $author, $abstract, $year, $keywords, $document_type, $publication_type, $publisher, $journal, $pages, $volume, $doi, $url, $affiliation, $issn, $language, $note, $bibtex_key, $added_by, $updated_by, $added_at, $updated_at, $database, $status_selection, $status_extraction, $reding_priority, $score, $quality_score)
 	{
 		$this->title = $title;
 		$this->author = $author;
@@ -89,6 +93,8 @@ class Paper{
 		$this->status_selection = $status_selection;
 		$this->status_extraction = $status_extraction;
 		$this->reding_priority = $reding_priority;
+		$this->score = $score;
+		$this->quality_score = $quality_score;
 	}
 
 
@@ -110,6 +116,7 @@ class Paper{
 	 * @param String $affiliation
 	 * @param String $issn
 	 * @param String $language
+	 *
 	 */
 	public function __constructd($title, $author, $abstract, $year, $keywords, $document_type, $publication_type, $publisher, $journal, $pages, $volume, $doi, $url, $affiliation, $issn, $language)
 	{
@@ -139,6 +146,8 @@ class Paper{
 		$this->status_selection = null;
 		$this->status_extraction = null;
 		$this->reding_priority = null;
+		$this->score = null;
+		$this->quality_score = null;
 	}
 
 
@@ -471,6 +480,48 @@ class Paper{
 	public function getLanguage(){
 		return $this->language;
 	}
+
+	/**
+	 * Method to retrieve the paper score.
+	 * @return float url
+	 */
+	public function getScore(){
+		return $this->score;
+	}
+
+	/**
+	 * Method to change the paper  score.
+	 * @param float $score
+	 * @throws InvalidArgumentException
+	 */
+	public function setScore($score){
+		if(is_null($score)|| !is_float($score)){
+			throw  new  InvalidArgumentException("Paper Score Invalid!");
+		}
+		$this->score = $score;
+	}
+
+	/**
+	 * Method to retrieve the paper quality score.
+	 * @return Quality_Score quality_score
+	 */
+	public function getQualityScore(){
+		return $this->quality_score;
+	}
+
+	/**
+	 * Method to change the paper quality score.
+	 * @param Quality_Score $quality_score
+	 * @throws InvalidArgumentException
+	 */
+	public function setQualityScore($quality_score){
+		if(is_null($quality_score)){
+			throw  new  InvalidArgumentException("Paper Quality Score Invalid!");
+		}
+		$this->quality_score = $quality_score;
+	}
+
+
 
 }
 
