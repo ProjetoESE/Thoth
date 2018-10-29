@@ -9,24 +9,32 @@
 <hr>
 <div class="row">
 	<div class="col-sm-12 col-md-3">
-		<i class="fas fa-question"></i>
-		<h4>Questions</h4>
+		<div class="form-inline">
+			<i class="fas fa-question fa-2x opt"></i>
+			<h4>Questions</h4>
+		</div>
 		<p>Defining a question and agreeing an objective method.</p>
 	</div>
 	<div class="col-sm-12 col-md-3">
-		<i class="fas fa-database "></i>
-		<h4>Relevant data</h4>
+		<div class="form-inline">
+			<i class="fas fa-database fa-2x opt"></i>
+			<h4>Relevant data</h4>
+		</div>
 		<p>A search for relevant data from research that matches certain criteria. For example, only selecting research
 			that is good quality and answers the defined question.</p>
 	</div>
 	<div class="col-sm-12 col-md-3">
-		<i class="fas fa-thumbs-up"></i>
-		<h4>Quality</h4>
+		<div class="form-inline">
+			<i class="fas fa-thumbs-up fa-2x opt"></i>
+			<h4>Quality</h4>
+		</div>
 		<p>Assess the quality of the data by judging it against criteria identified at the first stage.</p>
 	</div>
 	<div class="col-sm-12 col-md-3">
-		<i class="fas fa-chart-bar "></i>
-		<h4>Analyse and combine the data</h4>
+		<div class="form-inline">
+			<i class="fas fa-chart-bar fa-2x opt"></i>
+			<h4>Analyse the data</h4>
+		</div>
 		<p>Analyse and combine the data (using complex statistical methods) which give an overall result from all of the
 			data. Once these stages are complete, the review may be published, disseminated and translated into practice
 			after being adopted as evidence.</p>

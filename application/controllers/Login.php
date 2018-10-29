@@ -8,15 +8,6 @@ class Login extends CI_Controller
 	{
 	}
 
-
-	public function dashboard()
-	{
-		if (!$this->session->logged_in) {
-			redirect(base_url());
-		}
-		load_templates('pages/dashboard');
-	}
-
 	public function log_into()
 	{
 		$email = $this->input->post('email');
@@ -34,7 +25,7 @@ class Login extends CI_Controller
 		);
 
 		$this->session->set_userdata($session);
-		redirect(base_url("login/dashboard"));
+		redirect(base_url("user_controller"));
 	}
 
 	public function log_up()
@@ -45,15 +36,15 @@ class Login extends CI_Controller
 		);
 
 		$this->session->set_userdata($session);
-		load_templates('pages/dashboard');
+		redirect(base_url("user_controller"));
 	}
 
 	public function sign_in()
 	{
 		if($this->session->logged_in){
-			redirect(base_url('login/dashboard'));
+			redirect(base_url("user_controller"));
 		}
-		load_templates('pages/sign_in');
+		load_templates('pages/login/sign_in', null);
 	}
 
 	public function sign_out()
@@ -65,9 +56,9 @@ class Login extends CI_Controller
 	public function sign_up()
 	{
 		if($this->session->logged_in){
-			redirect(base_url('login/dashboard'));
+			redirect(base_url("user_controller"));
 		}
-		load_templates('pages/sign_up');
+		load_templates('pages/login/sign_up', null);
 	}
 
 }

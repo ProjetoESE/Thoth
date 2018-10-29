@@ -2,11 +2,11 @@
 
 if ( ! function_exists('load_templates'))
 {
-	function load_templates($var){
+	function load_templates($var,$data){
 		$ci=& get_instance();
 		$ci->load->view('templates/header');
 		$ci->load->view('templates/menu');
-		$ci->load->view($var);
+		$ci->load->view($var,$data);
 		$ci->load->view('templates/footer');
 	}
 }
