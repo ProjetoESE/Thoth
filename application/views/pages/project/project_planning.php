@@ -208,10 +208,10 @@
 			</div>
 			<div class="form-inline">
 				<input type="text" id="id_research_question" placeholder="ID"
-					   class="form-control col-sm-12 col-md-1 opt">
-				<div class="input-group col-md-10 col-sm-12">
+					   class="form-control col-sm-12 col-md-1">
+				<div class="input-group col-md-11 col-sm-12">
 					<input type="text" id="description_research_question" placeholder="Description"
-						   class="form-control opt">
+						   class="form-control">
 					<div class="input-group-append">
 						<button class="btn btn-success" type="button"><span class="fas fa-plus"></span></button>
 					</div>
@@ -529,32 +529,32 @@
 					<input type="text" class=" form-control" id="id_qa">
 				</div>
 				<div class="input-group col-md-8">
-					<input type="text" class=" form-control" id="qa_description">
+					<input type="text" class=" form-control" id="desc_qa">
 				</div>
 				<div class="input-group col-md-2">
-					<input type="number" class="form-control" id="qa_weight" step="0.5">
+					<input type="number" class="form-control" id="weight_qa" step="0.5">
 				</div>
 			</div>
 			<br>
 			<div class="form-inline">
-				<label for="score_abr" class="col-sm-12 col-md-2">Score Rule</label>
-				<label for="score_desc" class="col-sm-12 col-md-7">Description</label>
+				<label for="abr_score" class="col-sm-12 col-md-2">Score Rule</label>
+				<label for="desc_score" class="col-sm-12 col-md-7">Description</label>
 				<label for="score" class="col-sm-12 col-md-2">Score: 50%</label>
 			</div>
 			<div class="row">
 				<div class="input-group col-md-2">
-					<input type="text" class=" form-control" id="score_abr">
+					<input type="text" class=" form-control" id="abr_score">
 				</div>
 				<div class="input-group col-md-7">
-					<input type="text" class=" form-control" id="score_desc">
+					<input type="text" class=" form-control" id="desc_score">
 				</div>
 				<div class="input-group col-md-2">
-					<input type="range"  min="0" max="100" class="form-control" id="score" step="0.5">
+					<input type="range" min="0" max="100" class="form-control" id="score" step="0.5">
 				</div>
 				<button class="btn btn-success" type="button"><span class="fas fa-plus"></span></button>
 			</div>
 			<br>
-			<table id="tableqa" class="table table-responsive">
+			<table id="table_qa" class="table table-responsive">
 				<caption>List of Question Quality</caption>
 				<thead>
 				<tr>
@@ -572,10 +572,10 @@
 					<td>
 						<table class="table table-responsive">
 							<thead>
-								<th>Score Rule</th>
-								<th>Description</th>
-								<th>Score</th>
-								<th>Delete</th>
+							<th>Score Rule</th>
+							<th>Description</th>
+							<th>Score</th>
+							<th>Delete</th>
 							</thead>
 							<tbody>
 							<tr>
@@ -584,7 +584,8 @@
 								<td>
 									<div class="form-inline">
 										50%
-									<input type="range"  min="0" max="100" class="form-control" id="score" step="0.5">
+										<input type="range" min="0" max="100" class="form-control" id="edit_score"
+										step="0.5">
 									</div>
 								</td>
 								<td>
@@ -597,7 +598,8 @@
 								<td>
 									<div class="form-inline">
 										50%
-										<input type="range"  min="0" max="100" class="form-control" id="score" step="0.5">
+										<input type="range" min="0" max="100" class="form-control" id="edit_score"
+											   step="0.5">
 									</div>
 								</td>
 								<td>
@@ -610,7 +612,8 @@
 								<td>
 									<div class="form-inline">
 										50%
-										<input type="range"  min="0" max="100" class="form-control" id="score" step="0.5">
+										<input type="range" min="0" max="100" class="form-control" id="edit_score"
+											   step="0.5">
 									</div>
 								</td>
 								<td>
@@ -621,7 +624,7 @@
 						</table>
 					</td>
 					<td>
-						<input type="number" class="form-control" id="qa_weight_edit" step="0.5" value="5">
+						<input type="number" class="form-control" id="edit_qa_weight" step="0.5" value="5">
 					</td>
 					<td>
 						<select class="form-control" id="min_score_to_qa">
@@ -652,7 +655,8 @@
 								<td>
 									<div class="form-inline">
 										50%
-										<input type="range"  min="0" max="100" class="form-control" id="score" step="0.5">
+										<input type="range" min="0" max="100" class="form-control" id="edit_score""
+											   step="0.5">
 									</div>
 								</td>
 								<td>
@@ -665,7 +669,8 @@
 								<td>
 									<div class="form-inline">
 										50%
-										<input type="range"  min="0" max="100" class="form-control" id="score" step="0.5">
+										<input type="range" min="0" max="100" class="form-control" id="edit_score"
+											   step="0.5">
 									</div>
 								</td>
 								<td>
@@ -678,7 +683,8 @@
 								<td>
 									<div class="form-inline">
 										50%
-										<input type="range"  min="0" max="100" class="form-control" id="score" step="0.5">
+										<input type="range" min="0" max="100" class="form-control" id="edit_score"
+											   step="0.5">
 									</div>
 								</td>
 								<td>
@@ -689,7 +695,7 @@
 						</table>
 					</td>
 					<td>
-						<input type="number" class="form-control" id="qa_weight_edit" step="0.5" value="5">
+						<input type="number" class="form-control" id="edit_qa_weight" step="0.5" value="5">
 					</td>
 					<td>
 						<select class="form-control" id="min_score_to_qa">
@@ -712,7 +718,89 @@
 			</div>
 		</div>
 		<div class="tab-pane container" id="tabdata">
-			<h5>Data Extraction</h5>
+			<label for="id_qa"><strong>Data Extraction</strong></label>
+			<div class="form-inline">
+				<label for="id_qa" class="col-sm-12 col-md-2">ID</label>
+				<label for="id_qa" class="col-sm-12 col-md-7">Description</label>
+				<label for="qa_description" class="col-sm-12 col-md-2">Type of Data</label>
+			</div>
+			<div class="row">
+				<div class="input-group col-md-2">
+					<input type="text" class=" form-control" id="id_data_extraction">
+				</div>
+				<div class="input-group col-md-7">
+					<input type="text" class=" form-control" id="desc_data_extraction">
+				</div>
+				<div class="input-group col-md-2">
+					<select class="form-control" id="type_data_extraction">
+						<option>Text</option>
+						<option>List</option>
+					</select>
+				</div>
+				<button class="btn btn-success" type="button"><span class="fas fa-plus"></span></button>
+			</div>
+			<br>
+			<table id="table_data_extraction" class="table table-responsive-sm">
+				<caption>List of Data Extraction</caption>
+				<thead>
+				<tr>
+					<th>ID</th>
+					<th>Description</th>
+					<th>Type</th>
+					<th>Options</th>
+					<th>Delete</th>
+				</tr>
+				</thead>
+				<tbody>
+				<tr>
+					<td contenteditable="true">ID</td>
+					<td contenteditable="true">Description</td>
+					<td>
+						<select class="form-control">
+							<option>Text</option>
+							<option>List</option>
+						</select>
+					</td>
+					<td>
+						<div class="row">
+							<div class="input-group col-sm-12 opt">
+								<input type="text" class="form-control" id="edit_opt" value="Option">
+								<div class="input-group-append">
+									<button class="btn btn-danger" type="button">
+										<span class="far fa-trash-alt"></span></button>
+								</div>
+							</div>
+							<div class="input-group col-sm-12 opt">
+								<input type="text" class="form-control" placeholder="Add a Option to Question"
+									   id="add_options">
+								<div class="input-group-append">
+									<button class="btn btn-success" type="button"><span class="fas fa-plus"></span>
+									</button>
+								</div>
+							</div>
+						</div>
+					</td>
+					<td>
+						<button class="btn btn-danger"><span class="far fa-trash-alt"></span></button>
+					</td>
+				</tr>
+				<tr>
+					<td contenteditable="true">ID</td>
+					<td contenteditable="true">Description</td>
+					<td>
+						<select class="form-control">
+							<option>Text</option>
+							<option>List</option>
+						</select>
+					</td>
+					<td>
+					</td>
+					<td>
+						<button class="btn btn-danger"><span class="far fa-trash-alt"></span></button>
+					</td>
+				</tr>
+				</tbody>
+			</table>
 			<br>
 			<div class="form-inline container justify-content-between">
 				<a class="btn btn-secondary"><span class="fas fa-backward"></span> Previous</a>
