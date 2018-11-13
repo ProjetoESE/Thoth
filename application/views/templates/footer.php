@@ -122,7 +122,8 @@
 							<tbody>
 							<tr>
 								<td>QQ1</td>
-								<td>A publicação apresenta uma contribuição para o campo de teste de desempenho de
+								<td data-toggle="tooltip" data-placement="right"
+									title="Minimo para Aprovar: ">A publicação apresenta uma contribuição para o campo de teste de desempenho de
 									software?
 								</td>
 								<td>
@@ -139,7 +140,8 @@
 							</tr>
 							<tr>
 								<td>QQ1</td>
-								<td>A publicação apresenta uma contribuição para o campo de teste de desempenho de
+								<td data-toggle="tooltip" data-placement="right"
+									title="Minimo para Aprovar: ">A publicação apresenta uma contribuição para o campo de teste de desempenho de
 									software?
 								</td>
 								<td>
@@ -202,6 +204,7 @@
 								</div>
 							</div>
 						</div>
+						<a class="btn btn-success">Done</a>
 					</div>
 				</div>
 				<div class="modal-footer">
