@@ -20,7 +20,7 @@
 				<a data-toggle="pill" class="nav-link" href="#tabdatabases">Data Bases</a>
 			</li>
 			<li class="nav-item">
-				<a data-toggle="pill" class="nav-link" href="#tabsearchstring">Search String</a>
+				<a data-toggle="pill" class="nav-link" href="#tabsearchstring" onclick="showString();">Search String</a>
 			</li>
 			<li class="nav-item">
 				<a data-toggle="pill" class="nav-link" href="#tabsearchstrategy">Search Strategy</a>
@@ -49,7 +49,7 @@
 						</div>
 					</div>
 					<br>
-					<table id="tabledomains" class="table table-responsive-sm">
+					<table id="table_domains" class="table table-responsive-sm">
 						<caption>List of Domains</caption>
 						<thead>
 						<tr>
@@ -85,7 +85,7 @@
 						<option>French</option>
 					</select>
 					<br>
-					<table id="tablelanguages" class="table table-responsive-sm">
+					<table id="table_languages" class="table table-responsive-sm">
 						<caption>List of Languages</caption>
 						<thead>
 						<tr>
@@ -121,7 +121,7 @@
 						<option>Thesis</option>
 					</select>
 					<br>
-					<table id="tablestudy_type" class="table table-responsive-sm">
+					<table id="table_study_type" class="table table-responsive-sm">
 						<caption>List of Study Type</caption>
 						<thead>
 						<tr>
@@ -154,7 +154,7 @@
 						</div>
 					</div>
 					<br>
-					<table id="tablekeywords" class="table table-responsive-sm">
+					<table id="table_keywords" class="table table-responsive-sm">
 						<caption>List of Keywords</caption>
 						<thead>
 						<tr>
@@ -218,7 +218,7 @@
 				</div>
 			</div>
 			<br>
-			<table id="tableresearch_question" class="table table-responsive-sm">
+			<table id="table_research_question" class="table table-responsive-sm">
 				<caption>List of Research Questions</caption>
 				<thead>
 				<tr>
@@ -258,7 +258,7 @@
 				<option>IEEE</option>
 			</select>
 			<br>
-			<table id="tabledatabases" class="table table-responsive-sm">
+			<table id="table_databases" class="table table-responsive-sm">
 				<caption>List of Databases</caption>
 				<thead>
 				<tr>
@@ -268,13 +268,13 @@
 				</thead>
 				<tbody>
 				<tr>
-					<td>Descrição</td>
+					<td>Scopus</td>
 					<td>
 						<button class="btn btn-danger"><span class="far fa-trash-alt"></span></button>
 					</td>
 				</tr>
 				<tr>
-					<td>Descrição</td>
+					<td>ACM</td>
 					<td>
 						<button class="btn btn-danger"><span class="far fa-trash-alt"></span></button>
 					</td>
@@ -299,7 +299,7 @@
 				</div>
 			</div>
 			<br>
-			<table id="tablesearchstring" class="table table-responsive-sm">
+			<table id="table_search_string" class="table table-responsive-sm">
 				<caption>List of Term</caption>
 				<thead>
 				<tr>
@@ -362,9 +362,53 @@
 				</tbody>
 			</table>
 			<br>
+			<label><strong>Strings</strong></label>
+			<div class="form-group" id="div_string_scopus">
+				<label>SCOPUS</label>
+				<textarea class="form-control" id="string_scopus"></textarea>
+				<a class="btn btn-secondary opt"  onclick="generateString(1);">Gerar</a>
+				<hr>
+			</div>
+			<div class="form-group" id="div_string_acm">
+				<label>ACM</label>
+				<textarea class="form-control" id="string_acm"></textarea>
+				<a class="btn btn-secondary opt" onclick="generateString(2);">Gerar</a>
+				<hr>
+			</div>
+			<div class="form-group" id="div_string_ieee">
+				<label>IEEE</label>
+				<textarea class="form-control" id="string_ieee"></textarea>
+				<a class="btn btn-secondary opt">Gerar</a>
+				<hr>
+			</div>
+			<div class="form-group" id="div_string_science">
+				<label>Science Direct</label>
+				<textarea class="form-control" id="string_science"></textarea>
+				<a class="btn btn-secondary opt">Gerar</a>
+				<hr>
+			</div>
+			<div class="form-group" id="div_string_enginnering">
+				<label>Enginnering Village</label>
+				<textarea class="form-control" id="string_enginnering"></textarea>
+				<a class="btn btn-secondary opt">Gerar</a>
+				<hr>
+			</div>
+			<div class="form-group" id="div_string_springer">
+				<label>Springer Link</label>
+				<textarea class="form-control" id="string_springer"></textarea>
+				<a class="btn btn-secondary opt">Gerar</a>
+				<hr>
+			</div>
+			<div class="form-group" id="div_string_google">
+				<label>Google</label>
+				<textarea class="form-control" id="string_google"></textarea>
+				<a class="btn btn-secondary opt">Gerar</a>
+				<hr>
+			</div>
+
 			<div class="form-inline container justify-content-between">
 				<a class="btn btn-secondary"><span class="fas fa-backward"></span> Previous</a>
-				<a class="btn btn-secondary">Next <span class="fas fa-forward"></span></a>
+				<a class="btn btn-secondary opt">Next <span class="fas fa-forward"></span></a>
 			</div>
 		</div>
 		<div class="tab-pane container" id="tabsearchstrategy">
@@ -397,7 +441,7 @@
 				</div>
 			</div>
 			<br>
-			<table id="tablecriteria" class="table table-responsive-sm">
+			<table id="table_criteria" class="table table-responsive-sm">
 				<caption>List of Criteria</caption>
 				<thead>
 				<tr>
@@ -480,7 +524,7 @@
 				</div>
 			</div>
 			<br>
-			<table id="tablegeneralscore" class="table table-responsive-sm">
+			<table id="table_general_score" class="table table-responsive-sm">
 				<caption>List of General Score</caption>
 				<thead>
 				<tr>

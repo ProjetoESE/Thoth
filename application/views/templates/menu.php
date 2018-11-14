@@ -66,10 +66,13 @@
 <?php
 if (isset($_SESSION['error'])) {
 	?>
-	<div class="alert alert-danger container" role="alert">
+	<div class="alert alert-danger container alert-dismissible fade show" role="alert">
 		<strong>
 			<?= $_SESSION['error']; ?>
 		</strong>
+		<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		</button>
 	</div>
 	<br>
 	<?php
@@ -79,10 +82,13 @@ if (isset($_SESSION['error'])) {
 <?php
 if (isset($_SESSION['success'])) {
 	?>
-	<div class="alert alert-success container" role="alert">
+	<div class="alert alert-success container alert-dismissible fade show" role="alert">
 		<strong>
 			<?= $_SESSION['success']; ?>
 		</strong>
+		<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		</button>
 	</div>
 	<br>
 	<?php
@@ -92,10 +98,13 @@ if (isset($_SESSION['success'])) {
 <?php
 if (isset($_SESSION['info'])) {
 	?>
-	<div class="alert alert-info container" role="alert">
+	<div class="alert alert-info container alert-dismissible fade show" role="alert">
 		<strong>
 			<?= $_SESSION['info']; ?>
 		</strong>
+		<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		</button>
 	</div>
 	<br>
 	<?php
@@ -105,10 +114,13 @@ if (isset($_SESSION['info'])) {
 <?php
 if (isset($_SESSION['warning'])) {
 	?>
-	<div class="alert alert-warning container" role="alert">
+	<div class="alert alert-warning container alert-dismissible fade show" role="alert">
 		<strong>
 			<?= $_SESSION['warning']; ?>
 		</strong>
+		<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		</button>
 	</div>
 	<br>
 	<?php

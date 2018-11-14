@@ -27,21 +27,24 @@
 		<br>
 		<label for="database_import"><strong>Import Studies</strong></label>
 		<div class="form-inline">
-			<label for="database_import" class="col-sm-12 col-md-4">Database</label>
+			<label for="database_import" class="col-sm-12 col-md-2">Database</label>
 		</div>
 		<div class="row">
-			<div class="input-group col-md-4">
+			<div class="input-group col-md-3">
 				<select class="form-control" id="database_import">
 					<option>Scopus</option>
 					<option>IEEE</option>
 					<option>Spring</option>
 				</select>
 			</div>
-			<div class="input-group col-md-2">
+			<div class="input-group col-md-3">
 				<a class="btn btn-outline-primary"><span class="fas fa-file-upload "></span> BibTex File Upload</a>
 			</div>
-			<div class="input-group col-md-2">
+			<div class="input-group col-md-3">
 				<a class="btn btn-outline-primary"><span class="fas fa-search"></span> Automated Search</a>
+			</div>
+			<div class="input-group col-md-3">
+				<a class="btn btn-outline-primary"><span class="fas fa-copy"></span> Check for Duplicates</a>
 			</div>
 		</div>
 		<br>

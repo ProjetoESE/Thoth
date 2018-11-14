@@ -1,3 +1,5 @@
+<script src="<?= base_url('assets/js/chars.js'); ?>"></script>
+
 <div class="card">
 	<div class="text-center card-header">
 		<h4>Projeto 01</h4>

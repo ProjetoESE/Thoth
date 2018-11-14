@@ -31,19 +31,19 @@
 		<div class="form-inline">
 			<div class="input-group col-md-3">
 				<label class="text-success">
-					<span class="fas fa-check "></span>
+					<span class="fas fa-check fa-lg"></span>
 					Done: 1
 				</label>
 			</div>
 			<div class="input-group col-md-3">
 				<label class="text-warning">
-					<span class="fas fa-exclamation"></span>
+					<span class="fas fa-exclamation fa-lg"></span>
 					To do: 1
 				</label>
 			</div>
 			<div class="input-group col-md-3">
 				<label class="text-info">
-					<span class="fas fa-bars "></span>
+					<span class="fas fa-bars fa-lg"></span>
 					Total: 2
 				</label>
 			</div>

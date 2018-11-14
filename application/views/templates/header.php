@@ -29,6 +29,7 @@
 	<script src="<?= base_url('assets/js/export-data.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/highcharts-more.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/funnel.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/sweetalert.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/main.js'); ?>"></script>
 
 </head>

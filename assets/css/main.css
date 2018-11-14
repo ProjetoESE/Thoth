@@ -26,6 +26,9 @@ body {
 .opt{
 	margin: 0.1em;
 }
+span{
+	margin: 0.1em;
+}
 .new-project{
 	margin-bottom: 0.5em;
 }

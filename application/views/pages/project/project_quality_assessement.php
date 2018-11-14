@@ -30,19 +30,19 @@
 		<div class="form-inline">
 			<div class="input-group col-md-3">
 				<label class="text-success">
-					<span class="fas fa-check "></span>
+					<span class="fas fa-check fa-lg"></span>
 					Accepted: 1
 				</label>
 			</div>
 			<div class="input-group col-md-3">
 				<label class="text-danger">
-					<span class="fas fa-times "></span>
+					<span class="fas fa-times fa-lg"></span>
 					Rejected: 1
 				</label>
 			</div>
 			<div class="input-group col-md-3">
 				<label class="text-info">
-					<span class="fas fa-bars"></span>
+					<span class="fas fa-bars fa-lg"></span>
 					Total: 2
 				</label>
 			</div>

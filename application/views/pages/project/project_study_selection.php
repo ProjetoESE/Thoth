@@ -31,26 +31,26 @@
 		<div class="form-inline">
 			<div class="input-group col-md-3">
 				<label class="text-success">
-					<span class="fas fa-check "></span>
-					Accepted: 1
+					<span class="fas fa-check fa-lg"></span>
+					 Accepted: 1
 				</label>
 			</div>
 			<div class="input-group col-md-3 ">
 				<label class="text-danger">
-					<span class="fas fa-times "></span>
-					Rejected: 1
+					<span class="fas fa-times fa-lg"></span>
+					 Rejected: 1
 				</label>
 			</div>
 			<div class="input-group col-md-3">
 				<label class="text-dark">
-					<span class="fas fa-question"></span>
-					Unclassified: 1
+					<span class="fas fa-question fa-lg"></span>
+					 Unclassified: 1
 				</label>
 			</div>
 			<div class="input-group col-md-3">
 				<label class="text-info">
-					<span class="fas fa-bars "></span>
-					Total: 3
+					<span class="fas fa-bars fa-lg"></span>
+					 Total: 3
 				</label>
 			</div>
 		</div>

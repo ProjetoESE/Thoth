@@ -17,6 +17,7 @@
 				</button>
 			</div>
 			<div class="modal-body">
+				<input type="hidden" id="paper_id">
 				<div class="row">
 					<div class="col-md-6">
 						<h6>Author</h6>
@@ -123,7 +124,8 @@
 							<tr>
 								<td>QQ1</td>
 								<td data-toggle="tooltip" data-placement="right"
-									title="Minimo para Aprovar: ">A publicação apresenta uma contribuição para o campo de teste de desempenho de
+									title="Minimo para Aprovar: ">A publicação apresenta uma contribuição para o campo
+									de teste de desempenho de
 									software?
 								</td>
 								<td>
@@ -141,7 +143,8 @@
 							<tr>
 								<td>QQ1</td>
 								<td data-toggle="tooltip" data-placement="right"
-									title="Minimo para Aprovar: ">A publicação apresenta uma contribuição para o campo de teste de desempenho de
+									title="Minimo para Aprovar: ">A publicação apresenta uma contribuição para o campo
+									de teste de desempenho de
 									software?
 								</td>
 								<td>
@@ -204,7 +207,7 @@
 								</div>
 							</div>
 						</div>
-						<a class="btn btn-success">Done</a>
+						<a class="btn btn-success opt" onclick="done_paper();">Done</a>
 					</div>
 				</div>
 				<div class="modal-footer">
