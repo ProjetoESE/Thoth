@@ -1,6 +1,12 @@
 $(document).ready(function () {
 
+	let lang = {
+		"sZeroRecords": "No options added"
+	};
+
+
 	let configDataTables = {
+		language: lang,
 		responsive: true,
 		order: [[1, "asc"]],
 		paginate: false,
@@ -9,13 +15,16 @@ $(document).ready(function () {
 		ordering: false
 	};
 
+
+
+	table_domains = $('#table_domains').DataTable(configDataTables);
+	table_languages = $('#table_languages').DataTable(configDataTables);
+	table_study_type = $('#table_study_type').DataTable(configDataTables);
+	table_keywords = $('#table_keywords').DataTable(configDataTables);
+	table_research_question = $('#table_research_question').DataTable(configDataTables);
 	table_databases = $('#table_databases').DataTable(configDataTables);
 
-	$('#table_domains').DataTable(configDataTables);
-	$('#table_languages').DataTable(configDataTables);
-	$('#table_study_type').DataTable(configDataTables);
-	$('#table_keywords').DataTable(configDataTables);
-	$('#table_research_question').DataTable(configDataTables);
+
 	$('#table_search_string').DataTable(configDataTables);
 	$('#table_criteria').DataTable(configDataTables);
 	$('#table_qa').DataTable(configDataTables);
@@ -138,50 +147,11 @@ $(document).ready(function () {
 		$('#modalPaper').modal('show');
 	});
 
-});
-
-function done_paper() {
-	let id = document.getElementById("paper_id").value;
-	swal({
-		title: "Paper Done!",
-		text: "Paper " + id + " is Done!!",
-		icon: "info",
-		button: "Ok",
+	if (location.hash) {
+		$("a[href='" + location.hash + "']").tab("show");
+	}
+	$(document.body).on("click", "a[data-toggle]", function (event) {
+		location.hash = this.getAttribute("href");
 	});
-}
 
-function generateString(database) {
-	switch (database) {
-		case 1:
-			$('#string_scopus').text("(\"Performance Test\" \"Load Test\" \"Stress Test\" \"Soak Test\" \"Spike Test\" \"Workload Test\" \"Automation Test\") AND (Tool Generator Injector Monitor Analyzer Framework Suite Environment Plug*in) AND (Software Application System) AND (Teste-Teste)\n" +
-				"\n");
-			break;
-		case 2:
-			$('#string_acm').text("(\"Performance Test\" \"Load Test\" \"Stress Test\" \"Soak Test\" \"Spike Test\" \"Workload Test\" \"Automation Test\") AND (Tool Generator Injector Monitor Analyzer Framework Suite Environment Plug*in) AND (Software Application System) AND (Teste-Teste)\n" +
-				"\n");
-			break;
-	}
-}
-
-function showString() {
-	$('#div_string_scopus').hide();
-	$('#div_string_acm').hide();
-	$('#div_string_enginnering').hide();
-	$('#div_string_google').hide();
-	$('#div_string_ieee').hide();
-	$('#div_string_science').hide();
-	$('#div_string_springer').hide();
-
-	let data = table_databases.rows().data().toArray();
-	for(let i =0; i<data.length; i++){
-		switch (data[i][0]) {
-			case "Scopus":
-				$('#div_string_scopus').show();
-				break;
-			case "ACM":
-				$('#div_string_acm').show();
-				break;
-		}
-	}
-	console.log(data[0][0])
-}
+});

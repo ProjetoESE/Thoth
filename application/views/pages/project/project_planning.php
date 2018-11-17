@@ -45,7 +45,8 @@
 					<div class="input-group">
 						<input type="text" class="form-control" id="domain">
 						<div class="input-group-append">
-							<button class="btn btn-success" type="button"><span class="fas fa-plus"></span></button>
+							<button class="btn btn-success" type="button" onclick="add_domain();"><span
+									class="fas fa-plus"></span></button>
 						</div>
 					</div>
 					<br>
@@ -58,32 +59,26 @@
 						</tr>
 						</thead>
 						<tbody>
-						<tr>
-							<td contenteditable="true">Descrição</td>
-							<td>
-								<button class="btn btn-danger"><span class="far fa-trash-alt"></span></button>
-							</td>
-						</tr>
-						<tr>
-							<td contenteditable="true">Descrição</td>
-							<td>
-								<button class="btn btn-danger"><span class="far fa-trash-alt"></span></button>
-							</td>
-						</tr>
 						</tbody>
 					</table>
 				</div>
 
 				<div class="col-sm-12 col-md-6">
 					<label for="language"><strong>Select languages</strong></label>
-					<select class="form-control" id="language">
-						<option></option>
-						<option>English</option>
-						<option>Portuguese</option>
-						<option>Spanish</option>
-						<option>Russian</option>
-						<option>French</option>
-					</select>
+					<div class="input-group">
+						<select class="form-control" id="language">
+							<option></option>
+							<option>English</option>
+							<option>Portuguese</option>
+							<option>Spanish</option>
+							<option>Russian</option>
+							<option>French</option>
+						</select>
+						<div class="input-group-append">
+							<button class="btn btn-success" type="button" onclick="add_language();"><span
+									class="fas fa-plus"></span></button>
+						</div>
+					</div>
 					<br>
 					<table id="table_languages" class="table table-responsive-sm">
 						<caption>List of Languages</caption>
@@ -94,32 +89,26 @@
 						</tr>
 						</thead>
 						<tbody>
-						<tr>
-							<td>Descrição</td>
-							<td>
-								<button class="btn btn-danger"><span class="far fa-trash-alt"></span></button>
-							</td>
-						</tr>
-						<tr>
-							<td>Descrição</td>
-							<td>
-								<button class="btn btn-danger"><span class="far fa-trash-alt"></span></button>
-							</td>
-						</tr>
 						</tbody>
 					</table>
 				</div>
 				<br>
 				<div class="col-sm-12 col-md-6">
 					<label for="study_type"><strong>Select study type</strong></label>
-					<select class="form-control" id="study_type">
-						<option></option>
-						<option>All types</option>
-						<option>Article in Press</option>
-						<option>Article</option>
-						<option>Book</option>
-						<option>Thesis</option>
-					</select>
+					<div class="input-group">
+						<select class="form-control" id="study_type">
+							<option></option>
+							<option>All types</option>
+							<option>Article in Press</option>
+							<option>Article</option>
+							<option>Book</option>
+							<option>Thesis</option>
+						</select>
+						<div class="input-group-append">
+							<button class="btn btn-success" type="button" onclick="add_study_type();"><span
+									class="fas fa-plus"></span></button>
+						</div>
+					</div>
 					<br>
 					<table id="table_study_type" class="table table-responsive-sm">
 						<caption>List of Study Type</caption>
@@ -130,18 +119,6 @@
 						</tr>
 						</thead>
 						<tbody>
-						<tr>
-							<td>Descrição</td>
-							<td>
-								<button class="btn btn-danger"><span class="far fa-trash-alt"></span></button>
-							</td>
-						</tr>
-						<tr>
-							<td>Descrição</td>
-							<td>
-								<button class="btn btn-danger"><span class="far fa-trash-alt"></span></button>
-							</td>
-						</tr>
 						</tbody>
 					</table>
 				</div>
@@ -150,7 +127,8 @@
 					<div class="input-group">
 						<input type="text" class="form-control" id="keywords">
 						<div class="input-group-append">
-							<button class="btn btn-success" type="button"><span class="fas fa-plus"></span></button>
+							<button class="btn btn-success" type="button" onclick="add_keywords();"><span
+									class="fas fa-plus"></span></button>
 						</div>
 					</div>
 					<br>
@@ -163,18 +141,6 @@
 						</tr>
 						</thead>
 						<tbody>
-						<tr>
-							<td contenteditable="true">Descrição</td>
-							<td>
-								<button class="btn btn-danger"><span class="far fa-trash-alt"></span></button>
-							</td>
-						</tr>
-						<tr>
-							<td contenteditable="true">Descrição</td>
-							<td>
-								<button class="btn btn-danger"><span class="far fa-trash-alt"></span></button>
-							</td>
-						</tr>
 						</tbody>
 					</table>
 				</div>
@@ -213,7 +179,8 @@
 					<input type="text" id="description_research_question" placeholder="Description"
 						   class="form-control">
 					<div class="input-group-append">
-						<button class="btn btn-success" type="button"><span class="fas fa-plus"></span></button>
+						<button class="btn btn-success" type="button" onclick="add_research_question();"><span
+								class="fas fa-plus"></span></button>
 					</div>
 				</div>
 			</div>
@@ -228,20 +195,6 @@
 				</tr>
 				</thead>
 				<tbody>
-				<tr>
-					<td contenteditable="true">RQ01</td>
-					<td contenteditable="true">Descrição</td>
-					<td>
-						<button class="btn btn-danger"><span class="far fa-trash-alt"></span></button>
-					</td>
-				</tr>
-				<tr>
-					<td contenteditable="true">RQ02</td>
-					<td contenteditable="true">Descrição</td>
-					<td>
-						<button class="btn btn-danger"><span class="far fa-trash-alt"></span></button>
-					</td>
-				</tr>
 				</tbody>
 			</table>
 			<br>
@@ -252,11 +205,17 @@
 		</div>
 		<div class="tab-pane container" id="tabdatabases">
 			<label for="databases"><strong>Data Bases</strong></label>
-			<select class="form-control" id="databases">
-				<option></option>
-				<option>Scopus</option>
-				<option>IEEE</option>
-			</select>
+			<div class="input-group col-md-3">
+				<select class="form-control" id="databases">
+					<option></option>
+					<option>Scopus</option>
+					<option>IEEE</option>
+				</select>
+				<div class="input-group-append">
+					<button class="btn btn-success" type="button" onclick="add_database();"><span
+							class="fas fa-plus"></span></button>
+				</div>
+			</div>
 			<br>
 			<table id="table_databases" class="table table-responsive-sm">
 				<caption>List of Databases</caption>
@@ -267,18 +226,6 @@
 				</tr>
 				</thead>
 				<tbody>
-				<tr>
-					<td>Scopus</td>
-					<td>
-						<button class="btn btn-danger"><span class="far fa-trash-alt"></span></button>
-					</td>
-				</tr>
-				<tr>
-					<td>ACM</td>
-					<td>
-						<button class="btn btn-danger"><span class="far fa-trash-alt"></span></button>
-					</td>
-				</tr>
 				</tbody>
 			</table>
 			<br>
@@ -341,7 +288,8 @@
 							<div class="input-group col-sm-12 opt">
 								<input type="text" class="form-control" id="synonym" value="Synonym">
 								<div class="input-group-append">
-									<button class="btn btn-danger" type="button"><span class="far fa-trash-alt"></span>
+									<button class="btn btn-danger" type="button"><span
+											class="far fa-trash-alt"></span>
 									</button>
 								</div>
 							</div>
@@ -366,7 +314,7 @@
 			<div class="form-group" id="div_string_scopus">
 				<label>SCOPUS</label>
 				<textarea class="form-control" id="string_scopus"></textarea>
-				<a class="btn btn-secondary opt"  onclick="generateString(1);">Gerar</a>
+				<a class="btn btn-secondary opt" onclick="generateString(1);">Gerar</a>
 				<hr>
 			</div>
 			<div class="form-group" id="div_string_acm">
@@ -428,11 +376,13 @@
 					<div class="input-group-append">
 						<div class="input-group-text">
 							<div class="form-check form-check-inline">
-								<input class="form-check-input" type="radio" name="inlineRadioOptions" id="inclusion">
+								<input class="form-check-input" type="radio" name="inlineRadioOptions"
+									   id="inclusion">
 								<label class="form-check-label" for="inclusion">Inclusion</label>
 							</div>
 							<div class="form-check form-check-inline">
-								<input class="form-check-input" type="radio" name="inlineRadioOptions" id="exclusion">
+								<input class="form-check-input" type="radio" name="inlineRadioOptions"
+									   id="exclusion">
 								<label class="form-check-label" for="exclusion">Exclusion</label>
 							</div>
 						</div>
@@ -537,7 +487,8 @@
 				<tr>
 					<td>
 						<div class="form-inline">
-							<input type="number" id="start_interval" class="form-control" step="0.5" placeholder="4.5">
+							<input type="number" id="start_interval" class="form-control" step="0.5"
+								   placeholder="4.5">
 							<input type="number" id="end_interval" class="form-control" step="0.5" placeholder="5">
 						</div>
 					</td>
@@ -549,7 +500,8 @@
 				<tr>
 					<td>
 						<div class="form-inline">
-							<input type="number" id="start_interval" class="form-control" step="0.5" placeholder="4.5">
+							<input type="number" id="start_interval" class="form-control" step="0.5"
+								   placeholder="4.5">
 							<input type="number" id="end_interval" class="form-control" step="0.5" placeholder="5">
 						</div>
 					</td>
@@ -629,7 +581,7 @@
 									<div class="form-inline">
 										50%
 										<input type="range" min="0" max="100" class="form-control" id="edit_score"
-										step="0.5">
+											   step="0.5">
 									</div>
 								</td>
 								<td>
@@ -700,7 +652,7 @@
 									<div class="form-inline">
 										50%
 										<input type="range" min="0" max="100" class="form-control" id="edit_score""
-											   step="0.5">
+										step="0.5">
 									</div>
 								</td>
 								<td>
