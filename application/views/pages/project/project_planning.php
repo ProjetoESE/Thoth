@@ -209,7 +209,12 @@
 				<select class="form-control" id="databases">
 					<option></option>
 					<option>Scopus</option>
+					<option>ACM</option>
 					<option>IEEE</option>
+					<option>Science Direct</option>
+					<option>Enginnering Village</option>
+					<option>Springer Link</option>
+					<option>Google</option>
 				</select>
 				<div class="input-group-append">
 					<button class="btn btn-success" type="button" onclick="add_database();"><span
@@ -239,10 +244,23 @@
 			<div class="form-inline">
 				<label for="term">Term</label>
 			</div>
-			<div class="input-group">
+			<div class="input-group col-md-4">
 				<input type="text" class="form-control" id="term">
 				<div class="input-group-append">
-					<button class="btn btn-success" type="button"><span class="fas fa-plus"></span></button>
+					<button class="btn btn-success" type="button" onclick="add_term();"><span class="fas fa-plus"></span></button>
+				</div>
+			</div>
+			<div class="form-inline">
+				<label for="list_term">Synonym</label>
+			</div>
+			<div class="input-group col-md-6">
+				<select class="form-control col-md-4" id="list_term">
+				</select>
+				<input type="text" class="form-control" placeholder="Add a Synonym to Term"
+					   id="synonym">
+				<div class="input-group-append">
+					<button class="btn btn-success" type="button" onclick="add_synonym();"><span class="fas fa-plus"></span>
+					</button>
 				</div>
 			</div>
 			<br>
@@ -256,68 +274,23 @@
 				</tr>
 				</thead>
 				<tbody>
-				<tr>
-					<td contenteditable="true">Term</td>
-					<td>
-						<div class="row">
-							<div class="input-group col-sm-12 opt">
-								<input type="text" class="form-control" id="synonym" value="Synonym">
-								<div class="input-group-append">
-									<button class="btn btn-danger" type="button">
-										<span class="far fa-trash-alt"></span></button>
-								</div>
-							</div>
-							<div class="input-group col-sm-12 opt">
-								<input type="text" class="form-control" placeholder="Add a Synonym to Term"
-									   id="synonymus">
-								<div class="input-group-append">
-									<button class="btn btn-success" type="button"><span class="fas fa-plus"></span>
-									</button>
-								</div>
-							</div>
-						</div>
-					</td>
-					<td>
-						<button class="btn btn-danger"><span class="far fa-trash-alt"></span></button>
-					</td>
-				</tr>
-				<tr>
-					<td contenteditable="true">Term</td>
-					<td>
-						<div class="row">
-							<div class="input-group col-sm-12 opt">
-								<input type="text" class="form-control" id="synonym" value="Synonym">
-								<div class="input-group-append">
-									<button class="btn btn-danger" type="button"><span
-											class="far fa-trash-alt"></span>
-									</button>
-								</div>
-							</div>
-							<div class="input-group col-sm-12 opt">
-								<input type="text" class="form-control" placeholder="Add a Synonym to Term"
-									   id="synonymus">
-								<div class="input-group-append">
-									<button class="btn btn-success" type="button"><span class="fas fa-plus"></span>
-									</button>
-								</div>
-							</div>
-						</div>
-					</td>
-					<td>
-						<button class="btn btn-danger"><span class="far fa-trash-alt"></span></button>
-					</td>
-				</tr>
 				</tbody>
 			</table>
 			<br>
 			<label><strong>Strings</strong></label>
+			<div class="form-group" id="div_string_gnerics">
+				<label>Generic String</label>
+				<textarea class="form-control" id="string_generic"></textarea>
+				<a class="btn btn-secondary opt" onclick="generateString(0);">Gerar</a>
+				<hr>
+			</div>
 			<div class="form-group" id="div_string_scopus">
 				<label>SCOPUS</label>
 				<textarea class="form-control" id="string_scopus"></textarea>
 				<a class="btn btn-secondary opt" onclick="generateString(1);">Gerar</a>
 				<hr>
 			</div>
-			<div class="form-group" id="div_string_acm">
+			<div class="form-group" id="div_string_acm" >
 				<label>ACM</label>
 				<textarea class="form-control" id="string_acm"></textarea>
 				<a class="btn btn-secondary opt" onclick="generateString(2);">Gerar</a>
@@ -326,31 +299,31 @@
 			<div class="form-group" id="div_string_ieee">
 				<label>IEEE</label>
 				<textarea class="form-control" id="string_ieee"></textarea>
-				<a class="btn btn-secondary opt">Gerar</a>
+				<a class="btn btn-secondary opt" onclick="generateString(3);">Gerar</a>
 				<hr>
 			</div>
 			<div class="form-group" id="div_string_science">
 				<label>Science Direct</label>
 				<textarea class="form-control" id="string_science"></textarea>
-				<a class="btn btn-secondary opt">Gerar</a>
+				<a class="btn btn-secondary opt" onclick="generateString(4);">Gerar</a>
 				<hr>
 			</div>
 			<div class="form-group" id="div_string_enginnering">
 				<label>Enginnering Village</label>
 				<textarea class="form-control" id="string_enginnering"></textarea>
-				<a class="btn btn-secondary opt">Gerar</a>
+				<a class="btn btn-secondary opt" onclick="generateString(5);">Gerar</a>
 				<hr>
 			</div>
 			<div class="form-group" id="div_string_springer">
 				<label>Springer Link</label>
 				<textarea class="form-control" id="string_springer"></textarea>
-				<a class="btn btn-secondary opt">Gerar</a>
+				<a class="btn btn-secondary opt" onclick="generateString(6);">Gerar</a>
 				<hr>
 			</div>
 			<div class="form-group" id="div_string_google">
 				<label>Google</label>
 				<textarea class="form-control" id="string_google"></textarea>
-				<a class="btn btn-secondary opt">Gerar</a>
+				<a class="btn btn-secondary opt" onclick="generateString(7);">Gerar</a>
 				<hr>
 			</div>
 

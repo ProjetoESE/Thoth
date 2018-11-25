@@ -4,12 +4,36 @@ function done_paper() {
 
 function generateString(database) {
 	switch (database) {
+		case 0:
+			$('#string_generic').text("(\"Performance Test\" \"Load Test\" \"Stress Test\" \"Soak Test\" \"Spike Test\" \"Workload Test\" \"Automation Test\") AND (Tool Generator Injector Monitor Analyzer Framework Suite Environment Plug*in) AND (Software Application System) AND (Teste-Teste)\n" +
+				"\n");
+			break;
 		case 1:
 			$('#string_scopus').text("(\"Performance Test\" \"Load Test\" \"Stress Test\" \"Soak Test\" \"Spike Test\" \"Workload Test\" \"Automation Test\") AND (Tool Generator Injector Monitor Analyzer Framework Suite Environment Plug*in) AND (Software Application System) AND (Teste-Teste)\n" +
 				"\n");
 			break;
 		case 2:
 			$('#string_acm').text("(\"Performance Test\" \"Load Test\" \"Stress Test\" \"Soak Test\" \"Spike Test\" \"Workload Test\" \"Automation Test\") AND (Tool Generator Injector Monitor Analyzer Framework Suite Environment Plug*in) AND (Software Application System) AND (Teste-Teste)\n" +
+				"\n");
+			break;
+		case 3:
+			$('#string_ieee').text("(\"Performance Test\" \"Load Test\" \"Stress Test\" \"Soak Test\" \"Spike Test\" \"Workload Test\" \"Automation Test\") AND (Tool Generator Injector Monitor Analyzer Framework Suite Environment Plug*in) AND (Software Application System) AND (Teste-Teste)\n" +
+				"\n");
+			break;
+		case 4:
+			$('#string_science').text("(\"Performance Test\" \"Load Test\" \"Stress Test\" \"Soak Test\" \"Spike Test\" \"Workload Test\" \"Automation Test\") AND (Tool Generator Injector Monitor Analyzer Framework Suite Environment Plug*in) AND (Software Application System) AND (Teste-Teste)\n" +
+				"\n");
+			break;
+		case 5:
+			$('#string_enginnering').text("(\"Performance Test\" \"Load Test\" \"Stress Test\" \"Soak Test\" \"Spike Test\" \"Workload Test\" \"Automation Test\") AND (Tool Generator Injector Monitor Analyzer Framework Suite Environment Plug*in) AND (Software Application System) AND (Teste-Teste)\n" +
+				"\n");
+			break;
+		case 6:
+			$('#string_springer').text("(\"Performance Test\" \"Load Test\" \"Stress Test\" \"Soak Test\" \"Spike Test\" \"Workload Test\" \"Automation Test\") AND (Tool Generator Injector Monitor Analyzer Framework Suite Environment Plug*in) AND (Software Application System) AND (Teste-Teste)\n" +
+				"\n");
+			break;
+		case 7:
+			$('#string_google').text("(\"Performance Test\" \"Load Test\" \"Stress Test\" \"Soak Test\" \"Spike Test\" \"Workload Test\" \"Automation Test\") AND (Tool Generator Injector Monitor Analyzer Framework Suite Environment Plug*in) AND (Software Application System) AND (Teste-Teste)\n" +
 				"\n");
 			break;
 	}
@@ -33,6 +57,21 @@ function showString() {
 			case "ACM":
 				$('#div_string_acm').show();
 				break;
+			case "IEEE":
+				$('#div_string_ieee').show();
+				break;
+			case "Science Direct":
+				$('#div_string_science').show();
+				break;
+			case "Enginnering Village":
+				$('#div_string_enginnering').show();
+				break;
+			case "Springer Link":
+				$('#div_string_springer').show();
+				break;
+			case "Google":
+				$('#div_string_google').show();
+				break;
 		}
 	}
 }
@@ -54,7 +93,7 @@ function add_domain() {
 	let data = table_domains.rows().data().toArray();
 
 	for (let i = 0; i < data.length; i++) {
-		if(domain[0].value.toLowerCase().trim() == data[i][0].toLowerCase().trim()){
+		if (domain[0].value.toLowerCase().trim() == data[i][0].toLowerCase().trim()) {
 			alertify.error("The domain has already been registered!");
 			return;
 		}
@@ -69,8 +108,8 @@ function add_domain() {
 
 }
 
-function delete_domain(value){
-	let row = table_domains.row( value );
+function delete_domain(value) {
+	let row = table_domains.row(value);
 	row.remove();
 	table_domains.draw();
 }
@@ -86,7 +125,7 @@ function add_language() {
 	let data = table_languages.rows().data().toArray();
 
 	for (let i = 0; i < data.length; i++) {
-		if(language[0].value.toLowerCase().trim() == data[i][0].toLowerCase().trim()){
+		if (language[0].value.toLowerCase().trim() == data[i][0].toLowerCase().trim()) {
 			alertify.error("The language has already been registered!");
 			return;
 		}
@@ -101,8 +140,8 @@ function add_language() {
 
 }
 
-function delete_language(value){
-	let row = table_languages.row( value );
+function delete_language(value) {
+	let row = table_languages.row(value);
 	row.remove();
 	table_languages.draw();
 }
@@ -118,7 +157,7 @@ function add_study_type() {
 	let data = table_study_type.rows().data().toArray();
 
 	for (let i = 0; i < data.length; i++) {
-		if(study_type[0].value.toLowerCase().trim() == data[i][0].toLowerCase().trim()){
+		if (study_type[0].value.toLowerCase().trim() == data[i][0].toLowerCase().trim()) {
 			alertify.error("The study type has already been registered!");
 			return;
 		}
@@ -133,8 +172,8 @@ function add_study_type() {
 
 }
 
-function delete_study_type(value){
-	let row = table_study_type.row( value );
+function delete_study_type(value) {
+	let row = table_study_type.row(value);
 	row.remove();
 	table_study_type.draw();
 }
@@ -150,7 +189,7 @@ function add_keywords() {
 	let data = table_keywords.rows().data().toArray();
 
 	for (let i = 0; i < data.length; i++) {
-		if(keywords[0].value.toLowerCase().trim() == data[i][0].toLowerCase().trim()){
+		if (keywords[0].value.toLowerCase().trim() == data[i][0].toLowerCase().trim()) {
 			alertify.error("The keyword has already been registered!");
 			return;
 		}
@@ -165,8 +204,8 @@ function add_keywords() {
 
 }
 
-function delete_keywords(value){
-	let row = table_keywords.row( value );
+function delete_keywords(value) {
+	let row = table_keywords.row(value);
 	row.remove();
 	table_keywords.draw();
 }
@@ -188,13 +227,13 @@ function add_research_question() {
 	let data = table_research_question.rows().data().toArray();
 
 	for (let i = 0; i < data.length; i++) {
-		if(id[0].value.toLowerCase().trim() == data[i][0].toLowerCase().trim()){
+		if (id[0].value.toLowerCase().trim() == data[i][0].toLowerCase().trim()) {
 			alertify.error("The ID of research question has already been registered!");
 			return;
 		}
 	}
 	for (let i = 0; i < data.length; i++) {
-		if(description[0].value.toLowerCase().trim() == data[i][1].toLowerCase().trim()){
+		if (description[0].value.toLowerCase().trim() == data[i][1].toLowerCase().trim()) {
 			alertify.error("The description of research question has already been registered!");
 			return;
 		}
@@ -211,8 +250,8 @@ function add_research_question() {
 
 }
 
-function delete_research_question(value){
-	let row = table_research_question.row( value );
+function delete_research_question(value) {
+	let row = table_research_question.row(value);
 	row.remove();
 	table_research_question.draw();
 }
@@ -228,7 +267,7 @@ function add_database() {
 	let data = table_databases.rows().data().toArray();
 
 	for (let i = 0; i < data.length; i++) {
-		if(databases[0].value.toLowerCase().trim() == data[i][0].toLowerCase().trim()){
+		if (databases[0].value.toLowerCase().trim() == data[i][0].toLowerCase().trim()) {
 			alertify.error("The database has already been registered!");
 			return;
 		}
@@ -243,10 +282,90 @@ function add_database() {
 	databases[0].value = "";
 }
 
-function delete_database(value){
-	let row = table_databases.row( value );
+function delete_database(value) {
+	let row = table_databases.row(value);
 	row.remove();
 	table_databases.draw();
 }
 
+function add_term() {
+	let term = $("#term");
 
+	if (!term[0].value) {
+		alertify.error('The term can not be empty!');
+		return;
+	}
+
+	let data = table_search_string.rows().data().toArray();
+
+	for (let i = 0; i < data.length; i++) {
+		if (term[0].value.toLowerCase().trim() == data[i][0].toLowerCase().trim()) {
+			alertify.error("The term has already been registered!");
+			return;
+		}
+	}
+
+	table_search_string.row.add([
+		term[0].value, '' +
+		'<table id="table_' + term[0].value + '" class="table">' +
+		'<th>Synonym</th>' +
+		'<th>Delete</th>' +
+		'</table>',
+		'<button class="btn btn-danger" onClick="delete_term($(this).parents(\'tr\'));"><span class="far fa-trash-alt"></span></button>'
+	]).draw();
+
+	let x = document.getElementById("list_term");
+	let option = document.createElement("option");
+	option.text = term[0].value;
+	x.add(option);
+	term[0].value = "";
+}
+
+function delete_term(value) {
+	let row = table_search_string.row(value);
+	let index = row.index();
+	row.remove();
+	table_search_string.draw();
+
+	let x = document.getElementById("list_term");
+	x.remove(index);
+}
+
+function add_synonym() {
+	let term = $("#list_term");
+	let syn = $("#synonym");
+	let id = "table_" + term[0].value;
+
+	if (!term[0].value) {
+		alertify.error('The term can not be empty!');
+		return;
+	}
+
+	if (!syn[0].value) {
+		alertify.error('The synonymous can not be empty!');
+		return;
+	}
+
+	let size = document.getElementById(id).rows.length;
+	let rows = document.getElementById(id).rows;
+	for (let i = 0; i < size; i++) {
+		if (syn[0].value.toLowerCase().trim() == rows[i].cells.item(0).innerHTML.toLowerCase().trim()) {
+			alertify.error("The synonym has already been registered!");
+			return;
+		}
+	}
+
+
+	let table_syn = document.getElementById(id);
+	let row = table_syn.insertRow();
+	let cell1 = row.insertCell(0);
+	let cell2 = row.insertCell(1);
+	cell1.innerHTML = syn[0].value;
+	cell2.innerHTML = '<button class="btn btn-danger" onClick="delete_synonym(this)"><span class="far fa-trash-alt"></span></button>';
+	syn[0].value = "";
+}
+
+function delete_synonym(btn) {
+	let row = btn.parentNode.parentNode;
+	row.parentNode.removeChild(row);
+}

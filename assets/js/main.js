@@ -1,5 +1,4 @@
 $(document).ready(function () {
-
 	let lang = {
 		"sZeroRecords": "No options added"
 	};
@@ -12,20 +11,32 @@ $(document).ready(function () {
 		paginate: false,
 		info: false,
 		searching: false,
-		ordering: false
+		ordering: false,
+		select: {
+			style: 'single'
+		}
 	};
 
-
-
 	table_domains = $('#table_domains').DataTable(configDataTables);
+
+	table_domains.on('select', function (e, dt, type, indexes) {
+		var rowData = table_domains.rows(indexes).data().toArray();
+		alertify.prompt( 'Prompt Message', rowData[0][0]
+			, function(evt, value) {
+			alertify.success('You entered: ' + value)
+				rowData[0]=value;
+			}
+			, function() {
+			alertify.error('Cancel')
+		});
+	});
+
 	table_languages = $('#table_languages').DataTable(configDataTables);
 	table_study_type = $('#table_study_type').DataTable(configDataTables);
 	table_keywords = $('#table_keywords').DataTable(configDataTables);
 	table_research_question = $('#table_research_question').DataTable(configDataTables);
 	table_databases = $('#table_databases').DataTable(configDataTables);
-
-
-	$('#table_search_string').DataTable(configDataTables);
+	table_search_string = $('#table_search_string').DataTable(configDataTables);
 	$('#table_criteria').DataTable(configDataTables);
 	$('#table_qa').DataTable(configDataTables);
 	$('#table_question_quality').DataTable(configDataTables);
@@ -155,3 +166,5 @@ $(document).ready(function () {
 	});
 
 });
+
+
