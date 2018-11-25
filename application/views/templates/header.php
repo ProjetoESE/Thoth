@@ -21,8 +21,8 @@
 	<link rel="stylesheet" href="<?= base_url('assets/css/dataTables.bootstrap4.css'); ?>">
 	<link rel="stylesheet" href="<?= base_url('assets/css/select.bootstrap4.css'); ?>">
 
-	<!-- AlertifyJS -->
-	<link rel="stylesheet" href="<?= base_url('assets/css/alertify.min.css'); ?>"/>
+	<!-- SweetAlert -->
+	<link rel="stylesheet" href="<?= base_url('assets/css/sweetalert2.min.css'); ?>">
 
 	<!-- My CSS Files -->
 	<link rel="stylesheet" href="<?= base_url('assets/css/main.css'); ?>">
@@ -47,9 +47,8 @@
 	<script src="<?= base_url('assets/js/highcharts-more.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/funnel.js'); ?>"></script>
 
-	<!-- AlertifyJS -->
-	<script src="<?= base_url('assets/js/alertify.min.js'); ?>"></script>
-
+	<!-- SweetAlert -->
+	<script src="<?= base_url('assets/js/sweetalert2.all.min.js'); ?>"></script>
 	<!-- My JS Files -->
 	<script src="<?= base_url('assets/js/main.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/functions.js'); ?>"></script>

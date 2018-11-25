@@ -86,7 +86,11 @@ function add_domain() {
 	let domain = $("#domain");
 
 	if (!domain[0].value) {
-		alertify.error('The domain can not be empty!');
+		swal({
+			type: 'warning',
+			title: 'Warning',
+			text: 'The domain can not be empty!'
+		});
 		return;
 	}
 
@@ -94,7 +98,11 @@ function add_domain() {
 
 	for (let i = 0; i < data.length; i++) {
 		if (domain[0].value.toLowerCase().trim() == data[i][0].toLowerCase().trim()) {
-			alertify.error("The domain has already been registered!");
+			swal({
+				type: 'warning',
+				title: 'Warning',
+				text: 'The domain has already been registered!'
+			});
 			return;
 		}
 	}
@@ -118,7 +126,11 @@ function add_language() {
 	let language = $("#language");
 
 	if (!language[0].value) {
-		alertify.error('The language can not be empty!');
+		swal({
+			type: 'warning',
+			title: 'Warning',
+			text: 'The language can not be empty!'
+		});
 		return;
 	}
 
@@ -126,7 +138,11 @@ function add_language() {
 
 	for (let i = 0; i < data.length; i++) {
 		if (language[0].value.toLowerCase().trim() == data[i][0].toLowerCase().trim()) {
-			alertify.error("The language has already been registered!");
+			swal({
+				type: 'warning',
+				title: 'Warning',
+				text: 'The language has already been registered!'
+			});
 			return;
 		}
 	}
@@ -150,7 +166,11 @@ function add_study_type() {
 	let study_type = $("#study_type");
 
 	if (!study_type[0].value) {
-		alertify.error('The study type can not be empty!');
+		swal({
+			type: 'warning',
+			title: 'Warning',
+			text: 'The study type can not be empty!'
+		});
 		return;
 	}
 
@@ -158,7 +178,11 @@ function add_study_type() {
 
 	for (let i = 0; i < data.length; i++) {
 		if (study_type[0].value.toLowerCase().trim() == data[i][0].toLowerCase().trim()) {
-			alertify.error("The study type has already been registered!");
+			swal({
+				type: 'warning',
+				title: 'Warning',
+				text: 'The study type has already been registered!'
+			});
 			return;
 		}
 	}
@@ -182,7 +206,11 @@ function add_keywords() {
 	let keywords = $("#keywords");
 
 	if (!keywords[0].value) {
-		alertify.error('The keyword can not be empty!');
+		swal({
+			type: 'warning',
+			title: 'Warning',
+			text: 'The keyword can not be empty!'
+		});
 		return;
 	}
 
@@ -190,7 +218,11 @@ function add_keywords() {
 
 	for (let i = 0; i < data.length; i++) {
 		if (keywords[0].value.toLowerCase().trim() == data[i][0].toLowerCase().trim()) {
-			alertify.error("The keyword has already been registered!");
+			swal({
+				type: 'warning',
+				title: 'Warning',
+				text: 'The keyword has already been registered!'
+			});
 			return;
 		}
 	}
@@ -215,12 +247,20 @@ function add_research_question() {
 	let id = $("#id_research_question");
 
 	if (!id[0].value) {
-		alertify.error('The ID of research question can not be empty!');
+		swal({
+			type: 'warning',
+			title: 'Warning',
+			text: 'The ID of research question can not be empty!'
+		});
 		return;
 	}
 
 	if (!description[0].value) {
-		alertify.error('The description of research question can not be empty!');
+		swal({
+			type: 'warning',
+			title: 'Warning',
+			text: 'The description of research question can not be empty!'
+		});
 		return;
 	}
 
@@ -228,13 +268,21 @@ function add_research_question() {
 
 	for (let i = 0; i < data.length; i++) {
 		if (id[0].value.toLowerCase().trim() == data[i][0].toLowerCase().trim()) {
-			alertify.error("The ID of research question has already been registered!");
+			swal({
+				type: 'warning',
+				title: 'Warning',
+				text: 'The ID of research question has already been registered!'
+			});
 			return;
 		}
 	}
 	for (let i = 0; i < data.length; i++) {
 		if (description[0].value.toLowerCase().trim() == data[i][1].toLowerCase().trim()) {
-			alertify.error("The description of research question has already been registered!");
+			swal({
+				type: 'warning',
+				title: 'Warning',
+				text: 'The description of research question has already been registered!'
+			});
 			return;
 		}
 	}
@@ -260,7 +308,11 @@ function add_database() {
 	let databases = $("#databases");
 
 	if (!databases[0].value) {
-		alertify.error('The database can not be empty!');
+		swal({
+			type: 'warning',
+			title: 'Warning',
+			text: 'The database can not be empty!'
+		});
 		return;
 	}
 
@@ -268,7 +320,11 @@ function add_database() {
 
 	for (let i = 0; i < data.length; i++) {
 		if (databases[0].value.toLowerCase().trim() == data[i][0].toLowerCase().trim()) {
-			alertify.error("The database has already been registered!");
+			swal({
+				type: 'warning',
+				title: 'Warning',
+				text: 'The database has already been registered!'
+			});
 			return;
 		}
 	}
@@ -292,7 +348,11 @@ function add_term() {
 	let term = $("#term");
 
 	if (!term[0].value) {
-		alertify.error('The term can not be empty!');
+		swal({
+			type: 'warning',
+			title: 'Warning',
+			text: 'The term can not be empty!'
+		});
 		return;
 	}
 
@@ -300,7 +360,11 @@ function add_term() {
 
 	for (let i = 0; i < data.length; i++) {
 		if (term[0].value.toLowerCase().trim() == data[i][0].toLowerCase().trim()) {
-			alertify.error("The term has already been registered!");
+			swal({
+				type: 'warning',
+				title: 'Warning',
+				text: 'The term has already been registered!'
+			});
 			return;
 		}
 	}
@@ -337,12 +401,20 @@ function add_synonym() {
 	let id = "table_" + term[0].value;
 
 	if (!term[0].value) {
-		alertify.error('The term can not be empty!');
+		swal({
+			type: 'warning',
+			title: 'Warning',
+			text: 'The term can not be empty!'
+		});
 		return;
 	}
 
 	if (!syn[0].value) {
-		alertify.error('The synonymous can not be empty!');
+		swal({
+			type: 'warning',
+			title: 'Warning',
+			text: 'The synonymous can not be empty!'
+		});
 		return;
 	}
 
@@ -350,7 +422,11 @@ function add_synonym() {
 	let rows = document.getElementById(id).rows;
 	for (let i = 0; i < size; i++) {
 		if (syn[0].value.toLowerCase().trim() == rows[i].cells.item(0).innerHTML.toLowerCase().trim()) {
-			alertify.error("The synonym has already been registered!");
+			swal({
+				type: 'warning',
+				title: 'Warning',
+				text: 'The synonym has already been registered!'
+			});
 			return;
 		}
 	}

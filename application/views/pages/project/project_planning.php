@@ -281,49 +281,49 @@
 			<div class="form-group" id="div_string_gnerics">
 				<label>Generic String</label>
 				<textarea class="form-control" id="string_generic"></textarea>
-				<a class="btn btn-secondary opt" onclick="generateString(0);">Gerar</a>
+				<a class="btn btn-info opt" onclick="generateString(0);">Gerar</a>
 				<hr>
 			</div>
 			<div class="form-group" id="div_string_scopus">
 				<label>SCOPUS</label>
 				<textarea class="form-control" id="string_scopus"></textarea>
-				<a class="btn btn-secondary opt" onclick="generateString(1);">Gerar</a>
+				<a class="btn btn-info opt" onclick="generateString(1);">Gerar</a>
 				<hr>
 			</div>
 			<div class="form-group" id="div_string_acm" >
 				<label>ACM</label>
 				<textarea class="form-control" id="string_acm"></textarea>
-				<a class="btn btn-secondary opt" onclick="generateString(2);">Gerar</a>
+				<a class="btn btn-info opt" onclick="generateString(2);">Gerar</a>
 				<hr>
 			</div>
 			<div class="form-group" id="div_string_ieee">
 				<label>IEEE</label>
 				<textarea class="form-control" id="string_ieee"></textarea>
-				<a class="btn btn-secondary opt" onclick="generateString(3);">Gerar</a>
+				<a class="btn btn-info opt" onclick="generateString(3);">Gerar</a>
 				<hr>
 			</div>
 			<div class="form-group" id="div_string_science">
 				<label>Science Direct</label>
 				<textarea class="form-control" id="string_science"></textarea>
-				<a class="btn btn-secondary opt" onclick="generateString(4);">Gerar</a>
+				<a class="btn btn-info opt" onclick="generateString(4);">Gerar</a>
 				<hr>
 			</div>
 			<div class="form-group" id="div_string_enginnering">
 				<label>Enginnering Village</label>
 				<textarea class="form-control" id="string_enginnering"></textarea>
-				<a class="btn btn-secondary opt" onclick="generateString(5);">Gerar</a>
+				<a class="btn btn-info opt" onclick="generateString(5);">Gerar</a>
 				<hr>
 			</div>
 			<div class="form-group" id="div_string_springer">
 				<label>Springer Link</label>
 				<textarea class="form-control" id="string_springer"></textarea>
-				<a class="btn btn-secondary opt" onclick="generateString(6);">Gerar</a>
+				<a class="btn btn-info opt" onclick="generateString(6);">Gerar</a>
 				<hr>
 			</div>
 			<div class="form-group" id="div_string_google">
 				<label>Google</label>
 				<textarea class="form-control" id="string_google"></textarea>
-				<a class="btn btn-secondary opt" onclick="generateString(7);">Gerar</a>
+				<a class="btn btn-info opt" onclick="generateString(7);">Gerar</a>
 				<hr>
 			</div>
 
