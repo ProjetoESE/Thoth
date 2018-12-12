@@ -20,6 +20,7 @@
 	<!-- DataTables -->
 	<link rel="stylesheet" href="<?= base_url('assets/css/dataTables.bootstrap4.css'); ?>">
 	<link rel="stylesheet" href="<?= base_url('assets/css/select.bootstrap4.css'); ?>">
+	<link rel="stylesheet" href="<?= base_url('assets/css/buttons.bootstrap4.min.css'); ?>">
 
 	<!-- SweetAlert -->
 	<link rel="stylesheet" href="<?= base_url('assets/css/sweetalert2.min.css'); ?>">
@@ -38,6 +39,14 @@
 	<script src="<?= base_url('assets/js/jquery.dataTables.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/dataTables.bootstrap4.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/dataTables.select.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/dataTables.buttons.min.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/buttons.bootstrap4.min.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/jszip.min.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/pdfmake.min.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/vfs_fonts.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/buttons.html5.min.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/buttons.print.min.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/buttons.colVis.min.js'); ?>"></script>
 
 	<!-- Highcharts -->
 	<script src="<?= base_url('assets/js/highcharts.js'); ?>"></script>

@@ -141,7 +141,7 @@ function add_language() {
 			swal({
 				type: 'warning',
 				title: 'Warning',
-				text: 'The language has already been registered!'
+				text: 'The language has already been registered!',
 			});
 			return;
 		}

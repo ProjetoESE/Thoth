@@ -247,7 +247,8 @@
 			<div class="input-group col-md-4">
 				<input type="text" class="form-control" id="term">
 				<div class="input-group-append">
-					<button class="btn btn-success" type="button" onclick="add_term();"><span class="fas fa-plus"></span></button>
+					<button class="btn btn-success" type="button" onclick="add_term();"><span
+							class="fas fa-plus"></span></button>
 				</div>
 			</div>
 			<div class="form-inline">
@@ -259,7 +260,8 @@
 				<input type="text" class="form-control" placeholder="Add a Synonym to Term"
 					   id="synonym">
 				<div class="input-group-append">
-					<button class="btn btn-success" type="button" onclick="add_synonym();"><span class="fas fa-plus"></span>
+					<button class="btn btn-success" type="button" onclick="add_synonym();"><span
+							class="fas fa-plus"></span>
 					</button>
 				</div>
 			</div>
@@ -290,7 +292,7 @@
 				<a class="btn btn-info opt" onclick="generateString(1);">Gerar</a>
 				<hr>
 			</div>
-			<div class="form-group" id="div_string_acm" >
+			<div class="form-group" id="div_string_acm">
 				<label>ACM</label>
 				<textarea class="form-control" id="string_acm"></textarea>
 				<a class="btn btn-info opt" onclick="generateString(2);">Gerar</a>
@@ -338,6 +340,27 @@
 		</div>
 		<div class="tab-pane container" id="tabcriteria">
 			<label for="databases" class="container"><strong>Criteria</strong></label>
+			<div class="form-inline">
+				<label for="rule_inclusion" class="col-sm-12 col-md-2">Inclusion Rule</label>
+				<label for="rule_exclusion" class="col-sm-12 col-md-2">Exclusion Rule</label>
+			</div>
+			<div class="form-inline">
+				<div class="col-md-2">
+					<select class="form-control" id="rule_inclusion">
+						<option value="1">All</option>
+						<option value="2">Any</option>
+						<option value="3">At Least</option>
+					</select>
+				</div>
+				<div class="col-md-2" id="rule_exclusion">
+					<select class="form-control">
+						<option value="1">All</option>
+						<option value="2">Any</option>
+						<option value="3">At Least</option>
+					</select>
+				</div>
+			</div>
+
 			<div class="form-inline">
 				<label for="id_criteria" class="col-sm-12 col-md-1">ID</label>
 				<label for="description_criteria" class="col-sm-12 col-md-6">Description</label>

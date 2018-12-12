@@ -52,8 +52,8 @@ $(document).ready(function () {
 		searching: false,
 		columnDefs: [
 			{"orderable": false, "targets": 2}]
-	});
 
+	});
 	$('#tableMyProjects').DataTable({
 		responsive: true,
 		order: [[0, "asc"]],
@@ -66,12 +66,17 @@ $(document).ready(function () {
 		order: [[0, "asc"]],
 		columnDefs: [
 			{"orderable": false, "targets": 2}],
+
 	});
 
 	let table_papers = $('#table_papers').DataTable({
 		responsive: true,
 		order: [[0, "asc"]],
-		select: true
+		select: true,
+		dom: 'Bfrtip',
+		buttons: [
+			'copy', 'csv', 'excel', 'pdf', 'print'
+		]
 	});
 
 	table_papers.on('select', function (e, dt, type, indexes) {
@@ -121,7 +126,11 @@ $(document).ready(function () {
 	let table_papers_quality = $('#table_papers_quality').DataTable({
 		responsive: true,
 		order: [[0, "asc"]],
-		select: true
+		select: true,
+		dom: 'Bfrtip',
+		buttons: [
+			'copy', 'csv', 'excel', 'pdf', 'print'
+		]
 	});
 
 	table_papers_quality.on('select', function (e, dt, type, indexes) {
@@ -141,7 +150,11 @@ $(document).ready(function () {
 	let table_papers_extraction = $('#table_papers_extraction').DataTable({
 		responsive: true,
 		order: [[0, "asc"]],
-		select: true
+		select: true,
+		dom: 'Bfrtip',
+		buttons: [
+			'copy', 'csv', 'excel', 'pdf', 'print'
+		]
 	});
 
 	table_papers_extraction.on('select', function (e, dt, type, indexes) {
