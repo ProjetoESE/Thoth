@@ -39,6 +39,7 @@ function generateString(database) {
 	}
 }
 
+
 function showString() {
 	$('#div_string_scopus').hide();
 	$('#div_string_acm').hide();
@@ -85,30 +86,13 @@ $(window).on("popstate", function () {
 function add_domain() {
 	let domain = $("#domain");
 
-	if (!domain[0].value) {
-		swal({
-			type: 'warning',
-			title: 'Warning',
-			text: 'The domain can not be empty!'
-		});
+	if(!validate_domain(domain[0].value)){
 		return;
-	}
-
-	let data = table_domains.rows().data().toArray();
-
-	for (let i = 0; i < data.length; i++) {
-		if (domain[0].value.toLowerCase().trim() == data[i][0].toLowerCase().trim()) {
-			swal({
-				type: 'warning',
-				title: 'Warning',
-				text: 'The domain has already been registered!'
-			});
-			return;
-		}
 	}
 
 	table_domains.row.add([
 		domain[0].value,
+		'<button class="btn btn-warning opt" onClick="modal_domain($(this).parents(\'tr\'));"><span class="fas fa-edit"></span></button>' +
 		'<button class="btn btn-danger" onClick="delete_domain($(this).parents(\'tr\'));"><span class="far fa-trash-alt"></span></button>'
 	]).draw();
 
@@ -122,29 +106,72 @@ function delete_domain(value) {
 	table_domains.draw();
 }
 
-function add_language() {
-	let language = $("#language");
+function modal_domain(value) {
+	let row = table_domains.row(value);
+	$('#modal_domain #edit_domain').val(row.data()[0]);
+	$('#modal_domain #index_domain').val(row.index());
+	$('#modal_domain').modal('show');
+}
 
-	if (!language[0].value) {
+function edit_domain() {
+	let index = $('#modal_domain #index_domain').val();
+	let domain = $('#modal_domain #edit_domain').val();
+
+	if(!validate_domain(domain)){
+		return false;
+	}
+
+	let row = table_domains.row(index);
+	row.remove();
+	table_domains.row.add([
+		domain,
+		'<button class="btn btn-warning opt" onClick="modal_domain($(this).parents(\'tr\'));"><span class="fas fa-edit"></span></button>' +
+		'<button class="btn btn-danger" onClick="delete_domain($(this).parents(\'tr\'));"><span class="far fa-trash-alt"></span></button>'
+	]).draw();
+
+	Swal({
+		title: 'Success',
+		text: "The domain was edited",
+		type: 'success',
+		showCancelButton: false,
+		confirmButtonText: 'Ok'
+	}).then((result) => {
+		if (result.value) {
+			$('#modal_domain').modal('hide');
+		}
+	});
+}
+
+function validate_domain(domain){
+	if (!domain) {
 		swal({
 			type: 'warning',
 			title: 'Warning',
-			text: 'The language can not be empty!'
+			text: 'The domain can not be empty!'
 		});
-		return;
+		return false;
 	}
 
-	let data = table_languages.rows().data().toArray();
+	let data = table_domains.rows().data().toArray();
 
 	for (let i = 0; i < data.length; i++) {
-		if (language[0].value.toLowerCase().trim() == data[i][0].toLowerCase().trim()) {
+		if (domain.toLowerCase().trim() == data[i][0].toLowerCase().trim()) {
 			swal({
 				type: 'warning',
 				title: 'Warning',
-				text: 'The language has already been registered!',
+				text: 'The domain has already been registered!'
 			});
-			return;
+			return false;
 		}
+	}
+	return true;
+}
+
+function add_language() {
+	let language = $("#language");
+
+	if(!validate_language(language[0].value)){
+		return false;
 	}
 
 	table_languages.row.add([
@@ -156,6 +183,32 @@ function add_language() {
 
 }
 
+function validate_language(language) {
+	if (!language) {
+		swal({
+			type: 'warning',
+			title: 'Warning',
+			text: 'The language can not be empty!'
+		});
+		return false;
+	}
+
+	let data = table_languages.rows().data().toArray();
+
+	for (let i = 0; i < data.length; i++) {
+		if (language.toLowerCase().trim() == data[i][0].toLowerCase().trim()) {
+			swal({
+				type: 'warning',
+				title: 'Warning',
+				text: 'The language has already been registered!',
+			});
+			return false;
+		}
+	}
+
+	return true;
+}
+
 function delete_language(value) {
 	let row = table_languages.row(value);
 	row.remove();
@@ -165,26 +218,8 @@ function delete_language(value) {
 function add_study_type() {
 	let study_type = $("#study_type");
 
-	if (!study_type[0].value) {
-		swal({
-			type: 'warning',
-			title: 'Warning',
-			text: 'The study type can not be empty!'
-		});
-		return;
-	}
-
-	let data = table_study_type.rows().data().toArray();
-
-	for (let i = 0; i < data.length; i++) {
-		if (study_type[0].value.toLowerCase().trim() == data[i][0].toLowerCase().trim()) {
-			swal({
-				type: 'warning',
-				title: 'Warning',
-				text: 'The study type has already been registered!'
-			});
-			return;
-		}
+	if(!validate_study_type(study_type[0].value)){
+		return false;
 	}
 
 	table_study_type.row.add([
@@ -196,6 +231,32 @@ function add_study_type() {
 
 }
 
+function validate_study_type(study_type) {
+	if (!study_type) {
+		swal({
+			type: 'warning',
+			title: 'Warning',
+			text: 'The study type can not be empty!'
+		});
+		return false;
+	}
+
+	let data = table_study_type.rows().data().toArray();
+
+	for (let i = 0; i < data.length; i++) {
+		if (study_type.toLowerCase().trim() == data[i][0].toLowerCase().trim()) {
+			swal({
+				type: 'warning',
+				title: 'Warning',
+				text: 'The study type has already been registered!'
+			});
+			return false;
+		}
+	}
+
+	return true;
+}
+
 function delete_study_type(value) {
 	let row = table_study_type.row(value);
 	row.remove();
@@ -205,35 +266,80 @@ function delete_study_type(value) {
 function add_keywords() {
 	let keywords = $("#keywords");
 
-	if (!keywords[0].value) {
-		swal({
-			type: 'warning',
-			title: 'Warning',
-			text: 'The keyword can not be empty!'
-		});
-		return;
-	}
-
-	let data = table_keywords.rows().data().toArray();
-
-	for (let i = 0; i < data.length; i++) {
-		if (keywords[0].value.toLowerCase().trim() == data[i][0].toLowerCase().trim()) {
-			swal({
-				type: 'warning',
-				title: 'Warning',
-				text: 'The keyword has already been registered!'
-			});
-			return;
-		}
+	if(!validate_keywords(keywords[0].value)){
+		return false;
 	}
 
 	table_keywords.row.add([
 		keywords[0].value,
+		'<button class="btn btn-warning opt" onClick="modal_keywords($(this).parents(\'tr\'));"><span class="fas fa-edit"></span></button>' +
 		'<button class="btn btn-danger" onClick="delete_keywords($(this).parents(\'tr\'));"><span class="far fa-trash-alt"></span></button>'
 	]).draw();
 
 	keywords[0].value = "";
 
+}
+
+function modal_keywords(value) {
+	let row = table_keywords.row(value);
+	$('#modal_keyword #index_keyword').val(row.index());
+	$('#modal_keyword #edit_keyword').val(row.data()[0]);
+	$('#modal_keyword').modal('show');
+}
+
+
+function edit_keyword() {
+	let index = $('#modal_keyword #index_keyword').val();
+	let keyword = $('#modal_keyword #edit_keyword').val();
+
+	if(!validate_keywords(keyword)){
+		return false;
+	}
+
+	let row = table_keywords.row(index);
+	row.remove();
+	table_keywords.row.add([
+		keyword,
+		'<button class="btn btn-warning opt" onClick="modal_keywords($(this).parents(\'tr\'));"><span class="fas fa-edit"></span></button>' +
+		'<button class="btn btn-danger" onClick="delete_keywords($(this).parents(\'tr\'));"><span class="far fa-trash-alt"></span></button>'
+	]).draw();
+
+	Swal({
+		title: 'Success',
+		text: "The keyword was edited",
+		type: 'success',
+		showCancelButton: false,
+		confirmButtonText: 'Ok'
+	}).then((result) => {
+		if (result.value) {
+			$('#modal_keyword').modal('hide');
+		}
+	});
+}
+
+function validate_keywords(keyword) {
+	if (!keyword) {
+		swal({
+			type: 'warning',
+			title: 'Warning',
+			text: 'The keyword can not be empty!'
+		});
+		return false;
+	}
+
+	let data = table_keywords.rows().data().toArray();
+
+	for (let i = 0; i < data.length; i++) {
+		if (keyword.toLowerCase().trim() == data[i][0].toLowerCase().trim()) {
+			swal({
+				type: 'warning',
+				title: 'Warning',
+				text: 'The keyword has already been registered!'
+			});
+			return false;
+		}
+	}
+	return true;
 }
 
 function delete_keywords(value) {
@@ -290,6 +396,7 @@ function add_research_question() {
 
 	table_research_question.row.add([id[0].value,
 		description[0].value,
+		'<button class="btn btn-warning opt" onClick=""><span class="fas fa-edit"></span></button>' +
 		'<button class="btn btn-danger" onClick="delete_research_question($(this).parents(\'tr\'));"><span class="far fa-trash-alt"></span></button>'
 	]).draw();
 
@@ -332,6 +439,7 @@ function add_database() {
 
 	table_databases.row.add([
 		databases[0].value,
+		'<button class="btn btn-warning opt" onClick=""><span class="fas fa-edit"></span></button>' +
 		'<button class="btn btn-danger" onClick="delete_database($(this).parents(\'tr\'));"><span class="far fa-trash-alt"></span></button>'
 	]).draw();
 
@@ -375,6 +483,7 @@ function add_term() {
 		'<th>Synonym</th>' +
 		'<th>Delete</th>' +
 		'</table>',
+		'<button class="btn btn-warning opt" onClick=""><span class="fas fa-edit"></span></button>' +
 		'<button class="btn btn-danger" onClick="delete_term($(this).parents(\'tr\'));"><span class="far fa-trash-alt"></span></button>'
 	]).draw();
 
@@ -437,7 +546,7 @@ function add_synonym() {
 	let cell1 = row.insertCell(0);
 	let cell2 = row.insertCell(1);
 	cell1.innerHTML = syn[0].value;
-	cell2.innerHTML = '<button class="btn btn-danger" onClick="delete_synonym(this)"><span class="far fa-trash-alt"></span></button>';
+	cell2.innerHTML = '<button class="btn btn-warning opt" onClick=""><span class="fas fa-edit"></span></button><button class="btn btn-danger" onClick="delete_synonym(this)"><span class="far fa-trash-alt"></span></button>';
 	syn[0].value = "";
 }
 

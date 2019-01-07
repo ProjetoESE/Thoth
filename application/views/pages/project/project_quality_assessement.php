@@ -55,6 +55,12 @@
 				<th>ID</th>
 				<th>Title</th>
 				<th>Year</th>
+				<th>Q1</th>
+				<th>Q2</th>
+				<th>Q3</th>
+				<th>Q4</th>
+				<th>Q5</th>
+				<th>Q6</th>
 				<th>Score</th>
 				<th>Status</th>
 			</tr>
@@ -64,6 +70,12 @@
 				<td>69</td>
 				<td>A novel on-die GHz AC stress test methodology for high speed IO application</td>
 				<td>2017</td>
+				<td>TOTAL</td>
+				<td>TOTAL</td>
+				<td>TOTAL</td>
+				<td>TOTAL</td>
+				<td>TOTAL</td>
+				<td>TOTAL</td>
 				<td>0.0</td>
 				<td class="text-dark">Unclassified</td>
 			</tr>
@@ -71,6 +83,12 @@
 				<td>65</td>
 				<td>A IPv6 Network Performance Test System using Multi-Agent</td>
 				<td>2007</td>
+				<td>TOTAL</td>
+				<td>TOTAL</td>
+				<td>TOTAL</td>
+				<td>TOTAL</td>
+				<td>TOTAL</td>
+				<td>TOTAL</td>
 				<td>3.5</td>
 				<td class="text-dark">Unclassified</td>
 			</tr>
@@ -80,6 +98,12 @@
 				<th>ID</th>
 				<th>Title</th>
 				<th>Year</th>
+				<th>Q1</th>
+				<th>Q2</th>
+				<th>Q3</th>
+				<th>Q4</th>
+				<th>Q5</th>
+				<th>Q6</th>
 				<th>Score</th>
 				<th>Status</th>
 			</tr>

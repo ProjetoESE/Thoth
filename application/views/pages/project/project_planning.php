@@ -11,16 +11,16 @@
 		<h4>Planning</h4>
 		<ul class="nav nav-pills nav-justified">
 			<li class="nav-item">
-				<a data-toggle="pill" class="nav-link active" href="#taboveral">Overall information</a>
+				<a data-toggle="pill" class="nav-link active" href="#tab_overall">Overall information</a>
 			</li>
 			<li class="nav-item">
-				<a data-toggle="pill" class="nav-link" href="#tabresearch">Research Questions</a>
+				<a data-toggle="pill" class="nav-link" href="#tab_research">Research Questions</a>
 			</li>
 			<li class="nav-item">
-				<a data-toggle="pill" class="nav-link" href="#tabdatabases">Data Bases</a>
+				<a data-toggle="pill" class="nav-link" href="#tab_databases">Data Bases</a>
 			</li>
 			<li class="nav-item">
-				<a data-toggle="pill" class="nav-link" href="#tabsearchstring" onclick="showString();">Search String</a>
+				<a data-toggle="pill" class="nav-link" href="#tab_search_string" onclick="showString();">Search String</a>
 			</li>
 			<li class="nav-item">
 				<a data-toggle="pill" class="nav-link" href="#tabsearchstrategy">Search Strategy</a>
@@ -38,7 +38,7 @@
 	</div>
 
 	<div class="tab-content">
-		<div class="tab-pane active container" id="taboveral">
+		<div class="tab-pane active container" id="tab_overall">
 			<div class="row">
 				<div class="col-sm-12 col-md-6">
 					<label for="domain"><strong>Domains</strong></label>
@@ -162,11 +162,11 @@
 			</div>
 			<br>
 			<div class="form-inline container justify-content-between">
-				<a class="btn btn-secondary"><span class="fas fa-backward"></span> Previous</a>
-				<a class="btn btn-secondary">Next <span class="fas fa-forward"></span></a>
+				<a href="#" class="btn btn-secondary disabled"><span class="fas fa-backward"></span> Previous</a>
+				<a class="btn btn-secondary" href="#tab_research">Next <span class="fas fa-forward"></span></a>
 			</div>
 		</div>
-		<div class="tab-pane container" id="tabresearch">
+		<div class="tab-pane container" id="tab_research">
 			<label for="research_question" class="container"><strong>Research Questions</strong></label>
 			<div class="form-inline">
 				<label for="id_research_question" class="col-sm-12 col-md-1">ID</label>
@@ -199,11 +199,11 @@
 			</table>
 			<br>
 			<div class="form-inline container justify-content-between">
-				<a class="btn btn-secondary"><span class="fas fa-backward"></span> Previous</a>
-				<a class="btn btn-secondary">Next <span class="fas fa-forward"></span></a>
+				<a href="#tab_overall" class="btn btn-secondary"><span class="fas fa-backward"></span> Previous</a>
+				<a href="#tab_databases" class="btn btn-secondary">Next <span class="fas fa-forward"></span></a>
 			</div>
 		</div>
-		<div class="tab-pane container" id="tabdatabases">
+		<div class="tab-pane container" id="tab_databases">
 			<label for="databases"><strong>Data Bases</strong></label>
 			<div class="input-group col-md-3">
 				<select class="form-control" id="databases">
@@ -235,11 +235,11 @@
 			</table>
 			<br>
 			<div class="form-inline container justify-content-between">
-				<a class="btn btn-secondary"><span class="fas fa-backward"></span> Previous</a>
-				<a class="btn btn-secondary">Next <span class="fas fa-forward"></span></a>
+				<a href="#tab_research" class="btn btn-secondary"><span class="fas fa-backward"></span> Previous</a>
+				<a href="#tab_search_string" onclick="showString();" class="btn btn-secondary">Next <span class="fas fa-forward"></span></a>
 			</div>
 		</div>
-		<div class="tab-pane container" id="tabsearchstring">
+		<div class="tab-pane container" id="tab_search_string">
 			<label for="term"><strong>Search String</strong></label>
 			<div class="form-inline">
 				<label for="term">Term</label>

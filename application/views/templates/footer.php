@@ -6,6 +6,51 @@
 																href="http://lesse.com.br">Lesse</a></small>
 	</div>
 </footer>
+
+<div class="modal fade" id="modal_keyword" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="modalTitle">Edit Keyword</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div id="alert_domain"></div>
+				<input type="hidden" id="index_keyword">
+				<input type="text" class="form-control" id="edit_keyword">
+			</div>
+			<div class="modal-footer">
+				<a class="btn btn-danger" data-dismiss="modal">Cancel</a>
+				<a class="btn btn-success" onclick="edit_keyword()">Save</a>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="modal_domain" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="modalTitle">Edit Domain</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div id="alert_domain"></div>
+				<input type="hidden" id="index_domain">
+				<input type="text" class="form-control" id="edit_domain">
+			</div>
+			<div class="modal-footer">
+				<a class="btn btn-danger" data-dismiss="modal">Cancel</a>
+				<a class="btn btn-success" onclick="edit_domain()">Save</a>
+			</div>
+		</div>
+	</div>
+</div>
+
 <div class="modal fade bd-example-modal-lg" id="modalPaper" tabindex="-1" role="dialog"
 	 aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-lg" role="document">

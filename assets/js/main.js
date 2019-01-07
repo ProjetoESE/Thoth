@@ -11,10 +11,7 @@ $(document).ready(function () {
 		paginate: false,
 		info: false,
 		searching: false,
-		ordering: false,
-		select: {
-			style: 'single'
-		}
+		ordering: false
 	};
 
 	table_domains = $('#table_domains').DataTable(configDataTables);
@@ -31,12 +28,13 @@ $(document).ready(function () {
 		});
 	});
 
-	table_languages = $('#table_languages').DataTable(configDataTables);
-	table_study_type = $('#table_study_type').DataTable(configDataTables);
-	table_keywords = $('#table_keywords').DataTable(configDataTables);
-	table_research_question = $('#table_research_question').DataTable(configDataTables);
-	table_databases = $('#table_databases').DataTable(configDataTables);
+	 table_languages = $('#table_languages').DataTable(configDataTables);
+	 table_study_type = $('#table_study_type').DataTable(configDataTables);
+	 table_keywords = $('#table_keywords').DataTable(configDataTables);
+	 table_research_question = $('#table_research_question').DataTable(configDataTables);
+	 table_databases = $('#table_databases').DataTable(configDataTables);
 	table_search_string = $('#table_search_string').DataTable(configDataTables);
+
 	$('#table_criteria').DataTable(configDataTables);
 	$('#table_qa').DataTable(configDataTables);
 	$('#table_question_quality').DataTable(configDataTables);
@@ -88,8 +86,23 @@ $(document).ready(function () {
 		$('#paper_database').text(rowData[0][4]);
 		$('#row_quality').hide();
 		$('#row_extraction').hide();
-		$('#paper_keywords').text("field programmable gate arrays;integrated circuit packaging;integrated circuit testing;integrated optoelectronics;monitoring;smart pixels;test equipment;PGA chip carrier;compact low-cost high-performance test fixture;electrical test;high-speed electrical signal monitoring;smart pixel IC packaging;smart pixel integrated circuit control;smart pixel integrated circuit testing;Circuit testing;Clocks;EPROM;Electronics packaging;Field programmable gate arrays;Fixtures;Hardware design languages;Integrated circuit testing;Smart pixels;Sockets");
-		$('#paper_abtract').text("The Internet Engineering Task Force (IETF) has introduced IPv6 with a mission to meet the growing demands of the future Internet. IPv6 is more and more emphasized and moving from the pilot phase to the practical application. In the process of deploying IPv6, performance is one of the key issues to be considered. Test is an effective method to understand IPv6 network performance. We need scalable and available tools to measure IPv6 network performance, but the few existing network performance test software support IPv6. So through the introduction of multi-agent technology, a distributed IPv6 network performance test model integrated with centralized control is proposed. We describe architecture and workflow of the model thoroughly, and a IPv6 network performance test system is designed and implemented based on the model. Finally, using our system, we measure IPv6 performance metrics on CERNET2 which is the largest pure IPv6 network in the world presently. The final experiments show that it is necessary to implement a IPv6 network performance test system and that our system is scalable and available for IPv6 network performance tes");
+		$('#paper_keywords').text("field programmable gate arrays;integrated circuit packaging;integrated circuit testing;" +
+			"integrated optoelectronics;monitoring;smart pixels;test equipment;PGA chip carrier;compact low-cost high-performance" +
+			" test fixture;electrical test;high-speed electrical signal monitoring;smart pixel IC packaging;smart pixel integrated" +
+			" circuit control;smart pixel integrated circuit testing;Circuit testing;Clocks;EPROM;Electronics packaging;Field " +
+			"programmable gate arrays;Fixtures;Hardware design languages;Integrated circuit testing;Smart pixels;Sockets");
+		$('#paper_abtract').text("The Internet Engineering Task Force (IETF) has introduced IPv6 with a mission to meet " +
+			"the growing demands of the future Internet. IPv6 is more and more emphasized and moving from the pilot phase" +
+			" to the practical application. In the process of deploying IPv6, performance is one of the key issues to be" +
+			" considered. Test is an effective method to understand IPv6 network performance. We need scalable and " +
+			"available tools to measure IPv6 network performance, but the few existing network performance test software " +
+			"support IPv6. So through the introduction of multi-agent technology, a distributed IPv6 network performance" +
+			" test model integrated with centralized control is proposed. We describe architecture and workflow of the" +
+			" model thoroughly, and a IPv6 network performance test system is designed and implemented based on the" +
+			" model. Finally, using our system, we measure IPv6 performance metrics on CERNET2 which is the largest" +
+			" pure IPv6 network in the world presently. The final experiments show that it is necessary to implement a" +
+			" IPv6 network performance test system and that our system is scalable and available for IPv6 network " +
+			"performance tes");
 		$('#modalPaper').modal('show');
 	});
 
@@ -140,8 +153,22 @@ $(document).ready(function () {
 		$('#paper_author').text("F. Kiamilev and R. Rozier and J. Rieve");
 		$('#paper_year').text(rowData[0][2]);
 		$('#paper_database').text("IEEE");
-		$('#paper_keywords').text("field programmable gate arrays;integrated circuit packaging;integrated circuit testing;integrated optoelectronics;monitoring;smart pixels;test equipment;PGA chip carrier;compact low-cost high-performance test fixture;electrical test;high-speed electrical signal monitoring;smart pixel IC packaging;smart pixel integrated circuit control;smart pixel integrated circuit testing;Circuit testing;Clocks;EPROM;Electronics packaging;Field programmable gate arrays;Fixtures;Hardware design languages;Integrated circuit testing;Smart pixels;Sockets");
-		$('#paper_abtract').text("The Internet Engineering Task Force (IETF) has introduced IPv6 with a mission to meet the growing demands of the future Internet. IPv6 is more and more emphasized and moving from the pilot phase to the practical application. In the process of deploying IPv6, performance is one of the key issues to be considered. Test is an effective method to understand IPv6 network performance. We need scalable and available tools to measure IPv6 network performance, but the few existing network performance test software support IPv6. So through the introduction of multi-agent technology, a distributed IPv6 network performance test model integrated with centralized control is proposed. We describe architecture and workflow of the model thoroughly, and a IPv6 network performance test system is designed and implemented based on the model. Finally, using our system, we measure IPv6 performance metrics on CERNET2 which is the largest pure IPv6 network in the world presently. The final experiments show that it is necessary to implement a IPv6 network performance test system and that our system is scalable and available for IPv6 network performance tes");
+		$('#paper_keywords').text("field programmable gate arrays;integrated circuit packaging;integrated circuit testing" +
+			";integrated optoelectronics;monitoring;smart pixels;test equipment;PGA chip carrier;compact low-cost high-performance" +
+			" test fixture;electrical test;high-speed electrical signal monitoring;smart pixel IC packaging;smart pixel integrated " +
+			"circuit control;smart pixel integrated circuit testing;Circuit testing;Clocks;EPROM;Electronics packaging;Field " +
+			"programmable gate arrays;Fixtures;Hardware design languages;Integrated circuit testing;Smart pixels;Sockets");
+		$('#paper_abtract').text("The Internet Engineering Task Force (IETF) has introduced IPv6 with a mission to meet the " +
+			"growing demands of the future Internet. IPv6 is more and more emphasized and moving from the pilot phase to the " +
+			"practical application. In the process of deploying IPv6, performance is one of the key issues to be considered. " +
+			"Test is an effective method to understand IPv6 network performance. We need scalable and available tools to measure " +
+			"IPv6 network performance, but the few existing network performance test software support IPv6. So through the" +
+			" introduction of multi-agent technology, a distributed IPv6 network performance test model integrated with " +
+			"centralized control is proposed. We describe architecture and workflow of the model thoroughly, and a IPv6 " +
+			"network performance test system is designed and implemented based on the model. Finally, using our system, " +
+			"we measure IPv6 performance metrics on CERNET2 which is the largest pure IPv6 network in the world presently. " +
+			"The final experiments show that it is necessary to implement a IPv6 network performance test system and that" +
+			" our system is scalable and available for IPv6 network performance tes");
 		$('#row_criteria').hide();
 		$('#row_extraction').hide();
 		$('#modalPaper').modal('show');
@@ -164,8 +191,24 @@ $(document).ready(function () {
 		$('#paper_author').text("F. Kiamilev and R. Rozier and J. Rieve");
 		$('#paper_year').text(rowData[0][2]);
 		$('#paper_database').text("IEEE");
-		$('#paper_keywords').text("field programmable gate arrays;integrated circuit packaging;integrated circuit testing;integrated optoelectronics;monitoring;smart pixels;test equipment;PGA chip carrier;compact low-cost high-performance test fixture;electrical test;high-speed electrical signal monitoring;smart pixel IC packaging;smart pixel integrated circuit control;smart pixel integrated circuit testing;Circuit testing;Clocks;EPROM;Electronics packaging;Field programmable gate arrays;Fixtures;Hardware design languages;Integrated circuit testing;Smart pixels;Sockets");
-		$('#paper_abtract').text("The Internet Engineering Task Force (IETF) has introduced IPv6 with a mission to meet the growing demands of the future Internet. IPv6 is more and more emphasized and moving from the pilot phase to the practical application. In the process of deploying IPv6, performance is one of the key issues to be considered. Test is an effective method to understand IPv6 network performance. We need scalable and available tools to measure IPv6 network performance, but the few existing network performance test software support IPv6. So through the introduction of multi-agent technology, a distributed IPv6 network performance test model integrated with centralized control is proposed. We describe architecture and workflow of the model thoroughly, and a IPv6 network performance test system is designed and implemented based on the model. Finally, using our system, we measure IPv6 performance metrics on CERNET2 which is the largest pure IPv6 network in the world presently. The final experiments show that it is necessary to implement a IPv6 network performance test system and that our system is scalable and available for IPv6 network performance tes");
+		$('#paper_keywords').text("field programmable gate arrays;integrated circuit packaging;integrated circuit " +
+			"testing;integrated optoelectronics;monitoring;smart pixels;test equipment;PGA chip carrier;compact " +
+			"low-cost high-performance test fixture;electrical test;high-speed electrical signal monitoring;smart " +
+			"pixel IC packaging;smart pixel integrated circuit control;smart pixel integrated circuit testing;Circuit" +
+			" testing;Clocks;EPROM;Electronics packaging;Field programmable gate arrays;Fixtures;Hardware design " +
+			"languages;Integrated circuit testing;Smart pixels;Sockets");
+		$('#paper_abtract').text("The Internet Engineering Task Force (IETF) has introduced IPv6 with a mission" +
+			" to meet the growing demands of the future Internet. IPv6 is more and more emphasized and moving" +
+			" from the pilot phase to the practical application. In the process of deploying IPv6, performance" +
+			" is one of the key issues to be considered. Test is an effective method to understand IPv6 network " +
+			"performance. We need scalable and available tools to measure IPv6 network performance, but the few " +
+			"existing network performance test software support IPv6. So through the introduction of multi-agent" +
+			" technology, a distributed IPv6 network performance test model integrated with centralized control " +
+			"is proposed. We describe architecture and workflow of the model thoroughly, and a IPv6 network performance" +
+			" test system is designed and implemented based on the model. Finally, using our system, we measure" +
+			" IPv6 performance metrics on CERNET2 which is the largest pure IPv6 network in the world presently. " +
+			"The final experiments show that it is necessary to implement a IPv6 network performance test system and " +
+			"that our system is scalable and available for IPv6 network performance tes");
 		$('#row_criteria').hide();
 		$('#row_quality').hide();
 		$('#modalPaper').modal('show');
