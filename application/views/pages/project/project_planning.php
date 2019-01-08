@@ -20,13 +20,14 @@
 				<a data-toggle="pill" class="nav-link" href="#tab_databases">Data Bases</a>
 			</li>
 			<li class="nav-item">
-				<a data-toggle="pill" class="nav-link" href="#tab_search_string" onclick="showString();">Search String</a>
+				<a data-toggle="pill" class="nav-link" href="#tab_search_string" onclick="showString();">Search
+					String</a>
 			</li>
 			<li class="nav-item">
-				<a data-toggle="pill" class="nav-link" href="#tabsearchstrategy">Search Strategy</a>
+				<a data-toggle="pill" class="nav-link" href="#tab_search_strategy">Search Strategy</a>
 			</li>
 			<li class="nav-item">
-				<a data-toggle="pill" class="nav-link" href="#tabcriteria">Criteria</a>
+				<a data-toggle="pill" class="nav-link" href="#tab_criteria">Criteria</a>
 			</li>
 			<li class="nav-item">
 				<a data-toggle="pill" class="nav-link" href="#tabquality">Quality Assessment</a>
@@ -67,7 +68,6 @@
 					<label for="language"><strong>Select languages</strong></label>
 					<div class="input-group">
 						<select class="form-control" id="language">
-							<option></option>
 							<option>English</option>
 							<option>Portuguese</option>
 							<option>Spanish</option>
@@ -97,7 +97,6 @@
 					<label for="study_type"><strong>Select study type</strong></label>
 					<div class="input-group">
 						<select class="form-control" id="study_type">
-							<option></option>
 							<option>All types</option>
 							<option>Article in Press</option>
 							<option>Article</option>
@@ -167,7 +166,9 @@
 			</div>
 		</div>
 		<div class="tab-pane container" id="tab_research">
-			<label for="research_question" class="container"><strong>Research Questions</strong></label>
+			<div class="row">
+				<label for="research_question" class="container"><strong>Research Questions</strong></label>
+			</div>
 			<div class="form-inline">
 				<label for="id_research_question" class="col-sm-12 col-md-1">ID</label>
 				<label for="description_research_question" class="col-sm-12 col-md-6">Description</label>
@@ -191,7 +192,7 @@
 				<tr>
 					<th>ID</th>
 					<th>Research Question</th>
-					<th>Delete</th>
+					<th>Actions</th>
 				</tr>
 				</thead>
 				<tbody>
@@ -207,7 +208,6 @@
 			<label for="databases"><strong>Data Bases</strong></label>
 			<div class="input-group col-md-3">
 				<select class="form-control" id="databases">
-					<option></option>
 					<option>Scopus</option>
 					<option>ACM</option>
 					<option>IEEE</option>
@@ -236,7 +236,8 @@
 			<br>
 			<div class="form-inline container justify-content-between">
 				<a href="#tab_research" class="btn btn-secondary"><span class="fas fa-backward"></span> Previous</a>
-				<a href="#tab_search_string" onclick="showString();" class="btn btn-secondary">Next <span class="fas fa-forward"></span></a>
+				<a href="#tab_search_string" onclick="showString();" class="btn btn-secondary">Next <span
+						class="fas fa-forward"></span></a>
 			</div>
 		</div>
 		<div class="tab-pane container" id="tab_search_string">
@@ -272,7 +273,7 @@
 				<tr>
 					<th>Term</th>
 					<th>Synonyms</th>
-					<th>Delete</th>
+					<th>Actions</th>
 				</tr>
 				</thead>
 				<tbody>
@@ -330,16 +331,17 @@
 			</div>
 
 			<div class="form-inline container justify-content-between">
-				<a class="btn btn-secondary"><span class="fas fa-backward"></span> Previous</a>
-				<a class="btn btn-secondary opt">Next <span class="fas fa-forward"></span></a>
+				<a href="#tab_databases" class="btn btn-secondary"><span class="fas fa-backward"></span> Previous</a>
+				<a href="#tab_search_strategy" class="btn btn-secondary opt">Next <span
+						class="fas fa-forward"></span></a>
 			</div>
 		</div>
-		<div class="tab-pane container" id="tabsearchstrategy">
+		<div class="tab-pane container" id="tab_search_strategy">
 			<label for="search_strategy"><strong>Search Strategy</strong></label>
 			<textarea rows="8" class="form-control" id="search_strategy"></textarea>
 		</div>
-		<div class="tab-pane container" id="tabcriteria">
-			<label for="databases" class="container"><strong>Criteria</strong></label>
+		<div class="tab-pane container" id="tab_criteria">
+			<label for="databases"><strong>Criteria</strong></label>
 			<div class="form-inline">
 				<label for="rule_inclusion" class="col-sm-12 col-md-2">Inclusion Rule</label>
 				<label for="rule_exclusion" class="col-sm-12 col-md-2">Exclusion Rule</label>

@@ -352,7 +352,62 @@ function add_research_question() {
 	let description = $("#description_research_question");
 	let id = $("#id_research_question");
 
-	if (!id[0].value) {
+	if(!validate_research(id[0].value, description[0].value)){
+		return false;
+	}
+
+	table_research_question.row.add([id[0].value,
+		description[0].value,
+		'<button class="btn btn-warning opt" onClick="modal_research_question($(this).parents(\'tr\'));"><span class="fas fa-edit"></span></button>' +
+		'<button class="btn btn-danger" onClick="delete_research_question($(this).parents(\'tr\'));"><span class="far fa-trash-alt"></span></button>'
+	]).draw();
+
+	description[0].value = "";
+	id[0].value = "";
+
+}
+
+function modal_research_question(value) {
+	let row = table_research_question.row(value);
+	$('#modal_research #index_research').val(row.index());
+	$('#modal_research #edit_research_id').val(row.data()[0]);
+	$('#modal_research #edit_research_question').val(row.data()[1]);
+	$('#modal_research').modal('show');
+}
+
+function edit_research() {
+	let index = $('#modal_research #index_research').val();
+	let id = $('#modal_research #edit_research_id').val();
+	let question = $('#modal_research #edit_research_question').val();
+
+	if(!validate_research(id,question)){
+		return false;
+	}
+
+	let row = table_research_question.row(index);
+	row.remove();
+	table_research_question.row.add([
+		id,
+		question,
+		'<button class="btn btn-warning opt" onClick="modal_research_question($(this).parents(\'tr\'));"><span class="fas fa-edit"></span></button>' +
+		'<button class="btn btn-danger" onClick="delete_research_question($(this).parents(\'tr\'));"><span class="far fa-trash-alt"></span></button>'
+	]).draw();
+
+	Swal({
+		title: 'Success',
+		text: "The research question was edited",
+		type: 'success',
+		showCancelButton: false,
+		confirmButtonText: 'Ok'
+	}).then((result) => {
+		if (result.value) {
+			$('#modal_research').modal('hide');
+		}
+	});
+}
+
+function validate_research(id,description) {
+	if (!id) {
 		swal({
 			type: 'warning',
 			title: 'Warning',
@@ -361,48 +416,39 @@ function add_research_question() {
 		return;
 	}
 
-	if (!description[0].value) {
+	if (!description) {
 		swal({
 			type: 'warning',
 			title: 'Warning',
 			text: 'The description of research question can not be empty!'
 		});
-		return;
+		return false;
 	}
 
 	let data = table_research_question.rows().data().toArray();
 
 	for (let i = 0; i < data.length; i++) {
-		if (id[0].value.toLowerCase().trim() == data[i][0].toLowerCase().trim()) {
+		if (id.toLowerCase().trim() == data[i][0].toLowerCase().trim()) {
 			swal({
 				type: 'warning',
 				title: 'Warning',
 				text: 'The ID of research question has already been registered!'
 			});
-			return;
+			return false;
 		}
 	}
 	for (let i = 0; i < data.length; i++) {
-		if (description[0].value.toLowerCase().trim() == data[i][1].toLowerCase().trim()) {
+		if (description.toLowerCase().trim() == data[i][1].toLowerCase().trim()) {
 			swal({
 				type: 'warning',
 				title: 'Warning',
 				text: 'The description of research question has already been registered!'
 			});
-			return;
+			return false;
 		}
 	}
 
-
-	table_research_question.row.add([id[0].value,
-		description[0].value,
-		'<button class="btn btn-warning opt" onClick=""><span class="fas fa-edit"></span></button>' +
-		'<button class="btn btn-danger" onClick="delete_research_question($(this).parents(\'tr\'));"><span class="far fa-trash-alt"></span></button>'
-	]).draw();
-
-	description[0].value = "";
-	id[0].value = "";
-
+	return true;
 }
 
 function delete_research_question(value) {
@@ -439,7 +485,6 @@ function add_database() {
 
 	table_databases.row.add([
 		databases[0].value,
-		'<button class="btn btn-warning opt" onClick=""><span class="fas fa-edit"></span></button>' +
 		'<button class="btn btn-danger" onClick="delete_database($(this).parents(\'tr\'));"><span class="far fa-trash-alt"></span></button>'
 	]).draw();
 
@@ -455,35 +500,17 @@ function delete_database(value) {
 function add_term() {
 	let term = $("#term");
 
-	if (!term[0].value) {
-		swal({
-			type: 'warning',
-			title: 'Warning',
-			text: 'The term can not be empty!'
-		});
-		return;
-	}
-
-	let data = table_search_string.rows().data().toArray();
-
-	for (let i = 0; i < data.length; i++) {
-		if (term[0].value.toLowerCase().trim() == data[i][0].toLowerCase().trim()) {
-			swal({
-				type: 'warning',
-				title: 'Warning',
-				text: 'The term has already been registered!'
-			});
-			return;
-		}
+	if(!validate_term(term[0].value)){
+		return false;
 	}
 
 	table_search_string.row.add([
 		term[0].value, '' +
 		'<table id="table_' + term[0].value + '" class="table">' +
 		'<th>Synonym</th>' +
-		'<th>Delete</th>' +
+		'<th>Actions</th>' +
 		'</table>',
-		'<button class="btn btn-warning opt" onClick=""><span class="fas fa-edit"></span></button>' +
+		'<button class="btn btn-warning opt" onClick="modal_term($(this).parents(\'tr\'))"><span class="fas fa-edit"></span></button>' +
 		'<button class="btn btn-danger" onClick="delete_term($(this).parents(\'tr\'));"><span class="far fa-trash-alt"></span></button>'
 	]).draw();
 
@@ -492,6 +519,80 @@ function add_term() {
 	option.text = term[0].value;
 	x.add(option);
 	term[0].value = "";
+}
+
+function modal_term(value) {
+	let row = table_search_string.row(value);
+	$('#modal_term #index_term').val(row.index());
+	$('#modal_term #edit_term').val(row.data()[0]);
+	$('#modal_term').modal('show');
+}
+
+function edit_term() {
+	let index = $('#modal_term #index_term').val();
+	let term = $('#modal_term #edit_term').val();
+
+	if(!validate_term(term)) {
+		return false;
+	}
+
+	let row = table_search_string.row(index);
+	let data = table_search_string.row(index).data();
+	let id = "table_" + data[0];
+	let table_syn = document.getElementById(id);
+	id = "table_"+term;
+	table_syn.id = id;
+	row.remove();
+
+	let x = document.getElementById("list_term");
+	let option = document.createElement("option");
+	option.text = term;
+	x.remove(index);
+	x.add(option);
+
+	table_search_string.row.add([
+		term,
+		table_syn.outerHTML ,
+		'<button class="btn btn-warning opt" onClick="modal_term($(this).parents(\'tr\'));"><span class="fas fa-edit"></span></button>' +
+		'<button class="btn btn-danger" onClick="delete_term($(this).parents(\'tr\'));"><span class="far fa-trash-alt"></span></button>'
+	]).draw();
+
+	Swal({
+		title: 'Success',
+		text: "The term was edited",
+		type: 'success',
+		showCancelButton: false,
+		confirmButtonText: 'Ok'
+	}).then((result) => {
+		if (result.value) {
+			$('#modal_term').modal('hide');
+		}
+	});
+}
+
+function validate_term(term) {
+	if (!term) {
+		swal({
+			type: 'warning',
+			title: 'Warning',
+			text: 'The term can not be empty!'
+		});
+		return false;
+	}
+
+	let data = table_search_string.rows().data().toArray();
+
+	for (let i = 0; i < data.length; i++) {
+		if (term.toLowerCase().trim() == data[i][0].toLowerCase().trim()) {
+			swal({
+				type: 'warning',
+				title: 'Warning',
+				text: 'The term has already been registered!'
+			});
+			return false;
+		}
+	}
+	return true;
 }
 
 function delete_term(value) {
@@ -509,37 +610,9 @@ function add_synonym() {
 	let syn = $("#synonym");
 	let id = "table_" + term[0].value;
 
-	if (!term[0].value) {
-		swal({
-			type: 'warning',
-			title: 'Warning',
-			text: 'The term can not be empty!'
-		});
-		return;
+	if(!validate_synonym(term[0].value,syn[0].value,id)){
+		return false;
 	}
-
-	if (!syn[0].value) {
-		swal({
-			type: 'warning',
-			title: 'Warning',
-			text: 'The synonymous can not be empty!'
-		});
-		return;
-	}
-
-	let size = document.getElementById(id).rows.length;
-	let rows = document.getElementById(id).rows;
-	for (let i = 0; i < size; i++) {
-		if (syn[0].value.toLowerCase().trim() == rows[i].cells.item(0).innerHTML.toLowerCase().trim()) {
-			swal({
-				type: 'warning',
-				title: 'Warning',
-				text: 'The synonym has already been registered!'
-			});
-			return;
-		}
-	}
-
 
 	let table_syn = document.getElementById(id);
 	let row = table_syn.insertRow();
@@ -548,6 +621,40 @@ function add_synonym() {
 	cell1.innerHTML = syn[0].value;
 	cell2.innerHTML = '<button class="btn btn-warning opt" onClick=""><span class="fas fa-edit"></span></button><button class="btn btn-danger" onClick="delete_synonym(this)"><span class="far fa-trash-alt"></span></button>';
 	syn[0].value = "";
+}
+
+function validate_synonym(term,syn,id) {
+	if (!term) {
+		swal({
+			type: 'warning',
+			title: 'Warning',
+			text: 'The term can not be empty!'
+		});
+		return false;
+	}
+
+	if (!syn) {
+		swal({
+			type: 'warning',
+			title: 'Warning',
+			text: 'The synonymous can not be empty!'
+		});
+		return false;
+	}
+
+	let size = document.getElementById(id).rows.length;
+	let rows = document.getElementById(id).rows;
+	for (let i = 0; i < size; i++) {
+		if (syn.toLowerCase().trim() == rows[i].cells.item(0).innerHTML.toLowerCase().trim()) {
+			swal({
+				type: 'warning',
+				title: 'Warning',
+				text: 'The synonym has already been registered!'
+			});
+			return false;
+		}
+	}
+	return true;
 }
 
 function delete_synonym(btn) {
