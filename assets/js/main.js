@@ -33,9 +33,9 @@ $(document).ready(function () {
 	 table_keywords = $('#table_keywords').DataTable(configDataTables);
 	 table_research_question = $('#table_research_question').DataTable(configDataTables);
 	 table_databases = $('#table_databases').DataTable(configDataTables);
-	table_search_string = $('#table_search_string').DataTable(configDataTables);
+	 table_search_string = $('#table_search_string').DataTable(configDataTables);
+	 table_criteria = $('#table_criteria').DataTable(configDataTables);
 
-	$('#table_criteria').DataTable(configDataTables);
 	$('#table_qa').DataTable(configDataTables);
 	$('#table_question_quality').DataTable(configDataTables);
 	$('#table_data_extraction').DataTable(configDataTables);

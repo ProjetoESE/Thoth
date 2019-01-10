@@ -7,6 +7,47 @@
 	</div>
 </footer>
 
+<div class="modal fade" id="modal_criteria" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="modalTitle">Edit Criteria</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<input type="hidden" id="index_term">
+				<div class="form-inline">
+					<label for="edit_id_criteria" class="col-sm-12 col-md-2">ID</label>
+					<label for="check_type" class="col-sm-12 col-md-6">Type</label>
+				</div>
+				<div class="form-inline">
+					<input type="text" id="edit_id_criteria" placeholder="ID" class="form-control col-sm-12 col-md-2 opt">
+					<div class="input-group-text" id="check_type">
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" id="edit_inclusion" value="Inclusion">
+							<label class="form-check-label" for="edit_inclusion">Inclusion</label>
+						</div>
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" id="edit_exclusion" value="Exclusion">
+							<label class="form-check-label" for="edit_exclusion">Exclusion</label>
+						</div>
+					</div>
+				</div>
+
+				<label for="edit_description_criteria" class="col-sm-12 col-md-6">Description</label>
+				<input type="text" id="edit_description_criteria" placeholder="Description" class="form-control">
+
+			</div>
+			<div class="modal-footer">
+				<a class="btn btn-danger" data-dismiss="modal">Cancel</a>
+				<a class="btn btn-success" onclick="edit_criteria()">Save</a>
+			</div>
+		</div>
+	</div>
+</div>
+
 <div class="modal fade" id="modal_term" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
@@ -18,6 +59,7 @@
 			</div>
 			<div class="modal-body">
 				<input type="hidden" id="index_term">
+				<label for="edit_term" class="col-sm-12 col-md-2">Term</label>
 				<div class="form-inline">
 					<input type="text" id="edit_term" class="form-control col-sm-12 col-md-12">
 				</div>
@@ -41,6 +83,10 @@
 			</div>
 			<div class="modal-body">
 				<input type="hidden" id="index_research">
+				<div class="form-inline">
+					<label for="edit_research_id" class="col-md-2">ID</label>
+					<label for="edit_research_question" class="col-md-10">Description</label>
+				</div>
 				<div class="form-inline">
 					<input type="text" id="edit_research_id" class="form-control col-sm-12 col-md-2">
 					<div class="input-group col-md-10 col-sm-12">
@@ -68,6 +114,7 @@
 			</div>
 			<div class="modal-body">
 				<input type="hidden" id="index_keyword">
+				<label for="edit_keyword">Keyword</label>
 				<input type="text" class="form-control" id="edit_keyword">
 			</div>
 			<div class="modal-footer">
@@ -89,6 +136,7 @@
 			</div>
 			<div class="modal-body">
 				<input type="hidden" id="index_domain">
+				<label for="edit_domain">Domain</label>
 				<input type="text" class="form-control" id="edit_domain">
 			</div>
 			<div class="modal-footer">

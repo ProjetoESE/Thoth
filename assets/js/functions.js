@@ -5,35 +5,51 @@ function done_paper() {
 function generateString(database) {
 	switch (database) {
 		case 0:
-			$('#string_generic').text("(\"Performance Test\" \"Load Test\" \"Stress Test\" \"Soak Test\" \"Spike Test\" \"Workload Test\" \"Automation Test\") AND (Tool Generator Injector Monitor Analyzer Framework Suite Environment Plug*in) AND (Software Application System) AND (Teste-Teste)\n" +
+			$('#string_generic').text("(\"Performance Test\" \"Load Test\" \"Stress Test\" \"Soak Test\" \"Spike Test\" " +
+				"\"Workload Test\" \"Automation Test\") AND (Tool Generator Injector Monitor Analyzer " +
+				"Framework Suite Environment Plug*in) AND (Software Application System) AND (Teste-Teste)\n" +
 				"\n");
 			break;
 		case 1:
-			$('#string_scopus').text("(\"Performance Test\" \"Load Test\" \"Stress Test\" \"Soak Test\" \"Spike Test\" \"Workload Test\" \"Automation Test\") AND (Tool Generator Injector Monitor Analyzer Framework Suite Environment Plug*in) AND (Software Application System) AND (Teste-Teste)\n" +
+			$('#string_scopus').text("(\"Performance Test\" \"Load Test\" \"Stress Test\" \"Soak Test\" \"Spike Test\"" +
+				" \"Workload Test\" \"Automation Test\") AND (Tool Generator Injector Monitor Analyzer Framework Suite" +
+				" Environment Plug*in) AND (Software Application System) AND (Teste-Teste)\n" +
 				"\n");
 			break;
 		case 2:
-			$('#string_acm').text("(\"Performance Test\" \"Load Test\" \"Stress Test\" \"Soak Test\" \"Spike Test\" \"Workload Test\" \"Automation Test\") AND (Tool Generator Injector Monitor Analyzer Framework Suite Environment Plug*in) AND (Software Application System) AND (Teste-Teste)\n" +
+			$('#string_acm').text("(\"Performance Test\" \"Load Test\" \"Stress Test\" \"Soak Test\" \"Spike Test\" " +
+				"\"Workload Test\" \"Automation Test\") AND (Tool Generator Injector Monitor Analyzer Framework Suite" +
+				" Environment Plug*in) AND (Software Application System) AND (Teste-Teste)\n" +
 				"\n");
 			break;
 		case 3:
-			$('#string_ieee').text("(\"Performance Test\" \"Load Test\" \"Stress Test\" \"Soak Test\" \"Spike Test\" \"Workload Test\" \"Automation Test\") AND (Tool Generator Injector Monitor Analyzer Framework Suite Environment Plug*in) AND (Software Application System) AND (Teste-Teste)\n" +
+			$('#string_ieee').text("(\"Performance Test\" \"Load Test\" \"Stress Test\" \"Soak Test\" \"Spike Test\" " +
+				"\"Workload Test\" \"Automation Test\") AND (Tool Generator Injector Monitor Analyzer Framework Suite" +
+				" Environment Plug*in) AND (Software Application System) AND (Teste-Teste)\n" +
 				"\n");
 			break;
 		case 4:
-			$('#string_science').text("(\"Performance Test\" \"Load Test\" \"Stress Test\" \"Soak Test\" \"Spike Test\" \"Workload Test\" \"Automation Test\") AND (Tool Generator Injector Monitor Analyzer Framework Suite Environment Plug*in) AND (Software Application System) AND (Teste-Teste)\n" +
+			$('#string_science').text("(\"Performance Test\" \"Load Test\" \"Stress Test\" \"Soak Test\" \"Spike Test\" " +
+				"\"Workload Test\" \"Automation Test\") AND (Tool Generator Injector Monitor Analyzer Framework Suite" +
+				" Environment Plug*in) AND (Software Application System) AND (Teste-Teste)\n" +
 				"\n");
 			break;
 		case 5:
-			$('#string_enginnering').text("(\"Performance Test\" \"Load Test\" \"Stress Test\" \"Soak Test\" \"Spike Test\" \"Workload Test\" \"Automation Test\") AND (Tool Generator Injector Monitor Analyzer Framework Suite Environment Plug*in) AND (Software Application System) AND (Teste-Teste)\n" +
+			$('#string_enginnering').text("(\"Performance Test\" \"Load Test\" \"Stress Test\" \"Soak Test\"" +
+				" \"Spike Test\" \"Workload Test\" \"Automation Test\") AND (Tool Generator Injector Monitor " +
+				"Analyzer Framework Suite Environment Plug*in) AND (Software Application System) AND (Teste-Teste)\n" +
 				"\n");
 			break;
 		case 6:
-			$('#string_springer').text("(\"Performance Test\" \"Load Test\" \"Stress Test\" \"Soak Test\" \"Spike Test\" \"Workload Test\" \"Automation Test\") AND (Tool Generator Injector Monitor Analyzer Framework Suite Environment Plug*in) AND (Software Application System) AND (Teste-Teste)\n" +
+			$('#string_springer').text("(\"Performance Test\" \"Load Test\" \"Stress Test\" \"Soak Test\" " +
+				"\"Spike Test\" \"Workload Test\" \"Automation Test\") AND (Tool Generator Injector Monitor " +
+				"Analyzer Framework Suite Environment Plug*in) AND (Software Application System) AND (Teste-Teste)\n" +
 				"\n");
 			break;
 		case 7:
-			$('#string_google').text("(\"Performance Test\" \"Load Test\" \"Stress Test\" \"Soak Test\" \"Spike Test\" \"Workload Test\" \"Automation Test\") AND (Tool Generator Injector Monitor Analyzer Framework Suite Environment Plug*in) AND (Software Application System) AND (Teste-Teste)\n" +
+			$('#string_google').text("(\"Performance Test\" \"Load Test\" \"Stress Test\" \"Soak Test\" \"Spike Test\"" +
+				" \"Workload Test\" \"Automation Test\") AND (Tool Generator Injector Monitor Analyzer Framework Suite " +
+				"Environment Plug*in) AND (Software Application System) AND (Teste-Teste)\n" +
 				"\n");
 			break;
 	}
@@ -86,14 +102,18 @@ $(window).on("popstate", function () {
 function add_domain() {
 	let domain = $("#domain");
 
-	if(!validate_domain(domain[0].value)){
+	if (!validate_domain(domain[0].value)) {
 		return;
 	}
 
 	table_domains.row.add([
 		domain[0].value,
-		'<button class="btn btn-warning opt" onClick="modal_domain($(this).parents(\'tr\'));"><span class="fas fa-edit"></span></button>' +
-		'<button class="btn btn-danger" onClick="delete_domain($(this).parents(\'tr\'));"><span class="far fa-trash-alt"></span></button>'
+		'<button class="btn btn-warning opt" onClick="modal_domain($(this).parents(\'tr\'));">' +
+		'<span class="fas fa-edit"></span>' +
+		'</button>' +
+		'<button class="btn btn-danger" onClick="delete_domain($(this).parents(\'tr\'));">' +
+		'<span class="far fa-trash-alt"></span>' +
+		'</button>'
 	]).draw();
 
 	domain[0].value = "";
@@ -117,7 +137,7 @@ function edit_domain() {
 	let index = $('#modal_domain #index_domain').val();
 	let domain = $('#modal_domain #edit_domain').val();
 
-	if(!validate_domain(domain)){
+	if (!validate_domain(domain)) {
 		return false;
 	}
 
@@ -125,8 +145,12 @@ function edit_domain() {
 	row.remove();
 	table_domains.row.add([
 		domain,
-		'<button class="btn btn-warning opt" onClick="modal_domain($(this).parents(\'tr\'));"><span class="fas fa-edit"></span></button>' +
-		'<button class="btn btn-danger" onClick="delete_domain($(this).parents(\'tr\'));"><span class="far fa-trash-alt"></span></button>'
+		'<button class="btn btn-warning opt" onClick="modal_domain($(this).parents(\'tr\'));">' +
+		'<span class="fas fa-edit"></span>' +
+		'</button>' +
+		'<button class="btn btn-danger" onClick="delete_domain($(this).parents(\'tr\'));">' +
+		'<span class="far fa-trash-alt"></span>' +
+		'</button>'
 	]).draw();
 
 	Swal({
@@ -142,7 +166,7 @@ function edit_domain() {
 	});
 }
 
-function validate_domain(domain){
+function validate_domain(domain) {
 	if (!domain) {
 		swal({
 			type: 'warning',
@@ -170,13 +194,15 @@ function validate_domain(domain){
 function add_language() {
 	let language = $("#language");
 
-	if(!validate_language(language[0].value)){
+	if (!validate_language(language[0].value)) {
 		return false;
 	}
 
 	table_languages.row.add([
 		language[0].value,
-		'<button class="btn btn-danger" onClick="delete_language($(this).parents(\'tr\'));"><span class="far fa-trash-alt"></span></button>'
+		'<button class="btn btn-danger" onClick="delete_language($(this).parents(\'tr\'));">' +
+		'<span class="far fa-trash-alt"></span>' +
+		'</button>'
 	]).draw();
 
 	language[0].value = "";
@@ -218,13 +244,15 @@ function delete_language(value) {
 function add_study_type() {
 	let study_type = $("#study_type");
 
-	if(!validate_study_type(study_type[0].value)){
+	if (!validate_study_type(study_type[0].value)) {
 		return false;
 	}
 
 	table_study_type.row.add([
 		study_type[0].value,
-		'<button class="btn btn-danger" onClick="delete_study_type($(this).parents(\'tr\'));"><span class="far fa-trash-alt"></span></button>'
+		'<button class="btn btn-danger" onClick="delete_study_type($(this).parents(\'tr\'));">' +
+		'<span class="far fa-trash-alt"></span>' +
+		'</button>'
 	]).draw();
 
 	study_type[0].value = "";
@@ -266,14 +294,18 @@ function delete_study_type(value) {
 function add_keywords() {
 	let keywords = $("#keywords");
 
-	if(!validate_keywords(keywords[0].value)){
+	if (!validate_keywords(keywords[0].value)) {
 		return false;
 	}
 
 	table_keywords.row.add([
 		keywords[0].value,
-		'<button class="btn btn-warning opt" onClick="modal_keywords($(this).parents(\'tr\'));"><span class="fas fa-edit"></span></button>' +
-		'<button class="btn btn-danger" onClick="delete_keywords($(this).parents(\'tr\'));"><span class="far fa-trash-alt"></span></button>'
+		'<button class="btn btn-warning opt" onClick="modal_keywords($(this).parents(\'tr\'));">' +
+		'<span class="fas fa-edit"></span>' +
+		'</button>' +
+		'<button class="btn btn-danger" onClick="delete_keywords($(this).parents(\'tr\'));">' +
+		'<span class="far fa-trash-alt"></span>' +
+		'</button>'
 	]).draw();
 
 	keywords[0].value = "";
@@ -292,7 +324,7 @@ function edit_keyword() {
 	let index = $('#modal_keyword #index_keyword').val();
 	let keyword = $('#modal_keyword #edit_keyword').val();
 
-	if(!validate_keywords(keyword)){
+	if (!validate_keywords(keyword)) {
 		return false;
 	}
 
@@ -300,8 +332,12 @@ function edit_keyword() {
 	row.remove();
 	table_keywords.row.add([
 		keyword,
-		'<button class="btn btn-warning opt" onClick="modal_keywords($(this).parents(\'tr\'));"><span class="fas fa-edit"></span></button>' +
-		'<button class="btn btn-danger" onClick="delete_keywords($(this).parents(\'tr\'));"><span class="far fa-trash-alt"></span></button>'
+		'<button class="btn btn-warning opt" onClick="modal_keywords($(this).parents(\'tr\'));">' +
+		'<span class="fas fa-edit"></span>' +
+		'</button>' +
+		'<button class="btn btn-danger" onClick="delete_keywords($(this).parents(\'tr\'));">' +
+		'<span class="far fa-trash-alt"></span>' +
+		'</button>'
 	]).draw();
 
 	Swal({
@@ -352,14 +388,18 @@ function add_research_question() {
 	let description = $("#description_research_question");
 	let id = $("#id_research_question");
 
-	if(!validate_research(id[0].value, description[0].value)){
+	if (!validate_research(id[0].value, description[0].value)) {
 		return false;
 	}
 
 	table_research_question.row.add([id[0].value,
 		description[0].value,
-		'<button class="btn btn-warning opt" onClick="modal_research_question($(this).parents(\'tr\'));"><span class="fas fa-edit"></span></button>' +
-		'<button class="btn btn-danger" onClick="delete_research_question($(this).parents(\'tr\'));"><span class="far fa-trash-alt"></span></button>'
+		'<button class="btn btn-warning opt" onClick="modal_research_question($(this).parents(\'tr\'));">' +
+		'<span class="fas fa-edit"></span>' +
+		'</button>' +
+		'<button class="btn btn-danger" onClick="delete_research_question($(this).parents(\'tr\'));">' +
+		'<span class="far fa-trash-alt"></span>' +
+		'</button>'
 	]).draw();
 
 	description[0].value = "";
@@ -380,7 +420,7 @@ function edit_research() {
 	let id = $('#modal_research #edit_research_id').val();
 	let question = $('#modal_research #edit_research_question').val();
 
-	if(!validate_research(id,question)){
+	if (!validate_research(id, question)) {
 		return false;
 	}
 
@@ -389,8 +429,12 @@ function edit_research() {
 	table_research_question.row.add([
 		id,
 		question,
-		'<button class="btn btn-warning opt" onClick="modal_research_question($(this).parents(\'tr\'));"><span class="fas fa-edit"></span></button>' +
-		'<button class="btn btn-danger" onClick="delete_research_question($(this).parents(\'tr\'));"><span class="far fa-trash-alt"></span></button>'
+		'<button class="btn btn-warning opt" onClick="modal_research_question($(this).parents(\'tr\'));">' +
+		'<span class="fas fa-edit"></span>' +
+		'</button>' +
+		'<button class="btn btn-danger" onClick="delete_research_question($(this).parents(\'tr\'));">' +
+		'<span class="far fa-trash-alt"></span>' +
+		'</button>'
 	]).draw();
 
 	Swal({
@@ -406,7 +450,7 @@ function edit_research() {
 	});
 }
 
-function validate_research(id,description) {
+function validate_research(id, description) {
 	if (!id) {
 		swal({
 			type: 'warning',
@@ -485,7 +529,9 @@ function add_database() {
 
 	table_databases.row.add([
 		databases[0].value,
-		'<button class="btn btn-danger" onClick="delete_database($(this).parents(\'tr\'));"><span class="far fa-trash-alt"></span></button>'
+		'<button class="btn btn-danger" onClick="delete_database($(this).parents(\'tr\'));">' +
+		'<span class="far fa-trash-alt"></span>' +
+		'</button>'
 	]).draw();
 
 	databases[0].value = "";
@@ -500,7 +546,7 @@ function delete_database(value) {
 function add_term() {
 	let term = $("#term");
 
-	if(!validate_term(term[0].value)){
+	if (!validate_term(term[0].value)) {
 		return false;
 	}
 
@@ -510,8 +556,12 @@ function add_term() {
 		'<th>Synonym</th>' +
 		'<th>Actions</th>' +
 		'</table>',
-		'<button class="btn btn-warning opt" onClick="modal_term($(this).parents(\'tr\'))"><span class="fas fa-edit"></span></button>' +
-		'<button class="btn btn-danger" onClick="delete_term($(this).parents(\'tr\'));"><span class="far fa-trash-alt"></span></button>'
+		'<button class="btn btn-warning opt" onClick="modal_term($(this).parents(\'tr\'))">' +
+		'<span class="fas fa-edit"></span>' +
+		'</button>' +
+		'<button class="btn btn-danger" onClick="delete_term($(this).parents(\'tr\'));">' +
+		'<span class="far fa-trash-alt"></span>' +
+		'</button>'
 	]).draw();
 
 	let x = document.getElementById("list_term");
@@ -532,7 +582,7 @@ function edit_term() {
 	let index = $('#modal_term #index_term').val();
 	let term = $('#modal_term #edit_term').val();
 
-	if(!validate_term(term)) {
+	if (!validate_term(term)) {
 		return false;
 	}
 
@@ -540,7 +590,7 @@ function edit_term() {
 	let data = table_search_string.row(index).data();
 	let id = "table_" + data[0];
 	let table_syn = document.getElementById(id);
-	id = "table_"+term;
+	id = "table_" + term;
 	table_syn.id = id;
 	row.remove();
 
@@ -552,9 +602,13 @@ function edit_term() {
 
 	table_search_string.row.add([
 		term,
-		table_syn.outerHTML ,
-		'<button class="btn btn-warning opt" onClick="modal_term($(this).parents(\'tr\'));"><span class="fas fa-edit"></span></button>' +
-		'<button class="btn btn-danger" onClick="delete_term($(this).parents(\'tr\'));"><span class="far fa-trash-alt"></span></button>'
+		table_syn.outerHTML,
+		'<button class="btn btn-warning opt" onClick="modal_term($(this).parents(\'tr\'));">' +
+		'<span class="fas fa-edit"></span>' +
+		'</button>' +
+		'<button class="btn btn-danger" onClick="delete_term($(this).parents(\'tr\'));">' +
+		'<span class="far fa-trash-alt"></span>' +
+		'</button>'
 	]).draw();
 
 	Swal({
@@ -610,7 +664,7 @@ function add_synonym() {
 	let syn = $("#synonym");
 	let id = "table_" + term[0].value;
 
-	if(!validate_synonym(term[0].value,syn[0].value,id)){
+	if (!validate_synonym(term[0].value, syn[0].value, id)) {
 		return false;
 	}
 
@@ -619,11 +673,16 @@ function add_synonym() {
 	let cell1 = row.insertCell(0);
 	let cell2 = row.insertCell(1);
 	cell1.innerHTML = syn[0].value;
-	cell2.innerHTML = '<button class="btn btn-warning opt" onClick=""><span class="fas fa-edit"></span></button><button class="btn btn-danger" onClick="delete_synonym(this)"><span class="far fa-trash-alt"></span></button>';
+	cell2.innerHTML = '<button class="btn btn-warning opt" onClick="">' +
+		'<span class="fas fa-edit"></span>' +
+		'</button>' +
+		'<button class="btn btn-danger" onClick="delete_synonym(this)">' +
+		'<span class="far fa-trash-alt"></span>' +
+		'</button>';
 	syn[0].value = "";
 }
 
-function validate_synonym(term,syn,id) {
+function validate_synonym(term, syn, id) {
 	if (!term) {
 		swal({
 			type: 'warning',
@@ -660,4 +719,103 @@ function validate_synonym(term,syn,id) {
 function delete_synonym(btn) {
 	let row = btn.parentNode.parentNode;
 	row.parentNode.removeChild(row);
+}
+
+function add_criteria() {
+	let id = $("#id_criteria");
+	let description = $("#description_criteria");
+	let type = $("#check_type input[type='radio']:checked").val();
+
+	if (!validate_criteria(id[0].value, description[0].value, type)) {
+		return false;
+	}
+
+
+	table_criteria.row.add([
+		'<div class="form-check">' +
+		'<input type="checkbox" class="form-check-input">' +
+		'</div>',
+		id[0].value,
+		description[0].value,
+		type,
+		'<button class="btn btn-warning opt" onClick="modal_criteria($(this).parents(\'tr\'))">' +
+		'<span class="fas fa-edit"></span>' +
+		'</button>' +
+		'<button class="btn btn-danger" onClick="delete_criteria($(this).parents(\'tr\'));">' +
+		'<span class="far fa-trash-alt"></span>' +
+		'</button>'
+	]).draw();
+
+	id[0].value = "";
+	description[0].value = "";
+}
+
+function validate_criteria(id, description, type) {
+
+	if (!id) {
+		swal({
+			type: 'warning',
+			title: 'Warning',
+			text: 'The id can not be empty!'
+		});
+		return false;
+	}
+	if (!description) {
+		swal({
+			type: 'warning',
+			title: 'Warning',
+			text: 'The description can not be empty!'
+		});
+		return false;
+	}
+	if (!type) {
+		swal({
+			type: 'warning',
+			title: 'Warning',
+			text: 'The type can not be empty!'
+		});
+		return false;
+	}
+
+	let data = table_criteria.rows().data().toArray();
+
+	for (let i = 0; i < data.length; i++) {
+		if (id.toLowerCase().trim() == data[i][1].toLowerCase().trim()) {
+			swal({
+				type: 'warning',
+				title: 'Warning',
+				text: 'The id has already been registered!'
+			});
+			return false;
+		}
+	}
+
+	for (let i = 0; i < data.length; i++) {
+		if (description.toLowerCase().trim() == data[i][2].toLowerCase().trim()) {
+			swal({
+				type: 'warning',
+				title: 'Warning',
+				text: 'The description has already been registered!'
+			});
+			return false;
+		}
+	}
+
+	return true;
+}
+
+function delete_criteria(value) {
+	let row = table_criteria.row(value);
+	row.remove();
+	table_criteria.draw();
+}
+
+function modal_criteria(value) {
+	let row = table_criteria.row(value);
+	$('#modal_criteria #index_term').val(row.index());
+	$('#modal_criteria').modal('show');
+}
+
+function edit_criteria() {
+
 }

@@ -347,20 +347,16 @@
 				<label for="rule_exclusion" class="col-sm-12 col-md-2">Exclusion Rule</label>
 			</div>
 			<div class="form-inline">
-				<div class="col-md-2">
-					<select class="form-control" id="rule_inclusion">
-						<option value="1">All</option>
-						<option value="2">Any</option>
-						<option value="3">At Least</option>
-					</select>
-				</div>
-				<div class="col-md-2" id="rule_exclusion">
-					<select class="form-control">
-						<option value="1">All</option>
-						<option value="2">Any</option>
-						<option value="3">At Least</option>
-					</select>
-				</div>
+				<select class="form-control col-sm-12 col-md-2 opt" id="rule_inclusion">
+					<option value="1">All</option>
+					<option value="2">Any</option>
+					<option value="3">At Least</option>
+				</select>
+				<select class="form-control col-sm-12 col-md-2 opt" id="rule_exclusion">
+					<option value="1">All</option>
+					<option value="2">Any</option>
+					<option value="3">At Least</option>
+				</select>
 			</div>
 
 			<div class="form-inline">
@@ -372,19 +368,19 @@
 				<div class="input-group col-md-11 col-sm-12">
 					<input type="text" id="description_criteria" placeholder="Description" class="form-control">
 					<div class="input-group-append">
-						<div class="input-group-text">
+						<div class="input-group-text" id="check_type">
 							<div class="form-check form-check-inline">
 								<input class="form-check-input" type="radio" name="inlineRadioOptions"
-									   id="inclusion">
+									   id="inclusion" value="Inclusion">
 								<label class="form-check-label" for="inclusion">Inclusion</label>
 							</div>
 							<div class="form-check form-check-inline">
 								<input class="form-check-input" type="radio" name="inlineRadioOptions"
-									   id="exclusion">
+									   id="exclusion" value="Exclusion">
 								<label class="form-check-label" for="exclusion">Exclusion</label>
 							</div>
 						</div>
-						<button class="btn btn-success" type="button"><span class="fas fa-plus"></span></button>
+						<button class="btn btn-success" type="button" onclick="add_criteria()"><span class="fas fa-plus"></span></button>
 					</div>
 				</div>
 			</div>
@@ -401,42 +397,6 @@
 				</tr>
 				</thead>
 				<tbody>
-				<tr>
-					<td>
-						<div class="form-check">
-							<input type="checkbox" class="form-check-input">
-						</div>
-					</td>
-					<td contenteditable="true">IC2</td>
-					<td contenteditable="true">Description</td>
-					<td>
-						<select class="form-control" id="extractiontype">
-							<option>Inclusion</option>
-							<option>Exclusion</option>
-						</select>
-					</td>
-					<td>
-						<button class="btn btn-danger"><span class="far fa-trash-alt"></span></button>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<div class="form-check">
-							<input type="checkbox" class="form-check-input">
-						</div>
-					</td>
-					<td contenteditable="true">IC2</td>
-					<td contenteditable="true">Description</td>
-					<td>
-						<select class="form-control" id="extractiontype">
-							<option>Inclusion</option>
-							<option>Exclusion</option>
-						</select>
-					</td>
-					<td>
-						<button class="btn btn-danger"><span class="far fa-trash-alt"></span></button>
-					</td>
-				</tr>
 				</tbody>
 			</table>
 			<br>
