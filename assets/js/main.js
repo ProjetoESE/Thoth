@@ -14,27 +14,43 @@ $(document).ready(function () {
 		ordering: false
 	};
 
+	let configCriteria = {}
+
+
 	table_domains = $('#table_domains').DataTable(configDataTables);
+	table_languages = $('#table_languages').DataTable(configDataTables);
+	table_study_type = $('#table_study_type').DataTable(configDataTables);
+	table_keywords = $('#table_keywords').DataTable(configDataTables);
+	table_research_question = $('#table_research_question').DataTable(configDataTables);
+	table_databases = $('#table_databases').DataTable(configDataTables);
+	table_search_string = $('#table_search_string').DataTable(configDataTables);
+	table_criteria = $('#table_criteria').DataTable({
+		initComplete: function () {
+			this.api().columns(3).every(function () {
+				var column = this;
+				var select = $('<select><option value=""></option></select>')
+					.appendTo($(column.footer()).empty())
+					.on('change', function () {
+						var val = $.fn.dataTable.util.escapeRegex(
+							$(this).val()
+						);
 
-	table_domains.on('select', function (e, dt, type, indexes) {
-		var rowData = table_domains.rows(indexes).data().toArray();
-		alertify.prompt( 'Prompt Message', rowData[0][0]
-			, function(evt, value) {
-			alertify.success('You entered: ' + value)
-				rowData[0]=value;
-			}
-			, function() {
-			alertify.error('Cancel')
-		});
+						column
+							.search(val ? '^' + val + '$' : '', true, false)
+							.draw();
+					});
+
+				select.append('<option value="Exclusion">Exclusion</option>')
+				select.append('<option value="Inclusion">Inclusion</option>')
+			});
+		},
+		language: lang,
+		responsive: true,
+		order: [[1, "asc"]],
+		paginate: false,
+		info: false,
+		ordering: false
 	});
-
-	 table_languages = $('#table_languages').DataTable(configDataTables);
-	 table_study_type = $('#table_study_type').DataTable(configDataTables);
-	 table_keywords = $('#table_keywords').DataTable(configDataTables);
-	 table_research_question = $('#table_research_question').DataTable(configDataTables);
-	 table_databases = $('#table_databases').DataTable(configDataTables);
-	 table_search_string = $('#table_search_string').DataTable(configDataTables);
-	 table_criteria = $('#table_criteria').DataTable(configDataTables);
 
 	$('#table_qa').DataTable(configDataTables);
 	$('#table_question_quality').DataTable(configDataTables);

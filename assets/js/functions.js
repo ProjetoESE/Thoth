@@ -726,7 +726,7 @@ function add_criteria() {
 	let description = $("#description_criteria");
 	let type = $("#select_type option:selected").val();
 
-	if (!validate_criteria(id[0].value, description[0].value, type)) {
+	if (!validate_criteria(id[0].value, description[0].value, type,null)) {
 		return false;
 	}
 
@@ -782,30 +782,31 @@ function validate_criteria(id, description, type, index) {
 	}
 
 
-
-
-
 	let data = table_criteria.rows().data().toArray();
 
 	for (let i = 0; i < data.length; i++) {
-		if (id.toLowerCase().trim() == data[i][1].toLowerCase().trim()) {
-			swal({
-				type: 'warning',
-				title: 'Warning',
-				text: 'The id has already been registered!'
-			});
-			return false;
+		if (i != index) {
+			if (id.toLowerCase().trim() == data[i][1].toLowerCase().trim()) {
+				swal({
+					type: 'warning',
+					title: 'Warning',
+					text: 'The ID has already been registered!'
+				});
+				return false;
+			}
 		}
 	}
 
 	for (let i = 0; i < data.length; i++) {
-		if (description.toLowerCase().trim() == data[i][2].toLowerCase().trim()) {
-			swal({
-				type: 'warning',
-				title: 'Warning',
-				text: 'The description has already been registered!'
-			});
-			return false;
+		if (i != index) {
+			if (description.toLowerCase().trim() == data[i][2].toLowerCase().trim()) {
+				swal({
+					type: 'warning',
+					title: 'Warning',
+					text: 'The description has already been registered!'
+				});
+				return false;
+			}
 		}
 	}
 
@@ -833,7 +834,7 @@ function edit_criteria() {
 	let description = $('#modal_criteria #edit_description_criteria').val();
 	let type = $('#edit_select_type option:selected').val();
 
-	if (!validate_criteria(id, description,type,index)) {
+	if (!validate_criteria(id, description, type, index)) {
 		return false;
 	}
 

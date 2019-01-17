@@ -390,6 +390,15 @@
 				</thead>
 				<tbody>
 				</tbody>
+				<tfoot>
+				<tr>
+					<th>Select</th>
+					<th>ID</th>
+					<th>Criteria</th>
+					<th>Type</th>
+					<th>Delete</th>
+				</tr>
+				</tfoot>
 			</table>
 			<br>
 			<div class="form-inline container justify-content-between">
