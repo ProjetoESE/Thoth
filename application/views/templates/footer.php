@@ -19,20 +19,16 @@
 			<div class="modal-body">
 				<input type="hidden" id="index_term">
 				<div class="form-inline">
-					<label for="edit_id_criteria" class="col-sm-12 col-md-2">ID</label>
-					<label for="check_type" class="col-sm-12 col-md-6">Type</label>
+					<label for="edit_id_criteria" class="col-sm-12 col-md-6">ID</label>
+					<label for="edit_select_type" class="col-sm-12 col-md-6">Type</label>
 				</div>
-				<div class="form-inline">
-					<input type="text" id="edit_id_criteria" placeholder="ID" class="form-control col-sm-12 col-md-2 opt">
-					<div class="input-group-text" id="check_type">
-						<div class="form-check form-check-inline">
-							<input class="form-check-input" type="radio" id="edit_inclusion" value="Inclusion">
-							<label class="form-check-label" for="edit_inclusion">Inclusion</label>
-						</div>
-						<div class="form-check form-check-inline">
-							<input class="form-check-input" type="radio" id="edit_exclusion" value="Exclusion">
-							<label class="form-check-label" for="edit_exclusion">Exclusion</label>
-						</div>
+				<div class="input-group col-md-11 col-sm-12">
+					<input type="text" id="edit_id_criteria" placeholder="ID" class="form-control">
+					<div class="input-group-append">
+						<select class="form-control" id="edit_select_type">
+							<option value="Inclusion">Inclusion</option>
+							<option value="Exclusion">Exclusion</option>
+						</select>
 					</div>
 				</div>
 

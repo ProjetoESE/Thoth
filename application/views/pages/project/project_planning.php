@@ -368,18 +368,10 @@
 				<div class="input-group col-md-11 col-sm-12">
 					<input type="text" id="description_criteria" placeholder="Description" class="form-control">
 					<div class="input-group-append">
-						<div class="input-group-text" id="check_type">
-							<div class="form-check form-check-inline">
-								<input class="form-check-input" type="radio" name="inlineRadioOptions"
-									   id="inclusion" value="Inclusion">
-								<label class="form-check-label" for="inclusion">Inclusion</label>
-							</div>
-							<div class="form-check form-check-inline">
-								<input class="form-check-input" type="radio" name="inlineRadioOptions"
-									   id="exclusion" value="Exclusion">
-								<label class="form-check-label" for="exclusion">Exclusion</label>
-							</div>
-						</div>
+						<select class="form-control" id="select_type">
+							<option value="Inclusion">Inclusion</option>
+							<option value="Exclusion">Exclusion</option>
+						</select>
 						<button class="btn btn-success" type="button" onclick="add_criteria()"><span class="fas fa-plus"></span></button>
 					</div>
 				</div>
