@@ -30,10 +30,10 @@
 				<a data-toggle="pill" class="nav-link" href="#tab_criteria">Criteria</a>
 			</li>
 			<li class="nav-item">
-				<a data-toggle="pill" class="nav-link" href="#tabquality">Quality Assessment</a>
+				<a data-toggle="pill" class="nav-link" href="#tab_quality">Quality Assessment</a>
 			</li>
 			<li class="nav-item">
-				<a data-toggle="pill" class="nav-link" href="#tabdata">Data Extraction</a>
+				<a data-toggle="pill" class="nav-link" href="#tab_data">Data Extraction</a>
 			</li>
 		</ul>
 	</div>
@@ -339,6 +339,11 @@
 		<div class="tab-pane container" id="tab_search_strategy">
 			<label for="search_strategy"><strong>Search Strategy</strong></label>
 			<textarea rows="8" class="form-control" id="search_strategy"></textarea>
+			<div class="form-inline container justify-content-between">
+				<a href="#tab_search_string" onclick="showString();" class="btn btn-secondary"><span class="fas fa-backward"></span> Previous</a>
+				<a href="#tab_criteria" class="btn btn-secondary opt">Next <span
+						class="fas fa-forward"></span></a>
+			</div>
 		</div>
 		<div class="tab-pane container" id="tab_criteria">
 			<label for="databases"><strong>Criteria</strong></label>
@@ -402,11 +407,12 @@
 			</table>
 			<br>
 			<div class="form-inline container justify-content-between">
-				<a class="btn btn-secondary"><span class="fas fa-backward"></span> Previous</a>
-				<a class="btn btn-secondary">Next <span class="fas fa-forward"></span></a>
+				<a href="#tab_search_strategy"  class="btn btn-secondary"><span class="fas fa-backward"></span> Previous</a>
+				<a href="#tab_quality" class="btn btn-secondary opt">Next <span
+						class="fas fa-forward"></span></a>
 			</div>
 		</div>
-		<div class="tab-pane container" id="tabquality">
+		<div class="tab-pane container" id="tab_quality">
 			<label for="start_interval"><strong>Quality Assessment</strong></label>
 			<div class="form-inline">
 				<label for="start_interval" class="col-sm-12 col-md-4">General Score Interval</label>
@@ -668,11 +674,12 @@
 			</table>
 			<br>
 			<div class="form-inline container justify-content-between">
-				<a class="btn btn-secondary"><span class="fas fa-backward"></span> Previous</a>
-				<a class="btn btn-secondary">Next <span class="fas fa-forward"></span></a>
+				<a href="#tab_criteria"  class="btn btn-secondary"><span class="fas fa-backward"></span> Previous</a>
+				<a href="#tab_data" class="btn btn-secondary opt">Next <span
+						class="fas fa-forward"></span></a>
 			</div>
 		</div>
-		<div class="tab-pane container" id="tabdata">
+		<div class="tab-pane container" id="tab_data">
 			<label for="id_qa"><strong>Data Extraction</strong></label>
 			<div class="form-inline">
 				<label for="id_qa" class="col-sm-12 col-md-2">ID</label>
@@ -758,8 +765,8 @@
 			</table>
 			<br>
 			<div class="form-inline container justify-content-between">
-				<a class="btn btn-secondary"><span class="fas fa-backward"></span> Previous</a>
-				<a class="btn btn-secondary">Next <span class="fas fa-forward"></span></a>
+				<a href="#tab_quality" class="btn btn-secondary"><span class="fas fa-backward"></span> Previous</a>
+				<a class="btn btn-secondary disabled" >Next <span class="fas fa-forward"></span></a>
 			</div>
 		</div>
 	</div>
