@@ -673,7 +673,7 @@ function add_synonym() {
 	let cell1 = row.insertCell(0);
 	let cell2 = row.insertCell(1);
 	cell1.innerHTML = syn[0].value;
-	cell2.innerHTML = '<button class="btn btn-warning opt" onClick="">' +
+	cell2.innerHTML = '<button class="btn btn-warning opt" onClick="modal_synonym(this)">' +
 		'<span class="fas fa-edit"></span>' +
 		'</button>' +
 		'<button class="btn btn-danger" onClick="delete_synonym(this)">' +
@@ -682,6 +682,16 @@ function add_synonym() {
 	syn[0].value = "";
 }
 
+function modal_synonym(value) {
+	let row = value.parentNode.parentNode;
+	$('#modal_synonym #index_synonym').val($("tr").index(row));
+	$('#modal_synonym #edit_synonym').val(row.innerText);
+	$('#modal_synonym').modal('show');
+}
+
+function edit_synonym() {
+
+}
 function validate_synonym(term, syn, id) {
 	if (!term) {
 		swal({
@@ -866,4 +876,22 @@ function edit_criteria() {
 			$('#modal_criteria').modal('hide');
 		}
 	});
+}
+
+function add_general_quality_score() {
+	let start_interval = $("#start_interval").val();
+	let end_interval = $("#end_interval").val();
+	let general_score_desc = $("#general_score_desc").val();
+
+	table_general_score.row.add([
+		start_interval,
+		end_interval,
+		general_score_desc,
+		'<button class="btn btn-warning opt" onClick="">' +
+		'<span class="fas fa-edit"></span>' +
+		'</button>' +
+		'<button class="btn btn-danger" onClick="">' +
+		'<span class="far fa-trash-alt"></span>' +
+		'</button>'
+	]);
 }

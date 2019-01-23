@@ -284,49 +284,49 @@
 			<div class="form-group" id="div_string_gnerics">
 				<label>Generic String</label>
 				<textarea class="form-control" id="string_generic"></textarea>
-				<a class="btn btn-info opt" onclick="generateString(0);">Gerar</a>
+				<a class="btn btn-info opt" onclick="generateString(0);">Generate</a>
 				<hr>
 			</div>
 			<div class="form-group" id="div_string_scopus">
 				<label>SCOPUS</label>
 				<textarea class="form-control" id="string_scopus"></textarea>
-				<a class="btn btn-info opt" onclick="generateString(1);">Gerar</a>
+				<a class="btn btn-info opt" onclick="generateString(1);">Generate</a>
 				<hr>
 			</div>
 			<div class="form-group" id="div_string_acm">
 				<label>ACM</label>
 				<textarea class="form-control" id="string_acm"></textarea>
-				<a class="btn btn-info opt" onclick="generateString(2);">Gerar</a>
+				<a class="btn btn-info opt" onclick="generateString(2);">Generate</a>
 				<hr>
 			</div>
 			<div class="form-group" id="div_string_ieee">
 				<label>IEEE</label>
 				<textarea class="form-control" id="string_ieee"></textarea>
-				<a class="btn btn-info opt" onclick="generateString(3);">Gerar</a>
+				<a class="btn btn-info opt" onclick="generateString(3);">Generate</a>
 				<hr>
 			</div>
 			<div class="form-group" id="div_string_science">
 				<label>Science Direct</label>
 				<textarea class="form-control" id="string_science"></textarea>
-				<a class="btn btn-info opt" onclick="generateString(4);">Gerar</a>
+				<a class="btn btn-info opt" onclick="generateString(4);">Generate</a>
 				<hr>
 			</div>
 			<div class="form-group" id="div_string_enginnering">
 				<label>Enginnering Village</label>
 				<textarea class="form-control" id="string_enginnering"></textarea>
-				<a class="btn btn-info opt" onclick="generateString(5);">Gerar</a>
+				<a class="btn btn-info opt" onclick="generateString(5);">Generate</a>
 				<hr>
 			</div>
 			<div class="form-group" id="div_string_springer">
 				<label>Springer Link</label>
 				<textarea class="form-control" id="string_springer"></textarea>
-				<a class="btn btn-info opt" onclick="generateString(6);">Gerar</a>
+				<a class="btn btn-info opt" onclick="generateString(6);">Generate</a>
 				<hr>
 			</div>
 			<div class="form-group" id="div_string_google">
 				<label>Google</label>
 				<textarea class="form-control" id="string_google"></textarea>
-				<a class="btn btn-info opt" onclick="generateString(7);">Gerar</a>
+				<a class="btn btn-info opt" onclick="generateString(7);">Generate</a>
 				<hr>
 			</div>
 
@@ -420,21 +420,18 @@
 			</div>
 			<div class="row">
 				<div class="input-group col-md-4">
-					<input type="number" id="start_interval" class="form-control" step="0.5" placeholder="4.5">
-					<input type="number" id="end_interval" class="form-control" step="0.5" placeholder="5">
+					<input type="number" id="start_interval" class="form-control" step="0.5" placeholder="4.5" min="0">
+					<input type="number" id="end_interval" class="form-control" step="0.5" placeholder="5" min="0.1">
 				</div>
 				<div class="input-group col-md-8">
 					<input type="text" id="general_score_desc" class="form-control" placeholder="Description">
 					<div class="input-group-append">
-						<button class="btn btn-success" type="button"><span class="fas fa-plus"></span></button>
+						<button class="btn btn-success" type="button" onclick="add_general_quality_score();"><span class="fas fa-plus"></span></button>
 					</div>
 				</div>
 				<label for="min_score_to_app" class="col-md-12">Minimum General Score to Approve</label>
 				<div class="input-group container">
 					<select class="form-control col-md-3" id="min_score_to_app">
-						<option></option>
-						<option>Ruim</option>
-						<option>Bom</option>
 					</select>
 				</div>
 			</div>
@@ -443,38 +440,13 @@
 				<caption>List of General Score</caption>
 				<thead>
 				<tr>
-					<th>Score Interval</th>
+					<th>Start Score Interval</th>
+					<th>End Score Interval</th>
 					<th>Score Description</th>
-					<th>Delete</th>
+					<th>Actions</th>
 				</tr>
 				</thead>
 				<tbody>
-				<tr>
-					<td>
-						<div class="form-inline">
-							<input type="number" id="start_interval" class="form-control" step="0.5"
-								   placeholder="4.5">
-							<input type="number" id="end_interval" class="form-control" step="0.5" placeholder="5">
-						</div>
-					</td>
-					<td contenteditable="true">Descrição</td>
-					<td>
-						<button class="btn btn-danger"><span class="far fa-trash-alt"></span></button>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<div class="form-inline">
-							<input type="number" id="start_interval" class="form-control" step="0.5"
-								   placeholder="4.5">
-							<input type="number" id="end_interval" class="form-control" step="0.5" placeholder="5">
-						</div>
-					</td>
-					<td contenteditable="true">Descrição</td>
-					<td>
-						<button class="btn btn-danger"><span class="far fa-trash-alt"></span></button>
-					</td>
-				</tr>
 				</tbody>
 			</table>
 			<br>

@@ -52,10 +52,11 @@ $(document).ready(function () {
 		ordering: false
 	});
 
+	table_general_score = $('#table_general_score').DataTable(configDataTables);
+
 	$('#table_qa').DataTable(configDataTables);
 	$('#table_question_quality').DataTable(configDataTables);
 	$('#table_data_extraction').DataTable(configDataTables);
-	$('#table_general_score').DataTable(configDataTables);
 
 
 	$('#table_imported_studies').DataTable({
