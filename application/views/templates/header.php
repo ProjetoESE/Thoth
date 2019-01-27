@@ -58,6 +58,7 @@
 
 	<!-- SweetAlert -->
 	<script src="<?= base_url('assets/js/sweetalert2.all.min.js'); ?>"></script>
+
 	<!-- My JS Files -->
 	<script src="<?= base_url('assets/js/main.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/functions.js'); ?>"></script>

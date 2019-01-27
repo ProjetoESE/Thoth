@@ -63,6 +63,7 @@
 				<th>Q6</th>
 				<th>Score</th>
 				<th>Status</th>
+				<th>Delete</th>
 			</tr>
 			</thead>
 			<tbody>
@@ -78,6 +79,7 @@
 				<td>TOTAL</td>
 				<td>0.0</td>
 				<td class="text-dark">Unclassified</td>
+				<td><button class="btn btn-danger"><span class="far fa-trash-alt"></span></button></td>
 			</tr>
 			<tr>
 				<td>65</td>
@@ -91,6 +93,7 @@
 				<td>TOTAL</td>
 				<td>3.5</td>
 				<td class="text-dark">Unclassified</td>
+				<td><button class="btn btn-danger"><span class="far fa-trash-alt"></span></button></td>
 			</tr>
 			</tbody>
 			<tfoot>
@@ -106,6 +109,7 @@
 				<th>Q6</th>
 				<th>Score</th>
 				<th>Status</th>
+				<th>Delete</th>
 			</tr>
 			</tfoot>
 		</table>

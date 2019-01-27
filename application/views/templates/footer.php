@@ -183,26 +183,31 @@
 				<div class="row">
 					<div class="col-md-6">
 						<h6>Author</h6>
-						<p id="paper_author"></p>
+						<input type="text"  class="form-control" id="paper_author"  placeholder="This paper don't author">
 					</div>
 					<div class="col-md-2">
 						<h6>Year</h6>
-						<p id="paper_year"></p>
+						<input type="text"  class="form-control" id="paper_year"  placeholder="This paper don't have year">
 					</div>
 					<div class="col-md-4">
 						<h6>Database</h6>
-						<p id="paper_database"></p>
+						<select class="form-control">
+							<option value="Scopus">Scopus</option>
+							<option value="IEEE">IEEE</option>
+						</select>
 					</div>
 				</div>
 				<hr>
 				<div class="row">
 					<div class="col-md-6">
 						<h6>Abstract</h6>
-						<p id="paper_abtract"></p>
+						<textarea type="text" class="form-control" id="paper_abtract" placeholder="This paper don't have abstract">
+						</textarea>
 					</div>
 					<div class="col-md-6">
 						<h6>Keywords</h6>
-						<p id="paper_keywords"></p>
+						<textarea type="text" class="form-control" id="paper_keywords" placeholder="This paper don't have keywords">
+						</textarea>
 					</div>
 				</div>
 				<hr>
@@ -369,7 +374,7 @@
 								</div>
 							</div>
 						</div>
-						<a class="btn btn-success opt" onclick="done_paper();">Done</a>
+						<a class="btn btn-success opt float-right" onclick="done_paper();">Done</a>
 					</div>
 				</div>
 				<div class="modal-footer">

@@ -85,9 +85,16 @@ $(document).ready(function () {
 	});
 
 	let table_papers = $('#table_papers').DataTable({
+		columnDefs: [ {
+			targets: 6,
+			orderable: false
+		} ],
 		responsive: true,
 		order: [[0, "asc"]],
-		select: true,
+		select:{
+			style: 'single',
+			selector: 'td:first-child'
+		},
 		dom: 'Bfrtip',
 		buttons: [
 			'copy', 'csv', 'excel', 'pdf', 'print'
@@ -98,17 +105,17 @@ $(document).ready(function () {
 		let rowData = table_papers.rows(indexes).data().toArray();
 		document.getElementById("paper_id").value = rowData[0][0];
 		$('#paper_title').text(rowData[0][1]);
-		$('#paper_author').text(rowData[0][2]);
-		$('#paper_year').text(rowData[0][3]);
-		$('#paper_database').text(rowData[0][4]);
+		$('#paper_author').val(rowData[0][2]);
+		$('#paper_year').val(rowData[0][3]);
+		$('#paper_database').val(rowData[0][4]);
 		$('#row_quality').hide();
 		$('#row_extraction').hide();
-		$('#paper_keywords').text("field programmable gate arrays;integrated circuit packaging;integrated circuit testing;" +
+		$('#paper_keywords').val("field programmable gate arrays;integrated circuit packaging;integrated circuit testing;" +
 			"integrated optoelectronics;monitoring;smart pixels;test equipment;PGA chip carrier;compact low-cost high-performance" +
 			" test fixture;electrical test;high-speed electrical signal monitoring;smart pixel IC packaging;smart pixel integrated" +
 			" circuit control;smart pixel integrated circuit testing;Circuit testing;Clocks;EPROM;Electronics packaging;Field " +
 			"programmable gate arrays;Fixtures;Hardware design languages;Integrated circuit testing;Smart pixels;Sockets");
-		$('#paper_abtract').text("The Internet Engineering Task Force (IETF) has introduced IPv6 with a mission to meet " +
+		$('#paper_abtract').val("The Internet Engineering Task Force (IETF) has introduced IPv6 with a mission to meet " +
 			"the growing demands of the future Internet. IPv6 is more and more emphasized and moving from the pilot phase" +
 			" to the practical application. In the process of deploying IPv6, performance is one of the key issues to be" +
 			" considered. Test is an effective method to understand IPv6 network performance. We need scalable and " +
@@ -156,7 +163,10 @@ $(document).ready(function () {
 	let table_papers_quality = $('#table_papers_quality').DataTable({
 		responsive: true,
 		order: [[0, "asc"]],
-		select: true,
+		select:{
+			style: 'single',
+			selector: 'td:first-child'
+		},
 		dom: 'Bfrtip',
 		buttons: [
 			'copy', 'csv', 'excel', 'pdf', 'print'
@@ -167,15 +177,15 @@ $(document).ready(function () {
 		let rowData = table_papers_quality.rows(indexes).data().toArray();
 		document.getElementById("paper_id").value = rowData[0][0];
 		$('#paper_title').text(rowData[0][1]);
-		$('#paper_author').text("F. Kiamilev and R. Rozier and J. Rieve");
-		$('#paper_year').text(rowData[0][2]);
-		$('#paper_database').text("IEEE");
-		$('#paper_keywords').text("field programmable gate arrays;integrated circuit packaging;integrated circuit testing" +
+		$('#paper_author').val("F. Kiamilev and R. Rozier and J. Rieve");
+		$('#paper_year').val(rowData[0][2]);
+		$('#paper_database').val("IEEE");
+		$('#paper_keywords').val("field programmable gate arrays;integrated circuit packaging;integrated circuit testing" +
 			";integrated optoelectronics;monitoring;smart pixels;test equipment;PGA chip carrier;compact low-cost high-performance" +
 			" test fixture;electrical test;high-speed electrical signal monitoring;smart pixel IC packaging;smart pixel integrated " +
 			"circuit control;smart pixel integrated circuit testing;Circuit testing;Clocks;EPROM;Electronics packaging;Field " +
 			"programmable gate arrays;Fixtures;Hardware design languages;Integrated circuit testing;Smart pixels;Sockets");
-		$('#paper_abtract').text("The Internet Engineering Task Force (IETF) has introduced IPv6 with a mission to meet the " +
+		$('#paper_abtract').val("The Internet Engineering Task Force (IETF) has introduced IPv6 with a mission to meet the " +
 			"growing demands of the future Internet. IPv6 is more and more emphasized and moving from the pilot phase to the " +
 			"practical application. In the process of deploying IPv6, performance is one of the key issues to be considered. " +
 			"Test is an effective method to understand IPv6 network performance. We need scalable and available tools to measure " +
@@ -192,9 +202,16 @@ $(document).ready(function () {
 	});
 
 	let table_papers_extraction = $('#table_papers_extraction').DataTable({
+		columnDefs: [ {
+			targets: 4,
+			orderable: false
+		} ],
 		responsive: true,
 		order: [[0, "asc"]],
-		select: true,
+		select:{
+			style: 'single',
+			selector: 'td:first-child'
+		},
 		dom: 'Bfrtip',
 		buttons: [
 			'copy', 'csv', 'excel', 'pdf', 'print'
@@ -205,16 +222,16 @@ $(document).ready(function () {
 		let rowData = table_papers_extraction.rows(indexes).data().toArray();
 		document.getElementById("paper_id").value = rowData[0][0];
 		$('#paper_title').text(rowData[0][1]);
-		$('#paper_author').text("F. Kiamilev and R. Rozier and J. Rieve");
-		$('#paper_year').text(rowData[0][2]);
-		$('#paper_database').text("IEEE");
-		$('#paper_keywords').text("field programmable gate arrays;integrated circuit packaging;integrated circuit " +
+		$('#paper_author').val("F. Kiamilev and R. Rozier and J. Rieve");
+		$('#paper_year').val(rowData[0][2]);
+		$('#paper_database').val("IEEE");
+		$('#paper_keywords').val("field programmable gate arrays;integrated circuit packaging;integrated circuit " +
 			"testing;integrated optoelectronics;monitoring;smart pixels;test equipment;PGA chip carrier;compact " +
 			"low-cost high-performance test fixture;electrical test;high-speed electrical signal monitoring;smart " +
 			"pixel IC packaging;smart pixel integrated circuit control;smart pixel integrated circuit testing;Circuit" +
 			" testing;Clocks;EPROM;Electronics packaging;Field programmable gate arrays;Fixtures;Hardware design " +
 			"languages;Integrated circuit testing;Smart pixels;Sockets");
-		$('#paper_abtract').text("The Internet Engineering Task Force (IETF) has introduced IPv6 with a mission" +
+		$('#paper_abtract').val("The Internet Engineering Task Force (IETF) has introduced IPv6 with a mission" +
 			" to meet the growing demands of the future Internet. IPv6 is more and more emphasized and moving" +
 			" from the pilot phase to the practical application. In the process of deploying IPv6, performance" +
 			" is one of the key issues to be considered. Test is an effective method to understand IPv6 network " +
@@ -238,6 +255,9 @@ $(document).ready(function () {
 		location.hash = this.getAttribute("href");
 	});
 
+
+
 });
+
 
 

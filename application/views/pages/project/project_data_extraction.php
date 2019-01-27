@@ -57,6 +57,7 @@
 				<th>Title</th>
 				<th>Year</th>
 				<th>Status</th>
+				<th>Delete</th>
 			</tr>
 			</thead>
 			<tbody>
@@ -65,12 +66,14 @@
 				<td>A novel on-die GHz AC stress test methodology for high speed IO application</td>
 				<td>2017</td>
 				<td class="text-warning">To do</td>
+				<td><button class="btn btn-danger"><span class="far fa-trash-alt"></span></button></td>
 			</tr>
 			<tr>
 				<td>65</td>
 				<td>A IPv6 Network Performance Test System using Multi-Agent</td>
 				<td>2007</td>
 				<td class="text-success">Done</td>
+				<td><button class="btn btn-danger"><span class="far fa-trash-alt"></span></button></td>
 			</tr>
 			</tbody>
 			<tfoot>
@@ -79,6 +82,7 @@
 				<th>Title</th>
 				<th>Year</th>
 				<th>Status</th>
+				<th>Delete</th>
 			</tr>
 			</tfoot>
 		</table>

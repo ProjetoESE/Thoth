@@ -32,25 +32,25 @@
 			<div class="input-group col-md-3">
 				<label class="text-success">
 					<span class="fas fa-check fa-lg"></span>
-					 Accepted: 1
+					Accepted: 1
 				</label>
 			</div>
 			<div class="input-group col-md-3 ">
 				<label class="text-danger">
 					<span class="fas fa-times fa-lg"></span>
-					 Rejected: 1
+					Rejected: 1
 				</label>
 			</div>
 			<div class="input-group col-md-3">
 				<label class="text-dark">
 					<span class="fas fa-question fa-lg"></span>
-					 Unclassified: 1
+					Unclassified: 1
 				</label>
 			</div>
 			<div class="input-group col-md-3">
 				<label class="text-info">
 					<span class="fas fa-bars fa-lg"></span>
-					 Total: 3
+					Total: 3
 				</label>
 			</div>
 		</div>
@@ -65,16 +65,20 @@
 				<th>Year</th>
 				<th>Database</th>
 				<th>Status</th>
+				<th>Delete</th>
 			</tr>
 			</thead>
 			<tbody>
 			<tr>
 				<td>52</td>
-				<td>A compact, low-cost, high-performance test fixture for electrical test and control of smart pixel integrated circuits</td>
+				<td>A compact, low-cost, high-performance test fixture for electrical test and control of smart pixel
+					integrated circuits
+				</td>
 				<td>F. Kiamilev and R. Rozier and J. Rieve</td>
 				<td>1996</td>
 				<td>SCOPUS</td>
 				<td class="text-success">Accepted</td>
+				<td><button class="btn btn-danger"><span class="far fa-trash-alt"></span></button></td>
 			</tr>
 			<tr>
 				<td>65</td>
@@ -83,14 +87,18 @@
 				<td>2007</td>
 				<td>IEEE</td>
 				<td class="text-danger">Rejected</td>
+				<td><button class="btn btn-danger"><span class="far fa-trash-alt"></span></button></td>
 			</tr>
 			<tr>
 				<td>69</td>
 				<td>A novel on-die GHz AC stress test methodology for high speed IO application</td>
-				<td>P. Z. Kang and T. Y. Yew and K. W. Shih and M. H. Hsieh and W. S. Chou and C. M. Fu and Y. C. Huang and W. Wang and Y. C. Peng and Y. H. Lee</td>
+				<td>P. Z. Kang and T. Y. Yew and K. W. Shih and M. H. Hsieh and W. S. Chou and C. M. Fu and Y. C. Huang
+					and W. Wang and Y. C. Peng and Y. H. Lee
+				</td>
 				<td>2017</td>
 				<td>IEEE</td>
 				<td class="text-dark">Unclassified</td>
+				<td><button class="btn btn-danger"><span class="far fa-trash-alt"></span></button></td>
 			</tr>
 			</tbody>
 			<tfoot>
@@ -101,6 +109,7 @@
 				<th>Year</th>
 				<th>Database</th>
 				<th>Status</th>
+				<th>Delete</th>
 			</tr>
 			</tfoot>
 		</table>
