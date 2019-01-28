@@ -14,8 +14,6 @@ class User
 	private $status;
 	private $institution;
 	private $lattes_link;
-	private $created_at;
-	private $updated_at;
 
 	/**
 	 * User constructor.
@@ -24,46 +22,6 @@ class User
 	{
 	}
 
-	/**
-	 * User constructor for data in the database.
-	 * @param String $name
-	 * @param String $email
-	 * @param String $password
-	 * @param String $status
-	 * @param String $institution
-	 * @param String $lattes_link
-	 * @param DateTime $created_at
-	 * @param DateTime $updated_at
-	 */
-	public function __construct_DB($name, $email, $password, $status, $institution, $lattes_link, $created_at, $updated_at)
-	{
-		$this->name = $name;
-		$this->email = $email;
-		$this->password = $password;
-		$this->status = $status;
-		$this->institution = $institution;
-		$this->lattes_link = $lattes_link;
-		$this->created_at = $created_at;
-		$this->updated_at = $updated_at;
-	}
-
-	/**
-	 * User constructor for new registry.
-	 * @param String $name
-	 * @param String $email
-	 * @param String $password
-	 */
-	public function __construct_New($name, $email, $password)
-	{
-		$this->name = $name;
-		$this->email = $email;
-		$this->password = $password;
-		$this->status = null;
-		$this->institution = null;
-		$this->lattes_link = null;
-		$this->created_at = null;
-		$this->updated_at = null;
-	}
 
 	/**
 	 * Method to retrieve the term name.
@@ -103,7 +61,7 @@ class User
 	 */
 	public function setEmail($email)
 	{
-		if (is_null($email) || empty($email) || filter_var($email, FILTER_VALIDATE_EMAIL)) {
+		if (is_null($email) || empty($email)) {
 			throw  new  InvalidArgumentException("User E-mail Invalid!");
 		}
 		$this->email = $email;
@@ -195,50 +153,6 @@ class User
 			throw  new  InvalidArgumentException("User Lattes Link Invalid!");
 		}
 		$this->lattes_link = $lattes_link;
-	}
-
-	/**
-	 * Method to retrieve the user created at.
-	 * @return DateTime created_at
-	 */
-	public function getCreatedAt()
-	{
-		return $this->created_at;
-	}
-
-	/**
-	 * Method to change the user created at.
-	 * @param DateTime $created_at
-	 * @throws InvalidArgumentException
-	 */
-	public function setCreatedAt($created_at)
-	{
-		if (is_null($created_at)) {
-			throw  new  InvalidArgumentException("User Created At Invalid!");
-		}
-		$this->created_at = $created_at;
-	}
-
-	/**
-	 * Method to retrieve the user updated at.
-	 * @return DateTime updated_at
-	 */
-	public function getUpdatedAt()
-	{
-		return $this->updated_at;
-	}
-
-	/**
-	 * Method to change the user updated at.
-	 * @param DateTime $updated_at
-	 * @throws InvalidArgumentException
-	 */
-	public function setUpdatedAt($updated_at)
-	{
-		if (is_null($updated_at)) {
-			throw  new  InvalidArgumentException("User Updated At Invalid!");
-		}
-		$this->updated_at = $updated_at;
 	}
 
 }

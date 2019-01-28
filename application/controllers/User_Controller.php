@@ -23,4 +23,5 @@ class User_Controller extends CI_Controller
 
 		load_templates('pages/user/profile',null);
 	}
+
 }
