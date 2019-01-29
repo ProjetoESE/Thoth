@@ -22,12 +22,11 @@ class User
 	{
 	}
 
-
 	/**
 	 * Method to retrieve the term name.
 	 * @return String name
 	 */
-	public function getName()
+	public function get_name()
 	{
 		return $this->name;
 	}
@@ -37,7 +36,7 @@ class User
 	 * @param String $name
 	 * @throws InvalidArgumentException
 	 */
-	public function setName($name)
+	public function set_name($name)
 	{
 		if (is_null($name) || empty($name)) {
 			throw  new  InvalidArgumentException("User Name Invalid!");
@@ -49,7 +48,7 @@ class User
 	 * Method to retrieve the user email.
 	 * @return String email
 	 */
-	public function getEmail()
+	public function get_email()
 	{
 		return $this->email;
 	}
@@ -59,7 +58,7 @@ class User
 	 * @param String $email
 	 * @throws InvalidArgumentException
 	 */
-	public function setEmail($email)
+	public function set_email($email)
 	{
 		if (is_null($email) || empty($email)) {
 			throw  new  InvalidArgumentException("User E-mail Invalid!");
@@ -71,7 +70,7 @@ class User
 	 * Method to retrieve the user password.
 	 * @return String password
 	 */
-	public function getPassword()
+	public function get_password()
 	{
 		return $this->password;
 	}
@@ -81,7 +80,7 @@ class User
 	 * @param String $password
 	 * @throws InvalidArgumentException
 	 */
-	public function setPassword($password)
+	public function set_password($password)
 	{
 		if (is_null($password) || empty($password)) {
 			throw  new  InvalidArgumentException("User Password Invalid!");
@@ -93,7 +92,7 @@ class User
 	 * Method to retrieve the user status.
 	 * @return String status
 	 */
-	public function getStatus()
+	public function get_status()
 	{
 		return $this->status;
 	}
@@ -103,7 +102,7 @@ class User
 	 * @param String $status
 	 * @throws InvalidArgumentException
 	 */
-	public function setStatus($status)
+	public function set_status($status)
 	{
 		if (is_null($status) || empty($status)) {
 			throw  new  InvalidArgumentException("User Status Invalid!");
@@ -115,7 +114,7 @@ class User
 	 * Method to retrieve the user institution.
 	 * @return String institution
 	 */
-	public function getInstitution()
+	public function get_institution()
 	{
 		return $this->institution;
 	}
@@ -125,7 +124,7 @@ class User
 	 * @param String $institution
 	 * @throws InvalidArgumentException
 	 */
-	public function setInstitution($institution)
+	public function set_institution($institution)
 	{
 		if (is_null($institution) || empty($institution)) {
 			throw  new  InvalidArgumentException("User Institution Invalid!");
@@ -137,7 +136,7 @@ class User
 	 * Method to retrieve the user lattes link.
 	 * @return String lattes_link
 	 */
-	public function getLattesLink()
+	public function get_lattes_link()
 	{
 		return $this->lattes_link;
 	}
@@ -147,7 +146,7 @@ class User
 	 * @param String $lattes_link
 	 * @throws InvalidArgumentException
 	 */
-	public function setLattesLink($lattes_link)
+	public function set_lattes_link($lattes_link)
 	{
 		if (is_null($lattes_link) || empty($lattes_link)) {
 			throw  new  InvalidArgumentException("User Lattes Link Invalid!");

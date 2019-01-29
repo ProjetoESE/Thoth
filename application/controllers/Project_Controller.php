@@ -6,11 +6,13 @@ class Project_Controller extends CI_Controller
 	}
 
 	public function open($id){
+		$this->load->model("Project_Model");
+
+		$data['project'] = $this->Project_Model->get_project($id);
+
 		if(!isset($_SESSION['logged_in'])){
-			$data['project'] = $id;
 			load_templates('pages/visitor/project_visitor',$data);
 		}else {
-			$data['project'] = $id;
 			load_templates('pages/project/project', $data);
 		}
 	}
@@ -86,6 +88,36 @@ class Project_Controller extends CI_Controller
 	}
 
 	public function new_project(){
-		load_templates('pages/project/project_new',null);
+		try {
+			if (!$this->session->logged_in) {
+				redirect(base_url());
+			}
+
+			load_templates('pages/project/project_new', null);
+		}catch (Exception $e){
+			$this->session->set_flashdata('error', $e->getMessage());
+			load_templates('pages/project/project_new', null);
+		}
+	}
+
+	public function created_project(){
+		try {
+			if (!$this->session->logged_in) {
+				redirect(base_url());
+			}
+
+			$this->load->model("Project_Model");
+			$title = $this->input->post('title');
+			$description = $this->input->post('description');
+			$objectives = $this->input->post('$objectives');
+
+			$data['project'] = $this->Project_Model->created_project($title,$description,$objectives,$this->session->email);
+
+			load_templates('pages/project/project', $data);
+
+		}catch (Exception $e){
+			$this->session->set_flashdata('error', $e->getMessage());
+			redirect(base_url());
+		}
 	}
 }

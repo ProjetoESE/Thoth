@@ -7,7 +7,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Project
 {
-
+	private $id;
 	private $title;
 	private $description;
 	private $objectives;
@@ -43,104 +43,25 @@ class Project
 	}
 
 	/**
-	 * Project constructor for data in the database.
-	 * @param String $title
-	 * @param String $description
-	 * @param String $objectives
-	 * @param User $created_by
-	 * @param DateTime $start_date
-	 * @param DateTime $end_date
-	 * @param DateTime $has_date
-	 * @param Rule_Type $inclusion_rule
-	 * @param Rule_Type $exclusion_rule
-	 * @param Quality_Score $score_min
-	 * @param array(String) $domains
-	 * @param array(String) $languages
-	 * @param array(String) $study_types
-	 * @param array(String) $keywords
-	 * @param array(Research_Question) $research_questions
-	 * @param array(Database) $databases
-	 * @param array(Search_String) $search_strings
-	 * @param String $search_strategy
-	 * @param array(Inclusion_Criteria) $criterias_inclusion
-	 * @param array(Exclusion_Criteria) $criterias_exclusion
-	 * @param array(Quality_Question) $questions_quality
-	 * @param array(Question_Extraction)$questions_extraction
-	 * @param array(Paper) $papers
-	 * @param array(Term) $terms
-	 * @param array(User) $members
-	 * @param array(Quality_Score) $quality_scores
+	 * Method to retrieve the project Id.
+	 * @return Integer id
 	 */
-	public function __construct_DB($title, $description, $objectives, $created_by, $start_date, $end_date, $has_date,
-								   $inclusion_rule, $exclusion_rule, $score_min, $domains, $languages, $study_types,
-								   $keywords, $research_questions, $databases, $search_strings, $search_strategy,
-								   $criterias_inclusion, $criterias_exclusion, $questions_quality, $questions_extraction,
-								   $papers, $terms, $members, $quality_scores)
+	public function get_id()
 	{
-		$this->title = $title;
-		$this->description = $description;
-		$this->objectives = $objectives;
-		$this->created_by = $created_by;
-		$this->start_date = $start_date;
-		$this->end_date = $end_date;
-		$this->has_date = $has_date;
-		$this->inclusion_rule = $inclusion_rule;
-		$this->exclusion_rule = $exclusion_rule;
-		$this->score_min = $score_min;
-		$this->domains = $domains;
-		$this->languages = $languages;
-		$this->study_types = $study_types;
-		$this->keywords = $keywords;
-		$this->research_questions = $research_questions;
-		$this->databases = $databases;
-		$this->search_strings = $search_strings;
-		$this->search_strategy = $search_strategy;
-		$this->criterias_inclusion = $criterias_inclusion;
-		$this->criterias_exclusion = $criterias_exclusion;
-		$this->questions_quality = $questions_quality;
-		$this->questions_extraction = $questions_extraction;
-		$this->papers = $papers;
-		$this->terms = $terms;
-		$this->members = $members;
-		$this->quality_scores = $quality_scores;
+		return $this->id;
 	}
 
-
 	/**
-	 * Project constructor for to new registry.
-	 * @param String $title
-	 * @param String $description
-	 * @param String $objectives
-	 * @param User $created_by
+	 * Method to change the project Id.
+	 * @param Integer $id
+	 * @throws InvalidArgumentException
 	 */
-	public function __construct_New($title, $description, $objectives, $created_by)
+	public function set_id($id)
 	{
-		$this->title = $title;
-		$this->description = $description;
-		$this->objectives = $objectives;
-		$this->created_by = $created_by;
-		$this->start_date = null;
-		$this->end_date = null;
-		$this->has_date = null;
-		$this->inclusion_rule = null;
-		$this->exclusion_rule = null;
-		$this->score_min = null;
-		$this->domains = null;
-		$this->languages = null;
-		$this->study_types = null;
-		$this->keywords = null;
-		$this->research_questions = null;
-		$this->databases = null;
-		$this->search_strings = null;
-		$this->search_strategy = null;
-		$this->criterias_inclusion = null;
-		$this->criterias_exclusion = null;
-		$this->questions_quality = null;
-		$this->questions_extraction = null;
-		$this->papers = null;
-		$this->terms = null;
-		$this->members = null;
-		$this->quality_scores = null;
+		if (is_null($id) || empty($id)) {
+			throw  new  InvalidArgumentException("Project Id Invalid!");
+		}
+		$this->id = $id;
 	}
 
 
@@ -148,7 +69,7 @@ class Project
 	 * Method to retrieve the project title.
 	 * @return String title
 	 */
-	public function getTitle()
+	public function get_title()
 	{
 		return $this->title;
 	}
@@ -158,7 +79,7 @@ class Project
 	 * @param String $title
 	 * @throws InvalidArgumentException
 	 */
-	public function setTitle($title)
+	public function set_title($title)
 	{
 		if (is_null($title) || empty($title)) {
 			throw  new  InvalidArgumentException("Project Title Invalid!");
@@ -170,7 +91,7 @@ class Project
 	 * Method to retrieve the project description.
 	 * @return String description
 	 */
-	public function getDescription()
+	public function get_description()
 	{
 		return $this->description;
 	}
@@ -180,7 +101,7 @@ class Project
 	 * @param String $description
 	 * @throws InvalidArgumentException
 	 */
-	public function setDescription($description)
+	public function set_description($description)
 	{
 		if (is_null($description) || empty($description)) {
 			throw  new  InvalidArgumentException("Project Description Invalid!");
@@ -192,7 +113,7 @@ class Project
 	 * Method to retrieve the project objectives.
 	 * @return String objectives
 	 */
-	public function getObjectives()
+	public function get_objectives()
 	{
 		return $this->objectives;
 	}
@@ -202,7 +123,7 @@ class Project
 	 * @param String $objectives
 	 * @throws InvalidArgumentException
 	 */
-	public function setObjectives($objectives)
+	public function set_objectives($objectives)
 	{
 		if (is_null($objectives) || empty($objectives)) {
 			throw  new  InvalidArgumentException("Project Objectives Invalid!");
@@ -214,7 +135,7 @@ class Project
 	 * Method to retrieve the project created by.
 	 * @return User created_by
 	 */
-	public function getCreatedBy()
+	public function get_created_by()
 	{
 		return $this->created_by;
 	}
@@ -224,7 +145,7 @@ class Project
 	 * @param User $created_by
 	 * @throws InvalidArgumentException
 	 */
-	public function setCreatedBy($created_by)
+	public function set_created_by($created_by)
 	{
 		if (is_null($created_by)) {
 			throw  new  InvalidArgumentException("Project Created By Invalid!");
@@ -236,7 +157,7 @@ class Project
 	 * Method to retrieve the project start date.
 	 * @return DateTime start_date
 	 */
-	public function getStartDate()
+	public function get_start_date()
 	{
 		return $this->start_date;
 	}
@@ -246,7 +167,7 @@ class Project
 	 * @param DateTime $start_date
 	 * @throws InvalidArgumentException
 	 */
-	public function setStartDate($start_date)
+	public function set_start_date($start_date)
 	{
 		if (is_null($start_date)) {
 			throw  new  InvalidArgumentException("Project Start Date Invalid!");
@@ -258,7 +179,7 @@ class Project
 	 * Method to retrieve the project end date.
 	 * @return DateTime end_date
 	 */
-	public function getEndDate()
+	public function get_end_date()
 	{
 		return $this->end_date;
 	}
@@ -268,7 +189,7 @@ class Project
 	 * @param DateTime $end_date
 	 * @throws InvalidArgumentException
 	 */
-	public function setEndDate($end_date)
+	public function set_end_date($end_date)
 	{
 		if (is_null($end_date)) {
 			throw  new  InvalidArgumentException("Project End Date Invalid!");
@@ -280,7 +201,7 @@ class Project
 	 * Method to retrieve the project end date.
 	 * @return DateTime has_date
 	 */
-	public function getHasDate()
+	public function get_has_date()
 	{
 		return $this->has_date;
 	}
@@ -290,7 +211,7 @@ class Project
 	 * @param DateTime $has_date
 	 * @throws InvalidArgumentException
 	 */
-	public function setHasDate($has_date)
+	public function set_has_date($has_date)
 	{
 		if (is_null($has_date)) {
 			throw  new  InvalidArgumentException("Project Has Date Invalid!");
@@ -302,7 +223,7 @@ class Project
 	 * Method to retrieve the project inclusion rule.
 	 * @return Rule_Type inclusion_rule
 	 */
-	public function getInclusionRule()
+	public function get_inclusion_rule()
 	{
 		return $this->inclusion_rule;
 	}
@@ -312,7 +233,7 @@ class Project
 	 * @param Rule_Type $inclusion_rule
 	 * @throws InvalidArgumentException
 	 */
-	public function setInclusionRule($inclusion_rule)
+	public function set_inclusion_rule($inclusion_rule)
 	{
 		if (is_null($inclusion_rule)) {
 			throw  new  InvalidArgumentException("Project Inclusion Rule Invalid!");
@@ -324,7 +245,7 @@ class Project
 	 * Method to retrieve the project exclusion rule.
 	 * @return Rule_Type exclusion_rule
 	 */
-	public function getExclusionRule()
+	public function get_exclusion_rule()
 	{
 		return $this->exclusion_rule;
 	}
@@ -334,7 +255,7 @@ class Project
 	 * @param Rule_Type $exclusion_rule
 	 * @throws InvalidArgumentException
 	 */
-	public function setExclusionRule($exclusion_rule)
+	public function set_exclusion_rule($exclusion_rule)
 	{
 		if (is_null($exclusion_rule)) {
 			throw  new  InvalidArgumentException("Project Exclusion Rule Invalid!");
@@ -346,7 +267,7 @@ class Project
 	 * Method to retrieve the project score min.
 	 * @return Quality_Score score_min
 	 */
-	public function getScoreMin()
+	public function get_score_min()
 	{
 		return $this->score_min;
 	}
@@ -356,7 +277,7 @@ class Project
 	 * @param Quality_Score $score_min
 	 * @throws InvalidArgumentException
 	 */
-	public function setScoreMin($score_min)
+	public function set_score_min($score_min)
 	{
 		if (is_null($score_min)) {
 			throw  new  InvalidArgumentException("Project Score Minimum Invalid!");
@@ -368,7 +289,7 @@ class Project
 	 * Method to retrieve the project domains.
 	 * @return array(String) domains
 	 */
-	public function getDomains()
+	public function get_domains()
 	{
 		return $this->domains;
 	}
@@ -378,7 +299,7 @@ class Project
 	 * @param array(String) $domains
 	 * @throws InvalidArgumentException
 	 */
-	public function setDomains($domains)
+	public function set_domains($domains)
 	{
 		if (is_null($domains) || empty($domains)) {
 			throw  new  InvalidArgumentException("Project Domains Invalid!");
@@ -390,7 +311,7 @@ class Project
 	 * Method to retrieve the project languages.
 	 * @return array(String) languages
 	 */
-	public function getLanguages()
+	public function get_Languages()
 	{
 		return $this->languages;
 	}
@@ -400,7 +321,7 @@ class Project
 	 * @param array(String) $languages
 	 * @throws InvalidArgumentException
 	 */
-	public function setLanguages($languages)
+	public function set_languages($languages)
 	{
 		if (is_null($languages) || empty($languages)) {
 			throw  new  InvalidArgumentException("Project Languages Invalid!");
@@ -412,7 +333,7 @@ class Project
 	 * Method to retrieve the project study types.
 	 * @return array(String) study_types
 	 */
-	public function getStudyTypes()
+	public function get_study_types()
 	{
 		return $this->study_types;
 	}
@@ -422,7 +343,7 @@ class Project
 	 * @param array(String) $study_types
 	 * @throws InvalidArgumentException
 	 */
-	public function setStudyTypes($study_types)
+	public function set_study_types($study_types)
 	{
 		if (is_null($study_types) || empty($study_types)) {
 			throw  new  InvalidArgumentException("Project Study Types Invalid!");
@@ -434,7 +355,7 @@ class Project
 	 * Method to retrieve the project keywords.
 	 * @return array(String) keywords
 	 */
-	public function getKeywords()
+	public function get_keywords()
 	{
 		return $this->keywords;
 	}
@@ -444,7 +365,7 @@ class Project
 	 * @param array(String) $keywords
 	 * @throws InvalidArgumentException
 	 */
-	public function setKeywords($keywords)
+	public function set_keywords($keywords)
 	{
 		if (is_null($keywords) || empty($keywords)) {
 			throw  new  InvalidArgumentException("Project Keywords Invalid!");
@@ -456,7 +377,7 @@ class Project
 	 * Method to retrieve the project research questions.
 	 * @return array(Research_Questions) research_questions
 	 */
-	public function getResearchQuestions()
+	public function get_research_questions()
 	{
 		return $this->research_questions;
 	}
@@ -466,7 +387,7 @@ class Project
 	 * @param array(Research_Questions) $research_questions
 	 * @throws InvalidArgumentException
 	 */
-	public function setResearchQuestions($research_questions)
+	public function set_research_questions($research_questions)
 	{
 		if (is_null($research_questions) || empty($research_questions)) {
 			throw  new  InvalidArgumentException("Project Keywords Invalid!");
@@ -478,7 +399,7 @@ class Project
 	 * Method to retrieve the project databases.
 	 * @return array(Database) databases
 	 */
-	public function getDatabases()
+	public function get_databases()
 	{
 		return $this->databases;
 	}
@@ -488,7 +409,7 @@ class Project
 	 * @param array(Database) $databases
 	 * @throws InvalidArgumentException
 	 */
-	public function setDatabases($databases)
+	public function set_databases($databases)
 	{
 		if (is_null($databases) || empty($databases)) {
 			throw  new  InvalidArgumentException("Project Databases Invalid!");
@@ -500,7 +421,7 @@ class Project
 	 * Method to retrieve the project search strings.
 	 * @return array(Search_String) search_strings
 	 */
-	public function getSearchStrings()
+	public function get_search_strings()
 	{
 		return $this->search_strings;
 	}
@@ -510,7 +431,7 @@ class Project
 	 * @param array(Search_String) $search_strings
 	 * @throws InvalidArgumentException
 	 */
-	public function setSearchStrings($search_strings)
+	public function set_search_strings($search_strings)
 	{
 		if (is_null($search_strings) || empty($search_strings)) {
 			throw  new  InvalidArgumentException("Project Search Strings Invalid!");
@@ -522,7 +443,7 @@ class Project
 	 * Method to retrieve the project search strategy.
 	 * @return String search_strategy
 	 */
-	public function getSearchStrategy()
+	public function get_search_strategy()
 	{
 		return $this->search_strategy;
 	}
@@ -532,7 +453,7 @@ class Project
 	 * @param String $search_strategy
 	 * @throws InvalidArgumentException
 	 */
-	public function setSearchStrategy($search_strategy)
+	public function set_search_strategy($search_strategy)
 	{
 		if (is_null($search_strategy) || empty($search_strategy)) {
 			throw  new  InvalidArgumentException("Project Search Strategy Invalid!");
@@ -544,7 +465,7 @@ class Project
 	 * Method to retrieve the project criterias inclusion.
 	 * @return array(Inclusion_Criteria) criterias_inclusion
 	 */
-	public function getCriteriasInclusion()
+	public function get_criterias_inclusion()
 	{
 		return $this->criterias_inclusion;
 	}
@@ -554,7 +475,7 @@ class Project
 	 * @param array(Inclusion_Criteria) $criterias_inclusion
 	 * @throws InvalidArgumentException
 	 */
-	public function setCriteriasInclusion($criterias_inclusion)
+	public function set_criterias_inclusion($criterias_inclusion)
 	{
 		if (is_null($criterias_inclusion) || empty($criterias_inclusion)) {
 			throw  new  InvalidArgumentException("Project Criterias Inclusion Invalid!");
@@ -566,7 +487,7 @@ class Project
 	 * Method to retrieve the project criterias exclusion.
 	 * @return array(Exclusion_Criteria) criterias_exclusion
 	 */
-	public function getCriteriasExclusion()
+	public function get_criterias_exclusion()
 	{
 		return $this->criterias_exclusion;
 	}
@@ -576,7 +497,7 @@ class Project
 	 * @param array(Exclusion_Criteria) $criterias_exclusion
 	 * @throws InvalidArgumentException
 	 */
-	public function setCriteriasExclusion($criterias_exclusion)
+	public function set_criterias_exclusion($criterias_exclusion)
 	{
 		if (is_null($criterias_exclusion) || empty($criterias_exclusion)) {
 			throw  new  InvalidArgumentException("Project Criterias Exclusion Invalid!");
@@ -588,7 +509,7 @@ class Project
 	 * Method to retrieve the project questions quality.
 	 * @return array(Questions_Quality) questions_quality
 	 */
-	public function getQuestionsQuality()
+	public function get_questions_quality()
 	{
 		return $this->questions_quality;
 	}
@@ -598,7 +519,7 @@ class Project
 	 * @param array(Questions_Quality) $questions_quality
 	 * @throws InvalidArgumentException
 	 */
-	public function setQuestionsQuality($questions_quality)
+	public function set_questions_quality($questions_quality)
 	{
 		if (is_null($questions_quality) || empty($questions_quality)) {
 			throw  new  InvalidArgumentException("Project Questions Quality Invalid!");
@@ -610,7 +531,7 @@ class Project
 	 * Method to retrieve the project questions extraction.
 	 * @return array(Questions_extraction) questions_extraction
 	 */
-	public function getQuestionsExtraction()
+	public function get_questions_extraction()
 	{
 		return $this->questions_extraction;
 	}
@@ -620,7 +541,7 @@ class Project
 	 * @param array(Questions_extraction) $questions_extraction
 	 * @throws InvalidArgumentException
 	 */
-	public function setQuestionsExtraction($questions_extraction)
+	public function set_questions_extraction($questions_extraction)
 	{
 		if (is_null($questions_extraction) || empty($questions_extraction)) {
 			throw  new  InvalidArgumentException("Project Questions extraction Invalid!");
@@ -632,7 +553,7 @@ class Project
 	 * Method to retrieve the project papers.
 	 * @return array(Paper) papers
 	 */
-	public function getPapers()
+	public function get_papers()
 	{
 		return $this->papers;
 	}
@@ -642,7 +563,7 @@ class Project
 	 * @param array(Paper) $papers
 	 * @throws InvalidArgumentException
 	 */
-	public function setPapers($papers)
+	public function set_papers($papers)
 	{
 		if (is_null($papers) || empty($papers)) {
 			throw  new  InvalidArgumentException("Project Papers Invalid!");
@@ -654,7 +575,7 @@ class Project
 	 * Method to retrieve the project terms.
 	 * @return array(Term) terms
 	 */
-	public function getTerms()
+	public function get_terms()
 	{
 		return $this->terms;
 	}
@@ -664,7 +585,7 @@ class Project
 	 * @param array(Term) $terms
 	 * @throws InvalidArgumentException
 	 */
-	public function setTerms($terms)
+	public function set_terms($terms)
 	{
 		if (is_null($terms) || empty($terms)) {
 			throw  new  InvalidArgumentException("Project Terms Invalid!");
@@ -676,7 +597,7 @@ class Project
 	 * Method to retrieve the project members.
 	 * @return array(User) members
 	 */
-	public function getMembers()
+	public function get_members()
 	{
 		return $this->members;
 	}
@@ -686,7 +607,7 @@ class Project
 	 * @param array(User) $members
 	 * @throws InvalidArgumentException
 	 */
-	public function setMembers($members)
+	public function set_members($members)
 	{
 		if (is_null($members) || empty($members)) {
 			throw  new  InvalidArgumentException("Project Members Invalid!");
@@ -698,7 +619,7 @@ class Project
 	 * Method to retrieve the project quality scores.
 	 * @return array(Quality_Score) quality_scores
 	 */
-	public function getQualityScores()
+	public function get_quality_scores()
 	{
 		return $this->quality_scores;
 	}
@@ -708,7 +629,7 @@ class Project
 	 * @param array(Quality_Score) $quality_scores
 	 * @throws InvalidArgumentException
 	 */
-	public function setQualityScores($quality_scores)
+	public function set_quality_scores($quality_scores)
 	{
 		if (is_null($quality_scores) || empty($quality_scores)) {
 			throw  new  InvalidArgumentException("Project Members Invalid!");

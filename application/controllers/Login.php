@@ -23,7 +23,8 @@ class Login extends CI_Controller
 			}
 
 			$session = array(
-				'name' => $user->getName(),
+				'name' => $user->get_name(),
+				'email' => $user->get_email(),
 				'logged_in' => true
 			);
 
@@ -53,7 +54,8 @@ class Login extends CI_Controller
 			$user = $this->Login_Model->new_user($email, $password, $name);
 
 			$session = array(
-				'name' => $user->getName(),
+				'name' => $user->get_name(),
+				'email' => $user->get_email(),
 				'logged_in' => true
 			);
 
@@ -67,24 +69,39 @@ class Login extends CI_Controller
 
 	public function sign_in()
 	{
-		if ($this->session->logged_in) {
-			redirect(base_url("user_controller"));
+		try {
+			if ($this->session->logged_in) {
+				redirect(base_url("user_controller"));
+			}
+			load_templates('pages/login/sign_in', null);
+		} catch (Exception $e) {
+			$this->session->set_flashdata('error', $e->getMessage());
+			redirect(base_url());
 		}
-		load_templates('pages/login/sign_in', null);
 	}
 
 	public function sign_out()
 	{
-		$this->session->sess_destroy();
-		redirect(base_url());
+		try {
+			$this->session->sess_destroy();
+			redirect(base_url());
+		} catch (Exception $e) {
+			$this->session->set_flashdata('error', $e->getMessage());
+			redirect(base_url());
+		}
 	}
 
 	public function sign_up()
 	{
-		if ($this->session->logged_in) {
-			redirect(base_url("user_controller"));
+		try {
+			if ($this->session->logged_in) {
+				redirect(base_url("user_controller"));
+			}
+			load_templates('pages/login/sign_up', null);
+		} catch (Exception $e) {
+			$this->session->set_flashdata('error', $e->getMessage());
+			redirect(base_url());
 		}
-		load_templates('pages/login/sign_up', null);
 	}
 
 }

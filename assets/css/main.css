@@ -32,3 +32,6 @@ span{
 .new-project{
 	margin-bottom: 0.5em;
 }
+.min-height{
+	min-height: 65px;
+}

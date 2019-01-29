@@ -3,7 +3,8 @@
 class Login_Model extends CI_Model
 {
 
-	public function check_email_unique($email){
+	public function check_email_unique($email)
+	{
 		$this->db->select('*');
 		$this->db->from('user');
 		$this->db->where(array('email =' => $email));
@@ -16,7 +17,8 @@ class Login_Model extends CI_Model
 		return true;
 	}
 
-	public function new_user($email,$password,$name){
+	public function new_user($email, $password, $name)
+	{
 		$now = new DateTime();
 		$now->getTimestamp();
 
@@ -24,32 +26,31 @@ class Login_Model extends CI_Model
 			'email' => $email,
 			'name' => $name,
 			'password' => $password,
-			'created_at' => $now->format('Y-m-d H:i:s'),
-			'updated_at' => $now->format('Y-m-d H:i:s')
-
+			'created_at' => $now->format('Y-m-d H:i:s')
 		);
 
 		$this->db->insert('user', $data);
 
 		$user = new User();
-		$user->setName($name);
-		$user->setEmail($email);
+		$user->set_name($name);
+		$user->set_email($email);
 
 		return $user;
 	}
 
-	public function check_login($email,$password){
-		$user= new User();
+	public function check_login($email, $password)
+	{
+		$user = new User();
 		$password = md5($password);
 
 		$this->db->select('*');
 		$this->db->from('user');
-		$this->db->where(array('email =' => $email, 'password'=>$password));
+		$this->db->where(array('email =' => $email, 'password' => $password));
 		$query = $this->db->get();
 
-		foreach ($query->result() as $row){
-			$user->setName($row->name);
-			$user->setEmail($row->email);
+		foreach ($query->result() as $row) {
+			$user->set_name($row->name);
+			$user->set_email($row->email);
 			return $user;
 		}
 
