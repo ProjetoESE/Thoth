@@ -18,7 +18,7 @@ class Project
 	private $inclusion_rule;
 	private $exclusion_rule;
 	private $score_min;
-	private $domains;
+	private $domains = array();
 	private $languages;
 	private $study_types;
 	private $keywords;
@@ -304,7 +304,8 @@ class Project
 		if (is_null($domains) || empty($domains)) {
 			throw  new  InvalidArgumentException("Project Domains Invalid!");
 		}
-		$this->domains = $domains;
+
+		array_push($this->domains,$domains);
 	}
 
 	/**

@@ -387,6 +387,7 @@
 		</div>
 	</div>
 </div>
+<input type="hidden" id="base_url" value="<?=base_url()?>">
 </body>
 
 </html>

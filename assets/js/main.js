@@ -1,4 +1,6 @@
 $(document).ready(function () {
+	base_url = $("#base_url").val();
+
 	let lang = {
 		"sZeroRecords": "No options added"
 	};
@@ -13,8 +15,6 @@ $(document).ready(function () {
 		searching: false,
 		ordering: false
 	};
-
-	let configCriteria = {}
 
 
 	table_domains = $('#table_domains').DataTable(configDataTables);

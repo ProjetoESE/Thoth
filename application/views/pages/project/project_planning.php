@@ -1,11 +1,15 @@
 <div class="card">
 	<div class="text-center card-header">
-		<h4>Projeto 01</h4>
-		<a href="<?= base_url('project_controller/open/1') ?>"
+		<h4><?= $project->get_title(); ?></h4>
+		<input type="hidden" id="id_project" value="<?= $project->get_id(); ?>">
+		<a href="<?= base_url('project_controller/open/' . $project->get_id()) ?>"
 		   class="btn form-inline btn-outline-primary opt">Review</a>
-		<a href="<?= base_url('project_controller/planning/1') ?>" class="btn form-inline btn-outline-primary opt">Planning</a>
-		<a href="<?= base_url('project_controller/conducting/1') ?>" class="btn form-inline btn-outline-primary opt">Conducting</a>
-		<a href="<?= base_url('project_controller/reporting/1') ?>" class="btn form-inline btn-outline-primary opt">Reporting</a>
+		<a href="<?= base_url('project_controller/planning/' . $project->get_id()) ?>"
+		   class="btn form-inline btn-outline-primary opt">Planning</a>
+		<a href="<?= base_url('project_controller/conducting/' . $project->get_id()) ?>"
+		   class="btn form-inline btn-outline-primary opt">Conducting</a>
+		<a href="<?= base_url('project_controller/reporting/' . $project->get_id()) ?>"
+		   class="btn form-inline btn-outline-primary opt">Reporting</a>
 	</div>
 	<div class="card-body">
 		<h4>Planning</h4>
@@ -46,7 +50,7 @@
 					<div class="input-group">
 						<input type="text" class="form-control" id="domain">
 						<div class="input-group-append">
-							<button class="btn btn-success" type="button" onclick="add_domain();"><span
+							<button type="button" class="btn btn-success" id="add_domain" onclick="add_domain();"><span
 									class="fas fa-plus"></span></button>
 						</div>
 					</div>
@@ -60,6 +64,19 @@
 						</tr>
 						</thead>
 						<tbody>
+						<?php foreach ($project->get_domains() as $domain) { ?>
+							<tr>
+								<td><?=$domain?></td>
+								<td>
+									<button class="btn btn-warning opt" onClick="modal_domain($(this).parents('tr'));">
+										<span class="fas fa-edit"></span>
+									</button>
+									<button class="btn btn-danger" onClick="delete_domain($(this).parents('tr'));">
+										<span class="far fa-trash-alt"></span>
+									</button>
+								</td>
+							</tr>
+						<?php } ?>
 						</tbody>
 					</table>
 				</div>
@@ -340,7 +357,8 @@
 			<label for="search_strategy"><strong>Search Strategy</strong></label>
 			<textarea rows="8" class="form-control" id="search_strategy"></textarea>
 			<div class="form-inline container justify-content-between">
-				<a href="#tab_search_string" onclick="showString();" class="btn btn-secondary"><span class="fas fa-backward"></span> Previous</a>
+				<a href="#tab_search_string" onclick="showString();" class="btn btn-secondary"><span
+						class="fas fa-backward"></span> Previous</a>
 				<a href="#tab_criteria" class="btn btn-secondary opt">Next <span
 						class="fas fa-forward"></span></a>
 			</div>
@@ -377,7 +395,8 @@
 							<option value="Inclusion">Inclusion</option>
 							<option value="Exclusion">Exclusion</option>
 						</select>
-						<button class="btn btn-success" type="button" onclick="add_criteria()"><span class="fas fa-plus"></span></button>
+						<button class="btn btn-success" type="button" onclick="add_criteria()"><span
+								class="fas fa-plus"></span></button>
 					</div>
 				</div>
 			</div>
@@ -407,7 +426,7 @@
 			</table>
 			<br>
 			<div class="form-inline container justify-content-between">
-				<a href="#tab_search_strategy"  class="btn btn-secondary"><span class="fas fa-backward"></span> Previous</a>
+				<a href="#tab_search_strategy" class="btn btn-secondary"><span class="fas fa-backward"></span> Previous</a>
 				<a href="#tab_quality" class="btn btn-secondary opt">Next <span
 						class="fas fa-forward"></span></a>
 			</div>
@@ -426,7 +445,8 @@
 				<div class="input-group col-md-8">
 					<input type="text" id="general_score_desc" class="form-control" placeholder="Description">
 					<div class="input-group-append">
-						<button class="btn btn-success" type="button" onclick="add_general_quality_score();"><span class="fas fa-plus"></span></button>
+						<button class="btn btn-success" type="button" onclick="add_general_quality_score();"><span
+								class="fas fa-plus"></span></button>
 					</div>
 				</div>
 				<label for="min_score_to_app" class="col-md-12">Minimum General Score to Approve</label>
@@ -646,7 +666,7 @@
 			</table>
 			<br>
 			<div class="form-inline container justify-content-between">
-				<a href="#tab_criteria"  class="btn btn-secondary"><span class="fas fa-backward"></span> Previous</a>
+				<a href="#tab_criteria" class="btn btn-secondary"><span class="fas fa-backward"></span> Previous</a>
 				<a href="#tab_data" class="btn btn-secondary opt">Next <span
 						class="fas fa-forward"></span></a>
 			</div>
@@ -738,7 +758,7 @@
 			<br>
 			<div class="form-inline container justify-content-between">
 				<a href="#tab_quality" class="btn btn-secondary"><span class="fas fa-backward"></span> Previous</a>
-				<a class="btn btn-secondary disabled" >Next <span class="fas fa-forward"></span></a>
+				<a class="btn btn-secondary disabled">Next <span class="fas fa-forward"></span></a>
 			</div>
 		</div>
 	</div>

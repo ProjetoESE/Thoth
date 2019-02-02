@@ -99,31 +99,55 @@ $(window).on("popstate", function () {
 });
 
 
-function add_domain() {
+function add_domain () {
+	let id_project = $("#id_project").val();
 	let domain = $("#domain");
 
 	if (!validate_domain(domain[0].value)) {
 		return;
 	}
 
-	table_domains.row.add([
-		domain[0].value,
-		'<button class="btn btn-warning opt" onClick="modal_domain($(this).parents(\'tr\'));">' +
-		'<span class="fas fa-edit"></span>' +
-		'</button>' +
-		'<button class="btn btn-danger" onClick="delete_domain($(this).parents(\'tr\'));">' +
-		'<span class="far fa-trash-alt"></span>' +
-		'</button>'
-	]).draw();
+	$.ajax({
+		type: "POST",
+		url: base_url + 'project_controller/add_domain/',
+		data: {
+			id_project: id_project,
+			domain: domain[0].value
+		},
+		success: function () {
+			table_domains.row.add([
+				domain[0].value,
+				'<button class="btn btn-warning opt" onClick="modal_domain($(this).parents(\'tr\'));">' +
+				'<span class="fas fa-edit"></span>' +
+				'</button>' +
+				'<button class="btn btn-danger" onClick="delete_domain($(this).parents(\'tr\'));">' +
+				'<span class="far fa-trash-alt"></span>' +
+				'</button>'
+			]).draw();
 
-	domain[0].value = "";
+			domain[0].value = "";
+		}
+	});
 
 }
 
 function delete_domain(value) {
 	let row = table_domains.row(value);
-	row.remove();
-	table_domains.draw();
+	let id_project = $("#id_project").val();
+	$.ajax({
+		type: "POST",
+		url: base_url + 'project_controller/delete_domain/',
+		data: {
+			id_project: id_project,
+			domain: row.data()[0][0]
+		},
+		success: function () {
+			row.remove();
+			table_domains.draw();
+		}
+	});
+
+
 }
 
 function modal_domain(value) {
@@ -136,22 +160,35 @@ function modal_domain(value) {
 function edit_domain() {
 	let index = $('#modal_domain #index_domain').val();
 	let domain = $('#modal_domain #edit_domain').val();
+	let id_project = $("#id_project").val();
 
 	if (!validate_domain(domain)) {
 		return false;
 	}
 
-	let row = table_domains.row(index);
-	row.remove();
-	table_domains.row.add([
-		domain,
-		'<button class="btn btn-warning opt" onClick="modal_domain($(this).parents(\'tr\'));">' +
-		'<span class="fas fa-edit"></span>' +
-		'</button>' +
-		'<button class="btn btn-danger" onClick="delete_domain($(this).parents(\'tr\'));">' +
-		'<span class="far fa-trash-alt"></span>' +
-		'</button>'
-	]).draw();
+	delete_domain(index);
+
+	$.ajax({
+		type: "POST",
+		url: base_url + 'project_controller/add_domain/',
+		data: {
+			id_project: id_project,
+			domain: domain
+		},
+		success: function () {
+			table_domains.row.add([
+				domain,
+				'<button class="btn btn-warning opt" onClick="modal_domain($(this).parents(\'tr\'));">' +
+				'<span class="fas fa-edit"></span>' +
+				'</button>' +
+				'<button class="btn btn-danger" onClick="delete_domain($(this).parents(\'tr\'));">' +
+				'<span class="far fa-trash-alt"></span>' +
+				'</button>'
+			]).draw();
+
+			domain[0].value = "";
+		}
+	});
 
 	Swal({
 		title: 'Success',

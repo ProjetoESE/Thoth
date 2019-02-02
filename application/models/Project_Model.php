@@ -39,6 +39,8 @@ class Project_Model extends CI_Model
 
 	public function get_project($id)
 	{
+
+		$project = new Project();
 		$this->db->select('project.*, user.name');
 		$this->db->from('project');
 		$this->db->join('user', 'project.created_by = user.id_user');
@@ -46,15 +48,40 @@ class Project_Model extends CI_Model
 		$query = $this->db->get();
 
 		foreach ($query->result() as $row) {
-			$project = new Project();
 			$project->set_title($row->title);
 			$project->set_created_by($row->name);
 			$project->set_id($row->id_project);
 			$project->set_description($row->description);
 			$project->set_objectives($row->objectives);
-			return $project;
 		}
 
-		return null;
+		$this->db->select('*');
+		$this->db->from('domain');
+		$this->db->where('id_project', $id);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			$project->set_domains($row->description);
+		}
+
+		return $project;
+	}
+
+	public function add_domain($domain, $id_project)
+	{
+		$data = array(
+			'description' => $domain,
+			'id_project' => $id_project
+		);
+
+		$this->db->insert('domain', $data);
+	}
+
+	public function delete_domain($domain, $id_project)
+	{
+
+		$this->db->where('description', $domain);
+		$this->db->where('id_project', $id_project);
+		$this->db->delete('domain');
 	}
 }
