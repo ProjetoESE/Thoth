@@ -64,6 +64,16 @@ class Project_Model extends CI_Model
 			$project->set_domains($row->description);
 		}
 
+		$this->db->select('language.description');
+		$this->db->from('project_languages');
+		$this->db->join('language','language.id_language = project_languages.id_language');
+		$this->db->where('id_project', $id);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			$project->set_languages($row->description);
+		}
+
 		return $project;
 	}
 
@@ -79,9 +89,61 @@ class Project_Model extends CI_Model
 
 	public function delete_domain($domain, $id_project)
 	{
+		var_dump($domain);
 
 		$this->db->where('description', $domain);
 		$this->db->where('id_project', $id_project);
 		$this->db->delete('domain');
+	}
+
+	public function add_language($language, $id_project)
+	{
+		$id_language = null;
+		$this->db->select('*');
+		$this->db->from('language');
+		$this->db->where('description',$language);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row){
+			$id_language = $row->id_language;
+		}
+
+		$data = array(
+			'id_language' => $id_language,
+			'id_project' => $id_project
+		);
+
+		$this->db->insert('project_languages', $data);
+	}
+
+	public function get_languages(){
+		$languages = array();
+
+		$this->db->select('*');
+		$this->db->from('language');
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row){
+			array_push($languages,$row->description);
+		}
+
+		return $languages;
+	}
+
+	public function delete_language($language,$id_project){
+
+		$id_language = null;
+		$this->db->select('id_language');
+		$this->db->from('language');
+		$this->db->where('description',$language);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row){
+			$id_language = $row->id_language;
+		}
+
+		$this->db->where('id_language', $id_language);
+		$this->db->where('id_project', $id_project);
+		$this->db->delete('project_languages');
 	}
 }

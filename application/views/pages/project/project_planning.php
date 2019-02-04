@@ -66,7 +66,7 @@
 						<tbody>
 						<?php foreach ($project->get_domains() as $domain) { ?>
 							<tr>
-								<td><?=$domain?></td>
+								<td><?= $domain ?></td>
 								<td>
 									<button class="btn btn-warning opt" onClick="modal_domain($(this).parents('tr'));">
 										<span class="fas fa-edit"></span>
@@ -85,11 +85,13 @@
 					<label for="language"><strong>Select languages</strong></label>
 					<div class="input-group">
 						<select class="form-control" id="language">
-							<option>English</option>
-							<option>Portuguese</option>
-							<option>Spanish</option>
-							<option>Russian</option>
-							<option>French</option>
+							<?php
+							foreach ($languages as $lang) {
+								?>
+								<option value="<?= $lang ?>"><?= $lang ?></option>
+								<?php
+							}
+							?>
 						</select>
 						<div class="input-group-append">
 							<button class="btn btn-success" type="button" onclick="add_language();"><span
@@ -106,6 +108,16 @@
 						</tr>
 						</thead>
 						<tbody>
+						<?php foreach ($project->get_languages() as $language) { ?>
+							<tr>
+								<td><?= $language ?></td>
+								<td>
+									<button class="btn btn-danger" onClick="delete_language($(this).parents('tr'));">
+										<span class="far fa-trash-alt"></span>
+									</button>
+								</td>
+							</tr>
+						<?php } ?>
 						</tbody>
 					</table>
 				</div>

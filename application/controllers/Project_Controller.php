@@ -42,6 +42,7 @@ class Project_Controller extends CI_Controller
 		try {
 			$this->load->model("Project_Model");
 			$data['project'] = $this->Project_Model->get_project($id);
+			$data['languages'] = $this->Project_Model->get_languages($id);
 
 			if (!isset($_SESSION['logged_in'])) {
 				load_templates('pages/visitor/project_planning_visitor', $data);
@@ -160,13 +161,44 @@ class Project_Controller extends CI_Controller
 		}
 	}
 
-	public function delete_domain(){
+	public function delete_domain()
+	{
 		try {
 			$domain = $this->input->post('domain');
 			$id_project = $this->input->post('id_project');
 			$this->load->model("Project_Model");
 
 			$this->Project_Model->delete_domain($domain, $id_project);
+
+		} catch (Exception $e) {
+			$this->session->set_flashdata('error', $e->getMessage());
+			redirect(base_url());
+		}
+	}
+
+	public function add_language()
+	{
+		try {
+			$language = $this->input->post('language');
+			$id_project = $this->input->post('id_project');
+			$this->load->model("Project_Model");
+
+			$this->Project_Model->add_language($language, $id_project);
+
+		} catch (Exception $e) {
+			$this->session->set_flashdata('error', $e->getMessage());
+			redirect(base_url());
+		}
+	}
+
+	public function delete_language()
+	{
+		try {
+			$language = $this->input->post('language');
+			$id_project = $this->input->post('id_project');
+			$this->load->model("Project_Model");
+
+			$this->Project_Model->delete_language($language, $id_project);
 
 		} catch (Exception $e) {
 			$this->session->set_flashdata('error', $e->getMessage());

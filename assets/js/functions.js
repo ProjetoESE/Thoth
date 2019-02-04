@@ -99,7 +99,7 @@ $(window).on("popstate", function () {
 });
 
 
-function add_domain () {
+function add_domain() {
 	let id_project = $("#id_project").val();
 	let domain = $("#domain");
 
@@ -139,7 +139,7 @@ function delete_domain(value) {
 		url: base_url + 'project_controller/delete_domain/',
 		data: {
 			id_project: id_project,
-			domain: row.data()[0][0]
+			domain: row.data()[0]
 		},
 		success: function () {
 			row.remove();
@@ -230,19 +230,30 @@ function validate_domain(domain) {
 
 function add_language() {
 	let language = $("#language");
+	let id_project = $("#id_project").val();
 
 	if (!validate_language(language[0].value)) {
 		return false;
 	}
 
-	table_languages.row.add([
-		language[0].value,
-		'<button class="btn btn-danger" onClick="delete_language($(this).parents(\'tr\'));">' +
-		'<span class="far fa-trash-alt"></span>' +
-		'</button>'
-	]).draw();
+	$.ajax({
+		type: "POST",
+		url: base_url + 'project_controller/add_language/',
+		data: {
+			id_project: id_project,
+			language: language[0].value
+		},
+		success: function () {
+			table_languages.row.add([
+				language[0].value,
+				'<button class="btn btn-danger" onClick="delete_language($(this).parents(\'tr\'));">' +
+				'<span class="far fa-trash-alt"></span>' +
+				'</button>'
+			]).draw();
 
-	language[0].value = "";
+			language[0].value = "";
+		}
+	});
 
 }
 
@@ -274,8 +285,21 @@ function validate_language(language) {
 
 function delete_language(value) {
 	let row = table_languages.row(value);
-	row.remove();
-	table_languages.draw();
+	let id_project = $("#id_project").val();
+
+	$.ajax({
+		type: "POST",
+		url: base_url + 'project_controller/delete_language/',
+		data: {
+			id_project: id_project,
+			language: row.data()[0]
+		},
+		success: function () {
+			row.remove();
+			table_languages.draw();
+		}
+	});
+
 }
 
 function add_study_type() {
@@ -729,6 +753,7 @@ function modal_synonym(value) {
 function edit_synonym() {
 
 }
+
 function validate_synonym(term, syn, id) {
 	if (!term) {
 		swal({
@@ -773,7 +798,7 @@ function add_criteria() {
 	let description = $("#description_criteria");
 	let type = $("#select_type option:selected").val();
 
-	if (!validate_criteria(id[0].value, description[0].value, type,null)) {
+	if (!validate_criteria(id[0].value, description[0].value, type, null)) {
 		return false;
 	}
 
