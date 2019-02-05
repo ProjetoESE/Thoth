@@ -10,6 +10,9 @@
 	<meta property="og:description" content="SLR Tool"/>
 	<title> Thoth </title>
 
+
+	<link rel="icon" type="image/png" href="<?= base_url('assets/img/favicon.png'); ?>" />
+
 	<!-- Bootstrap -->
 	<link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.min.css'); ?>">
 
