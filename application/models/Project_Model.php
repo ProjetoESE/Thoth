@@ -53,6 +53,8 @@ class Project_Model extends CI_Model
 			$project->set_id($row->id_project);
 			$project->set_description($row->description);
 			$project->set_objectives($row->objectives);
+			$project->set_start_date($row->start_date);
+			$project->set_end_date($row->end_date);
 		}
 
 		$this->db->select('*');
@@ -233,5 +235,15 @@ class Project_Model extends CI_Model
 		$this->db->where('description', $keywords);
 		$this->db->where('id_project', $id_project);
 		$this->db->delete('keyword');
+	}
+
+	public function add_date($start_date, $end_date, $id_project){
+		$data = array(
+			'start_date' => $start_date,
+			'end_date' => $end_date
+		);
+
+		$this->db->where('id_project', $id_project);
+		$this->db->update('project', $data);
 	}
 }

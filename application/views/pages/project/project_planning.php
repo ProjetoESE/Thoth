@@ -185,7 +185,8 @@
 							<tr>
 								<td><?= $keyword ?></td>
 								<td>
-									<button class="btn btn-warning opt" onClick="modal_keywords($(this).parents('tr'));">
+									<button class="btn btn-warning opt"
+											onClick="modal_keywords($(this).parents('tr'));">
 										<span class="fas fa-edit"></span>
 									</button>
 									<button class="btn btn-danger" onClick="delete_keywords($(this).parents('tr'));">
@@ -197,19 +198,23 @@
 						</tbody>
 					</table>
 				</div>
-				<div class="col-sm-12 col-md-3">
+				<div class="col-sm-12 col-md-6">
 					<label for="start_date"><strong>Start and End Date</strong></label>
 					<div class="input-group">
 						<div class="input-group-prepend">
 							<button class="btn btn-success"><span class="far fa-calendar-check "></span></button>
 						</div>
-						<input type="Date" id="start_date" class="form-control" title="Start Date">
-					</div>
-					<div class="input-group">
+						<input type="Date" id="start_date" class="form-control" title="Start Date"
+							   value="<?=$project->get_start_date()?>">
 						<div class="input-group-prepend">
 							<button class="btn btn-danger"><span class="far fa-calendar-check "></span></button>
 						</div>
-						<input type="Date" id="end_date" class="form-control" title="End Date">
+						<input type="Date" id="end_date" class="form-control" title="End Date"
+							   value="<?=$project->get_end_date()?>">
+						<div class="input-group-append">
+							<button class="btn btn-success" type="button" onclick="add_date()"><span
+									class="fas fa-check"></span></button>
+						</div>
 					</div>
 				</div>
 			</div>

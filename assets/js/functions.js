@@ -502,6 +502,66 @@ function delete_keywords(value) {
 	});
 }
 
+function add_date() {
+	let start_date = $('#start_date').val();
+	let end_date = $('#end_date').val();
+	let id_project = $("#id_project").val();
+
+	if (!validate_date(start_date, end_date)) {
+		return false;
+	}
+
+	$.ajax({
+		type: "POST",
+		url: base_url + 'project_controller/add_date/',
+		data: {
+			id_project: id_project,
+			start_date: start_date,
+			end_date: end_date
+		},
+		success: function () {
+			Swal({
+				title: 'Success',
+				text: "The dates was edited",
+				type: 'success',
+				showCancelButton: false,
+				confirmButtonText: 'Ok'
+			});
+		}
+	});
+}
+
+function validate_date(start_date, end_date) {
+	if (!start_date) {
+		swal({
+			type: 'warning',
+			title: 'Warning',
+			text: 'The start date can not be empty!'
+		});
+		return false;
+	}
+
+	if (!end_date) {
+		swal({
+			type: 'warning',
+			title: 'Warning',
+			text: 'The end date can not be empty!'
+		});
+		return false;
+	}
+
+	if (!(start_date < end_date)) {
+		swal({
+			type: 'warning',
+			title: 'Warning',
+			text: 'The end date can not be greater than start date!'
+		});
+		return false;
+	}
+
+	return true;
+}
+
 function add_research_question() {
 	let description = $("#description_research_question");
 	let id = $("#id_research_question");
@@ -575,7 +635,7 @@ function validate_research(id, description) {
 			title: 'Warning',
 			text: 'The ID of research question can not be empty!'
 		});
-		return;
+		return false;
 	}
 
 	if (!description) {

@@ -267,4 +267,20 @@ class Project_Controller extends CI_Controller
 			redirect(base_url());
 		}
 	}
+
+	public function add_date()
+	{
+		try {
+			$start_date = $this->input->post('start_date');
+			$end_date = $this->input->post('end_date');
+			$id_project = $this->input->post('id_project');
+			$this->load->model("Project_Model");
+
+			$this->Project_Model->add_date($start_date, $end_date, $id_project);
+
+		} catch (Exception $e) {
+			$this->session->set_flashdata('error', $e->getMessage());
+			redirect(base_url());
+		}
+	}
 }
