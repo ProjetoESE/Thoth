@@ -210,6 +210,7 @@ class Project_Controller extends CI_Controller
 	public function add_study_type()
 	{
 		try {
+			;;
 			$study_type = $this->input->post('study_type');
 			$id_project = $this->input->post('id_project');
 			$this->load->model("Project_Model");
@@ -230,6 +231,36 @@ class Project_Controller extends CI_Controller
 			$this->load->model("Project_Model");
 
 			$this->Project_Model->delete_study_type($study_type, $id_project);
+
+		} catch (Exception $e) {
+			$this->session->set_flashdata('error', $e->getMessage());
+			redirect(base_url());
+		}
+	}
+
+	public function add_keywords()
+	{
+		try {
+			$keywords = $this->input->post('keywords');
+			$id_project = $this->input->post('id_project');
+			$this->load->model("Project_Model");
+
+			$this->Project_Model->add_keywords($keywords, $id_project);
+
+		} catch (Exception $e) {
+			$this->session->set_flashdata('error', $e->getMessage());
+			redirect(base_url());
+		}
+	}
+
+	public function delete_keywords()
+	{
+		try {
+			$keywords = $this->input->post('keywords');
+			$id_project = $this->input->post('id_project');
+			$this->load->model("Project_Model");
+
+			$this->Project_Model->delete_keywords($keywords, $id_project);
 
 		} catch (Exception $e) {
 			$this->session->set_flashdata('error', $e->getMessage());

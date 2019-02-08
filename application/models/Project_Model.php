@@ -66,7 +66,7 @@ class Project_Model extends CI_Model
 
 		$this->db->select('language.description');
 		$this->db->from('project_languages');
-		$this->db->join('language','language.id_language = project_languages.id_language');
+		$this->db->join('language', 'language.id_language = project_languages.id_language');
 		$this->db->where('id_project', $id);
 		$query = $this->db->get();
 
@@ -76,12 +76,21 @@ class Project_Model extends CI_Model
 
 		$this->db->select('study_type.description');
 		$this->db->from('project_study_types');
-		$this->db->join('study_type','study_type.id_study_type = project_study_types.id_study_type');
+		$this->db->join('study_type', 'study_type.id_study_type = project_study_types.id_study_type');
 		$this->db->where('id_project', $id);
 		$query = $this->db->get();
 
 		foreach ($query->result() as $row) {
 			$project->set_study_types($row->description);
+		}
+
+		$this->db->select('*');
+		$this->db->from('keyword');
+		$this->db->where('id_project', $id);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			$project->set_keywords($row->description);
 		}
 
 		return $project;
@@ -99,8 +108,6 @@ class Project_Model extends CI_Model
 
 	public function delete_domain($domain, $id_project)
 	{
-		var_dump($domain);
-
 		$this->db->where('description', $domain);
 		$this->db->where('id_project', $id_project);
 		$this->db->delete('domain');
@@ -111,10 +118,10 @@ class Project_Model extends CI_Model
 		$id_language = null;
 		$this->db->select('*');
 		$this->db->from('language');
-		$this->db->where('description',$language);
+		$this->db->where('description', $language);
 		$query = $this->db->get();
 
-		foreach ($query->result() as $row){
+		foreach ($query->result() as $row) {
 			$id_language = $row->id_language;
 		}
 
@@ -126,29 +133,31 @@ class Project_Model extends CI_Model
 		$this->db->insert('project_languages', $data);
 	}
 
-	public function get_languages(){
+	public function get_languages()
+	{
 		$languages = array();
 
 		$this->db->select('*');
 		$this->db->from('language');
 		$query = $this->db->get();
 
-		foreach ($query->result() as $row){
-			array_push($languages,$row->description);
+		foreach ($query->result() as $row) {
+			array_push($languages, $row->description);
 		}
 
 		return $languages;
 	}
 
-	public function delete_language($language,$id_project){
+	public function delete_language($language, $id_project)
+	{
 
 		$id_language = null;
 		$this->db->select('id_language');
 		$this->db->from('language');
-		$this->db->where('description',$language);
+		$this->db->where('description', $language);
 		$query = $this->db->get();
 
-		foreach ($query->result() as $row){
+		foreach ($query->result() as $row) {
 			$id_language = $row->id_language;
 		}
 
@@ -157,14 +166,15 @@ class Project_Model extends CI_Model
 		$this->db->delete('project_languages');
 	}
 
-	public function add_study_type($study_type,$id_project){
+	public function add_study_type($study_type, $id_project)
+	{
 		$id_study_type = null;
 		$this->db->select('*');
 		$this->db->from('study_type');
-		$this->db->where('description',$study_type);
+		$this->db->where('description', $study_type);
 		$query = $this->db->get();
 
-		foreach ($query->result() as $row){
+		foreach ($query->result() as $row) {
 			$id_study_type = $row->id_study_type;
 		}
 
@@ -176,33 +186,52 @@ class Project_Model extends CI_Model
 		$this->db->insert('project_study_types', $data);
 	}
 
-	public function get_study_types(){
+	public function get_study_types()
+	{
 		$study_types = array();
 
 		$this->db->select('*');
 		$this->db->from('study_type');
 		$query = $this->db->get();
 
-		foreach ($query->result() as $row){
-			array_push($study_types,$row->description);
+		foreach ($query->result() as $row) {
+			array_push($study_types, $row->description);
 		}
 
 		return $study_types;
 	}
 
-	public function delete_study_type($study_type,$id_project){
+	public function delete_study_type($study_type, $id_project)
+	{
 		$id_study_type = null;
 		$this->db->select('id_study_type');
 		$this->db->from('study_type');
-		$this->db->where('description',$study_type);
+		$this->db->where('description', $study_type);
 		$query = $this->db->get();
 
-		foreach ($query->result() as $row){
+		foreach ($query->result() as $row) {
 			$id_study_type = $row->id_study_type;
 		}
 
 		$this->db->where('id_study_type', $id_study_type);
 		$this->db->where('id_project', $id_project);
 		$this->db->delete('project_study_types');
+	}
+
+	public function add_keywords($keyword, $id_project)
+	{
+		$data = array(
+			'description' => $keyword,
+			'id_project' => $id_project
+		);
+
+		$this->db->insert('keyword', $data);
+	}
+
+	public function delete_keywords($keywords, $id_project)
+	{
+		$this->db->where('description', $keywords);
+		$this->db->where('id_project', $id_project);
+		$this->db->delete('keyword');
 	}
 }

@@ -181,6 +181,19 @@
 						</tr>
 						</thead>
 						<tbody>
+						<?php foreach ($project->get_keywords() as $keyword) { ?>
+							<tr>
+								<td><?= $keyword ?></td>
+								<td>
+									<button class="btn btn-warning opt" onClick="modal_keywords($(this).parents('tr'));">
+										<span class="fas fa-edit"></span>
+									</button>
+									<button class="btn btn-danger" onClick="delete_keywords($(this).parents('tr'));">
+										<span class="far fa-trash-alt"></span>
+									</button>
+								</td>
+							</tr>
+						<?php } ?>
 						</tbody>
 					</table>
 				</div>

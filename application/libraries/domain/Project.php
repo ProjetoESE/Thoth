@@ -21,7 +21,7 @@ class Project
 	private $domains = array();
 	private $languages = array();
 	private $study_types = array();
-	private $keywords;
+	private $keywords = array();
 	private $research_questions;
 	private $databases;
 	private $search_strings;
@@ -372,7 +372,7 @@ class Project
 		if (is_null($keywords) || empty($keywords)) {
 			throw  new  InvalidArgumentException("Project Keywords Invalid!");
 		}
-		$this->keywords = $keywords;
+		array_push($this->keywords, $keywords);
 	}
 
 	/**

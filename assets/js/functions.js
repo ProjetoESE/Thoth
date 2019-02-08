@@ -376,23 +376,34 @@ function delete_study_type(value) {
 }
 
 function add_keywords() {
+	let id_project = $("#id_project").val();
 	let keywords = $("#keywords");
 
 	if (!validate_keywords(keywords[0].value)) {
 		return false;
 	}
 
-	table_keywords.row.add([
-		keywords[0].value,
-		'<button class="btn btn-warning opt" onClick="modal_keywords($(this).parents(\'tr\'));">' +
-		'<span class="fas fa-edit"></span>' +
-		'</button>' +
-		'<button class="btn btn-danger" onClick="delete_keywords($(this).parents(\'tr\'));">' +
-		'<span class="far fa-trash-alt"></span>' +
-		'</button>'
-	]).draw();
+	$.ajax({
+		type: "POST",
+		url: base_url + 'project_controller/add_keywords/',
+		data: {
+			id_project: id_project,
+			keywords: keywords[0].value
+		},
+		success: function () {
+			table_keywords.row.add([
+				keywords[0].value,
+				'<button class="btn btn-warning opt" onClick="modal_keywords($(this).parents(\'tr\'));">' +
+				'<span class="fas fa-edit"></span>' +
+				'</button>' +
+				'<button class="btn btn-danger" onClick="delete_keywords($(this).parents(\'tr\'));">' +
+				'<span class="far fa-trash-alt"></span>' +
+				'</button>'
+			]).draw();
 
-	keywords[0].value = "";
+			keywords[0].value = "";
+		}
+	});
 
 }
 
@@ -407,22 +418,33 @@ function modal_keywords(value) {
 function edit_keyword() {
 	let index = $('#modal_keyword #index_keyword').val();
 	let keyword = $('#modal_keyword #edit_keyword').val();
+	let id_project = $("#id_project").val();
 
 	if (!validate_keywords(keyword)) {
 		return false;
 	}
 
-	let row = table_keywords.row(index);
-	row.remove();
-	table_keywords.row.add([
-		keyword,
-		'<button class="btn btn-warning opt" onClick="modal_keywords($(this).parents(\'tr\'));">' +
-		'<span class="fas fa-edit"></span>' +
-		'</button>' +
-		'<button class="btn btn-danger" onClick="delete_keywords($(this).parents(\'tr\'));">' +
-		'<span class="far fa-trash-alt"></span>' +
-		'</button>'
-	]).draw();
+	delete_keywords(index);
+
+	$.ajax({
+		type: "POST",
+		url: base_url + 'project_controller/add_keywords/',
+		data: {
+			id_project: id_project,
+			keywords: keyword
+		},
+		success: function () {
+			table_keywords.row.add([
+				keyword,
+				'<button class="btn btn-warning opt" onClick="modal_keywords($(this).parents(\'tr\'));">' +
+				'<span class="fas fa-edit"></span>' +
+				'</button>' +
+				'<button class="btn btn-danger" onClick="delete_keywords($(this).parents(\'tr\'));">' +
+				'<span class="far fa-trash-alt"></span>' +
+				'</button>'
+			]).draw();
+		}
+	});
 
 	Swal({
 		title: 'Success',
@@ -464,8 +486,20 @@ function validate_keywords(keyword) {
 
 function delete_keywords(value) {
 	let row = table_keywords.row(value);
-	row.remove();
-	table_keywords.draw();
+	let id_project = $("#id_project").val();
+
+	$.ajax({
+		type: "POST",
+		url: base_url + 'project_controller/delete_keywords/',
+		data: {
+			id_project: id_project,
+			keywords: row.data()[0]
+		},
+		success: function () {
+			row.remove();
+			table_keywords.draw();
+		}
+	});
 }
 
 function add_research_question() {
