@@ -29,6 +29,10 @@ class Login extends CI_Controller
 			);
 
 			$this->session->set_userdata($session);
+
+			$activity = $this->session->name . " logged in";
+			$this->insert_log($activity, 2);
+
 			redirect(base_url("user_controller"));
 		} catch (Exception $e) {
 			$this->session->set_flashdata('error', $e->getMessage());
@@ -60,6 +64,10 @@ class Login extends CI_Controller
 			);
 
 			$this->session->set_userdata($session);
+
+			$activity = $this->session->name . " created new user and logged in";
+			$this->insert_log($activity, 2);
+
 			redirect(base_url("user_controller"));
 		} catch (Exception $e) {
 			$this->session->set_flashdata('error', $e->getMessage());
@@ -83,6 +91,9 @@ class Login extends CI_Controller
 	public function sign_out()
 	{
 		try {
+			$activity = $this->session->name . " logged out";
+			$this->insert_log($activity, 2);
+
 			$this->session->sess_destroy();
 			redirect(base_url());
 		} catch (Exception $e) {
@@ -102,6 +113,12 @@ class Login extends CI_Controller
 			$this->session->set_flashdata('error', $e->getMessage());
 			redirect(base_url());
 		}
+	}
+
+	public function insert_log($activity, $module)
+	{
+		$this->load->model("User_Model");
+		$this->User_Model->insert_log($activity, $module);
 	}
 
 }
