@@ -42,7 +42,8 @@ class Project_Controller extends CI_Controller
 		try {
 			$this->load->model("Project_Model");
 			$data['project'] = $this->Project_Model->get_project($id);
-			$data['languages'] = $this->Project_Model->get_languages($id);
+			$data['languages'] = $this->Project_Model->get_languages();
+			$data['study_types'] = $this->Project_Model->get_study_types();
 
 			if (!isset($_SESSION['logged_in'])) {
 				load_templates('pages/visitor/project_planning_visitor', $data);
@@ -199,6 +200,36 @@ class Project_Controller extends CI_Controller
 			$this->load->model("Project_Model");
 
 			$this->Project_Model->delete_language($language, $id_project);
+
+		} catch (Exception $e) {
+			$this->session->set_flashdata('error', $e->getMessage());
+			redirect(base_url());
+		}
+	}
+
+	public function add_study_type()
+	{
+		try {
+			$study_type = $this->input->post('study_type');
+			$id_project = $this->input->post('id_project');
+			$this->load->model("Project_Model");
+
+			$this->Project_Model->add_study_type($study_type, $id_project);
+
+		} catch (Exception $e) {
+			$this->session->set_flashdata('error', $e->getMessage());
+			redirect(base_url());
+		}
+	}
+
+	public function delete_study_type()
+	{
+		try {
+			$study_type = $this->input->post('study_type');
+			$id_project = $this->input->post('id_project');
+			$this->load->model("Project_Model");
+
+			$this->Project_Model->delete_study_type($study_type, $id_project);
 
 		} catch (Exception $e) {
 			$this->session->set_flashdata('error', $e->getMessage());

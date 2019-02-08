@@ -74,6 +74,16 @@ class Project_Model extends CI_Model
 			$project->set_languages($row->description);
 		}
 
+		$this->db->select('study_type.description');
+		$this->db->from('project_study_types');
+		$this->db->join('study_type','study_type.id_study_type = project_study_types.id_study_type');
+		$this->db->where('id_project', $id);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			$project->set_study_types($row->description);
+		}
+
 		return $project;
 	}
 
@@ -145,5 +155,54 @@ class Project_Model extends CI_Model
 		$this->db->where('id_language', $id_language);
 		$this->db->where('id_project', $id_project);
 		$this->db->delete('project_languages');
+	}
+
+	public function add_study_type($study_type,$id_project){
+		$id_study_type = null;
+		$this->db->select('*');
+		$this->db->from('study_type');
+		$this->db->where('description',$study_type);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row){
+			$id_study_type = $row->id_study_type;
+		}
+
+		$data = array(
+			'id_study_type' => $id_study_type,
+			'id_project' => $id_project
+		);
+
+		$this->db->insert('project_study_types', $data);
+	}
+
+	public function get_study_types(){
+		$study_types = array();
+
+		$this->db->select('*');
+		$this->db->from('study_type');
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row){
+			array_push($study_types,$row->description);
+		}
+
+		return $study_types;
+	}
+
+	public function delete_study_type($study_type,$id_project){
+		$id_study_type = null;
+		$this->db->select('id_study_type');
+		$this->db->from('study_type');
+		$this->db->where('description',$study_type);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row){
+			$id_study_type = $row->id_study_type;
+		}
+
+		$this->db->where('id_study_type', $id_study_type);
+		$this->db->where('id_project', $id_project);
+		$this->db->delete('project_study_types');
 	}
 }

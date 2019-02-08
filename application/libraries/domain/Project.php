@@ -20,7 +20,7 @@ class Project
 	private $score_min;
 	private $domains = array();
 	private $languages = array();
-	private $study_types;
+	private $study_types = array();
 	private $keywords;
 	private $research_questions;
 	private $databases;
@@ -349,7 +349,8 @@ class Project
 		if (is_null($study_types) || empty($study_types)) {
 			throw  new  InvalidArgumentException("Project Study Types Invalid!");
 		}
-		$this->study_types = $study_types;
+
+		array_push($this->study_types, $study_types);
 	}
 
 	/**

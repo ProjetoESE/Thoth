@@ -303,20 +303,31 @@ function delete_language(value) {
 }
 
 function add_study_type() {
+	let id_project = $("#id_project").val();
 	let study_type = $("#study_type");
 
 	if (!validate_study_type(study_type[0].value)) {
 		return false;
 	}
 
-	table_study_type.row.add([
-		study_type[0].value,
-		'<button class="btn btn-danger" onClick="delete_study_type($(this).parents(\'tr\'));">' +
-		'<span class="far fa-trash-alt"></span>' +
-		'</button>'
-	]).draw();
+	$.ajax({
+		type: "POST",
+		url: base_url + 'project_controller/add_study_type/',
+		data: {
+			id_project: id_project,
+			study_type: study_type[0].value
+		},
+		success: function () {
+			table_study_type.row.add([
+				study_type[0].value,
+				'<button class="btn btn-danger" onClick="delete_study_type($(this).parents(\'tr\'));">' +
+				'<span class="far fa-trash-alt"></span>' +
+				'</button>'
+			]).draw();
 
-	study_type[0].value = "";
+			study_type[0].value = "";
+		}
+	});
 
 }
 
@@ -348,8 +359,20 @@ function validate_study_type(study_type) {
 
 function delete_study_type(value) {
 	let row = table_study_type.row(value);
-	row.remove();
-	table_study_type.draw();
+	let id_project = $("#id_project").val();
+
+	$.ajax({
+		type: "POST",
+		url: base_url + 'project_controller/delete_study_type/',
+		data: {
+			id_project: id_project,
+			study_type: row.data()[0]
+		},
+		success: function () {
+			row.remove();
+			table_study_type.draw();
+		}
+	});
 }
 
 function add_keywords() {

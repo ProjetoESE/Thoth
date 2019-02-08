@@ -126,11 +126,13 @@
 					<label for="study_type"><strong>Select study type</strong></label>
 					<div class="input-group">
 						<select class="form-control" id="study_type">
-							<option>All types</option>
-							<option>Article in Press</option>
-							<option>Article</option>
-							<option>Book</option>
-							<option>Thesis</option>
+							<?php
+							foreach ($study_types as $types) {
+								?>
+								<option value="<?= $types ?>"><?= $types ?></option>
+								<?php
+							}
+							?>
 						</select>
 						<div class="input-group-append">
 							<button class="btn btn-success" type="button" onclick="add_study_type();"><span
@@ -147,6 +149,16 @@
 						</tr>
 						</thead>
 						<tbody>
+						<?php foreach ($project->get_study_types() as $types) { ?>
+							<tr>
+								<td><?= $types ?></td>
+								<td>
+									<button class="btn btn-danger" onClick="delete_study_type($(this).parents('tr'));">
+										<span class="far fa-trash-alt"></span>
+									</button>
+								</td>
+							</tr>
+						<?php } ?>
 						</tbody>
 					</table>
 				</div>
