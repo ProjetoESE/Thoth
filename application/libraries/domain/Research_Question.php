@@ -33,7 +33,7 @@ class Research_Question
 	 * Method to retrieve the question id.
 	 * @return String id
 	 */
-	public function getId()
+	public function get_id()
 	{
 		return $this->id;
 	}
@@ -43,7 +43,7 @@ class Research_Question
 	 * @param String $id
 	 * @throws InvalidArgumentException
 	 */
-	public function setId($id)
+	public function set_id($id)
 	{
 		if (is_null($id) || empty($id)) {
 			throw  new  InvalidArgumentException("Question Id Invalid!");
@@ -55,7 +55,7 @@ class Research_Question
 	 * Method to retrieve the question description.
 	 * @return String description
 	 */
-	public function getDescription()
+	public function get_description()
 	{
 		return $this->description;
 	}
@@ -65,7 +65,7 @@ class Research_Question
 	 * @param String $description
 	 * @throws InvalidArgumentException
 	 */
-	public function setDescription($description)
+	public function set_description($description)
 	{
 		if (is_null($description) || empty($description)) {
 			throw  new  InvalidArgumentException("Question Description Invalid!");

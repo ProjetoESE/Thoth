@@ -22,8 +22,8 @@ class Project
 	private $languages = array();
 	private $study_types = array();
 	private $keywords = array();
-	private $research_questions;
-	private $databases;
+	private $research_questions = array();
+	private $databases = array();
 	private $search_strings;
 	private $search_strategy;
 	private $criterias_inclusion;
@@ -312,7 +312,7 @@ class Project
 	 * Method to retrieve the project languages.
 	 * @return array(String) languages
 	 */
-	public function get_Languages()
+	public function get_languages()
 	{
 		return $this->languages;
 	}
@@ -391,10 +391,10 @@ class Project
 	 */
 	public function set_research_questions($research_questions)
 	{
-		if (is_null($research_questions) || empty($research_questions)) {
+		if (is_null($research_questions)) {
 			throw  new  InvalidArgumentException("Project Keywords Invalid!");
 		}
-		$this->research_questions = $research_questions;
+		array_push($this->research_questions, $research_questions);
 	}
 
 	/**
@@ -416,7 +416,7 @@ class Project
 		if (is_null($databases) || empty($databases)) {
 			throw  new  InvalidArgumentException("Project Databases Invalid!");
 		}
-		$this->databases = $databases;
+		array_push($this->databases, $databases);
 	}
 
 	/**

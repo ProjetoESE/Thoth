@@ -10,7 +10,7 @@
 	<meta property="og:description" content="SLR Tool"/>
 	<title> Thoth </title>
 
-
+	<!-- Favicon -->
 	<link rel="icon" type="image/png" href="<?= base_url('assets/img/favicon.png'); ?>" />
 
 	<!-- Bootstrap -->
@@ -44,6 +44,7 @@
 	<script src="<?= base_url('assets/js/dataTables.select.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/dataTables.buttons.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/buttons.bootstrap4.min.js'); ?>"></script>
+	<!--
 	<script src="<?= base_url('assets/js/jszip.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/pdfmake.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/vfs_fonts.js'); ?>"></script>
@@ -51,13 +52,14 @@
 	<script src="<?= base_url('assets/js/buttons.print.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/buttons.colVis.min.js'); ?>"></script>
 
-	<!-- Highcharts -->
+
+	 Highcharts
 	<script src="<?= base_url('assets/js/highcharts.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/series-label.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/exporting.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/export-data.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/highcharts-more.js'); ?>"></script>
-	<script src="<?= base_url('assets/js/funnel.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/funnel.js'); ?>"></script> -->
 
 	<!-- SweetAlert -->
 	<script src="<?= base_url('assets/js/sweetalert2.all.min.js'); ?>"></script>

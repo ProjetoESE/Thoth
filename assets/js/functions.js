@@ -510,7 +510,6 @@ function add_date() {
 	if (!validate_date(start_date, end_date)) {
 		return false;
 	}
-
 	$.ajax({
 		type: "POST",
 		url: base_url + 'project_controller/add_date/',
@@ -562,27 +561,37 @@ function validate_date(start_date, end_date) {
 	return true;
 }
 
-function add_research_question() {
+function add_research_question (){
 	let description = $("#description_research_question");
-	let id = $("#id_research_question");
+	let id_rq = $("#id_research_question");
+	let id_project = $("#id_project").val();
 
-	if (!validate_research(id[0].value, description[0].value)) {
+	if (!validate_research(id_rq[0].value, description[0].value)) {
 		return false;
 	}
+	$.ajax({
+		type: "POST",
+		url: base_url + 'project_controller/add_research_question/',
+		data: {
+			id_project: id_project,
+			id_rq: id_rq[0].value,
+			description: description[0].value
+		},
+		success: function () {
+			table_research_question.row.add([id_rq[0].value,
+				description[0].value,
+				'<button class="btn btn-warning opt" onClick="modal_research_question($(this).parents(\'tr\'));">' +
+				'<span class="fas fa-edit"></span>' +
+				'</button>' +
+				'<button class="btn btn-danger opt" onClick="delete_research_question($(this).parents(\'tr\'));">' +
+				'<span class="far fa-trash-alt"></span>' +
+				'</button>'
+			]).draw();
 
-	table_research_question.row.add([id[0].value,
-		description[0].value,
-		'<button class="btn btn-warning opt" onClick="modal_research_question($(this).parents(\'tr\'));">' +
-		'<span class="fas fa-edit"></span>' +
-		'</button>' +
-		'<button class="btn btn-danger" onClick="delete_research_question($(this).parents(\'tr\'));">' +
-		'<span class="far fa-trash-alt"></span>' +
-		'</button>'
-	]).draw();
-
-	description[0].value = "";
-	id[0].value = "";
-
+			description[0].value = "";
+			id_rq[0].value = "";
+		}
+	});
 }
 
 function modal_research_question(value) {
@@ -597,35 +606,46 @@ function edit_research() {
 	let index = $('#modal_research #index_research').val();
 	let id = $('#modal_research #edit_research_id').val();
 	let question = $('#modal_research #edit_research_question').val();
+	let id_project = $("#id_project").val();
 
-	if (!validate_research(id, question)) {
-		return false;
-	}
+	delete_research_question(index);
 
-	let row = table_research_question.row(index);
-	row.remove();
-	table_research_question.row.add([
-		id,
-		question,
-		'<button class="btn btn-warning opt" onClick="modal_research_question($(this).parents(\'tr\'));">' +
-		'<span class="fas fa-edit"></span>' +
-		'</button>' +
-		'<button class="btn btn-danger" onClick="delete_research_question($(this).parents(\'tr\'));">' +
-		'<span class="far fa-trash-alt"></span>' +
-		'</button>'
-	]).draw();
+	$.ajax({
+		type: "POST",
+		url: base_url + 'project_controller/add_research_question/',
+		data: {
+			id_project: id_project,
+			id_rq: id,
+			description: question
+		},
+		success: function () {
+			table_research_question.row.add([id,
+				question,
+				'<button class="btn btn-warning opt" onClick="modal_research_question($(this).parents(\'tr\'));">' +
+				'<span class="fas fa-edit"></span>' +
+				'</button>' +
+				'<button class="btn btn-danger opt" onClick="delete_research_question($(this).parents(\'tr\'));">' +
+				'<span class="far fa-trash-alt"></span>' +
+				'</button>'
+			]).draw();
 
-	Swal({
-		title: 'Success',
-		text: "The research question was edited",
-		type: 'success',
-		showCancelButton: false,
-		confirmButtonText: 'Ok'
-	}).then((result) => {
-		if (result.value) {
-			$('#modal_research').modal('hide');
+			Swal({
+				title: 'Success',
+				text: "The research question was edited",
+				type: 'success',
+				showCancelButton: false,
+				confirmButtonText: 'Ok'
+			}).then((result) => {
+				if (result.value) {
+					$('#modal_research').modal('hide');
+				}
+			});
+
+			question = "";
+			id = "";
 		}
 	});
+
 }
 
 function validate_research(id, description) {
@@ -675,12 +695,25 @@ function validate_research(id, description) {
 
 function delete_research_question(value) {
 	let row = table_research_question.row(value);
-	row.remove();
-	table_research_question.draw();
+	let id_project = $("#id_project").val();
+
+	$.ajax({
+		type: "POST",
+		url: base_url + 'project_controller/delete_research_question/',
+		data: {
+			id_project: id_project,
+			id_rq: row.data()[0]
+		},
+		success: function () {
+			row.remove();
+			table_research_question.draw();
+		}
+	});
 }
 
 function add_database() {
 	let databases = $("#databases");
+	let id_project = $("#id_project").val();
 
 	if (!databases[0].value) {
 		swal({
@@ -704,21 +737,42 @@ function add_database() {
 		}
 	}
 
+	$.ajax({
+		type: "POST",
+		url: base_url + 'project_controller/add_database/',
+		data: {
+			id_project: id_project,
+			database: databases[0].value
+		},
+		success: function () {
+			table_databases.row.add([
+				databases[0].value,
+				'<button class="btn btn-danger" onClick="delete_database($(this).parents(\'tr\'));">' +
+				'<span class="far fa-trash-alt"></span>' +
+				'</button>'
+			]).draw();
 
-	table_databases.row.add([
-		databases[0].value,
-		'<button class="btn btn-danger" onClick="delete_database($(this).parents(\'tr\'));">' +
-		'<span class="far fa-trash-alt"></span>' +
-		'</button>'
-	]).draw();
+			databases[0].value = "";
+		}
+	});
 
-	databases[0].value = "";
 }
 
 function delete_database(value) {
 	let row = table_databases.row(value);
-	row.remove();
-	table_databases.draw();
+	let id_project = $("#id_project").val();
+	$.ajax({
+		type: "POST",
+		url: base_url + 'project_controller/delete_database/',
+		data: {
+			id_project: id_project,
+			database: row.data()[0]
+		},
+		success: function () {
+			row.remove();
+			table_databases.draw();
+		}
+	});
 }
 
 function add_term() {

@@ -95,6 +95,28 @@ class Project_Model extends CI_Model
 			$project->set_keywords($row->description);
 		}
 
+		$this->db->select('database.name');
+		$this->db->from('project_databases');
+		$this->db->join('database', 'database.id_database = project_databases.id_database');
+		$this->db->where('id_project', $id);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			$project->set_databases($row->name);
+		}
+
+		$this->db->select('*');
+		$this->db->from('research_question');
+		$this->db->where('id_project', $id);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			$rq = new Research_Question();
+			$rq->set_id($row->id);
+			$rq->set_description($row->description);
+			$project->set_research_questions($rq);
+		}
+
 		return $project;
 	}
 
@@ -245,5 +267,75 @@ class Project_Model extends CI_Model
 
 		$this->db->where('id_project', $id_project);
 		$this->db->update('project', $data);
+	}
+
+	public function add_database($database,$id_project){
+
+		$id_database = null;
+		$this->db->select('id_database');
+		$this->db->from('database');
+		$this->db->where('name', $database);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			$id_database = $row->id_database;
+		}
+
+
+		$data = array(
+			'id_project' => $id_project,
+			'id_database' => $id_database
+		);
+
+		$this->db->insert('project_databases', $data);
+	}
+
+	public function get_databases(){
+		$databases = array();
+
+		$this->db->select('*');
+		$this->db->from('database');
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			array_push($databases, $row->name);
+		}
+
+		return $databases;
+	}
+
+	public function delete_database($database, $id_project)
+	{
+		$id_database = null;
+		$this->db->select('id_database');
+		$this->db->from('database');
+		$this->db->where('name', $database);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			$id_database = $row->id_database;
+		}
+
+		$this->db->where('id_database', $id_database);
+		$this->db->where('id_project', $id_project);
+		$this->db->delete('project_databases');
+	}
+
+	public function add_research_question($id_rq, $description, $id_project){
+
+		$data = array(
+			'id_project' => $id_project,
+			'id' => $id_rq,
+			'description' => $description
+		);
+
+		$this->db->insert('research_question', $data);
+	}
+
+	public function delete_research_question($id_rq, $id_project)
+	{
+		$this->db->where('id', $id_rq);
+		$this->db->where('id_project', $id_project);
+		$this->db->delete('research_question');
 	}
 }

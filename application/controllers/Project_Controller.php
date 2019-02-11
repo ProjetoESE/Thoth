@@ -44,6 +44,7 @@ class Project_Controller extends CI_Controller
 			$data['project'] = $this->Project_Model->get_project($id);
 			$data['languages'] = $this->Project_Model->get_languages();
 			$data['study_types'] = $this->Project_Model->get_study_types();
+			$data['databases'] = $this->Project_Model->get_databases();
 
 			if (!isset($_SESSION['logged_in'])) {
 				load_templates('pages/visitor/project_planning_visitor', $data);
@@ -229,7 +230,6 @@ class Project_Controller extends CI_Controller
 	public function add_study_type()
 	{
 		try {
-			;;
 			$study_type = $this->input->post('study_type');
 			$id_project = $this->input->post('id_project');
 			$this->load->model("Project_Model");
@@ -317,4 +317,82 @@ class Project_Controller extends CI_Controller
 			redirect(base_url());
 		}
 	}
+
+	public function add_database()
+	{
+		try {
+			$database = $this->input->post('database');
+			$id_project = $this->input->post('id_project');
+			$this->load->model("Project_Model");
+
+			$this->Project_Model->add_database($database, $id_project);
+
+			$activity = $this->session->name . " added the database " . $database;
+			$this->insert_log($activity, 1);
+
+
+		} catch (Exception $e) {
+			$this->session->set_flashdata('error', $e->getMessage());
+			redirect(base_url());
+		}
+	}
+
+	public function delete_database()
+	{
+		try {
+			$database = $this->input->post('database');
+			$id_project = $this->input->post('id_project');
+			$this->load->model("Project_Model");
+
+			$this->Project_Model->delete_database($database, $id_project);
+
+			$activity = $this->session->name . " deleted the database " . $database;
+			$this->insert_log($activity, 1);
+
+
+		} catch (Exception $e) {
+			$this->session->set_flashdata('error', $e->getMessage());
+			redirect(base_url());
+		}
+	}
+
+	public function add_research_question()
+	{
+		try {
+			$id_rq = $this->input->post('id_rq');
+			$description = $this->input->post('description');
+			$id_project = $this->input->post('id_project');
+			$this->load->model("Project_Model");
+
+			$this->Project_Model->add_research_question($id_rq, $description, $id_project);
+
+			$activity = $this->session->name . " added the research question " . $id_rq;
+			$this->insert_log($activity, 1);
+
+
+		} catch (Exception $e) {
+			$this->session->set_flashdata('error', $e->getMessage());
+			redirect(base_url());
+		}
+	}
+
+	public function delete_research_question()
+	{
+		try {
+			$id_rq = $this->input->post('id_rq');
+			$id_project = $this->input->post('id_project');
+			$this->load->model("Project_Model");
+
+			$this->Project_Model->delete_research_question($id_rq, $id_project);
+
+			$activity = $this->session->name . " deleted the research question " . $id_rq;
+			$this->insert_log($activity, 1);
+
+
+		} catch (Exception $e) {
+			$this->session->set_flashdata('error', $e->getMessage());
+			redirect(base_url());
+		}
+	}
+
 }

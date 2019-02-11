@@ -205,12 +205,12 @@
 							<button class="btn btn-success"><span class="far fa-calendar-check "></span></button>
 						</div>
 						<input type="Date" id="start_date" class="form-control" title="Start Date"
-							   value="<?=$project->get_start_date()?>">
+							   value="<?= $project->get_start_date() ?>">
 						<div class="input-group-prepend">
 							<button class="btn btn-danger"><span class="far fa-calendar-check "></span></button>
 						</div>
 						<input type="Date" id="end_date" class="form-control" title="End Date"
-							   value="<?=$project->get_end_date()?>">
+							   value="<?= $project->get_end_date() ?>">
 						<div class="input-group-append">
 							<button class="btn btn-success" type="button" onclick="add_date()"><span
 									class="fas fa-check"></span></button>
@@ -255,6 +255,21 @@
 				</tr>
 				</thead>
 				<tbody>
+				<?php foreach ($project->get_research_questions() as $rq) { ?>
+					<tr>
+						<td><?= $rq->get_id() ?></td>
+						<td><?= $rq->get_description() ?></td>
+						<td>
+							<button class="btn btn-warning opt"
+									onClick="modal_research_question($(this).parents('tr'));">
+								<span class="fas fa-edit"></span>
+							</button>
+							<button class="btn btn-danger opt" onClick="delete_research_question($(this).parents('tr'));">
+								<span class="far fa-trash-alt"></span>
+							</button>
+						</td>
+					</tr>
+				<?php } ?>
 				</tbody>
 			</table>
 			<br>
@@ -267,13 +282,9 @@
 			<label for="databases"><strong>Data Bases</strong></label>
 			<div class="input-group col-md-3">
 				<select class="form-control" id="databases">
-					<option>Scopus</option>
-					<option>ACM</option>
-					<option>IEEE</option>
-					<option>Science Direct</option>
-					<option>Enginnering Village</option>
-					<option>Springer Link</option>
-					<option>Google</option>
+					<?php foreach ($databases as $database) { ?>
+						<option><?= $database ?></option>
+					<?php } ?>
 				</select>
 				<div class="input-group-append">
 					<button class="btn btn-success" type="button" onclick="add_database();"><span
@@ -290,6 +301,18 @@
 				</tr>
 				</thead>
 				<tbody>
+				<?php foreach ($project->get_databases() as $database) { ?>
+					<tr>
+						<td>
+							<?= $database ?>
+						</td>
+						<td>
+							<button class="btn btn-danger" onClick="delete_database($(this).parents('tr'));">
+								<span class="far fa-trash-alt"></span>
+							</button>
+						</td>
+					</tr>
+				<?php } ?>
 				</tbody>
 			</table>
 			<br>
