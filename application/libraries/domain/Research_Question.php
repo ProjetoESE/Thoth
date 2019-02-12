@@ -19,17 +19,6 @@ class Research_Question
 	}
 
 	/**
-	 * Research Question constructor for data in the database and new registry.
-	 * @param $id
-	 * @param $description
-	 */
-	public function __construct_New_DB($id, $description)
-	{
-		$this->id = $id;
-		$this->description = $description;
-	}
-
-	/**
 	 * Method to retrieve the question id.
 	 * @return String id
 	 */

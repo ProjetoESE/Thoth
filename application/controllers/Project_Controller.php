@@ -191,6 +191,26 @@ class Project_Controller extends CI_Controller
 		}
 	}
 
+	public function edit_domain()
+	{
+		try {
+			$now = $this->input->post('now');
+			$old = $this->input->post('old');
+			$id_project = $this->input->post('id_project');
+			$this->load->model("Project_Model");
+
+			$this->Project_Model->edit_domain($now, $old, $id_project);
+
+			$activity = $this->session->name . " edited the domain " . $old . " for " . $now;
+			$this->insert_log($activity, 1);
+
+		} catch (Exception $e) {
+			$this->session->set_flashdata('error', $e->getMessage());
+			redirect(base_url());
+		}
+	}
+
+
 	public function add_language()
 	{
 		try {
@@ -299,6 +319,25 @@ class Project_Controller extends CI_Controller
 		}
 	}
 
+	public function edit_keywords()
+	{
+		try {
+			$now = $this->input->post('now');
+			$old = $this->input->post('old');
+			$id_project = $this->input->post('id_project');
+			$this->load->model("Project_Model");
+
+			$this->Project_Model->edit_keywords($now, $old, $id_project);
+
+			$activity = $this->session->name . " edited the keywords " . $old . " for " . $now;
+			$this->insert_log($activity, 1);
+
+		} catch (Exception $e) {
+			$this->session->set_flashdata('error', $e->getMessage());
+			redirect(base_url());
+		}
+	}
+
 	public function add_date()
 	{
 		try {
@@ -395,4 +434,100 @@ class Project_Controller extends CI_Controller
 		}
 	}
 
+	public function edit_research_question()
+	{
+		try {
+			$now_id = $this->input->post('now_id');
+			$now_question = $this->input->post('now_question');
+			$old_id = $this->input->post('old_id');
+			$id_project = $this->input->post('id_project');
+			$this->load->model("Project_Model");
+
+			$this->Project_Model->edit_research_question($now_id, $now_question, $old_id, $id_project);
+
+			$activity = $this->session->name . " edited the research_question " . $now_id;
+			$this->insert_log($activity, 1);
+
+		} catch (Exception $e) {
+			$this->session->set_flashdata('error', $e->getMessage());
+			redirect(base_url());
+		}
+	}
+
+	public function add_term()
+	{
+		try {
+			$term = $this->input->post('term');
+			$id_project = $this->input->post('id_project');
+			$this->load->model("Project_Model");
+
+			$this->Project_Model->add_term($term, $id_project);
+
+			$activity = $this->session->name . " added the term" . $term;
+			$this->insert_log($activity, 1);
+
+
+		} catch (Exception $e) {
+			$this->session->set_flashdata('error', $e->getMessage());
+			redirect(base_url());
+		}
+	}
+
+	public function delete_term()
+	{
+		try {
+			$term = $this->input->post('term');
+			$id_project = $this->input->post('id_project');
+			$this->load->model("Project_Model");
+
+			$this->Project_Model->delete_term($term, $id_project);
+
+			$activity = $this->session->name . " deleted the term" . $term;
+			$this->insert_log($activity, 1);
+
+
+		} catch (Exception $e) {
+			$this->session->set_flashdata('error', $e->getMessage());
+			redirect(base_url());
+		}
+	}
+
+	public function edit_term()
+	{
+		try {
+			$now = $this->input->post('now');
+			$old = $this->input->post('old');
+			$id_project = $this->input->post('id_project');
+			$this->load->model("Project_Model");
+
+			$this->Project_Model->edit_term($now, $old, $id_project);
+
+			$activity = $this->session->name . " edited the term " . $old . " for " . $now;
+			$this->insert_log($activity, 1);
+
+		} catch (Exception $e) {
+			$this->session->set_flashdata('error', $e->getMessage());
+			redirect(base_url());
+		}
+	}
+
+	public function add_synonym()
+	{
+		try {
+			$term = $this->input->post('term');
+			$syn = $this->input->post('syn');
+			$id_project = $this->input->post('id_project');
+			$this->load->model("Project_Model");
+
+			$this->Project_Model->add_synonym($syn, $term, $id_project);
+
+			$activity = $this->session->name . " added the synonym" . $syn;
+			$this->insert_log($activity, 1);
+
+
+		} catch (Exception $e) {
+			$this->session->set_flashdata('error', $e->getMessage());
+			redirect(base_url());
+		}
+	}
 }

@@ -101,9 +101,9 @@ $(window).on("popstate", function () {
 
 function add_domain() {
 	let id_project = $("#id_project").val();
-	let domain = $("#domain");
+	let domain = $("#domain").val();
 
-	if (!validate_domain(domain[0].value)) {
+	if (!validate_domain(domain)) {
 		return;
 	}
 
@@ -112,11 +112,11 @@ function add_domain() {
 		url: base_url + 'project_controller/add_domain/',
 		data: {
 			id_project: id_project,
-			domain: domain[0].value
+			domain: domain
 		},
 		success: function () {
 			table_domains.row.add([
-				domain[0].value,
+				domain,
 				'<button class="btn btn-warning opt" onClick="modal_domain($(this).parents(\'tr\'));">' +
 				'<span class="fas fa-edit"></span>' +
 				'</button>' +
@@ -125,7 +125,7 @@ function add_domain() {
 				'</button>'
 			]).draw();
 
-			domain[0].value = "";
+			$("#domain")[0].value = "";
 		}
 	});
 
@@ -158,26 +158,27 @@ function modal_domain(value) {
 }
 
 function edit_domain() {
-	let index = $('#modal_domain #index_domain').val();
-	let domain = $('#modal_domain #edit_domain').val();
+	let now = $('#modal_domain #edit_domain').val();
 	let id_project = $("#id_project").val();
+	let row = table_domains.row($('#modal_domain #index_domain').val());
+	let old = row.data()[0];
 
-	if (!validate_domain(domain)) {
+	if (!validate_domain(now)) {
 		return false;
 	}
 
-	delete_domain(index);
-
 	$.ajax({
 		type: "POST",
-		url: base_url + 'project_controller/add_domain/',
+		url: base_url + 'project_controller/edit_domain/',
 		data: {
 			id_project: id_project,
-			domain: domain
+			old: old,
+			now: now
 		},
 		success: function () {
+			row.remove();
 			table_domains.row.add([
-				domain,
+				now,
 				'<button class="btn btn-warning opt" onClick="modal_domain($(this).parents(\'tr\'));">' +
 				'<span class="fas fa-edit"></span>' +
 				'</button>' +
@@ -186,7 +187,7 @@ function edit_domain() {
 				'</button>'
 			]).draw();
 
-			domain[0].value = "";
+			$("#domain")[0].value = "";
 		}
 	});
 
@@ -229,10 +230,10 @@ function validate_domain(domain) {
 }
 
 function add_language() {
-	let language = $("#language");
+	let language = $("#language").val();
 	let id_project = $("#id_project").val();
 
-	if (!validate_language(language[0].value)) {
+	if (!validate_language(language)) {
 		return false;
 	}
 
@@ -241,7 +242,7 @@ function add_language() {
 		url: base_url + 'project_controller/add_language/',
 		data: {
 			id_project: id_project,
-			language: language[0].value
+			language: language
 		},
 		success: function () {
 			table_languages.row.add([
@@ -251,7 +252,7 @@ function add_language() {
 				'</button>'
 			]).draw();
 
-			language[0].value = "";
+			$("#language")[0].value = "";
 		}
 	});
 
@@ -304,9 +305,9 @@ function delete_language(value) {
 
 function add_study_type() {
 	let id_project = $("#id_project").val();
-	let study_type = $("#study_type");
+	let study_type = $("#study_type").val();
 
-	if (!validate_study_type(study_type[0].value)) {
+	if (!validate_study_type(study_type)) {
 		return false;
 	}
 
@@ -315,17 +316,17 @@ function add_study_type() {
 		url: base_url + 'project_controller/add_study_type/',
 		data: {
 			id_project: id_project,
-			study_type: study_type[0].value
+			study_type: study_type
 		},
 		success: function () {
 			table_study_type.row.add([
-				study_type[0].value,
+				study_type,
 				'<button class="btn btn-danger" onClick="delete_study_type($(this).parents(\'tr\'));">' +
 				'<span class="far fa-trash-alt"></span>' +
 				'</button>'
 			]).draw();
 
-			study_type[0].value = "";
+			$("#study_type")[0].value = "";
 		}
 	});
 
@@ -377,9 +378,9 @@ function delete_study_type(value) {
 
 function add_keywords() {
 	let id_project = $("#id_project").val();
-	let keywords = $("#keywords");
+	let keywords = $("#keywords").val();
 
-	if (!validate_keywords(keywords[0].value)) {
+	if (!validate_keywords(keywords)) {
 		return false;
 	}
 
@@ -388,11 +389,11 @@ function add_keywords() {
 		url: base_url + 'project_controller/add_keywords/',
 		data: {
 			id_project: id_project,
-			keywords: keywords[0].value
+			keywords: keywords
 		},
 		success: function () {
 			table_keywords.row.add([
-				keywords[0].value,
+				keywords,
 				'<button class="btn btn-warning opt" onClick="modal_keywords($(this).parents(\'tr\'));">' +
 				'<span class="fas fa-edit"></span>' +
 				'</button>' +
@@ -401,7 +402,7 @@ function add_keywords() {
 				'</button>'
 			]).draw();
 
-			keywords[0].value = "";
+			$("#keywords")[0].value = "";
 		}
 	});
 
@@ -414,28 +415,28 @@ function modal_keywords(value) {
 	$('#modal_keyword').modal('show');
 }
 
-
 function edit_keyword() {
-	let index = $('#modal_keyword #index_keyword').val();
-	let keyword = $('#modal_keyword #edit_keyword').val();
+	let now = $('#modal_keyword #edit_keyword').val();
 	let id_project = $("#id_project").val();
+	let row = table_keywords.row($('#modal_keyword #index_keyword').val());
+	let old = row.data()[0];
 
-	if (!validate_keywords(keyword)) {
+	if (!validate_keywords(now)) {
 		return false;
 	}
 
-	delete_keywords(index);
-
 	$.ajax({
 		type: "POST",
-		url: base_url + 'project_controller/add_keywords/',
+		url: base_url + 'project_controller/edit_keywords/',
 		data: {
 			id_project: id_project,
-			keywords: keyword
+			now: now,
+			old: old
 		},
 		success: function () {
+			row.remove();
 			table_keywords.row.add([
-				keyword,
+				now,
 				'<button class="btn btn-warning opt" onClick="modal_keywords($(this).parents(\'tr\'));">' +
 				'<span class="fas fa-edit"></span>' +
 				'</button>' +
@@ -561,12 +562,12 @@ function validate_date(start_date, end_date) {
 	return true;
 }
 
-function add_research_question (){
-	let description = $("#description_research_question");
-	let id_rq = $("#id_research_question");
+function add_research_question() {
+	let description = $("#description_research_question").val();
+	let id_rq = $("#id_research_question").val();
 	let id_project = $("#id_project").val();
 
-	if (!validate_research(id_rq[0].value, description[0].value)) {
+	if (!validate_research(id_rq, description, null)) {
 		return false;
 	}
 	$.ajax({
@@ -574,12 +575,12 @@ function add_research_question (){
 		url: base_url + 'project_controller/add_research_question/',
 		data: {
 			id_project: id_project,
-			id_rq: id_rq[0].value,
-			description: description[0].value
+			id_rq: id_rq,
+			description: description
 		},
 		success: function () {
-			table_research_question.row.add([id_rq[0].value,
-				description[0].value,
+			table_research_question.row.add([id_rq,
+				description,
 				'<button class="btn btn-warning opt" onClick="modal_research_question($(this).parents(\'tr\'));">' +
 				'<span class="fas fa-edit"></span>' +
 				'</button>' +
@@ -588,8 +589,8 @@ function add_research_question (){
 				'</button>'
 			]).draw();
 
-			description[0].value = "";
-			id_rq[0].value = "";
+			$("#description_research_question")[0].value = "";
+			$("#id_research_question")[0].value = "";
 		}
 	});
 }
@@ -604,23 +605,29 @@ function modal_research_question(value) {
 
 function edit_research() {
 	let index = $('#modal_research #index_research').val();
-	let id = $('#modal_research #edit_research_id').val();
-	let question = $('#modal_research #edit_research_question').val();
+	let now_id = $('#modal_research #edit_research_id').val();
+	let now_question = $('#modal_research #edit_research_question').val();
 	let id_project = $("#id_project").val();
+	let row = table_research_question.row(index);
+	let old_id = row.data()[0];
 
-	delete_research_question(index);
+	if (!validate_research(now_id, now_question, index)) {
+		return false;
+	}
 
 	$.ajax({
 		type: "POST",
-		url: base_url + 'project_controller/add_research_question/',
+		url: base_url + 'project_controller/edit_research_question/',
 		data: {
 			id_project: id_project,
-			id_rq: id,
-			description: question
+			now_id: now_id,
+			now_question: now_question,
+			old_id: old_id,
 		},
 		success: function () {
-			table_research_question.row.add([id,
-				question,
+			row.remove();
+			table_research_question.row.add([now_id,
+				now_question,
 				'<button class="btn btn-warning opt" onClick="modal_research_question($(this).parents(\'tr\'));">' +
 				'<span class="fas fa-edit"></span>' +
 				'</button>' +
@@ -640,15 +647,12 @@ function edit_research() {
 					$('#modal_research').modal('hide');
 				}
 			});
-
-			question = "";
-			id = "";
 		}
 	});
 
 }
 
-function validate_research(id, description) {
+function validate_research(id, description, index) {
 	if (!id) {
 		swal({
 			type: 'warning',
@@ -670,23 +674,27 @@ function validate_research(id, description) {
 	let data = table_research_question.rows().data().toArray();
 
 	for (let i = 0; i < data.length; i++) {
-		if (id.toLowerCase().trim() == data[i][0].toLowerCase().trim()) {
-			swal({
-				type: 'warning',
-				title: 'Warning',
-				text: 'The ID of research question has already been registered!'
-			});
-			return false;
+		if (i != index) {
+			if (id.toLowerCase().trim() == data[i][0].toLowerCase().trim()) {
+				swal({
+					type: 'warning',
+					title: 'Warning',
+					text: 'The ID of research question has already been registered!'
+				});
+				return false;
+			}
 		}
 	}
 	for (let i = 0; i < data.length; i++) {
-		if (description.toLowerCase().trim() == data[i][1].toLowerCase().trim()) {
-			swal({
-				type: 'warning',
-				title: 'Warning',
-				text: 'The description of research question has already been registered!'
-			});
-			return false;
+		if (i != index) {
+			if (description.toLowerCase().trim() == data[i][1].toLowerCase().trim()) {
+				swal({
+					type: 'warning',
+					title: 'Warning',
+					text: 'The description of research question has already been registered!'
+				});
+				return false;
+			}
 		}
 	}
 
@@ -712,10 +720,10 @@ function delete_research_question(value) {
 }
 
 function add_database() {
-	let databases = $("#databases");
+	let databases = $("#databases").val();
 	let id_project = $("#id_project").val();
 
-	if (!databases[0].value) {
+	if (!databases) {
 		swal({
 			type: 'warning',
 			title: 'Warning',
@@ -727,7 +735,7 @@ function add_database() {
 	let data = table_databases.rows().data().toArray();
 
 	for (let i = 0; i < data.length; i++) {
-		if (databases[0].value.toLowerCase().trim() == data[i][0].toLowerCase().trim()) {
+		if (databases.toLowerCase().trim() == data[i][0].toLowerCase().trim()) {
 			swal({
 				type: 'warning',
 				title: 'Warning',
@@ -742,17 +750,17 @@ function add_database() {
 		url: base_url + 'project_controller/add_database/',
 		data: {
 			id_project: id_project,
-			database: databases[0].value
+			database: databases
 		},
 		success: function () {
 			table_databases.row.add([
-				databases[0].value,
+				databases,
 				'<button class="btn btn-danger" onClick="delete_database($(this).parents(\'tr\'));">' +
 				'<span class="far fa-trash-alt"></span>' +
 				'</button>'
 			]).draw();
 
-			databases[0].value = "";
+			$("#databases")[0].value = "";
 		}
 	});
 
@@ -776,31 +784,44 @@ function delete_database(value) {
 }
 
 function add_term() {
-	let term = $("#term");
+	let term = $("#term").val();
+	let id_project = $("#id_project").val();
 
-	if (!validate_term(term[0].value)) {
+	if (!validate_term(term, null)) {
 		return false;
 	}
 
-	table_search_string.row.add([
-		term[0].value, '' +
-		'<table id="table_' + term[0].value + '" class="table">' +
-		'<th>Synonym</th>' +
-		'<th>Actions</th>' +
-		'</table>',
-		'<button class="btn btn-warning opt" onClick="modal_term($(this).parents(\'tr\'))">' +
-		'<span class="fas fa-edit"></span>' +
-		'</button>' +
-		'<button class="btn btn-danger" onClick="delete_term($(this).parents(\'tr\'));">' +
-		'<span class="far fa-trash-alt"></span>' +
-		'</button>'
-	]).draw();
+	$.ajax({
+		type: "POST",
+		url: base_url + 'project_controller/add_term/',
+		data: {
+			id_project: id_project,
+			term: term
+		},
+		success: function () {
+			table_search_string.row.add([
+				term, '' +
+				'<table id="table_' + term + '" class="table">' +
+				'<th>Synonym</th>' +
+				'<th>Actions</th>' +
+				'<tbody>' +
+				'</tbody>' +
+				'</table>',
+				'<button class="btn btn-warning opt" onClick="modal_term($(this).parents(\'tr\'))">' +
+				'<span class="fas fa-edit"></span>' +
+				'</button>' +
+				'<button class="btn btn-danger" onClick="delete_term($(this).parents(\'tr\'));">' +
+				'<span class="far fa-trash-alt"></span>' +
+				'</button>'
+			]).draw();
 
-	let x = document.getElementById("list_term");
-	let option = document.createElement("option");
-	option.text = term[0].value;
-	x.add(option);
-	term[0].value = "";
+			let x = document.getElementById("list_term");
+			let option = document.createElement("option");
+			option.text = term;
+			x.add(option);
+			$("#term")[0].value = "";
+		}
+	});
 }
 
 function modal_term(value) {
@@ -812,51 +833,63 @@ function modal_term(value) {
 
 function edit_term() {
 	let index = $('#modal_term #index_term').val();
-	let term = $('#modal_term #edit_term').val();
+	let now = $('#modal_term #edit_term').val();
+	let id_project = $("#id_project").val();
 
-	if (!validate_term(term)) {
+	if (!validate_term(now)) {
 		return false;
 	}
 
 	let row = table_search_string.row(index);
-	let data = table_search_string.row(index).data();
-	let id = "table_" + data[0];
+	let old = row.data()[0];
+	let id = "table_" + old;
 	let table_syn = document.getElementById(id);
-	id = "table_" + term;
+	id = "table_" + now;
 	table_syn.id = id;
-	row.remove();
 
-	let x = document.getElementById("list_term");
-	let option = document.createElement("option");
-	option.text = term;
-	x.remove(index);
-	x.add(option);
+	$.ajax({
+		type: "POST",
+		url: base_url + 'project_controller/edit_term/',
+		data: {
+			id_project: id_project,
+			now: now,
+			old: old
+		},
+		success: function () {
+			row.remove();
+			let x = document.getElementById("list_term");
+			let option = document.createElement("option");
+			option.text = now;
+			x.remove(index);
+			x.add(option);
 
-	table_search_string.row.add([
-		term,
-		table_syn.outerHTML,
-		'<button class="btn btn-warning opt" onClick="modal_term($(this).parents(\'tr\'));">' +
-		'<span class="fas fa-edit"></span>' +
-		'</button>' +
-		'<button class="btn btn-danger" onClick="delete_term($(this).parents(\'tr\'));">' +
-		'<span class="far fa-trash-alt"></span>' +
-		'</button>'
-	]).draw();
+			table_search_string.row.add([
+				now,
+				table_syn.outerHTML,
+				'<button class="btn btn-warning opt" onClick="modal_term($(this).parents(\'tr\'));">' +
+				'<span class="fas fa-edit"></span>' +
+				'</button>' +
+				'<button class="btn btn-danger" onClick="delete_term($(this).parents(\'tr\'));">' +
+				'<span class="far fa-trash-alt"></span>' +
+				'</button>'
+			]).draw();
 
-	Swal({
-		title: 'Success',
-		text: "The term was edited",
-		type: 'success',
-		showCancelButton: false,
-		confirmButtonText: 'Ok'
-	}).then((result) => {
-		if (result.value) {
-			$('#modal_term').modal('hide');
+			Swal({
+				title: 'Success',
+				text: "The term was edited",
+				type: 'success',
+				showCancelButton: false,
+				confirmButtonText: 'Ok'
+			}).then((result) => {
+				if (result.value) {
+					$('#modal_term').modal('hide');
+				}
+			});
 		}
 	});
 }
 
-function validate_term(term) {
+function validate_term(term, index) {
 	if (!term) {
 		swal({
 			type: 'warning',
@@ -869,13 +902,15 @@ function validate_term(term) {
 	let data = table_search_string.rows().data().toArray();
 
 	for (let i = 0; i < data.length; i++) {
-		if (term.toLowerCase().trim() == data[i][0].toLowerCase().trim()) {
-			swal({
-				type: 'warning',
-				title: 'Warning',
-				text: 'The term has already been registered!'
-			});
-			return false;
+		if (i != index) {
+			if (term.toLowerCase().trim() == data[i][0].toLowerCase().trim()) {
+				swal({
+					type: 'warning',
+					title: 'Warning',
+					text: 'The term has already been registered!'
+				});
+				return false;
+			}
 		}
 	}
 	return true;
@@ -884,34 +919,60 @@ function validate_term(term) {
 function delete_term(value) {
 	let row = table_search_string.row(value);
 	let index = row.index();
-	row.remove();
-	table_search_string.draw();
+	let id_project = $("#id_project").val();
 
-	let x = document.getElementById("list_term");
-	x.remove(index);
+	$.ajax({
+		type: "POST",
+		url: base_url + 'project_controller/delete_term/',
+		data: {
+			id_project: id_project,
+			term: row.data()[0]
+		},
+		success: function () {
+			row.remove();
+			table_search_string.draw();
+
+			let x = document.getElementById("list_term");
+			x.remove(index);
+		}
+	});
+
 }
 
 function add_synonym() {
-	let term = $("#list_term");
-	let syn = $("#synonym");
-	let id = "table_" + term[0].value;
+	let term = $("#list_term").val();
+	let syn = $("#synonym").val();
+	let id = "table_" + term;
+	let id_project = $("#id_project").val();
 
-	if (!validate_synonym(term[0].value, syn[0].value, id)) {
+
+	if (!validate_synonym(term, syn, id)) {
 		return false;
 	}
 
-	let table_syn = document.getElementById(id);
-	let row = table_syn.insertRow();
-	let cell1 = row.insertCell(0);
-	let cell2 = row.insertCell(1);
-	cell1.innerHTML = syn[0].value;
-	cell2.innerHTML = '<button class="btn btn-warning opt" onClick="modal_synonym(this)">' +
-		'<span class="fas fa-edit"></span>' +
-		'</button>' +
-		'<button class="btn btn-danger" onClick="delete_synonym(this)">' +
-		'<span class="far fa-trash-alt"></span>' +
-		'</button>';
-	syn[0].value = "";
+	$.ajax({
+		type: "POST",
+		url: base_url + 'project_controller/add_synonym/',
+		data: {
+			id_project: id_project,
+			term: term,
+			syn: syn
+		},
+		success: function () {
+			let table_syn = document.getElementById(id);
+			let row = table_syn.insertRow();
+			let cell1 = row.insertCell(0);
+			let cell2 = row.insertCell(1);
+			cell1.innerHTML = syn;
+			cell2.innerHTML = '<button class="btn btn-warning opt" onClick="modal_synonym(this)">' +
+				'<span class="fas fa-edit"></span>' +
+				'</button>' +
+				'<button class="btn btn-danger" onClick="delete_synonym(this)">' +
+				'<span class="far fa-trash-alt"></span>' +
+				'</button>';
+			$("#synonym")[0].value = "";
+		}
+	});
 }
 
 function modal_synonym(value) {

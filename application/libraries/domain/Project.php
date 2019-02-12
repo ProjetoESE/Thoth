@@ -31,7 +31,7 @@ class Project
 	private $questions_quality;
 	private $questions_extraction;
 	private $papers;
-	private $terms;
+	private $terms = array();
 	private $members;
 	private $quality_scores;
 
@@ -592,7 +592,7 @@ class Project
 		if (is_null($terms) || empty($terms)) {
 			throw  new  InvalidArgumentException("Project Terms Invalid!");
 		}
-		$this->terms = $terms;
+		array_push($this->terms, $terms);
 	}
 
 	/**

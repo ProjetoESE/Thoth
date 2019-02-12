@@ -9,7 +9,7 @@ class Term
 {
 
 	private $description;
-	private $synonymus;
+	private $synonymus = array();
 
 	/**
 	 * Term constructor.
@@ -19,31 +19,10 @@ class Term
 	}
 
 	/**
-	 * Term constructor for data in the database.
-	 * @param String $description
-	 * @param array(String) $synonymus
-	 */
-	public function __construct_DB($description, $synonymus)
-	{
-		$this->description = $description;
-		$this->synonymus = $synonymus;
-	}
-
-	/**
-	 * Term constructor to new registry.
-	 * @param String $description
-	 */
-	public function __construct_New($description)
-	{
-		$this->description = $description;
-		$this->synonymus = array();
-	}
-
-	/**
 	 * Method to retrieve the term description.
 	 * @return String description
 	 */
-	public function getDescription()
+	public function get_description()
 	{
 		return $this->description;
 	}
@@ -53,7 +32,7 @@ class Term
 	 * @param String $description
 	 * @throws InvalidArgumentException
 	 */
-	public function setDescription($description)
+	public function set_description($description)
 	{
 		if (is_null($description) || empty($description)) {
 			throw  new  InvalidArgumentException("Term Description Invalid!");
@@ -65,7 +44,7 @@ class Term
 	 * Method to retrieve the term synonymus.
 	 * @return array(String) synonymus
 	 */
-	public function getSynonymus()
+	public function get_synonymus()
 	{
 		return $this->synonymus;
 	}
@@ -75,12 +54,12 @@ class Term
 	 * @param array(String) $synonymus
 	 * @throws InvalidArgumentException
 	 */
-	public function setSynonymus($synonymus)
+	public function set_synonymus($synonymus)
 	{
 		if (is_null($synonymus)) {
 			throw  new  InvalidArgumentException("Term Synonymus Invalid!");
 		}
-		$this->synonymus = $synonymus;
+		array_push($this->synonymus, $synonymus);
 	}
 
 }

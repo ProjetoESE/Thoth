@@ -117,6 +117,27 @@ class Project_Model extends CI_Model
 			$project->set_research_questions($rq);
 		}
 
+		$this->db->select('*');
+		$this->db->from('term');
+		$this->db->where('id_project', $id);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			$term = new Term();
+			$term->set_description($row->description);
+
+			$this->db->select('*');
+			$this->db->from('synonym');
+			$this->db->where('id_term', $row->id_term);
+			$query2 = $this->db->get();
+
+			foreach ($query2->result() as $row2) {
+				$term->set_synonymus($row2->description);
+			}
+
+			$project->set_terms($term);
+		}
+
 		return $project;
 	}
 
@@ -135,6 +156,27 @@ class Project_Model extends CI_Model
 		$this->db->where('description', $domain);
 		$this->db->where('id_project', $id_project);
 		$this->db->delete('domain');
+	}
+
+	public function edit_domain($now, $old, $id_project)
+	{
+		$id_domain = null;
+		$this->db->select('*');
+		$this->db->from('domain');
+		$this->db->where('id_project', $id_project);
+		$this->db->where('description', $old);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			$id_domain = $row->id_domain;
+		}
+
+		$data = array(
+			'description' => $now
+		);
+
+		$this->db->where('id_domain', $id_domain);
+		$this->db->update('domain', $data);
 	}
 
 	public function add_language($language, $id_project)
@@ -259,7 +301,29 @@ class Project_Model extends CI_Model
 		$this->db->delete('keyword');
 	}
 
-	public function add_date($start_date, $end_date, $id_project){
+	public function edit_keywords($now, $old, $id_project)
+	{
+		$id_keyword = null;
+		$this->db->select('*');
+		$this->db->from('keyword');
+		$this->db->where('id_project', $id_project);
+		$this->db->where('description', $old);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			$id_keyword = $row->id_keyword;
+		}
+
+		$data = array(
+			'description' => $now
+		);
+
+		$this->db->where('id_keyword', $id_keyword);
+		$this->db->update('keyword', $data);
+	}
+
+	public function add_date($start_date, $end_date, $id_project)
+	{
 		$data = array(
 			'start_date' => $start_date,
 			'end_date' => $end_date
@@ -269,7 +333,8 @@ class Project_Model extends CI_Model
 		$this->db->update('project', $data);
 	}
 
-	public function add_database($database,$id_project){
+	public function add_database($database, $id_project)
+	{
 
 		$id_database = null;
 		$this->db->select('id_database');
@@ -290,7 +355,8 @@ class Project_Model extends CI_Model
 		$this->db->insert('project_databases', $data);
 	}
 
-	public function get_databases(){
+	public function get_databases()
+	{
 		$databases = array();
 
 		$this->db->select('*');
@@ -321,7 +387,8 @@ class Project_Model extends CI_Model
 		$this->db->delete('project_databases');
 	}
 
-	public function add_research_question($id_rq, $description, $id_project){
+	public function add_research_question($id_rq, $description, $id_project)
+	{
 
 		$data = array(
 			'id_project' => $id_project,
@@ -337,5 +404,89 @@ class Project_Model extends CI_Model
 		$this->db->where('id', $id_rq);
 		$this->db->where('id_project', $id_project);
 		$this->db->delete('research_question');
+	}
+
+	public function edit_research_question($now_id, $now_question, $old_id, $id_project)
+	{
+		$id_rq = null;
+		$this->db->select('*');
+		$this->db->from('research_question');
+		$this->db->where('id_project', $id_project);
+		$this->db->where('id', $old_id);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			$id_rq = $row->id_research_question;
+		}
+
+		$data = array(
+			'description' => $now_question,
+			'id' =>$now_id
+		);
+
+		$this->db->where('id_research_question', $id_rq);
+		$this->db->update('research_question', $data);
+	}
+
+	public function add_term($term, $id_project)
+	{
+
+		$data = array(
+			'id_project' => $id_project,
+			'description' => $term
+		);
+
+		$this->db->insert('term', $data);
+	}
+
+	public function delete_term($term, $id_project)
+	{
+		$this->db->where('description', $term);
+		$this->db->where('id_project', $id_project);
+		$this->db->delete('term');
+	}
+	public function edit_term($now, $old, $id_project)
+	{
+		$id_term = null;
+		$this->db->select('*');
+		$this->db->from('term');
+		$this->db->where('id_project', $id_project);
+		$this->db->where('description', $old);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			$id_term = $row->id_term;
+		}
+
+		$data = array(
+			'description' => $now
+		);
+
+		$this->db->where('id_term', $id_term);
+		$this->db->update('term', $data);
+	}
+
+
+	public function add_synonym($syn, $term, $id_project)
+	{
+
+		$id_term = null;
+		$this->db->select('id_term');
+		$this->db->from('term');
+		$this->db->where('description', $term);
+		$this->db->where('id_project', $id_project);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			$id_term = $row->id_term;
+		}
+
+
+		$data = array(
+			'id_term' => $id_term,
+			'description' => $syn
+		);
+
+		$this->db->insert('synonym', $data);
 	}
 }

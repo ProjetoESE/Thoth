@@ -264,7 +264,8 @@
 									onClick="modal_research_question($(this).parents('tr'));">
 								<span class="fas fa-edit"></span>
 							</button>
-							<button class="btn btn-danger opt" onClick="delete_research_question($(this).parents('tr'));">
+							<button class="btn btn-danger opt"
+									onClick="delete_research_question($(this).parents('tr'));">
 								<span class="far fa-trash-alt"></span>
 							</button>
 						</td>
@@ -283,7 +284,7 @@
 			<div class="input-group col-md-3">
 				<select class="form-control" id="databases">
 					<?php foreach ($databases as $database) { ?>
-						<option><?= $database ?></option>
+						<option value="<?= $database ?>"><?= $database ?></option>
 					<?php } ?>
 				</select>
 				<div class="input-group-append">
@@ -339,6 +340,9 @@
 			</div>
 			<div class="input-group col-md-6">
 				<select class="form-control col-md-4" id="list_term">
+					<?php foreach ($project->get_terms() as $term) { ?>
+						<option value="<?= $term->get_description() ?>"><?= $term->get_description() ?></option>
+					<?php } ?>
 				</select>
 				<input type="text" class="form-control" placeholder="Add a Synonym to Term"
 					   id="synonym">
@@ -359,6 +363,40 @@
 				</tr>
 				</thead>
 				<tbody>
+				<?php foreach ($project->get_terms() as $term) { ?>
+					<tr>
+						<td><?= $term->get_description() ?></td>
+						<td>
+							<table id="table_<?= $term->get_description() ?>" class="table">
+								<th>Synonym</th>
+								<th>Actions</th>
+								<tbody>
+								<?php foreach ($term->get_synonymus() as $synonym) { ?>
+									<tr>
+										<td><?= $synonym ?></td>
+										<td>
+											<button class="btn btn-warning opt" onClick="modal_synonym(this)">
+												<span class="fas fa-edit"></span>
+											</button>
+											<button class="btn btn-danger" onClick="delete_synonym(this)">
+												<span class="far fa-trash-alt"></span>
+											</button>
+										</td>
+									</tr>
+								<?php } ?>
+								</tbody>
+							</table>
+						</td>
+						<td>
+							<button class="btn btn-warning opt" onClick="modal_term($(this).parents('tr'))">
+								<span class="fas fa-edit"></span>
+							</button>
+							<button class="btn btn-danger" onClick="delete_term($(this).parents('tr'));">
+								<span class="far fa-trash-alt"></span>
+							</button>
+						</td>
+					</tr>
+				<?php } ?>
 				</tbody>
 			</table>
 			<br>
