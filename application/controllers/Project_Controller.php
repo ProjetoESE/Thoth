@@ -530,4 +530,44 @@ class Project_Controller extends CI_Controller
 			redirect(base_url());
 		}
 	}
+
+	public function delete_synonym()
+	{
+		try {
+			$term = $this->input->post('term');
+			$syn = $this->input->post('syn');
+			$id_project = $this->input->post('id_project');
+			$this->load->model("Project_Model");
+
+			$this->Project_Model->delete_synonym($syn, $term, $id_project);
+
+			$activity = $this->session->name . " deleted the synonym" . $syn;
+			$this->insert_log($activity, 1);
+
+
+		} catch (Exception $e) {
+			$this->session->set_flashdata('error', $e->getMessage());
+			redirect(base_url());
+		}
+	}
+
+	public function edit_synonym()
+	{
+		try {
+			$now = $this->input->post('now');
+			$old = $this->input->post('old');
+			$term = $this->input->post('term');
+			$id_project = $this->input->post('id_project');
+			$this->load->model("Project_Model");
+
+			$this->Project_Model->edit_synonym($now, $old, $term, $id_project);
+
+			$activity = $this->session->name . " edited the synonym " . $old . " for " . $now;
+			$this->insert_log($activity, 1);
+
+		} catch (Exception $e) {
+			$this->session->set_flashdata('error', $e->getMessage());
+			redirect(base_url());
+		}
+	}
 }

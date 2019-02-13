@@ -95,14 +95,17 @@ class Project_Model extends CI_Model
 			$project->set_keywords($row->description);
 		}
 
-		$this->db->select('database.name');
+		$this->db->select('data_base.*');
 		$this->db->from('project_databases');
-		$this->db->join('database', 'database.id_database = project_databases.id_database');
+		$this->db->join('data_base', 'data_base.id_database = project_databases.id_database');
 		$this->db->where('id_project', $id);
 		$query = $this->db->get();
 
 		foreach ($query->result() as $row) {
-			$project->set_databases($row->name);
+			$database = new Database();
+			$database->set_name($row->name);
+			$database->set_link($row->link);
+			$project->set_databases($database);
 		}
 
 		$this->db->select('*');
@@ -338,7 +341,7 @@ class Project_Model extends CI_Model
 
 		$id_database = null;
 		$this->db->select('id_database');
-		$this->db->from('database');
+		$this->db->from('data_base');
 		$this->db->where('name', $database);
 		$query = $this->db->get();
 
@@ -360,11 +363,14 @@ class Project_Model extends CI_Model
 		$databases = array();
 
 		$this->db->select('*');
-		$this->db->from('database');
+		$this->db->from('data_base');
 		$query = $this->db->get();
 
 		foreach ($query->result() as $row) {
-			array_push($databases, $row->name);
+			$database = new Database();
+			$database->set_name($row->name);
+			$database->set_link($row->link);
+			array_push($databases, $database);
 		}
 
 		return $databases;
@@ -374,7 +380,7 @@ class Project_Model extends CI_Model
 	{
 		$id_database = null;
 		$this->db->select('id_database');
-		$this->db->from('database');
+		$this->db->from('data_base');
 		$this->db->where('name', $database);
 		$query = $this->db->get();
 
@@ -441,6 +447,20 @@ class Project_Model extends CI_Model
 
 	public function delete_term($term, $id_project)
 	{
+		$id_term = null;
+		$this->db->select('id_term');
+		$this->db->from('term');
+		$this->db->where('description', $term);
+		$this->db->where('id_project', $id_project);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			$id_term = $row->id_term;
+		}
+
+		$this->db->where('id_term', $id_term);
+		$this->db->delete('synonym');
+
 		$this->db->where('description', $term);
 		$this->db->where('id_project', $id_project);
 		$this->db->delete('term');
@@ -488,5 +508,56 @@ class Project_Model extends CI_Model
 		);
 
 		$this->db->insert('synonym', $data);
+	}
+
+	public function delete_synonym($syn, $term, $id_project)
+	{
+
+		$id_term = null;
+		$this->db->select('id_term');
+		$this->db->from('term');
+		$this->db->where('description', $term);
+		$this->db->where('id_project', $id_project);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			$id_term = $row->id_term;
+		}
+
+		$this->db->where('id_term',$id_term);
+		$this->db->where('description',$syn);
+		$this->db->delete('synonym');
+	}
+
+	public function edit_synonym($now, $old, $term, $id_project)
+	{
+		$id_term = null;
+		$this->db->select('*');
+		$this->db->from('term');
+		$this->db->where('id_project', $id_project);
+		$this->db->where('description', $term);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			$id_term = $row->id_term;
+		}
+
+		$id_synonym = null;
+		$this->db->select('*');
+		$this->db->from('synonym');
+		$this->db->where('id_term', $id_term);
+		$this->db->where('description', $old);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			$id_synonym = $row->id_synonym;
+		}
+
+		$data = array(
+			'description' => $now
+		);
+
+		$this->db->where('id_synonym', $id_synonym);
+		$this->db->update('synonym', $data);
 	}
 }

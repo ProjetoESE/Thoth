@@ -3,56 +3,6 @@ function done_paper() {
 }
 
 function generateString(database) {
-	switch (database) {
-		case 0:
-			$('#string_generic').text("(\"Performance Test\" \"Load Test\" \"Stress Test\" \"Soak Test\" \"Spike Test\" " +
-				"\"Workload Test\" \"Automation Test\") AND (Tool Generator Injector Monitor Analyzer " +
-				"Framework Suite Environment Plug*in) AND (Software Application System) AND (Teste-Teste)\n" +
-				"\n");
-			break;
-		case 1:
-			$('#string_scopus').text("(\"Performance Test\" \"Load Test\" \"Stress Test\" \"Soak Test\" \"Spike Test\"" +
-				" \"Workload Test\" \"Automation Test\") AND (Tool Generator Injector Monitor Analyzer Framework Suite" +
-				" Environment Plug*in) AND (Software Application System) AND (Teste-Teste)\n" +
-				"\n");
-			break;
-		case 2:
-			$('#string_acm').text("(\"Performance Test\" \"Load Test\" \"Stress Test\" \"Soak Test\" \"Spike Test\" " +
-				"\"Workload Test\" \"Automation Test\") AND (Tool Generator Injector Monitor Analyzer Framework Suite" +
-				" Environment Plug*in) AND (Software Application System) AND (Teste-Teste)\n" +
-				"\n");
-			break;
-		case 3:
-			$('#string_ieee').text("(\"Performance Test\" \"Load Test\" \"Stress Test\" \"Soak Test\" \"Spike Test\" " +
-				"\"Workload Test\" \"Automation Test\") AND (Tool Generator Injector Monitor Analyzer Framework Suite" +
-				" Environment Plug*in) AND (Software Application System) AND (Teste-Teste)\n" +
-				"\n");
-			break;
-		case 4:
-			$('#string_science').text("(\"Performance Test\" \"Load Test\" \"Stress Test\" \"Soak Test\" \"Spike Test\" " +
-				"\"Workload Test\" \"Automation Test\") AND (Tool Generator Injector Monitor Analyzer Framework Suite" +
-				" Environment Plug*in) AND (Software Application System) AND (Teste-Teste)\n" +
-				"\n");
-			break;
-		case 5:
-			$('#string_enginnering').text("(\"Performance Test\" \"Load Test\" \"Stress Test\" \"Soak Test\"" +
-				" \"Spike Test\" \"Workload Test\" \"Automation Test\") AND (Tool Generator Injector Monitor " +
-				"Analyzer Framework Suite Environment Plug*in) AND (Software Application System) AND (Teste-Teste)\n" +
-				"\n");
-			break;
-		case 6:
-			$('#string_springer').text("(\"Performance Test\" \"Load Test\" \"Stress Test\" \"Soak Test\" " +
-				"\"Spike Test\" \"Workload Test\" \"Automation Test\") AND (Tool Generator Injector Monitor " +
-				"Analyzer Framework Suite Environment Plug*in) AND (Software Application System) AND (Teste-Teste)\n" +
-				"\n");
-			break;
-		case 7:
-			$('#string_google').text("(\"Performance Test\" \"Load Test\" \"Stress Test\" \"Soak Test\" \"Spike Test\"" +
-				" \"Workload Test\" \"Automation Test\") AND (Tool Generator Injector Monitor Analyzer Framework Suite " +
-				"Environment Plug*in) AND (Software Application System) AND (Teste-Teste)\n" +
-				"\n");
-			break;
-	}
 }
 
 
@@ -977,13 +927,59 @@ function add_synonym() {
 
 function modal_synonym(value) {
 	let row = value.parentNode.parentNode;
-	$('#modal_synonym #index_synonym').val($("tr").index(row));
-	$('#modal_synonym #edit_synonym').val(row.innerText);
+	let term = row.parentNode.parentNode.parentNode.parentNode.cells.item(0).innerHTML;
+
+	$('#modal_synonym #index_synonym').val(row.rowIndex);
+	$('#modal_synonym #old_synonym').val(row.cells.item(0).innerHTML);
+	$('#modal_synonym #now_synonym').val(row.cells.item(0).innerHTML);
+	$('#modal_synonym #term_synonym').val(term);
 	$('#modal_synonym').modal('show');
 }
 
 function edit_synonym() {
+	let index = $('#modal_synonym #index_synonym').val();
+	let old = $('#modal_synonym #old_synonym').val();
+	let now = $('#modal_synonym #now_synonym').val();
+	let id_project = $("#id_project").val();
+	let term = $('#modal_synonym #term_synonym').val();
+	let id = "table_" + term;
 
+
+	$.ajax({
+		type: "POST",
+		url: base_url + 'project_controller/edit_synonym/',
+		data: {
+			id_project: id_project,
+			term: term,
+			old: old,
+			now: now
+		},
+		success: function () {
+			let table_syn = document.getElementById(id);
+			table_syn.deleteRow(index);
+			let row = table_syn.insertRow();
+			let cell1 = row.insertCell(0);
+			let cell2 = row.insertCell(1);
+			cell1.innerHTML = now;
+			cell2.innerHTML = '<button class="btn btn-warning opt" onClick="modal_synonym(this)">' +
+				'<span class="fas fa-edit"></span>' +
+				'</button>' +
+				'<button class="btn btn-danger" onClick="delete_synonym(this)">' +
+				'<span class="far fa-trash-alt"></span>' +
+				'</button>';
+			Swal({
+				title: 'Success',
+				text: "The synonym was edited",
+				type: 'success',
+				showCancelButton: false,
+				confirmButtonText: 'Ok'
+			}).then((result) => {
+				if (result.value) {
+					$('#modal_synonym').modal('hide');
+				}
+			});
+		}
+	});
 }
 
 function validate_synonym(term, syn, id) {
@@ -1022,7 +1018,22 @@ function validate_synonym(term, syn, id) {
 
 function delete_synonym(btn) {
 	let row = btn.parentNode.parentNode;
-	row.parentNode.removeChild(row);
+	let syn = row.cells.item(0).innerHTML;
+	let id_project = $("#id_project").val();
+	let term = row.parentNode.parentNode.parentNode.parentNode.cells.item(0).innerHTML;
+
+	$.ajax({
+		type: "POST",
+		url: base_url + 'project_controller/delete_synonym/',
+		data: {
+			id_project: id_project,
+			term: term,
+			syn: syn
+		},
+		success: function () {
+			row.parentNode.removeChild(row);
+		}
+	});
 }
 
 function add_criteria() {

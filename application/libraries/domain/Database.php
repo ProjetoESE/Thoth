@@ -17,22 +17,12 @@ class Database
 	{
 	}
 
-	/**
-	 * Database constructor for data in the database and new registry.
-	 * @param String $name
-	 * @param String $link
-	 */
-	public function __constructNew($name, $link)
-	{
-		$this->name = $name;
-		$this->link = $link;
-	}
 
 	/**
 	 * Method to retrieve the database name.
 	 * @return String name
 	 */
-	public function getName()
+	public function get_name()
 	{
 		return $this->name;
 	}
@@ -42,7 +32,7 @@ class Database
 	 * @param String $name
 	 * @throws InvalidArgumentException
 	 */
-	public function setName($name)
+	public function set_name($name)
 	{
 		if (is_null($name) || empty($name)) {
 			throw  new  InvalidArgumentException("Database Name Invalid!");
@@ -54,7 +44,7 @@ class Database
 	 * Method to retrieve the database link.
 	 * @return String link
 	 */
-	public function getLink()
+	public function get_link()
 	{
 		return $this->link;
 	}
@@ -64,7 +54,7 @@ class Database
 	 * @param String $link
 	 * @throws InvalidArgumentException
 	 */
-	public function setLink($link)
+	public function set_link($link)
 	{
 		if (is_null($link) || empty($link)) {
 			throw  new  InvalidArgumentException("Database Link Invalid!");

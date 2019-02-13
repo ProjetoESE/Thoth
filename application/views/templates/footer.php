@@ -55,10 +55,12 @@
 				</button>
 			</div>
 			<div class="modal-body">
+				<input type="hidden" id="term_synonym">
 				<input type="hidden" id="index_synonym">
-				<label for="edit_term" class="col-sm-12 col-md-2">Synonym</label>
+				<input type="hidden" id="old_synonym">
+				<label for="now_synonym" class="col-sm-12 col-md-2">Synonym</label>
 				<div class="form-inline">
-					<input type="text" id="edit_synonym" class="form-control col-sm-12 col-md-12">
+					<input type="text" id="now_synonym" class="form-control col-sm-12 col-md-12">
 				</div>
 			</div>
 			<div class="modal-footer">

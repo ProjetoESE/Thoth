@@ -284,7 +284,7 @@
 			<div class="input-group col-md-3">
 				<select class="form-control" id="databases">
 					<?php foreach ($databases as $database) { ?>
-						<option value="<?= $database ?>"><?= $database ?></option>
+						<option value="<?= $database->get_name() ?>"><?= $database->get_name() ?></option>
 					<?php } ?>
 				</select>
 				<div class="input-group-append">
@@ -305,7 +305,7 @@
 				<?php foreach ($project->get_databases() as $database) { ?>
 					<tr>
 						<td>
-							<?= $database ?>
+							<?= $database->get_name() ?>
 						</td>
 						<td>
 							<button class="btn btn-danger" onClick="delete_database($(this).parents('tr'));">
@@ -401,60 +401,20 @@
 			</table>
 			<br>
 			<label><strong>Strings</strong></label>
-			<div class="form-group" id="div_string_gnerics">
+			<div class="form-group" id="div_string_generics">
 				<label>Generic String</label>
 				<textarea class="form-control" id="string_generic"></textarea>
 				<a class="btn btn-info opt" onclick="generateString(0);">Generate</a>
 				<hr>
 			</div>
-			<div class="form-group" id="div_string_scopus">
-				<label>SCOPUS</label>
-				<textarea class="form-control" id="string_scopus"></textarea>
-				<a class="btn btn-info opt" onclick="generateString(1);">Generate</a>
-				<hr>
-			</div>
-			<div class="form-group" id="div_string_acm">
-				<label>ACM</label>
-				<textarea class="form-control" id="string_acm"></textarea>
-				<a class="btn btn-info opt" onclick="generateString(2);">Generate</a>
-				<hr>
-			</div>
-			<div class="form-group" id="div_string_ieee">
-				<label>IEEE</label>
-				<textarea class="form-control" id="string_ieee"></textarea>
-				<a class="btn btn-info opt" onclick="generateString(3);">Generate</a>
-				<hr>
-			</div>
-			<div class="form-group" id="div_string_science">
-				<label>Science Direct</label>
-				<textarea class="form-control" id="string_science"></textarea>
-				<a class="btn btn-info opt" onclick="generateString(4);">Generate</a>
-				<hr>
-			</div>
-			<div class="form-group" id="div_string_enginnering">
-				<label>Enginnering Village</label>
-				<textarea class="form-control" id="string_enginnering"></textarea>
-				<a class="btn btn-info opt" onclick="generateString(5);">Generate</a>
-				<hr>
-			</div>
-			<div class="form-group" id="div_string_springer">
-				<label>Springer Link</label>
-				<textarea class="form-control" id="string_springer"></textarea>
-				<a class="btn btn-info opt" onclick="generateString(6);">Generate</a>
-				<hr>
-			</div>
-			<div class="form-group" id="div_string_google">
-				<label>Google</label>
-				<textarea class="form-control" id="string_google"></textarea>
-				<a class="btn btn-info opt" onclick="generateString(7);">Generate</a>
-				<hr>
-			</div>
-
-			<div class="form-inline container justify-content-between">
-				<a href="#tab_databases" class="btn btn-secondary"><span class="fas fa-backward"></span> Previous</a>
-				<a href="#tab_search_strategy" class="btn btn-secondary opt">Next <span
-						class="fas fa-forward"></span></a>
-			</div>
+			<?php foreach ($project->get_databases() as $database) { ?>
+				<div class="form-group" id="div_string_<?= $database->get_name() ?>">
+					<label><?= $database->get_name() ?></label>
+					<textarea class="form-control" id="string_<?= $database->get_name() ?>"></textarea>
+					<a class="btn btn-info opt" onclick="generateString(<?= $database->get_name() ?>);">Generate</a>
+					<hr>
+				</div>
+			<?php } ?>
 		</div>
 		<div class="tab-pane container" id="tab_search_strategy">
 			<label for="search_strategy"><strong>Search Strategy</strong></label>
