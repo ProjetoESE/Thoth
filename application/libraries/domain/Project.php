@@ -24,7 +24,7 @@ class Project
 	private $keywords = array();
 	private $research_questions = array();
 	private $databases = array();
-	private $search_strings;
+	private $search_strings = array();
 	private $search_strategy;
 	private $criterias_inclusion;
 	private $criterias_exclusion;
@@ -438,7 +438,7 @@ class Project
 		if (is_null($search_strings) || empty($search_strings)) {
 			throw  new  InvalidArgumentException("Project Search Strings Invalid!");
 		}
-		$this->search_strings = $search_strings;
+		array_push($this->search_strings, $search_strings);
 	}
 
 	/**

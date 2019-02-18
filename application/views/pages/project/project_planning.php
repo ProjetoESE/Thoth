@@ -24,7 +24,7 @@
 				<a data-toggle="pill" class="nav-link" href="#tab_databases">Data Bases</a>
 			</li>
 			<li class="nav-item">
-				<a data-toggle="pill" class="nav-link" href="#tab_search_string" onclick="showString();">Search
+				<a data-toggle="pill" class="nav-link" href="#tab_search_string">Search
 					String</a>
 			</li>
 			<li class="nav-item">
@@ -319,7 +319,7 @@
 			<br>
 			<div class="form-inline container justify-content-between">
 				<a href="#tab_research" class="btn btn-secondary"><span class="fas fa-backward"></span> Previous</a>
-				<a href="#tab_search_string" onclick="showString();" class="btn btn-secondary">Next <span
+				<a href="#tab_search_string" class="btn btn-secondary">Next <span
 						class="fas fa-forward"></span></a>
 			</div>
 		</div>
@@ -371,7 +371,7 @@
 								<th>Synonym</th>
 								<th>Actions</th>
 								<tbody>
-								<?php foreach ($term->get_synonymus() as $synonym) { ?>
+								<?php foreach ($term->get_synonyms() as $synonym) { ?>
 									<tr>
 										<td><?= $synonym ?></td>
 										<td>
@@ -400,27 +400,34 @@
 				</tbody>
 			</table>
 			<br>
-			<label><strong>Strings</strong></label>
-			<div class="form-group" id="div_string_generics">
-				<label>Generic String</label>
-				<textarea class="form-control" id="string_generic"></textarea>
-				<a class="btn btn-info opt" onclick="generateString(0);">Generate</a>
-				<hr>
+			<div id="strings">
+				<label><strong>Strings</strong></label>
+				<?php foreach ($project->get_search_strings() as $search_string) { ?>
+					<div class="form-group" id="div_string_<?= $search_string->get_database() ?>">
+						<label><?= $search_string->get_database() ?></label>
+						<textarea class="form-control"
+								  id="string_<?= $search_string->get_database() ?>"><?= $search_string->get_description() ?></textarea>
+						<button type="button" class="btn btn-info opt"
+								onclick="generate_string('<?= $search_string->get_database() ?>');">
+							Generate
+						</button>
+						<hr>
+					</div>
+				<?php } ?>
 			</div>
-			<?php foreach ($project->get_databases() as $database) { ?>
-				<div class="form-group" id="div_string_<?= $database->get_name() ?>">
-					<label><?= $database->get_name() ?></label>
-					<textarea class="form-control" id="string_<?= $database->get_name() ?>"></textarea>
-					<a class="btn btn-info opt" onclick="generateString(<?= $database->get_name() ?>);">Generate</a>
-					<hr>
-				</div>
-			<?php } ?>
+			<div class="form-inline container justify-content-between">
+				<a href="#tab_databases" class="btn btn-secondary"><span
+						class="fas fa-backward"></span> Previous</a>
+				<a href="#tab_search_strategy" class="btn btn-secondary opt">Next <span
+						class="fas fa-forward"></span></a>
+			</div>
 		</div>
 		<div class="tab-pane container" id="tab_search_strategy">
 			<label for="search_strategy"><strong>Search Strategy</strong></label>
-			<textarea rows="8" class="form-control" id="search_strategy"></textarea>
+			<textarea rows="8" class="form-control" id="search_strategy"><?= $project->get_search_strategy() ?></textarea>
+			<button class="btn btn-success opt float-right" type="button" onclick="edit_search_strategy()">Save</button>
 			<div class="form-inline container justify-content-between">
-				<a href="#tab_search_string" onclick="showString();" class="btn btn-secondary"><span
+				<a href="#tab_search_string" class="btn btn-secondary"><span
 						class="fas fa-backward"></span> Previous</a>
 				<a href="#tab_criteria" class="btn btn-secondary opt">Next <span
 						class="fas fa-forward"></span></a>

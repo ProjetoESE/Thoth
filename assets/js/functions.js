@@ -2,45 +2,20 @@ function done_paper() {
 	let id = document.getElementById("paper_id").value;
 }
 
-function generateString(database) {
-}
-
-
-function showString() {
-	$('#div_string_scopus').hide();
-	$('#div_string_acm').hide();
-	$('#div_string_enginnering').hide();
-	$('#div_string_google').hide();
-	$('#div_string_ieee').hide();
-	$('#div_string_science').hide();
-	$('#div_string_springer').hide();
-
-	let data = table_databases.rows().data().toArray();
-	for (let i = 0; i < data.length; i++) {
-		switch (data[i][0]) {
-			case "Scopus":
-				$('#div_string_scopus').show();
-				break;
-			case "ACM":
-				$('#div_string_acm').show();
-				break;
-			case "IEEE":
-				$('#div_string_ieee').show();
-				break;
-			case "Science Direct":
-				$('#div_string_science').show();
-				break;
-			case "Enginnering Village":
-				$('#div_string_enginnering').show();
-				break;
-			case "Springer Link":
-				$('#div_string_springer').show();
-				break;
-			case "Google":
-				$('#div_string_google').show();
-				break;
+function generate_string(database) {
+	let id_project = $("#id_project").val();
+	$.ajax({
+		type: "POST",
+		url: base_url + 'project_controller/generate_string/',
+		data: {
+			id_project: id_project,
+			database: database
+		},
+		success: function (string) {
+			let id = 'string_' + database;
+			document.getElementById(id).value = string;
 		}
-	}
+	});
 }
 
 $(window).on("popstate", function () {
@@ -711,6 +686,18 @@ function add_database() {
 			]).draw();
 
 			$("#databases")[0].value = "";
+
+
+			let node = document.createElement("DIV");
+			node.id = 'div_string_' + databases;
+			node.classList.add("form-group")
+			node.innerHTML = '<label>' + databases + '</label>' +
+				'<textarea class="form-control" id="string_' + databases + '"></textarea>' +
+				'<button type="button" class="btn btn-info opt" onclick="generate_string(\'' + databases + '\');">Generate</button>' +
+				'<hr>';
+
+			document.getElementById("strings").appendChild(node);
+
 		}
 	});
 
@@ -727,8 +714,12 @@ function delete_database(value) {
 			database: row.data()[0]
 		},
 		success: function () {
+			let elem = document.getElementById('div_string_' + row.data()[0]);
+			elem.parentNode.removeChild(elem);
 			row.remove();
 			table_databases.draw();
+
+
 		}
 	});
 }
@@ -794,8 +785,8 @@ function edit_term() {
 	let old = row.data()[0];
 	let id = "table_" + old;
 	let table_syn = document.getElementById(id);
-	id = "table_" + now;
-	table_syn.id = id;
+	let id_now = "table_" + now;
+	table_syn.id = id_now;
 
 	$.ajax({
 		type: "POST",
@@ -944,6 +935,9 @@ function edit_synonym() {
 	let term = $('#modal_synonym #term_synonym').val();
 	let id = "table_" + term;
 
+	if (!validate_synonym(term, now, id)) {
+		return false;
+	}
 
 	$.ajax({
 		type: "POST",
@@ -1199,4 +1193,42 @@ function add_general_quality_score() {
 		'<span class="far fa-trash-alt"></span>' +
 		'</button>'
 	]);
+}
+
+function edit_search_strategy() {
+	let search_strategy = $("#search_strategy").val();
+	let id_project = $("#id_project").val();
+
+	if (!validate_search_strategy(search_strategy)) {
+		return false;
+	}
+	$.ajax({
+		type: "POST",
+		url: base_url + 'project_controller/edit_search_strategy/',
+		data: {
+			id_project: id_project,
+			search_strategy: search_strategy
+		},
+		success: function () {
+			Swal({
+				title: 'Success',
+				text: "The search strategy was edited",
+				type: 'success',
+				showCancelButton: false,
+				confirmButtonText: 'Ok'
+			});
+		}
+	});
+}
+
+function validate_search_strategy(search_strategy) {
+	if (!search_strategy) {
+		swal({
+			type: 'warning',
+			title: 'Warning',
+			text: 'The term can not be empty!'
+		});
+		return false;
+	}
+	return true;
 }

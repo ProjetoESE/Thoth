@@ -9,7 +9,7 @@ class Term
 {
 
 	private $description;
-	private $synonymus = array();
+	private $synonyms = array();
 
 	/**
 	 * Term constructor.
@@ -41,25 +41,25 @@ class Term
 	}
 
 	/**
-	 * Method to retrieve the term synonymus.
-	 * @return array(String) synonymus
+	 * Method to retrieve the term synonyms.
+	 * @return array(String) synonyms
 	 */
-	public function get_synonymus()
+	public function get_synonyms()
 	{
-		return $this->synonymus;
+		return $this->synonyms;
 	}
 
 	/**
-	 * Method to change the term synonymus.
-	 * @param array(String) $synonymus
+	 * Method to change the term synonyms.
+	 * @param array(String) $synonyms
 	 * @throws InvalidArgumentException
 	 */
-	public function set_synonymus($synonymus)
+	public function set_synonyms($synonyms)
 	{
-		if (is_null($synonymus)) {
-			throw  new  InvalidArgumentException("Term Synonymus Invalid!");
+		if (is_null($synonyms)) {
+			throw  new  InvalidArgumentException("Term Synonyms Invalid!");
 		}
-		array_push($this->synonymus, $synonymus);
+		array_push($this->synonyms, $synonyms);
 	}
 
 }

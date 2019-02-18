@@ -27,6 +27,14 @@ class Project_Model extends CI_Model
 		$this->db->insert('project', $data);
 		$id_project = $this->db->insert_id();
 
+		$data = array(
+			'id_project' => $id_project,
+			'description' => " ",
+		);
+
+		$this->db->insert('search_string_generics', $data);
+		$this->db->insert('search_strategy', $data);
+
 		$project = new Project();
 		$project->set_title($title);
 		$project->set_created_by($name);
@@ -121,6 +129,41 @@ class Project_Model extends CI_Model
 		}
 
 		$this->db->select('*');
+		$this->db->from('search_strategy');
+		$this->db->where('id_project', $id);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			$project->set_search_strategy($row->description);
+		}
+
+		$this->db->select('*');
+		$this->db->from('search_string_generics');
+		$this->db->where('id_project', $id);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			$ss = new Search_String();
+			$ss->set_description($row->description);
+			$ss->set_database('Generic');
+			$project->set_search_strings($ss);
+		}
+
+		$this->db->select('search_string.description, data_base.name');
+		$this->db->from('search_string');
+		$this->db->join('project_databases', 'project_databases.id_project_database = search_string.id_project_database');
+		$this->db->join('data_base', 'data_base.id_database = project_databases.id_database');
+		$this->db->where('id_project', $id);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			$ss = new Search_String();
+			$ss->set_description($row->description);
+			$ss->set_database($row->name);
+			$project->set_search_strings($ss);
+		}
+
+		$this->db->select('*');
 		$this->db->from('term');
 		$this->db->where('id_project', $id);
 		$query = $this->db->get();
@@ -135,7 +178,7 @@ class Project_Model extends CI_Model
 			$query2 = $this->db->get();
 
 			foreach ($query2->result() as $row2) {
-				$term->set_synonymus($row2->description);
+				$term->set_synonyms($row2->description);
 			}
 
 			$project->set_terms($term);
@@ -356,6 +399,15 @@ class Project_Model extends CI_Model
 		);
 
 		$this->db->insert('project_databases', $data);
+		$id_project_database = $this->db->insert_id();
+
+		$data = array(
+			'description' => " ",
+			'id_project_database' => $id_project_database
+		);
+
+		$this->db->insert('search_string', $data);
+
 	}
 
 	public function get_databases()
@@ -379,6 +431,7 @@ class Project_Model extends CI_Model
 	public function delete_database($database, $id_project)
 	{
 		$id_database = null;
+		$id_project_database = null;
 		$this->db->select('id_database');
 		$this->db->from('data_base');
 		$this->db->where('name', $database);
@@ -387,6 +440,19 @@ class Project_Model extends CI_Model
 		foreach ($query->result() as $row) {
 			$id_database = $row->id_database;
 		}
+
+		$this->db->select('id_project_database');
+		$this->db->from('project_databases');
+		$this->db->where('id_database', $id_database);
+		$this->db->where('id_project', $id_project);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			$id_project_database = $row->id_project_database;
+		}
+
+		$this->db->where('id_project_database', $id_project_database);
+		$this->db->delete('search_string');
 
 		$this->db->where('id_database', $id_database);
 		$this->db->where('id_project', $id_project);
@@ -427,7 +493,7 @@ class Project_Model extends CI_Model
 
 		$data = array(
 			'description' => $now_question,
-			'id' =>$now_id
+			'id' => $now_id
 		);
 
 		$this->db->where('id_research_question', $id_rq);
@@ -465,6 +531,7 @@ class Project_Model extends CI_Model
 		$this->db->where('id_project', $id_project);
 		$this->db->delete('term');
 	}
+
 	public function edit_term($now, $old, $id_project)
 	{
 		$id_term = null;
@@ -524,8 +591,8 @@ class Project_Model extends CI_Model
 			$id_term = $row->id_term;
 		}
 
-		$this->db->where('id_term',$id_term);
-		$this->db->where('description',$syn);
+		$this->db->where('id_term', $id_term);
+		$this->db->where('description', $syn);
 		$this->db->delete('synonym');
 	}
 
@@ -559,5 +626,89 @@ class Project_Model extends CI_Model
 
 		$this->db->where('id_synonym', $id_synonym);
 		$this->db->update('synonym', $data);
+	}
+
+	public function generate_string($string, $id_project_database)
+	{
+		$data = array(
+			'description' => $string
+		);
+
+		$this->db->where('id_project_database', $id_project_database);
+		$this->db->update('search_string', $data);
+
+	}
+
+	public function get_id_project_database($database, $id_project)
+	{
+		$id_database = null;
+
+		$this->db->select('id_database');
+		$this->db->from('data_base');
+		$this->db->where('name', $database);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			$id_database = $row->id_database;
+		}
+
+		$this->db->select('id_project_database');
+		$this->db->from('project_databases');
+		$this->db->where('id_project', $id_project);
+		$this->db->where('id_database', $id_database);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			$r = $row->id_project_database;
+			return $r;
+
+		}
+	}
+
+	public function generate_string_generic($string, $id_project)
+	{
+		$data = array(
+			'description' => $string
+		);
+
+		$this->db->where('id_project', $id_project);
+		$this->db->update('search_string_generics', $data);
+
+	}
+
+	public function edit_search_strategy($search_strategy, $id_project){
+		$data = array(
+			'description' => $search_strategy
+		);
+
+		$this->db->where('id_project', $id_project);
+		$this->db->update('search_strategy', $data);
+	}
+
+	public function get_terms_and_syn($id_project){
+		$data = array();
+
+		$this->db->select('*');
+		$this->db->from('term');
+		$this->db->where('id_project', $id_project);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			$term = new Term();
+			$term->set_description($row->description);
+
+			$this->db->select('*');
+			$this->db->from('synonym');
+			$this->db->where('id_term', $row->id_term);
+			$query2 = $this->db->get();
+
+			foreach ($query2->result() as $row2) {
+				$term->set_synonyms($row2->description);
+			}
+
+			array_push($data,$term);
+		}
+
+		return $data;
 	}
 }

@@ -10,7 +10,6 @@ class Search_String
 
 	private $description;
 	private $database;
-	private $updated_at;
 
 	/**
 	 * Search_String constructor.
@@ -20,23 +19,10 @@ class Search_String
 	}
 
 	/**
-	 * Search_String constructor for data in the database and new registry.
-	 * @param String $description
-	 * @param Database $database
-	 * @param DateTime $updated_at
-	 */
-	public function __construct_New_DB($description, $database, $updated_at)
-	{
-		$this->description = $description;
-		$this->database = $database;
-		$this->updated_at = $updated_at;
-	}
-
-	/**
 	 * Method to retrieve the search string description.
 	 * @return String description
 	 */
-	public function getDescription()
+	public function get_description()
 	{
 		return $this->description;
 	}
@@ -46,7 +32,7 @@ class Search_String
 	 * @param String $description
 	 * @throws InvalidArgumentException
 	 */
-	public function setDescription($description)
+	public function set_description($description)
 	{
 		if (is_null($description) || empty($description)) {
 			throw  new  InvalidArgumentException("Search String Description Invalid!");
@@ -56,9 +42,9 @@ class Search_String
 
 	/**
 	 * Method to retrieve the search string database.
-	 * @return Database database
+	 * @return String database
 	 */
-	public function getDatabase()
+	public function get_database()
 	{
 		return $this->database;
 	}
@@ -68,35 +54,12 @@ class Search_String
 	 * @param String $database
 	 * @throws InvalidArgumentException
 	 */
-	public function setDatabase($database)
+	public function set_database($database)
 	{
 		if (is_null($database)) {
 			throw  new  InvalidArgumentException("Search String Database Invalid!");
 		}
 		$this->database = $database;
 	}
-
-	/**
-	 * Method to retrieve the search string update at.
-	 * @return DateTime updated_at
-	 */
-	public function getUpdatedAt()
-	{
-		return $this->updated_at;
-	}
-
-	/**
-	 * Method to change the search string update at.
-	 * @param DateTime $updated_at
-	 * @throws InvalidArgumentException
-	 */
-	public function setUpdatedAt($updated_at)
-	{
-		if (is_null($updated_at)) {
-			throw  new  InvalidArgumentException("Search String Update at Invalid!");
-		}
-		$this->updated_at = $updated_at;
-	}
-
 
 }
