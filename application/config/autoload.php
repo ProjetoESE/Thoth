@@ -59,7 +59,7 @@ $autoload['packages'] = array();
 |	$autoload['libraries'] = array('user_agent' => 'ua');
 */
 $autoload['libraries'] = array('database','session','domain/User','domain/Project','domain/Research_Question',
-	'domain/Term','domain/Database','domain/Search_String');
+	'domain/Term','domain/Database','domain/Search_String','domain/Exclusion_Criteria','domain/Inclusion_Criteria');
 
 /*
 | -------------------------------------------------------------------

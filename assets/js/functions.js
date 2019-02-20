@@ -1031,36 +1031,70 @@ function delete_synonym(btn) {
 }
 
 function add_criteria() {
-	let id = $("#id_criteria");
-	let description = $("#description_criteria");
-	let type = $("#select_type option:selected").val();
+	let id = $("#id_criteria").val();
+	let description = $("#description_criteria").val();
+	let type = $("#select_type").val();
+	let id_project = $("#id_project").val();
 
-	if (!validate_criteria(id[0].value, description[0].value, type, null)) {
+	if (!validate_criteria(id, description, type, null)) {
 		return false;
 	}
 
+	$.ajax({
+		type: "POST",
+		url: base_url + 'project_controller/add_criteria/',
+		data: {
+			id_project: id_project,
+			id: id,
+			description: description,
+			type: type
+		},
+		success: function () {
+			table_criteria.row.add([
+				'<div class="form-check">' +
+				'<input id="selected_' + id.trim() + '" type="checkbox" class="form-check-input" onchange="select_criteria($(this).parents(\'tr\'))">' +
+				'</div>',
+				id,
+				description,
+				type,
+				'<button class="btn btn-warning opt" onClick="modal_criteria($(this).parents(\'tr\'))">' +
+				'<span class="fas fa-edit"></span>' +
+				'</button>' +
+				'<button class="btn btn-danger" onClick="delete_criteria($(this).parents(\'tr\'));">' +
+				'<span class="far fa-trash-alt"></span>' +
+				'</button>'
+			]).draw();
 
-	table_criteria.row.add([
-		'<div class="form-check">' +
-		'<input type="checkbox" class="form-check-input" onchange="select_criteria($(this).parents(\'tr\'))">' +
-		'</div>',
-		id[0].value,
-		description[0].value,
-		type,
-		'<button class="btn btn-warning opt" onClick="modal_criteria($(this).parents(\'tr\'))">' +
-		'<span class="fas fa-edit"></span>' +
-		'</button>' +
-		'<button class="btn btn-danger" onClick="delete_criteria($(this).parents(\'tr\'));">' +
-		'<span class="far fa-trash-alt"></span>' +
-		'</button>'
-	]).draw();
-
-	id[0].value = "";
-	description[0].value = "";
+			id = $("#id_criteria")[0].value = "";
+			description = $("#description_criteria")[0].value = "";
+		}
+	});
 }
 
-function select_criteria() {
-	console.log("Selecionado");
+function select_criteria(value) {
+	let row = table_criteria.row(value);
+	let id_project = $("#id_project").val();
+	let id = '#selected_' + row.data()[1].replace(" ", "");
+	//let pre_selected = $(id).checked();
+/*
+	$.ajax({
+		type: "POST",
+		url: base_url + 'project_controller/selected_pre_select/',
+		data: {
+			id_project: id_project,
+			id: row.data()[1],
+			pre_selected: pre_selected
+		},
+		success: function () {
+			Swal({
+				title: 'Success',
+				text: "The criteria is selected",
+				type: 'success',
+				showCancelButton: false,
+				confirmButtonText: 'Ok'
+			})
+		}
+	});*/
 }
 
 function validate_criteria(id, description, type, index) {
@@ -1231,4 +1265,50 @@ function validate_search_strategy(search_strategy) {
 		return false;
 	}
 	return true;
+}
+
+function edit_inclusion_rule() {
+	let rule = $("#rule_inclusion").val();
+	let id_project = $("#id_project").val();
+
+	$.ajax({
+		type: "POST",
+		url: base_url + 'project_controller/edit_inclusion_rule/',
+		data: {
+			id_project: id_project,
+			rule: rule
+		},
+		success: function () {
+			Swal({
+				title: 'Success',
+				text: "The inclusion rule was edited",
+				type: 'success',
+				showCancelButton: false,
+				confirmButtonText: 'Ok'
+			});
+		}
+	});
+}
+
+function edit_exclusion_rule() {
+	let rule = $("#rule_exclusion").val();
+	let id_project = $("#id_project").val();
+
+	$.ajax({
+		type: "POST",
+		url: base_url + 'project_controller/edit_exclusion_rule/',
+		data: {
+			id_project: id_project,
+			rule: rule
+		},
+		success: function () {
+			Swal({
+				title: 'Success',
+				text: "The inclusion rule was edited",
+				type: 'success',
+				showCancelButton: false,
+				confirmButtonText: 'Ok'
+			});
+		}
+	});
 }

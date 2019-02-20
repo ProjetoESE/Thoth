@@ -45,6 +45,7 @@ class Project_Controller extends CI_Controller
 			$data['languages'] = $this->Project_Model->get_languages();
 			$data['study_types'] = $this->Project_Model->get_study_types();
 			$data['databases'] = $this->Project_Model->get_databases();
+			$data['rules'] = $this->Project_Model->get_rules();
 
 			if (!isset($_SESSION['logged_in'])) {
 				load_templates('pages/visitor/project_planning_visitor', $data);
@@ -665,7 +666,7 @@ class Project_Controller extends CI_Controller
 		}
 	}
 
-	function edit_search_strategy()
+	public function edit_search_strategy()
 	{
 		try {
 			$search_strategy = $this->input->post('search_strategy');
@@ -676,6 +677,94 @@ class Project_Controller extends CI_Controller
 
 			$activity = $this->session->name . " edited search strategy " . $id_project;
 			$this->insert_log($activity, 1);
+
+		} catch (Exception $e) {
+			$this->session->set_flashdata('error', $e->getMessage());
+			redirect(base_url());
+		}
+	}
+
+	public function edit_exclusion_rule()
+	{
+		try {
+			$rule = $this->input->post('rule');
+			$id_project = $this->input->post('id_project');
+			$this->load->model("Project_Model");
+
+			$this->Project_Model->edit_exclusion_rule($rule, $id_project);
+
+			$activity = $this->session->name . " edited exclusion rule " . $id_project;
+			$this->insert_log($activity, 1);
+
+		} catch (Exception $e) {
+			$this->session->set_flashdata('error', $e->getMessage());
+			redirect(base_url());
+		}
+	}
+
+	public function edit_inclusion_rule()
+	{
+		try {
+			$rule = $this->input->post('rule');
+			$id_project = $this->input->post('id_project');
+			$this->load->model("Project_Model");
+
+			$this->Project_Model->edit_inclusion_rule($rule, $id_project);
+
+			$activity = $this->session->name . " edited inclusion rule " . $id_project;
+			$this->insert_log($activity, 1);
+
+		} catch (Exception $e) {
+			$this->session->set_flashdata('error', $e->getMessage());
+			redirect(base_url());
+		}
+	}
+
+	public function add_criteria()
+	{
+		try {
+			$id = $this->input->post('id');
+			$type = $this->input->post('type');
+			$description = $this->input->post('description');
+			$id_project = $this->input->post('id_project');
+			$this->load->model("Project_Model");
+
+			if ($type == "Inclusion") {
+				$this->Project_Model->add_inclusion_criteria($id, $description, $id_project);
+				$activity = $this->session->name . " added inclusion criteria " . $id_project;
+				$this->insert_log($activity, 1);
+			} else if ($type == "Exclusion") {
+				$this->Project_Model->add_exclusion_criteria($id, $description, $id_project);
+				$activity = $this->session->name . " added exclusion criteria " . $id_project;
+				$this->insert_log($activity, 1);
+			}
+
+		} catch (Exception $e) {
+			$this->session->set_flashdata('error', $e->getMessage());
+			redirect(base_url());
+		}
+	}
+
+	public function selected_pre_select()
+	{
+		try {
+			$id = $this->input->post('id');
+			$pre_selected = $this->input->post('pre_selected');
+			$id_project = $this->input->post('id_project');
+			//$this->load->model("Project_Model");
+
+			var_dump($id);
+			var_dump($pre_selected);
+			var_dump($id_project);
+			/*if ($type == "Inclusion") {
+				$this->Project_Model->add_inclusion_criteria($id, $description, $id_project);
+				$activity = $this->session->name . " added inclusion criteria " . $id_project;
+				$this->insert_log($activity, 1);
+			} else if ($type == "Exclusion") {
+				$this->Project_Model->add_exclusion_criteria($id, $description, $id_project);
+				$activity = $this->session->name . " added exclusion criteria " . $id_project;
+				$this->insert_log($activity, 1);
+			}*/
 
 		} catch (Exception $e) {
 			$this->session->set_flashdata('error', $e->getMessage());

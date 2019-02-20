@@ -424,7 +424,8 @@
 		</div>
 		<div class="tab-pane container" id="tab_search_strategy">
 			<label for="search_strategy"><strong>Search Strategy</strong></label>
-			<textarea rows="8" class="form-control" id="search_strategy"><?= $project->get_search_strategy() ?></textarea>
+			<textarea rows="8" class="form-control"
+					  id="search_strategy"><?= $project->get_search_strategy() ?></textarea>
 			<button class="btn btn-success opt float-right" type="button" onclick="edit_search_strategy()">Save</button>
 			<div class="form-inline container justify-content-between">
 				<a href="#tab_search_string" class="btn btn-secondary"><span
@@ -440,15 +441,17 @@
 				<label for="rule_exclusion" class="col-sm-12 col-md-2">Exclusion Rule</label>
 			</div>
 			<div class="form-inline">
-				<select class="form-control col-sm-12 col-md-2 opt" id="rule_inclusion">
-					<option value="1">All</option>
-					<option value="2">Any</option>
-					<option value="3">At Least</option>
+				<select class="form-control col-sm-12 col-md-2 opt" id="rule_inclusion"
+						onchange="edit_inclusion_rule();">
+					<?php foreach ($rules as $rule) { ?>
+						<option value="<?= $rule ?>"><?= $rule ?></option>
+					<?php } ?>
 				</select>
-				<select class="form-control col-sm-12 col-md-2 opt" id="rule_exclusion">
-					<option value="1">All</option>
-					<option value="2">Any</option>
-					<option value="3">At Least</option>
+				<select class="form-control col-sm-12 col-md-2 opt" id="rule_exclusion"
+						onchange="edit_exclusion_rule();">
+					<?php foreach ($rules as $rule) { ?>
+						<option value="<?= $rule ?>"><?= $rule ?></option>
+					<?php } ?>
 				</select>
 			</div>
 
@@ -483,6 +486,64 @@
 				</tr>
 				</thead>
 				<tbody>
+				<?php foreach ($project->get_inclusion_criteria() as $ic) {
+					if ($ic->get_pre_selected()) {
+						$checked = 'checked';
+					} else {
+						$checked = '';
+					}
+					?>
+					<tr>
+						<td>
+							<div class="form-check">
+								<input id="selected_<?= str_replace(' ', '', $ic->get_id()); ?>"
+									   type="checkbox" <?= $checked ?>
+									   class="form-check-input"
+									   onchange="select_criteria($(this).parents('tr'))">
+							</div>
+						</td>
+						<td><?= $ic->get_id() ?></td>
+						<td><?= $ic->get_description() ?></td>
+						<td>Inclusion</td>
+						<td>
+							<button class="btn btn-warning opt" onClick="modal_criteria($(this).parents('tr'))">
+								<span class="fas fa-edit"></span>
+							</button>
+							<button class="btn btn-danger" onClick="delete_criteria($(this).parents('tr'));">
+								<span class="far fa-trash-alt"></span>
+							</button>
+						</td>
+					</tr>
+				<?php } ?>
+				<?php foreach ($project->get_exclusion_criteria() as $ec) {
+					if ($ec->get_pre_selected()) {
+						$checked = 'checked';
+					} else {
+						$checked = '';
+					}
+					?>
+					<tr>
+						<td>
+							<div class="form-check">
+								<input id="selected_<?= str_replace(' ', '', $ec->get_id()) ?>"
+									   type="checkbox" <?= $checked ?>
+									   class="form-check-input"
+									   onchange="select_criteria($(this).parents('tr'))">
+							</div>
+						</td>
+						<td><?= $ec->get_id() ?></td>
+						<td><?= $ec->get_description() ?></td>
+						<td>Exclusion</td>
+						<td>
+							<button class="btn btn-warning opt" onClick="modal_criteria($(this).parents('tr'))">
+								<span class="fas fa-edit"></span>
+							</button>
+							<button class="btn btn-danger" onClick="delete_criteria($(this).parents('tr'));">
+								<span class="far fa-trash-alt"></span>
+							</button>
+						</td>
+					</tr>
+				<?php } ?>
 				</tbody>
 				<tfoot>
 				<tr>

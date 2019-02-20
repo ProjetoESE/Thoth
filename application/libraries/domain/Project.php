@@ -26,8 +26,8 @@ class Project
 	private $databases = array();
 	private $search_strings = array();
 	private $search_strategy;
-	private $criterias_inclusion;
-	private $criterias_exclusion;
+	private $inclusion_criteria = array();
+	private $exclusion_criteria = array();
 	private $questions_quality;
 	private $questions_extraction;
 	private $papers;
@@ -464,47 +464,47 @@ class Project
 	}
 
 	/**
-	 * Method to retrieve the project criterias inclusion.
-	 * @return array(Inclusion_Criteria) criterias_inclusion
+	 * Method to retrieve the project criteria inclusion.
+	 * @return array(Inclusion_Criteria) inclusion_criteria
 	 */
-	public function get_criterias_inclusion()
+	public function get_inclusion_criteria()
 	{
-		return $this->criterias_inclusion;
+		return $this->inclusion_criteria;
 	}
 
 	/**
-	 * Method to change the project criterias inclusion.
-	 * @param array(Inclusion_Criteria) $criterias_inclusion
+	 * Method to change the project criteria inclusion.
+	 * @param array(Inclusion_Criteria) $inclusion_criteria
 	 * @throws InvalidArgumentException
 	 */
-	public function set_criterias_inclusion($criterias_inclusion)
+	public function set_inclusion_criteria($inclusion_criteria)
 	{
-		if (is_null($criterias_inclusion) || empty($criterias_inclusion)) {
-			throw  new  InvalidArgumentException("Project Criterias Inclusion Invalid!");
+		if (is_null($inclusion_criteria) || empty($inclusion_criteria)) {
+			throw  new  InvalidArgumentException("Project Inclusion Criteria Invalid!");
 		}
-		$this->criterias_inclusion = $criterias_inclusion;
+		array_push($this->inclusion_criteria, $inclusion_criteria);
 	}
 
 	/**
-	 * Method to retrieve the project criterias exclusion.
-	 * @return array(Exclusion_Criteria) criterias_exclusion
+	 * Method to retrieve the project criteria exclusion.
+	 * @return array(Exclusion_Criteria) exclusion_criteria
 	 */
-	public function get_criterias_exclusion()
+	public function get_exclusion_criteria()
 	{
-		return $this->criterias_exclusion;
+		return $this->exclusion_criteria;
 	}
 
 	/**
-	 * Method to change the project criterias exclusion.
-	 * @param array(Exclusion_Criteria) $criterias_exclusion
+	 * Method to change the project criteria exclusion.
+	 * @param array(Exclusion_Criteria) $exclusion_criteria
 	 * @throws InvalidArgumentException
 	 */
-	public function set_criterias_exclusion($criterias_exclusion)
+	public function set_exclusion_criteria($exclusion_criteria)
 	{
-		if (is_null($criterias_exclusion) || empty($criterias_exclusion)) {
-			throw  new  InvalidArgumentException("Project Criterias Exclusion Invalid!");
+		if (is_null($exclusion_criteria) || empty($exclusion_criteria)) {
+			throw  new  InvalidArgumentException("Project Exclusion Criteria Invalid!");
 		}
-		$this->criterias_exclusion = $criterias_exclusion;
+		array_push($this->exclusion_criteria, $exclusion_criteria);
 	}
 
 	/**

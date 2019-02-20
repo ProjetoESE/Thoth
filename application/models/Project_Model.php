@@ -35,6 +35,14 @@ class Project_Model extends CI_Model
 		$this->db->insert('search_string_generics', $data);
 		$this->db->insert('search_strategy', $data);
 
+		$data = array(
+			'id_project' => $id_project,
+			'id_rule' => 1
+		);
+
+		$this->db->insert('inclusion_rule', $data);
+		$this->db->insert('exclusion_rule', $data);
+
 		$project = new Project();
 		$project->set_title($title);
 		$project->set_created_by($name);
@@ -184,7 +192,76 @@ class Project_Model extends CI_Model
 			$project->set_terms($term);
 		}
 
+		$this->db->select('*');
+		$this->db->from('inclusion_rule');
+		$this->db->join('rule', 'rule.id_rule = inclusion_rule.id_rule');
+		$this->db->where('id_project', $id);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			$project->set_inclusion_rule($row->description);
+		}
+
+		$this->db->select('*');
+		$this->db->from('exclusion_rule');
+		$this->db->join('rule', 'rule.id_rule = exclusion_rule.id_rule');
+		$this->db->where('id_project', $id);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			$project->set_exclusion_rule($row->description);
+		}
+
+		$this->db->select('*');
+		$this->db->from('exclusion_criteria');
+		$this->db->where('id_project', $id);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			$ec = new Exclusion_Criteria();
+			$ec->set_description($row->description);
+			$ec->set_id($row->id);
+			if ($row->pre_selected == 0) {
+				$ec->set_pre_selected(false);
+			} else {
+				$ec->set_pre_selected(true);
+			}
+			$project->set_exclusion_criteria($ec);
+		}
+
+		$this->db->select('*');
+		$this->db->from('inclusion_criteria');
+		$this->db->where('id_project', $id);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			$ic = new Inclusion_Criteria();
+			$ic->set_description($row->description);
+			$ic->set_id($row->id);
+			if ($row->pre_selected == 0) {
+				$ic->set_pre_selected(false);
+			} else {
+				$ic->set_pre_selected(true);
+			}
+			$project->set_inclusion_criteria($ic);
+		}
+
 		return $project;
+	}
+
+	public function get_rules()
+	{
+		$data = array();
+
+		$this->db->select('*');
+		$this->db->from('rule');
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			array_push($data, $row->description);
+		}
+
+		return $data;
 	}
 
 	public function add_domain($domain, $id_project)
@@ -676,7 +753,8 @@ class Project_Model extends CI_Model
 
 	}
 
-	public function edit_search_strategy($search_strategy, $id_project){
+	public function edit_search_strategy($search_strategy, $id_project)
+	{
 		$data = array(
 			'description' => $search_strategy
 		);
@@ -685,7 +763,8 @@ class Project_Model extends CI_Model
 		$this->db->update('search_strategy', $data);
 	}
 
-	public function get_terms_and_syn($id_project){
+	public function get_terms_and_syn($id_project)
+	{
 		$data = array();
 
 		$this->db->select('*');
@@ -706,9 +785,77 @@ class Project_Model extends CI_Model
 				$term->set_synonyms($row2->description);
 			}
 
-			array_push($data,$term);
+			array_push($data, $term);
 		}
 
 		return $data;
+	}
+
+	public function edit_exclusion_rule($rule, $id_project)
+	{
+
+		$id_rule = null;
+
+		$this->db->select('id_rule');
+		$this->db->from('rule');
+		$this->db->where('description', $rule);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			$id_rule = $row->id_rule;
+		}
+
+		$data = array(
+			'id_rule' => $id_rule
+		);
+
+		$this->db->where('id_project', $id_project);
+		$this->db->update('exclusion_rule', $data);
+	}
+
+	public function edit_inclusion_rule($rule, $id_project)
+	{
+
+		$id_rule = null;
+
+		$this->db->select('id_rule');
+		$this->db->from('rule');
+		$this->db->where('description', $rule);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			$id_rule = $row->id_rule;
+		}
+
+		$data = array(
+			'id_rule' => $id_rule
+		);
+
+		$this->db->where('id_project', $id_project);
+		$this->db->update('inclusion_rule', $data);
+	}
+
+	public function add_inclusion_criteria($id, $description, $id_project)
+	{
+		$data = array(
+			'id' => $id,
+			'id_project' => $id_project,
+			'description' => $description,
+			'pre_selected' => false
+		);
+
+		$this->db->insert('inclusion_criteria', $data);
+	}
+
+	public function add_exclusion_criteria($id, $description, $id_project)
+	{
+		$data = array(
+			'id' => $id,
+			'id_project' => $id_project,
+			'description' => $description,
+			'pre_selected' => false
+		);
+
+		$this->db->insert('exclusion_criteria', $data);
 	}
 }

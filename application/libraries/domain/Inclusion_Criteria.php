@@ -18,24 +18,12 @@ class Inclusion_Criteria
 	{
 	}
 
-	/**
-	 * Inclusion Criteria constructor for data in the database and new registry.
-	 * @param String $id
-	 * @param String $description
-	 * @param boolean $pre_selected
-	 */
-	public function __construct_New_DB($id, $description, $pre_selected)
-	{
-		$this->id = $id;
-		$this->description = $description;
-		$this->pre_selected = $pre_selected;
-	}
 
 	/**
 	 * Method to retrieve the criteria id.
 	 * @return String id
 	 */
-	public function getId()
+	public function get_id()
 	{
 		return $this->id;
 	}
@@ -45,7 +33,7 @@ class Inclusion_Criteria
 	 * @param String $id
 	 * @throws InvalidArgumentException
 	 */
-	public function setId($id)
+	public function set_id($id)
 	{
 		if (is_null($id) || empty($id)) {
 			throw  new  InvalidArgumentException("Id Criteria Invalid!");
@@ -57,7 +45,7 @@ class Inclusion_Criteria
 	 * Method to retrieve the criteria description.
 	 * @return String description
 	 */
-	public function getDescription()
+	public function get_description()
 	{
 		return $this->description;
 	}
@@ -67,7 +55,7 @@ class Inclusion_Criteria
 	 * @param String $description
 	 * @throws InvalidArgumentException
 	 */
-	public function setDescription($description)
+	public function set_description($description)
 	{
 		if (is_null($description) || empty($description)) {
 			throw  new  InvalidArgumentException("Criteria Description Invalid!");
@@ -79,7 +67,7 @@ class Inclusion_Criteria
 	 * Method to retrieve the criteria preselected.
 	 * @return boolean preselected
 	 */
-	public function getPreSelected()
+	public function get_pre_selected()
 	{
 		return $this->pre_selected;
 	}
@@ -89,9 +77,9 @@ class Inclusion_Criteria
 	 * @param boolean $pre_selected
 	 * @throws InvalidArgumentException
 	 */
-	public function setPreSelected($pre_selected)
+	public function set_pre_selected($pre_selected)
 	{
-		if (is_null($pre_selected) || empty($pre_selected)) {
+		if (is_null($pre_selected)) {
 			throw  new  InvalidArgumentException("Criteria Preselected Invalid!");
 		}
 		$this->pre_selected = $pre_selected;
