@@ -1052,7 +1052,7 @@ function add_criteria() {
 		success: function () {
 			table_criteria.row.add([
 				'<div class="form-check">' +
-				'<input id="selected_' + id.trim() + '" type="checkbox" class="form-check-input" onchange="select_criteria($(this).parents(\'tr\'))">' +
+				'<input id="selected_' + id.replace(" ", "").trim() + '" type="checkbox" class="form-check-input" onchange="select_criteria($(this).parents(\'tr\'))">' +
 				'</div>',
 				id,
 				description,
@@ -1074,9 +1074,9 @@ function add_criteria() {
 function select_criteria(value) {
 	let row = table_criteria.row(value);
 	let id_project = $("#id_project").val();
-	let id = '#selected_' + row.data()[1].replace(" ", "");
-	//let pre_selected = $(id).checked();
-/*
+	let id = 'selected_' + row.data()[1].replace(" ", "");
+	let pre_selected = document.getElementById(id).checked
+
 	$.ajax({
 		type: "POST",
 		url: base_url + 'project_controller/selected_pre_select/',
@@ -1086,15 +1086,26 @@ function select_criteria(value) {
 			pre_selected: pre_selected
 		},
 		success: function () {
-			Swal({
-				title: 'Success',
-				text: "The criteria is selected",
-				type: 'success',
-				showCancelButton: false,
-				confirmButtonText: 'Ok'
-			})
+			if (pre_selected) {
+				Swal({
+					title: 'Success',
+					text: "The criteria is selected",
+					type: 'success',
+					showCancelButton: false,
+					confirmButtonText: 'Ok'
+				})
+			} else {
+				Swal({
+					title: 'Success',
+					text: "The criteria is deselected",
+					type: 'success',
+					showCancelButton: false,
+					confirmButtonText: 'Ok'
+				})
+			}
+
 		}
-	});*/
+	});
 }
 
 function validate_criteria(id, description, type, index) {
@@ -1158,8 +1169,20 @@ function validate_criteria(id, description, type, index) {
 
 function delete_criteria(value) {
 	let row = table_criteria.row(value);
-	row.remove();
-	table_criteria.draw();
+	let id_project = $("#id_project").val();
+
+	$.ajax({
+		type: "POST",
+		url: base_url + 'project_controller/delete_criteria/',
+		data: {
+			id_project: id_project,
+			id: row.data()[1]
+		},
+		success: function () {
+			row.remove();
+			table_criteria.draw();
+		}
+	});
 }
 
 function modal_criteria(value) {
@@ -1176,37 +1199,56 @@ function edit_criteria() {
 	let id = $('#modal_criteria #edit_id_criteria').val();
 	let description = $('#modal_criteria #edit_description_criteria').val();
 	let type = $('#edit_select_type option:selected').val();
+	let row = table_criteria.row(index);
+	let id_project = $("#id_project").val();
+	let id_check = 'selected_' + row.data()[1].replace(" ", "");
+	let pre_selected = document.getElementById(id_check).checked
 
 	if (!validate_criteria(id, description, type, index)) {
 		return false;
 	}
 
-	let row = table_criteria.row(index);
-	row.remove();
-	table_criteria.row.add([
-		'<div class="form-check">' +
-		'<input type="checkbox" class="form-check-input" onchange="select_criteria($(this).parents(\'tr\'))">' +
-		'</div>',
-		id,
-		description,
-		type,
-		'<button class="btn btn-warning opt" onClick="modal_criteria($(this).parents(\'tr\'))">' +
-		'<span class="fas fa-edit"></span>' +
-		'</button>' +
-		'<button class="btn btn-danger" onClick="delete_criteria($(this).parents(\'tr\'));">' +
-		'<span class="far fa-trash-alt"></span>' +
-		'</button>'
-	]).draw();
 
-	Swal({
-		title: 'Success',
-		text: "The criteria was edited",
-		type: 'success',
-		showCancelButton: false,
-		confirmButtonText: 'Ok'
-	}).then((result) => {
-		if (result.value) {
-			$('#modal_criteria').modal('hide');
+	$.ajax({
+		type: "POST",
+		url: base_url + 'project_controller/edit_criteria/',
+		data: {
+			id_project: id_project,
+			new_id: id,
+			old_id: row.data()[1],
+			description: description,
+			new_type: type,
+			pre_selected: pre_selected
+		},
+		success: function () {
+			row.remove();
+			table_criteria.row.add([
+				'<div class="form-check">' +
+				'<input id="selected_' + id.replace(" ", "").trim() + '" type="checkbox" class="form-check-input" onchange="select_criteria($(this).parents(\'tr\'))">' +
+				'</div>',
+				id,
+				description,
+				type,
+				'<button class="btn btn-warning opt" onClick="modal_criteria($(this).parents(\'tr\'))">' +
+				'<span class="fas fa-edit"></span>' +
+				'</button>' +
+				'<button class="btn btn-danger" onClick="delete_criteria($(this).parents(\'tr\'));">' +
+				'<span class="far fa-trash-alt"></span>' +
+				'</button>'
+			]).draw();
+
+			Swal({
+				title: 'Success',
+				text: "The criteria was edited",
+				type: 'success',
+				showCancelButton: false,
+				confirmButtonText: 'Ok'
+
+			}).then((result) => {
+				if (result.value) {
+					$('#modal_criteria').modal('hide');
+				}
+			});
 		}
 	});
 }
