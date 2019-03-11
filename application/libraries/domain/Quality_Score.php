@@ -20,23 +20,10 @@ class Quality_Score
 	}
 
 	/**
-	 * Quality_Score constructor for data in the database and new registry.
-	 * @param float $start_interval
-	 * @param float $end_interval
-	 * @param String $description
-	 */
-	public function __construct_New_DB($start_interval, $end_interval, $description)
-	{
-		$this->start_interval = $start_interval;
-		$this->end_interval = $end_interval;
-		$this->description = $description;
-	}
-
-	/**
 	 * Method to retrieve the quality score start interval.
 	 * @return float start_interval
 	 */
-	public function getStartInterval()
+	public function get_start_interval()
 	{
 		return $this->start_interval;
 	}
@@ -46,7 +33,7 @@ class Quality_Score
 	 * @param float $start_interval
 	 * @throws InvalidArgumentException
 	 */
-	public function setStartInterval($start_interval)
+	public function set_start_interval($start_interval)
 	{
 		if (is_null($start_interval)) {
 			throw  new  InvalidArgumentException("Quality Score Start Interval Invalid!");
@@ -58,7 +45,7 @@ class Quality_Score
 	 * Method to retrieve the quality score end interval.
 	 * @return float end_interval
 	 */
-	public function getEndInterval()
+	public function get_end_interval()
 	{
 		return $this->end_interval;
 	}
@@ -68,7 +55,7 @@ class Quality_Score
 	 * @param float $end_interval
 	 * @throws InvalidArgumentException
 	 */
-	public function setEndInterval($end_interval)
+	public function set_end_interval($end_interval)
 	{
 		if (is_null($end_interval)) {
 			throw  new  InvalidArgumentException("Quality Score End Interval Invalid!");
@@ -80,7 +67,7 @@ class Quality_Score
 	 * Method to retrieve the quality score description.
 	 * @return String description
 	 */
-	public function getDescription()
+	public function get_description()
 	{
 		return $this->description;
 	}

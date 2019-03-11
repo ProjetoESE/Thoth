@@ -241,6 +241,19 @@ class Project_Model extends CI_Model
 			}
 		}
 
+		$this->db->select('*');
+		$this->db->from('general_score');
+		$this->db->where('id_project', $id);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			$score = new Quality_Score();
+			$score->setDescription($row->description);
+			$score->set_end_interval($row->end);
+			$score->set_start_interval($row->start);
+			$project->set_quality_scores($score);
+		}
+
 		return $project;
 	}
 
@@ -888,5 +901,84 @@ class Project_Model extends CI_Model
 		$this->db->where('id_project', $id_project);
 		$this->db->where('id', $old_id);
 		$this->db->update('criteria', $data);
+	}
+
+	public function add_general_quality_score($start_interval, $end_interval, $general_score_desc, $id_project)
+	{
+		var_dump($general_score_desc);
+		$data = array(
+			'start' => $start_interval,
+			'id_project' => $id_project,
+			'end' => $end_interval,
+			'description' => $general_score_desc
+		);
+
+		$this->db->insert('general_score', $data);
+	}
+
+	public function delete_general_quality_score($description, $id_project)
+	{
+
+		$id_general_score = null;
+
+		$this->db->select('id_general_score');
+		$this->db->from('general_score');
+		$this->db->where('description', $description);
+		$this->db->where('id_project', $id_project);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			$id_general_score = $row->id_general_score;
+		}
+
+		$this->db->where('id_general_score', $id_general_score);
+		$this->db->delete('min_to_app');
+
+		$this->db->where('description', $description);
+		$this->db->where('id_project', $id_project);
+		$this->db->delete('general_score');
+	}
+
+	public function edit_general_score($description, $start, $end, $old_desc, $id_project)
+	{
+		$data = array(
+			'start' => $start,
+			'end' => $end,
+			'description' => $description
+		);
+		$this->db->where('description', $old_desc);
+		$this->db->where('id_project', $id_project);
+		$this->db->update('general_score', $data);
+	}
+
+	public function edit_min_score($score, $id_project)
+	{
+		$id_general_score = null;
+
+		$this->db->select('id_general_score');
+		$this->db->from('general_score');
+		$this->db->where('description', $score);
+		$this->db->where('id_project', $id_project);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			$id_general_score = $row->id_general_score;
+		}
+
+		$data = array(
+			'id_general_score' => $id_general_score
+		);
+
+
+		$this->db->where('id_project', $id_project);
+		$q = $this->db->get('min_to_app');
+
+		if ($q->num_rows() > 0) {
+			$this->db->where('id_project', $id_project);
+			$this->db->update('min_to_app', $data);
+		} else {
+			$data['id_project'] = $id_project;
+			$this->db->insert('min_to_app', $data);
+		}
 	}
 }

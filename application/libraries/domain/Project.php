@@ -33,7 +33,7 @@ class Project
 	private $papers;
 	private $terms = array();
 	private $members;
-	private $quality_scores;
+	private $quality_scores = array();
 
 	/**
 	 * Project constructor.
@@ -636,7 +636,7 @@ class Project
 		if (is_null($quality_scores) || empty($quality_scores)) {
 			throw  new  InvalidArgumentException("Project Members Invalid!");
 		}
-		$this->quality_scores = $quality_scores;
+		array_push($this->quality_scores, $quality_scores);
 	}
 
 }

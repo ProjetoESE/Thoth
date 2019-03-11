@@ -58,8 +58,9 @@ $autoload['packages'] = array();
 |
 |	$autoload['libraries'] = array('user_agent' => 'ua');
 */
-$autoload['libraries'] = array('database','session','domain/User','domain/Project','domain/Research_Question',
-	'domain/Term','domain/Database','domain/Search_String','domain/Exclusion_Criteria','domain/Inclusion_Criteria');
+$autoload['libraries'] = array('database', 'session', 'domain/User', 'domain/Project', 'domain/Research_Question',
+	'domain/Term', 'domain/Database', 'domain/Search_String', 'domain/Exclusion_Criteria', 'domain/Inclusion_Criteria',
+	'domain/Quality_Score');
 
 /*
 | -------------------------------------------------------------------
@@ -90,7 +91,7 @@ $autoload['drivers'] = array();
 |
 |	$autoload['helper'] = array('url', 'file');
 */
-$autoload['helper'] = array('url', 'form','util');
+$autoload['helper'] = array('url', 'form', 'util');
 
 /*
 | -------------------------------------------------------------------

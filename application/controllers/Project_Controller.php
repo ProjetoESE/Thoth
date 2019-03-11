@@ -804,4 +804,82 @@ class Project_Controller extends CI_Controller
 			redirect(base_url());
 		}
 	}
+
+	public function add_general_quality_score()
+	{
+		try {
+			$start_interval = $this->input->post('start_interval');
+			$id_project = $this->input->post('id_project');
+			$end_interval = $this->input->post('end_interval');
+			$general_score_desc = $this->input->post('general_score_desc');
+			$this->load->model("Project_Model");
+
+			var_dump("To aqui");
+
+			$this->Project_Model->add_general_quality_score($start_interval, $end_interval, $general_score_desc, $id_project);
+
+			$activity = $this->session->name . " added general quality score " . $general_score_desc;
+			$this->insert_log($activity, 1);
+
+		} catch (Exception $e) {
+			$this->session->set_flashdata('error', $e->getMessage());
+			redirect(base_url());
+		}
+	}
+
+	public function delete_general_quality_score()
+	{
+		try {
+			$description = $this->input->post('description');
+			$id_project = $this->input->post('id_project');
+			$this->load->model("Project_Model");
+
+			$this->Project_Model->delete_general_quality_score($description, $id_project);
+
+			$activity = $this->session->name . " deleted general quality score " . $description;
+			$this->insert_log($activity, 1);
+
+		} catch (Exception $e) {
+			$this->session->set_flashdata('error', $e->getMessage());
+			redirect(base_url());
+		}
+	}
+
+	public function edit_general_score()
+	{
+		try {
+			$description = $this->input->post('desc');
+			$id_project = $this->input->post('id_project');
+			$old_desc = $this->input->post('old_desc');
+			$start = $this->input->post('start');
+			$end = $this->input->post('end');
+			$this->load->model("Project_Model");
+
+			$this->Project_Model->edit_general_score($description, $start, $end, $old_desc, $id_project);
+
+			$activity = $this->session->name . " edited general quality score " . $description;
+			$this->insert_log($activity, 1);
+
+		} catch (Exception $e) {
+			$this->session->set_flashdata('error', $e->getMessage());
+			redirect(base_url());
+		}
+	}
+
+	public function edit_min_score(){
+		try {
+			$score = $this->input->post('score');
+			$id_project = $this->input->post('id_project');
+			$this->load->model("Project_Model");
+
+			$this->Project_Model->edit_min_score($score, $id_project);
+
+			$activity = $this->session->name . " edited min general quality score to approved" . $score;
+			$this->insert_log($activity, 1);
+
+		} catch (Exception $e) {
+			$this->session->set_flashdata('error', $e->getMessage());
+			redirect(base_url());
+		}
+	}
 }

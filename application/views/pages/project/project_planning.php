@@ -563,7 +563,6 @@
 			</div>
 		</div>
 		<div class="tab-pane container" id="tab_quality">
-			<label for="start_interval"><strong>Quality Assessment</strong></label>
 			<div class="form-inline">
 				<label for="start_interval" class="col-sm-12 col-md-4">General Score Interval</label>
 				<label for="general_score_desc" class="col-sm-12 col-md-8">General Score Description</label>
@@ -582,7 +581,10 @@
 				</div>
 				<label for="min_score_to_app" class="col-md-12">Minimum General Score to Approve</label>
 				<div class="input-group container">
-					<select class="form-control col-md-3" id="min_score_to_app">
+					<select class="form-control col-md-3" id="min_score_to_app" onchange="edit_min_score();">
+						<?php foreach ($project->get_quality_scores() as $score) { ?>
+							<option value="<?= $score->get_description() ?>"><?= $score->get_description() ?></option>
+						<?php } ?>
 					</select>
 				</div>
 			</div>
@@ -598,6 +600,22 @@
 				</tr>
 				</thead>
 				<tbody>
+				<?php foreach ($project->get_quality_scores() as $score) { ?>
+					<tr>
+						<td><?= $score->get_start_interval() ?></td>
+						<td><?= $score->get_end_interval() ?></td>
+						<td><?= $score->get_description() ?></td>
+						<td>
+							<button class="btn btn-warning opt" onClick="modal_general_score($(this).parents('tr'))">
+								<span class="fas fa-edit"></span>
+							</button>
+							<button class="btn btn-danger"
+									onClick="delete_general_quality_score($(this).parents('tr'))">
+								<span class="far fa-trash-alt"></span>
+							</button>
+						</td>
+					</tr>
+				<?php } ?>
 				</tbody>
 			</table>
 			<br>
