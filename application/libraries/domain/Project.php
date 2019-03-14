@@ -32,7 +32,7 @@ class Project
 	private $questions_extraction;
 	private $papers;
 	private $terms = array();
-	private $members;
+	private $members = array();
 	private $quality_scores = array();
 
 	/**
@@ -614,7 +614,8 @@ class Project
 		if (is_null($members) || empty($members)) {
 			throw  new  InvalidArgumentException("Project Members Invalid!");
 		}
-		$this->members = $members;
+
+		array_push($this->members, $members);
 	}
 
 	/**

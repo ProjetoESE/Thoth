@@ -1539,7 +1539,7 @@ function validate_search_strategy(search_strategy) {
 		swal({
 			type: 'warning',
 			title: 'Warning',
-			text: 'The term can not be empty!'
+			text: 'The search string can not be empty!'
 		});
 		return false;
 	}
@@ -1590,4 +1590,57 @@ function edit_exclusion_rule() {
 			});
 		}
 	});
+}
+
+function add_research() {
+	let id_project = $("#id_project").val();
+	let email = $("#add_email_user").val();
+	let level = $("#add_level_user").val();
+	let index = document.getElementById("add_email_user").selectedIndex;
+
+	console.log(index);
+	if (!validate_add_research(email, level)) {
+		return false;
+	}
+
+	$.ajax({
+		type: "POST",
+		url: base_url + 'project_controller/add_member/',
+		data: {
+			id_project: id_project,
+			email: email,
+			level: level
+		},
+		success: function () {
+			let x = document.getElementById("add_email_user");
+			x.remove(index);
+			Swal({
+				title: 'Success',
+				text: "The research was added",
+				type: 'success',
+				showCancelButton: false,
+				confirmButtonText: 'Ok'
+			});
+		}
+	});
+}
+
+function validate_add_research(email, level) {
+	if (!email) {
+		swal({
+			type: 'warning',
+			title: 'Warning',
+			text: 'The email can not be empty!'
+		});
+		return false;
+	}
+	if (!level) {
+		swal({
+			type: 'warning',
+			title: 'Warning',
+			text: 'The level can not be empty!'
+		});
+		return false;
+	}
+	return true;
 }

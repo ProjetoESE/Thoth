@@ -33,7 +33,10 @@ class Project_Controller extends CI_Controller
 
 	public function add_research($id)
 	{
-		$data['project'] = $id;
+		$this->load->model("Project_Model");
+		$data['project'] = $this->Project_Model->get_project($id);
+		$data['users'] = $this->Project_Model->get_users();
+		$data['levels'] = $this->Project_Model->get_levels();
 		load_templates('pages/project/project_add_research', $data);
 	}
 
@@ -866,7 +869,8 @@ class Project_Controller extends CI_Controller
 		}
 	}
 
-	public function edit_min_score(){
+	public function edit_min_score()
+	{
 		try {
 			$score = $this->input->post('score');
 			$id_project = $this->input->post('id_project');
@@ -882,4 +886,24 @@ class Project_Controller extends CI_Controller
 			redirect(base_url());
 		}
 	}
+
+	public function add_member()
+	{
+		try {
+			$email = $this->input->post('email');
+			$id_project = $this->input->post('id_project');
+			$level = $this->input->post('level');
+			$this->load->model("Project_Model");
+
+			$this->Project_Model->add_member($email, $level, $id_project);
+
+			$activity = $this->session->name . " added member " . $email;
+			$this->insert_log($activity, 1);
+
+		} catch (Exception $e) {
+			$this->session->set_flashdata('error', $e->getMessage());
+			redirect(base_url());
+		}
+	}
+
 }

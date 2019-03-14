@@ -54,8 +54,6 @@ $(document).ready(function () {
 	});
 
 
-
-
 	$('#table_qa').DataTable(configDataTables);
 	$('#table_question_quality').DataTable(configDataTables);
 	$('#table_data_extraction').DataTable(configDataTables);
@@ -87,13 +85,13 @@ $(document).ready(function () {
 	});
 
 	let table_papers = $('#table_papers').DataTable({
-		columnDefs: [ {
+		columnDefs: [{
 			targets: 6,
 			orderable: false
-		} ],
+		}],
 		responsive: true,
 		order: [[0, "asc"]],
-		select:{
+		select: {
 			style: 'single',
 			selector: 'td:first-child'
 		},
@@ -165,7 +163,7 @@ $(document).ready(function () {
 	let table_papers_quality = $('#table_papers_quality').DataTable({
 		responsive: true,
 		order: [[0, "asc"]],
-		select:{
+		select: {
 			style: 'single',
 			selector: 'td:first-child'
 		},
@@ -204,13 +202,13 @@ $(document).ready(function () {
 	});
 
 	let table_papers_extraction = $('#table_papers_extraction').DataTable({
-		columnDefs: [ {
+		columnDefs: [{
 			targets: 4,
 			orderable: false
-		} ],
+		}],
 		responsive: true,
 		order: [[0, "asc"]],
-		select:{
+		select: {
 			style: 'single',
 			selector: 'td:first-child'
 		},
@@ -257,8 +255,15 @@ $(document).ready(function () {
 		location.hash = this.getAttribute("href");
 	});
 
+	$('#add_email_user').select2({
+		placeholder: 'Select an email',
+		allowClear: true
+	});
 
-
+	$('#add_level_user').select2({
+		placeholder: 'Select an level',
+		allowClear: true
+	});
 });
 
 

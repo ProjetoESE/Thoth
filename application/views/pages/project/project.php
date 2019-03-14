@@ -1,7 +1,7 @@
 <div class="card">
 	<div class="text-center card-header">
 		<h4><?= $project->get_title(); ?></h4>
-		<input type="hidden" id="id_project" value="<?= $project->get_id();?>">
+		<input type="hidden" id="id_project" value="<?= $project->get_id(); ?>">
 		<a href="<?= base_url('project_controller/open/' . $project->get_id()) ?>"
 		   class="btn form-inline btn-outline-primary opt">Review</a>
 		<a href="<?= base_url('project_controller/planning/' . $project->get_id()) ?>"
@@ -34,18 +34,11 @@
 					<h5>Members</h5>
 				</div>
 				<ul>
-					<li>
-						Guilherme Bolfe
-					</li>
-					<li>
-						Guilherme Bolfe
-					</li>
-					<li>
-						Guilherme Bolfe
-					</li>
-					<li>
-						Guilherme Bolfe
-					</li>
+					<?php foreach ($project->get_members() as $member) { ?>
+						<li>
+							<?= $member ?>
+						</li>
+					<?php } ?>
 				</ul>
 			</div>
 		</div>

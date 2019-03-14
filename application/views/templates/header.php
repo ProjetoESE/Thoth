@@ -28,6 +28,9 @@
 	<!-- SweetAlert -->
 	<link rel="stylesheet" href="<?= base_url('assets/css/sweetalert2.min.css'); ?>">
 
+	<!-- Select -->
+	<link rel="stylesheet" href="<?= base_url('assets/css/select2.min.css'); ?>">
+
 	<!-- My CSS Files -->
 	<link rel="stylesheet" href="<?= base_url('assets/css/main.css'); ?>">
 
@@ -63,6 +66,9 @@
 
 	<!-- SweetAlert -->
 	<script src="<?= base_url('assets/js/sweetalert2.all.min.js'); ?>"></script>
+
+	<!-- Select -->
+	<script src="<?= base_url('assets/js/select2.full.min.js'); ?>"></script>
 
 	<!-- My JS Files -->
 	<script src="<?= base_url('assets/js/main.js'); ?>"></script>

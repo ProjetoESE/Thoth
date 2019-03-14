@@ -43,12 +43,21 @@ class Project_Model extends CI_Model
 		$this->db->insert('inclusion_rule', $data);
 		$this->db->insert('exclusion_rule', $data);
 
+		$data = array(
+			'id_project' => $id_project,
+			'id_user' => $created_by,
+			'level' => 1
+		);
+
+		$this->db->insert('members', $data);
+
 		$project = new Project();
 		$project->set_title($title);
 		$project->set_created_by($name);
 		$project->set_id($id_project);
 		$project->set_description($description);
 		$project->set_objectives($objectives);
+		$project->set_members($name);
 
 		return $project;
 	}
@@ -252,6 +261,16 @@ class Project_Model extends CI_Model
 			$score->set_end_interval($row->end);
 			$score->set_start_interval($row->start);
 			$project->set_quality_scores($score);
+		}
+
+		$this->db->select('name');
+		$this->db->from('members');
+		$this->db->join('user', 'user.id_user = members.id_user');
+		$this->db->where('id_project', $id);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			$project->set_members($row->name);
 		}
 
 		return $project;
@@ -980,5 +999,70 @@ class Project_Model extends CI_Model
 			$data['id_project'] = $id_project;
 			$this->db->insert('min_to_app', $data);
 		}
+	}
+
+	public function get_users()
+	{
+		$users = array();
+		$this->db->select('*');
+		$this->db->from('user');
+		$this->db->join('members', 'members.id_user = user.id_user', 'left');
+		$this->db->where('members.id_user', null);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+
+			$user = new User();
+			$user->set_name($row->name);
+			$user->set_email($row->email);
+			array_push($users, $user);
+		}
+		return $users;
+	}
+
+	public function add_member($email, $level, $id_project)
+	{
+
+		$id_level = null;
+		$this->db->select('id_level');
+		$this->db->from('levels');
+		$this->db->where('level', $level);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			$id_level = $row->id_level;
+		}
+
+
+		$id_user = null;
+		$this->db->select('id_user');
+		$this->db->from('user');
+		$this->db->where('email', $email);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			$id_user = $row->id_user;
+		}
+
+		$data = array(
+			'id_user' => $id_user,
+			'id_project' => $id_project,
+			'level' => $id_level
+		);
+
+		$this->db->insert('members', $data);
+	}
+
+	public function get_levels()
+	{
+		$levels = array();
+		$this->db->select('*');
+		$this->db->from('levels');
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			array_push($levels, $row->level);
+		}
+		return $levels;
 	}
 }
