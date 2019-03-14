@@ -27,7 +27,8 @@ class Project_Controller extends CI_Controller
 
 	public function edit($id)
 	{
-		$data['project'] = $id;
+		$this->load->model("Project_Model");
+		$data['project'] = $this->Project_Model->get_project($id);
 		load_templates('pages/project/project_edit', $data);
 	}
 
@@ -898,6 +899,26 @@ class Project_Controller extends CI_Controller
 			$this->Project_Model->add_member($email, $level, $id_project);
 
 			$activity = $this->session->name . " added member " . $email;
+			$this->insert_log($activity, 1);
+
+		} catch (Exception $e) {
+			$this->session->set_flashdata('error', $e->getMessage());
+			redirect(base_url());
+		}
+	}
+
+	public function edited_project()
+	{
+		try {
+			$title = $this->input->post('title');
+			$id_project = $this->input->post('id_project');
+			$description = $this->input->post('description');
+			$objectives = $this->input->post('objectives');
+			$this->load->model("Project_Model");
+
+			$this->Project_Model->edit_project($title, $description, $objectives, $id_project);
+
+			$activity = $this->session->name . " edited project " . $id_project;
 			$this->insert_log($activity, 1);
 
 		} catch (Exception $e) {

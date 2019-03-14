@@ -1,28 +1,30 @@
 <input type="hidden" id="id_project" value="<?= $project->get_id(); ?>">
-<div class="row">
-	<div class="col-md-12">
+<div class="row justify-content-md-center">
+	<div class="col-md-6">
 		<div class="card">
 			<div class="card-header">
-				<h4>Add Research</h4>
+				<h4>Add Research at <?= $project->get_title() ?></h4>
 			</div>
 			<div class="card-body">
-				<div class="form-inline">
+				<div class="form-group">
 					<label for="add_user">E-mail </label>
-					<select id="add_email_user" class="col-md-4 col-sm-8">
+					<select id="add_email_user" class="form-control">
 						<?php foreach ($users as $user) { ?>
 							<option value="<?= $user->get_email() ?>"><?= $user->get_email() ?></option>
 						<?php } ?>
 					</select>
+				</div>
+				<div class="form-group">
 					<label for="add_level_user">Level </label>
-					<select id="add_level_user" class="col-md-2 col-sm-8">
+					<select id="add_level_user" class="form-control">
 						<?php foreach ($levels as $level) { ?>
 							<option value="<?= $level ?>"><?= $level ?></option>
 						<?php } ?>
 					</select>
-					<button class="btn btn-success" type="button" onclick="add_research()"><span
-							class="fas fa-plus"></span>
-					</button>
 				</div>
+				<button class="btn btn-success" type="button" onclick="add_research()"><span
+						class="fas fa-plus"></span>
+				</button>
 			</div>
 		</div>
 	</div>

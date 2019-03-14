@@ -1065,4 +1065,15 @@ class Project_Model extends CI_Model
 		}
 		return $levels;
 	}
+
+	public function edit_project($title, $description, $objectives, $id_project)
+	{
+		$data = array(
+			'title' => $title,
+			'description' => $description,
+			'objectives' => $objectives
+		);
+		$this->db->where('id_project', $id_project);
+		$this->db->update('project', $data);
+	}
 }

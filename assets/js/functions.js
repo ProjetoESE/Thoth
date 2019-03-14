@@ -1644,3 +1644,67 @@ function validate_add_research(email, level) {
 	}
 	return true;
 }
+
+function edit_project() {
+	let id_project = $("#id_project").val();
+	let objectives = $("#edit_objectives").val();
+	let description = $("#edit_description").val();
+	let title = $("#edit_title").val();
+
+	console.log(objectives);
+	console.log(description);
+	console.log(title);
+
+	if (!validate_edit_project(objectives, description, title)) {
+		return false;
+	}
+
+	$.ajax({
+		type: "POST",
+		url: base_url + 'project_controller/edited_project/',
+		data: {
+			id_project: id_project,
+			objectives: objectives,
+			description: description,
+			title: title
+		},
+		success: function () {
+			$("#title_project").text('Edit ' + title);
+			Swal({
+				title: 'Success',
+				text: "The project was edited",
+				type: 'success',
+				showCancelButton: false,
+				confirmButtonText: 'Ok'
+			});
+		}
+	});
+}
+
+function validate_edit_project(objectives, description, title) {
+	if (!title) {
+		swal({
+			type: 'warning',
+			title: 'Warning',
+			text: 'The title can not be empty!'
+		});
+		return false;
+	}
+	if (!description) {
+		swal({
+			type: 'warning',
+			title: 'Warning',
+			text: 'The description can not be empty!'
+		});
+		return false;
+	}
+	if (!objectives) {
+		swal({
+			type: 'warning',
+			title: 'Warning',
+			text: 'The objectives can not be empty!'
+		});
+		return false;
+	}
+	return true;
+}
