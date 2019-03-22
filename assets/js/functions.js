@@ -59,18 +59,37 @@ function add_domain() {
 function delete_domain(value) {
 	let row = table_domains.row(value);
 	let id_project = $("#id_project").val();
-	$.ajax({
-		type: "POST",
-		url: base_url + 'project_controller/delete_domain/',
-		data: {
-			id_project: id_project,
-			domain: row.data()[0]
-		},
-		success: function () {
-			row.remove();
-			table_domains.draw();
+
+	Swal.fire({
+		title: 'Are you sure?',
+		text: "You will not be able to reverse this," +
+			" this can impact other areas of your project!",
+		type: 'warning',
+		showCancelButton: true,
+		confirmButtonColor: '#3085d6',
+		cancelButtonColor: '#d33',
+		confirmButtonText: 'Yes, delete it!'
+	}).then((result) => {
+		if (result.value) {
+			$.ajax({
+				type: "POST",
+				url: base_url + 'project_controller/delete_domain/',
+				data: {
+					id_project: id_project,
+					domain: row.data()[0]
+				},
+				success: function () {
+					row.remove();
+					table_domains.draw();
+				}
+			});
+			Swal.fire(
+				'Deleted!',
+				'Domain has been deleted.',
+				'success'
+			)
 		}
-	});
+	})
 
 
 }
@@ -212,20 +231,36 @@ function validate_language(language) {
 function delete_language(value) {
 	let row = table_languages.row(value);
 	let id_project = $("#id_project").val();
-
-	$.ajax({
-		type: "POST",
-		url: base_url + 'project_controller/delete_language/',
-		data: {
-			id_project: id_project,
-			language: row.data()[0]
-		},
-		success: function () {
-			row.remove();
-			table_languages.draw();
+	Swal.fire({
+		title: 'Are you sure?',
+		text: "You will not be able to reverse this," +
+			" this can impact other areas of your project!",
+		type: 'warning',
+		showCancelButton: true,
+		confirmButtonColor: '#3085d6',
+		cancelButtonColor: '#d33',
+		confirmButtonText: 'Yes, delete it!'
+	}).then((result) => {
+		if (result.value) {
+			$.ajax({
+				type: "POST",
+				url: base_url + 'project_controller/delete_language/',
+				data: {
+					id_project: id_project,
+					language: row.data()[0]
+				},
+				success: function () {
+					row.remove();
+					table_languages.draw();
+				}
+			});
+			Swal.fire(
+				'Deleted!',
+				'Language has been deleted.',
+				'success'
+			)
 		}
 	});
-
 }
 
 function add_study_type() {
@@ -287,16 +322,34 @@ function delete_study_type(value) {
 	let row = table_study_type.row(value);
 	let id_project = $("#id_project").val();
 
-	$.ajax({
-		type: "POST",
-		url: base_url + 'project_controller/delete_study_type/',
-		data: {
-			id_project: id_project,
-			study_type: row.data()[0]
-		},
-		success: function () {
-			row.remove();
-			table_study_type.draw();
+	Swal.fire({
+		title: 'Are you sure?',
+		text: "You will not be able to reverse this," +
+			" this can impact other areas of your project!",
+		type: 'warning',
+		showCancelButton: true,
+		confirmButtonColor: '#3085d6',
+		cancelButtonColor: '#d33',
+		confirmButtonText: 'Yes, delete it!'
+	}).then((result) => {
+		if (result.value) {
+			$.ajax({
+				type: "POST",
+				url: base_url + 'project_controller/delete_study_type/',
+				data: {
+					id_project: id_project,
+					study_type: row.data()[0]
+				},
+				success: function () {
+					row.remove();
+					table_study_type.draw();
+				}
+			});
+			Swal.fire(
+				'Deleted!',
+				'Study Type has been deleted.',
+				'success'
+			)
 		}
 	});
 }
@@ -414,18 +467,38 @@ function delete_keywords(value) {
 	let row = table_keywords.row(value);
 	let id_project = $("#id_project").val();
 
-	$.ajax({
-		type: "POST",
-		url: base_url + 'project_controller/delete_keywords/',
-		data: {
-			id_project: id_project,
-			keywords: row.data()[0]
-		},
-		success: function () {
-			row.remove();
-			table_keywords.draw();
+	Swal.fire({
+		title: 'Are you sure?',
+		text: "You will not be able to reverse this," +
+			" this can impact other areas of your project!",
+		type: 'warning',
+		showCancelButton: true,
+		confirmButtonColor: '#3085d6',
+		cancelButtonColor: '#d33',
+		confirmButtonText: 'Yes, delete it!'
+	}).then((result) => {
+		if (result.value) {
+
+			$.ajax({
+				type: "POST",
+				url: base_url + 'project_controller/delete_keywords/',
+				data: {
+					id_project: id_project,
+					keywords: row.data()[0]
+				},
+				success: function () {
+					row.remove();
+					table_keywords.draw();
+				}
+			});
+			Swal.fire(
+				'Deleted!',
+				'Keyword has been deleted.',
+				'success'
+			)
 		}
 	});
+
 }
 
 function add_date() {
@@ -630,16 +703,34 @@ function delete_research_question(value) {
 	let row = table_research_question.row(value);
 	let id_project = $("#id_project").val();
 
-	$.ajax({
-		type: "POST",
-		url: base_url + 'project_controller/delete_research_question/',
-		data: {
-			id_project: id_project,
-			id_rq: row.data()[0]
-		},
-		success: function () {
-			row.remove();
-			table_research_question.draw();
+	Swal.fire({
+		title: 'Are you sure?',
+		text: "You will not be able to reverse this," +
+			" this can impact other areas of your project!",
+		type: 'warning',
+		showCancelButton: true,
+		confirmButtonColor: '#3085d6',
+		cancelButtonColor: '#d33',
+		confirmButtonText: 'Yes, delete it!'
+	}).then((result) => {
+		if (result.value) {
+			$.ajax({
+				type: "POST",
+				url: base_url + 'project_controller/delete_research_question/',
+				data: {
+					id_project: id_project,
+					id_rq: row.data()[0]
+				},
+				success: function () {
+					row.remove();
+					table_research_question.draw();
+				}
+			});
+			Swal.fire(
+				'Deleted!',
+				'Research question has been deleted.',
+				'success'
+			)
 		}
 	});
 }
@@ -706,20 +797,39 @@ function add_database() {
 function delete_database(value) {
 	let row = table_databases.row(value);
 	let id_project = $("#id_project").val();
-	$.ajax({
-		type: "POST",
-		url: base_url + 'project_controller/delete_database/',
-		data: {
-			id_project: id_project,
-			database: row.data()[0]
-		},
-		success: function () {
-			let elem = document.getElementById('div_string_' + row.data()[0]);
-			elem.parentNode.removeChild(elem);
-			row.remove();
-			table_databases.draw();
+
+	Swal.fire({
+		title: 'Are you sure?',
+		text: "You will not be able to reverse this," +
+			" this can impact other areas of your project!",
+		type: 'warning',
+		showCancelButton: true,
+		confirmButtonColor: '#3085d6',
+		cancelButtonColor: '#d33',
+		confirmButtonText: 'Yes, delete it!'
+	}).then((result) => {
+		if (result.value) {
+			$.ajax({
+				type: "POST",
+				url: base_url + 'project_controller/delete_database/',
+				data: {
+					id_project: id_project,
+					database: row.data()[0]
+				},
+				success: function () {
+					let elem = document.getElementById('div_string_' + row.data()[0]);
+					elem.parentNode.removeChild(elem);
+					row.remove();
+					table_databases.draw();
 
 
+				}
+			});
+			Swal.fire(
+				'Deleted!',
+				'Database has been deleted.',
+				'success'
+			)
 		}
 	});
 }
@@ -1050,29 +1160,85 @@ function add_criteria() {
 			type: type
 		},
 		success: function () {
-			table_criteria.row.add([
-				'<div class="form-check">' +
-				'<input id="selected_' + id.replace(" ", "").trim() + '" type="checkbox" class="form-check-input" onchange="select_criteria($(this).parents(\'tr\'))">' +
-				'</div>',
-				id,
-				description,
-				type,
-				'<button class="btn btn-warning opt" onClick="modal_criteria($(this).parents(\'tr\'))">' +
-				'<span class="fas fa-edit"></span>' +
-				'</button>' +
-				'<button class="btn btn-danger" onClick="delete_criteria($(this).parents(\'tr\'));">' +
-				'<span class="far fa-trash-alt"></span>' +
-				'</button>'
-			]).draw();
-
+			if (type == 'Inclusion') {
+				table_criteria_inclusion.row.add([
+					'<div class="form-check">' +
+					'<input id="selected_' + id.replace(" ", "").trim() + '" type="checkbox" class="form-check-input"' +
+					' onchange="select_criteria_inclusion($(this).parents(\'tr\'))">' +
+					'</div>',
+					id,
+					description,
+					'<button class="btn btn-warning opt" onClick="modal_criteria_inclusion($(this).parents(\'tr\'))">' +
+					'<span class="fas fa-edit"></span>' +
+					'</button>' +
+					'<button class="btn btn-danger" onClick="delete_criteria_inclusion($(this).parents(\'tr\'));">' +
+					'<span class="far fa-trash-alt"></span>' +
+					'</button>'
+				]).draw();
+			} else {
+				table_criteria_exclusion.row.add([
+					'<div class="form-check">' +
+					'<input id="selected_' + id.replace(" ", "").trim() + '" type="checkbox" class="form-check-input"' +
+					' onchange="select_criteria_exclusion($(this).parents(\'tr\'))">' +
+					'</div>',
+					id,
+					description,
+					'<button class="btn btn-warning opt" onClick="modal_criteria_exclusion($(this).parents(\'tr\'))">' +
+					'<span class="fas fa-edit"></span>' +
+					'</button>' +
+					'<button class="btn btn-danger" onClick="delete_criteria_exclusion($(this).parents(\'tr\'));">' +
+					'<span class="far fa-trash-alt"></span>' +
+					'</button>'
+				]).draw();
+			}
 			id = $("#id_criteria")[0].value = "";
 			description = $("#description_criteria")[0].value = "";
+
 		}
 	});
 }
 
-function select_criteria(value) {
-	let row = table_criteria.row(value);
+function select_criteria_inclusion(value, msg = null) {
+	let row = table_criteria_inclusion.row(value);
+	let id_project = $("#id_project").val();
+	let id = 'selected_' + row.data()[1].replace(" ", "");
+	let pre_selected = document.getElementById(id).checked;
+
+	$.ajax({
+		type: "POST",
+		url: base_url + 'project_controller/selected_pre_select/',
+		data: {
+			id_project: id_project,
+			id: row.data()[1],
+			pre_selected: pre_selected
+		},
+		success: function () {
+			if (msg == null) {
+				if (pre_selected) {
+					Swal({
+						title: 'Success',
+						text: "The criteria is selected",
+						type: 'success',
+						showCancelButton: false,
+						confirmButtonText: 'Ok'
+					})
+				} else {
+					Swal({
+						title: 'Success',
+						text: "The criteria is deselected",
+						type: 'success',
+						showCancelButton: false,
+						confirmButtonText: 'Ok'
+					})
+				}
+			}
+
+		}
+	});
+}
+
+function select_criteria_exclusion(value) {
+	let row = table_criteria_exclusion.row(value);
 	let id_project = $("#id_project").val();
 	let id = 'selected_' + row.data()[1].replace(" ", "");
 	let pre_selected = document.getElementById(id).checked
@@ -1136,7 +1302,7 @@ function validate_criteria(id, description, type, index) {
 	}
 
 
-	let data = table_criteria.rows().data().toArray();
+	let data = table_criteria_inclusion.rows().data().toArray();
 
 	for (let i = 0; i < data.length; i++) {
 		if (i != index) {
@@ -1150,6 +1316,22 @@ function validate_criteria(id, description, type, index) {
 			}
 		}
 	}
+
+	data = table_criteria_exclusion.rows().data().toArray();
+
+	for (let i = 0; i < data.length; i++) {
+		if (i != index) {
+			if (id.toLowerCase().trim() == data[i][1].toLowerCase().trim()) {
+				swal({
+					type: 'warning',
+					title: 'Warning',
+					text: 'The ID has already been registered!'
+				});
+				return false;
+			}
+		}
+	}
+
 
 	for (let i = 0; i < data.length; i++) {
 		if (i != index) {
@@ -1167,8 +1349,8 @@ function validate_criteria(id, description, type, index) {
 	return true;
 }
 
-function delete_criteria(value) {
-	let row = table_criteria.row(value);
+function delete_criteria_inclusion(value) {
+	let row = table_criteria_inclusion.row(value);
 	let id_project = $("#id_project").val();
 
 	$.ajax({
@@ -1180,26 +1362,54 @@ function delete_criteria(value) {
 		},
 		success: function () {
 			row.remove();
-			table_criteria.draw();
+			table_criteria_inclusion.draw();
 		}
 	});
 }
 
-function modal_criteria(value) {
-	let row = table_criteria.row(value);
-	$('#modal_criteria #index_term').val(row.index());
-	$('#modal_criteria #edit_id_criteria').val(row.data()[1]);
-	$('#modal_criteria #edit_description_criteria').val(row.data()[2]);
-	$('#modal_criteria #edit_select_type').val(row.data()[3]);
-	$('#modal_criteria').modal('show');
+function delete_criteria_exclusion(value) {
+	let row = table_criteria_exclusion.row(value);
+	let id_project = $("#id_project").val();
+
+	$.ajax({
+		type: "POST",
+		url: base_url + 'project_controller/delete_criteria/',
+		data: {
+			id_project: id_project,
+			id: row.data()[1]
+		},
+		success: function () {
+			row.remove();
+			table_criteria_exclusion.draw();
+		}
+	});
 }
 
-function edit_criteria() {
-	let index = $('#modal_criteria #index_term').val();
-	let id = $('#modal_criteria #edit_id_criteria').val();
-	let description = $('#modal_criteria #edit_description_criteria').val();
-	let type = $('#edit_select_type option:selected').val();
-	let row = table_criteria.row(index);
+
+function modal_criteria_inclusion(value) {
+	let row = table_criteria_inclusion.row(value);
+	$('#modal_inclusion_criteria #index_term').val(row.index());
+	$('#modal_inclusion_criteria #edit_id_criteria').val(row.data()[1]);
+	$('#modal_inclusion_criteria #edit_description_criteria').val(row.data()[2]);
+	$('#modal_inclusion_criteria #edit_select_type_inclusion').val("Inclusion");
+	$('#modal_inclusion_criteria').modal('show');
+}
+
+function modal_criteria_exclusion(value) {
+	let row = table_criteria_exclusion.row(value);
+	$('#modal_exclusion_criteria #index_term').val(row.index());
+	$('#modal_exclusion_criteria #edit_id_criteria').val(row.data()[1]);
+	$('#modal_exclusion_criteria #edit_description_criteria').val(row.data()[2]);
+	$('#modal_exclusion_criteria #edit_select_type_exclusion').val("Exclusion");
+	$('#modal_exclusion_criteria').modal('show');
+}
+
+function edit_criteria_inclusion() {
+	let index = $('#modal_inclusion_criteria #index_term').val();
+	let id = $('#modal_inclusion_criteria #edit_id_criteria').val();
+	let description = $('#modal_inclusion_criteria #edit_description_criteria').val();
+	let type = $('#modal_inclusion_criteria #edit_select_type_inclusion option:selected').val();
+	let row = table_criteria_inclusion.row(index);
 	let id_project = $("#id_project").val();
 	let id_check = 'selected_' + row.data()[1].replace(" ", "");
 	let pre_selected = document.getElementById(id_check).checked
@@ -1221,22 +1431,39 @@ function edit_criteria() {
 			pre_selected: pre_selected
 		},
 		success: function () {
-			row.remove();
-			table_criteria.row.add([
-				'<div class="form-check">' +
-				'<input id="selected_' + id.replace(" ", "").trim() + '" type="checkbox" class="form-check-input" onchange="select_criteria($(this).parents(\'tr\'))">' +
-				'</div>',
-				id,
-				description,
-				type,
-				'<button class="btn btn-warning opt" onClick="modal_criteria($(this).parents(\'tr\'))">' +
-				'<span class="fas fa-edit"></span>' +
-				'</button>' +
-				'<button class="btn btn-danger" onClick="delete_criteria($(this).parents(\'tr\'));">' +
-				'<span class="far fa-trash-alt"></span>' +
-				'</button>'
-			]).draw();
+			row.remove().draw();
+			if (type == 'Inclusion') {
+				table_criteria_inclusion.row.add([
+					'<div class="form-check">' +
+					'<input id="selected_' + id.replace(" ", "").trim() + '" type="checkbox" class="form-check-input" ' +
+					'onchange="select_criteria_inclusion($(this).parents(\'tr\'))">' +
+					'</div>',
+					id,
+					description,
+					'<button class="btn btn-warning opt" onClick="modal_criteria_inclusion($(this).parents(\'tr\'))">' +
+					'<span class="fas fa-edit"></span>' +
+					'</button>' +
+					'<button class="btn btn-danger" onClick="delete_criteria_inclusion($(this).parents(\'tr\'));">' +
+					'<span class="far fa-trash-alt"></span>' +
+					'</button>'
+				]).draw();
+			} else {
+				table_criteria_exclusion.row.add([
+					'<div class="form-check">' +
+					'<input id="selected_' + id.replace(" ", "").trim() + '" type="checkbox" class="form-check-input"' +
+					' onchange="select_criteria_exclusion($(this).parents(\'tr\'))">' +
+					'</div>',
+					id,
+					description,
+					'<button class="btn btn-warning opt" onClick="modal_criteria_exclusion($(this).parents(\'tr\'))">' +
+					'<span class="fas fa-edit"></span>' +
+					'</button>' +
+					'<button class="btn btn-danger" onClick="delete_criteria_exclusion($(this).parents(\'tr\'));">' +
+					'<span class="far fa-trash-alt"></span>' +
+					'</button>'
+				]).draw();
 
+			}
 			Swal({
 				title: 'Success',
 				text: "The criteria was edited",
@@ -1246,7 +1473,83 @@ function edit_criteria() {
 
 			}).then((result) => {
 				if (result.value) {
-					$('#modal_criteria').modal('hide');
+					$('#modal_inclusion_criteria').modal('hide');
+				}
+			});
+		}
+	});
+}
+
+function edit_criteria_exclusion() {
+	let index = $('#modal_exclusion_criteria #index_term').val();
+	let id = $('#modal_exclusion_criteria #edit_id_criteria').val();
+	let description = $('#modal_exclusion_criteria #edit_description_criteria').val();
+	let type = $('#modal_exclusion_criteria #edit_select_type_exclusion option:selected').val();
+	let row = table_criteria_exclusion.row(index);
+	let id_project = $("#id_project").val();
+	let id_check = 'selected_' + row.data()[1].replace(" ", "");
+	let pre_selected = document.getElementById(id_check).checked
+
+	if (!validate_criteria(id, description, type, index)) {
+		return false;
+	}
+
+
+	$.ajax({
+		type: "POST",
+		url: base_url + 'project_controller/edit_criteria/',
+		data: {
+			id_project: id_project,
+			new_id: id,
+			old_id: row.data()[1],
+			description: description,
+			new_type: type,
+			pre_selected: pre_selected
+		},
+		success: function () {
+			row.remove().draw();
+			if (type == 'Inclusion') {
+				table_criteria_inclusion.row.add([
+					'<div class="form-check">' +
+					'<input id="selected_' + id.replace(" ", "").trim() + '" type="checkbox" class="form-check-input" ' +
+					'onchange="select_criteria_inclusion($(this).parents(\'tr\'))">' +
+					'</div>',
+					id,
+					description,
+					'<button class="btn btn-warning opt" onClick="modal_criteria_inclusion($(this).parents(\'tr\'))">' +
+					'<span class="fas fa-edit"></span>' +
+					'</button>' +
+					'<button class="btn btn-danger" onClick="delete_criteria_inclusion($(this).parents(\'tr\'));">' +
+					'<span class="far fa-trash-alt"></span>' +
+					'</button>'
+				]).draw();
+			} else {
+				table_criteria_exclusion.row.add([
+					'<div class="form-check">' +
+					'<input id="selected_' + id.replace(" ", "").trim() + '" type="checkbox" class="form-check-input"' +
+					' onchange="select_criteria_exclusion($(this).parents(\'tr\'))">' +
+					'</div>',
+					id,
+					description,
+					'<button class="btn btn-warning opt" onClick="modal_criteria_exclusion($(this).parents(\'tr\'))">' +
+					'<span class="fas fa-edit"></span>' +
+					'</button>' +
+					'<button class="btn btn-danger" onClick="delete_criteria_exclusion($(this).parents(\'tr\'));">' +
+					'<span class="far fa-trash-alt"></span>' +
+					'</button>'
+				]).draw();
+
+			}
+			Swal({
+				title: 'Success',
+				text: "The criteria was edited",
+				type: 'success',
+				showCancelButton: false,
+				confirmButtonText: 'Ok'
+
+			}).then((result) => {
+				if (result.value) {
+					$('#modal_exclusion_criteria').modal('hide');
 				}
 			});
 		}
@@ -1558,6 +1861,26 @@ function edit_inclusion_rule() {
 			rule: rule
 		},
 		success: function () {
+			switch (rule) {
+				case "All":
+					table_criteria_inclusion.rows().every(function (rowIdx, tableLoop, rowLoop) {
+						let data = this.data();
+						let id = 'selected_' + data[1].replace(" ", "").trim();
+						document.getElementById(id).checked = true;
+						select_criteria_inclusion(rowIdx, rule)
+					});
+					break;
+				case "Any":
+					table_criteria_inclusion.rows().every(function (rowIdx, tableLoop, rowLoop) {
+						let data = this.data();
+						let id = 'selected_' + data[1].replace(" ", "").trim();
+						document.getElementById(id).checked = false;
+						select_criteria_inclusion(rowIdx, rule)
+					});
+					break;
+				case "At Least":
+					break;
+			}
 			Swal({
 				title: 'Success',
 				text: "The inclusion rule was edited",
@@ -1581,6 +1904,26 @@ function edit_exclusion_rule() {
 			rule: rule
 		},
 		success: function () {
+			switch (rule) {
+				case "All":
+					table_criteria_exclusion.rows().every(function (rowIdx, tableLoop, rowLoop) {
+						let data = this.data();
+						let id = 'selected_' + data[1].replace(" ", "").trim();
+						document.getElementById(id).checked = true;
+						select_criteria_inclusion(rowIdx, rule)
+					});
+					break;
+				case "Any":
+					table_criteria_exclusion.rows().every(function (rowIdx, tableLoop, rowLoop) {
+						let data = this.data();
+						let id = 'selected_' + data[1].replace(" ", "").trim();
+						document.getElementById(id).checked = false;
+						select_criteria_inclusion(rowIdx, rule)
+					});
+					break;
+				case "At Least":
+					break;
+			}
 			Swal({
 				title: 'Success',
 				text: "The inclusion rule was edited",
@@ -1707,4 +2050,25 @@ function validate_edit_project(objectives, description, title) {
 		return false;
 	}
 	return true;
+}
+
+function delete_project(id) {
+	Swal.fire({
+		title: 'Are you sure?',
+		text: "You will not be able to reverse this," +
+			" this can impact other areas of your project!",
+		type: 'warning',
+		showCancelButton: true,
+		confirmButtonColor: '#3085d6',
+		cancelButtonColor: '#d33',
+		confirmButtonText: 'Yes, delete it!'
+	}).then((result) => {
+		if (result.value) {
+			Swal.fire(
+				'Deleted!',
+				'Your project has been deleted.',
+				'success'
+			)
+		}
+	});
 }

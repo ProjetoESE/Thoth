@@ -47,6 +47,7 @@
 			<div class="row">
 				<div class="col-sm-12 col-md-6">
 					<label for="domain"><strong>Domains</strong></label>
+					<a href="#" class="float-right opt"><i class="fas fa-question-circle "></i></a>
 					<div class="input-group">
 						<input type="text" class="form-control" id="domain">
 						<div class="input-group-append">
@@ -83,6 +84,7 @@
 
 				<div class="col-sm-12 col-md-6">
 					<label for="language"><strong>Select languages</strong></label>
+					<a href="#" class="float-right opt"><i class="fas fa-question-circle "></i></a>
 					<div class="input-group">
 						<select class="form-control" id="language">
 							<?php
@@ -124,6 +126,7 @@
 				<br>
 				<div class="col-sm-12 col-md-6">
 					<label for="study_type"><strong>Select study type</strong></label>
+					<a href="#" class="float-right opt"><i class="fas fa-question-circle "></i></a>
 					<div class="input-group">
 						<select class="form-control" id="study_type">
 							<?php
@@ -164,6 +167,7 @@
 				</div>
 				<div class="col-sm-12 col-md-6">
 					<label for="keywords"><strong>Keywords</strong></label>
+					<a href="#" class="float-right opt"><i class="fas fa-question-circle "></i></a>
 					<div class="input-group">
 						<input type="text" class="form-control" id="keywords">
 						<div class="input-group-append">
@@ -198,17 +202,18 @@
 						</tbody>
 					</table>
 				</div>
-				<div class="col-sm-12 col-md-6">
+				<div class="col-sm-12 col-md-4">
 					<label for="start_date"><strong>Start and End Date</strong></label>
+					<a href="#" class="float-right opt"><i class="fas fa-question-circle "></i></a>
 					<div class="input-group">
 						<div class="input-group-prepend">
 							<button class="btn btn-success"><span class="far fa-calendar-check "></span></button>
 						</div>
 						<input type="Date" id="start_date" class="form-control" title="Start Date"
 							   value="<?= $project->get_start_date() ?>">
-						<div class="input-group-prepend">
-							<button class="btn btn-danger"><span class="far fa-calendar-check "></span></button>
-						</div>
+					</div>
+					<div class="input-group">
+						<button class="btn btn-danger"><span class="far fa-calendar-check "></span></button>
 						<input type="Date" id="end_date" class="form-control" title="End Date"
 							   value="<?= $project->get_end_date() ?>">
 						<div class="input-group-append">
@@ -225,17 +230,18 @@
 			</div>
 		</div>
 		<div class="tab-pane container" id="tab_research">
-			<div class="row">
-				<label for="research_question" class="container"><strong>Research Questions</strong></label>
+			<div class="form-inline">
+				<label for="research_question"><strong>Research Questions</strong></label>
+				<a href="#" class="float-right opt"><i class="fas fa-question-circle "></i></a>
 			</div>
 			<div class="form-inline">
-				<label for="id_research_question" class="col-sm-12 col-md-1">ID</label>
-				<label for="description_research_question" class="col-sm-12 col-md-6">Description</label>
-			</div>
-			<div class="form-inline">
-				<input type="text" id="id_research_question" placeholder="ID"
-					   class="form-control col-sm-12 col-md-1">
-				<div class="input-group col-md-11 col-sm-12">
+				<div class="input-group opt col-sm-12 col-md-2">
+					<label for="id_research_question" class="col-md-12">ID</label>
+					<input type="text" id="id_research_question" placeholder="ID"
+						   class="form-control">
+				</div>
+				<div class="input-group opt  col-sm-12 col-md-8">
+					<label for="description_research_question" class="col-md-12">Description</label>
 					<input type="text" id="description_research_question" placeholder="Description"
 						   class="form-control">
 					<div class="input-group-append">
@@ -280,16 +286,30 @@
 			</div>
 		</div>
 		<div class="tab-pane container" id="tab_databases">
-			<label for="databases"><strong>Data Bases</strong></label>
-			<div class="input-group col-md-3">
-				<select class="form-control" id="databases">
-					<?php foreach ($databases as $database) { ?>
-						<option value="<?= $database->get_name() ?>"><?= $database->get_name() ?></option>
-					<?php } ?>
-				</select>
-				<div class="input-group-append">
-					<button class="btn btn-success" type="button" onclick="add_database();"><span
-							class="fas fa-plus"></span></button>
+			<div class="form-inline">
+				<label for="databases"><strong>Data Bases</strong></label>
+				<a href="#" class="float-right opt"><i class="fas fa-question-circle "></i></a>
+			</div>
+			<div class="form-inline">
+				<div class="input-group col-md-3">
+					<label for="databases" class="opt col-sm-12">Database </label>
+					<select class="form-control" id="databases">
+						<?php foreach ($databases as $database) { ?>
+							<option value="<?= $database->get_name() ?>"><?= $database->get_name() ?></option>
+						<?php } ?>
+					</select>
+					<div class="input-group-append">
+						<button class="btn btn-success" type="button" onclick="add_database();"><span
+								class="fas fa-plus"></span></button>
+					</div>
+				</div>
+				<div class="input-group col-md-4">
+					<label for="new_database" class="opt col-sm-12">Other Database </label>
+					<input type="text" class="form-control" id="new_database">
+					<div class="input-group-append">
+						<button class="btn btn-success" type="button" onclick="new_database();"><span
+								class="fas fa-plus"></span></button>
+					</div>
 				</div>
 			</div>
 			<br>
@@ -324,32 +344,38 @@
 			</div>
 		</div>
 		<div class="tab-pane container" id="tab_search_string">
-			<label for="term"><strong>Search String</strong></label>
 			<div class="form-inline">
-				<label for="term">Term</label>
+				<label for="term"><strong>Search String</strong></label>
+				<a href="#" class="float-right opt"><i class="fas fa-question-circle "></i></a>
 			</div>
-			<div class="input-group col-md-4">
-				<input type="text" class="form-control" id="term">
-				<div class="input-group-append">
-					<button class="btn btn-success" type="button" onclick="add_term();"><span
-							class="fas fa-plus"></span></button>
+			<div class="form-inline">
+				<div class="input-group col-md-4">
+					<label for="term" class="col-sm-12">Term</label>
+					<input type="text" class="form-control" id="term">
+					<div class="input-group-append">
+						<button class="btn btn-success" type="button" onclick="add_term();"><span
+								class="fas fa-plus"></span></button>
+					</div>
 				</div>
 			</div>
 			<div class="form-inline">
-				<label for="list_term">Synonym</label>
-			</div>
-			<div class="input-group col-md-6">
-				<select class="form-control col-md-4" id="list_term">
-					<?php foreach ($project->get_terms() as $term) { ?>
-						<option value="<?= $term->get_description() ?>"><?= $term->get_description() ?></option>
-					<?php } ?>
-				</select>
-				<input type="text" class="form-control" placeholder="Add a Synonym to Term"
-					   id="synonym">
-				<div class="input-group-append">
-					<button class="btn btn-success" type="button" onclick="add_synonym();"><span
-							class="fas fa-plus"></span>
-					</button>
+				<div class="input-group col-md-4">
+					<label for="list_term" class="col-sm-12">Term for Synonym</label>
+					<select class="form-control" id="list_term">
+						<?php foreach ($project->get_terms() as $term) { ?>
+							<option value="<?= $term->get_description() ?>"><?= $term->get_description() ?></option>
+						<?php } ?>
+					</select>
+				</div>
+				<div class="input-group col-md-6">
+					<label for="list_term" class="col-sm-12">Synonym</label>
+					<input type="text" class="form-control" placeholder="Add a Synonym to Term"
+						   id="synonym">
+					<div class="input-group-append">
+						<button class="btn btn-success" type="button" onclick="add_synonym();"><span
+								class="fas fa-plus"></span>
+						</button>
+					</div>
 				</div>
 			</div>
 			<br>
@@ -401,7 +427,10 @@
 			</table>
 			<br>
 			<div id="strings">
-				<label><strong>Strings</strong></label>
+				<div class="form-inline">
+					<label><strong>Strings</strong></label>
+					<a href="#" class="float-right opt"><i class="fas fa-question-circle "></i></a>
+				</div>
 				<?php foreach ($project->get_search_strings() as $search_string) { ?>
 					<div class="form-group" id="div_string_<?= $search_string->get_database() ?>">
 						<label><?= $search_string->get_database() ?></label>
@@ -423,10 +452,14 @@
 			</div>
 		</div>
 		<div class="tab-pane container" id="tab_search_strategy">
-			<label for="search_strategy"><strong>Search Strategy</strong></label>
+			<div class="form-inline">
+				<label for="search_strategy"><strong>Search Strategy</strong></label>
+				<a href="#" class="float-right opt"><i class="fas fa-question-circle "></i></a>
+			</div>
 			<textarea rows="8" class="form-control"
 					  id="search_strategy"><?= $project->get_search_strategy() ?></textarea>
-			<button class="btn btn-success opt float-right" type="button" onclick="edit_search_strategy()">Save</button>
+			<button class="btn btn-success opt float-right" type="button" onclick="edit_search_strategy()">Save
+			</button>
 			<div class="form-inline container justify-content-between">
 				<a href="#tab_search_string" class="btn btn-secondary"><span
 						class="fas fa-backward"></span> Previous</a>
@@ -435,53 +468,38 @@
 			</div>
 		</div>
 		<div class="tab-pane container" id="tab_criteria">
-			<label for="databases"><strong>Criteria</strong></label>
 			<div class="form-inline">
-				<label for="rule_inclusion" class="col-sm-12 col-md-2">Inclusion Rule</label>
-				<label for="rule_exclusion" class="col-sm-12 col-md-2">Exclusion Rule</label>
+				<label><strong>Criteria</strong></label>
+				<a href="#" class="float-right opt"><i class="fas fa-question-circle "></i></a>
 			</div>
 			<div class="form-inline">
-				<select class="form-control col-sm-12 col-md-2 opt" id="rule_inclusion"
-						onchange="edit_inclusion_rule();">
-					<?php foreach ($rules as $rule) { ?>
-						<option value="<?= $rule ?>"><?= $rule ?></option>
-					<?php } ?>
-				</select>
-				<select class="form-control col-sm-12 col-md-2 opt" id="rule_exclusion"
-						onchange="edit_exclusion_rule();">
-					<?php foreach ($rules as $rule) { ?>
-						<option value="<?= $rule ?>"><?= $rule ?></option>
-					<?php } ?>
-				</select>
-			</div>
-
-			<div class="form-inline">
-				<label for="id_criteria" class="col-sm-12 col-md-1">ID</label>
-				<label for="description_criteria" class="col-sm-12 col-md-6">Description</label>
-			</div>
-			<div class="form-inline">
-				<input type="text" id="id_criteria" placeholder="ID" class="form-control col-sm-12 col-md-1">
-				<div class="input-group col-md-11 col-sm-12">
+				<div class="input-group col-md-2">
+					<label for="id_criteria" class="col-sm-12 col-md-12">ID</label>
+					<input type="text" id="id_criteria" placeholder="ID" class="form-control">
+				</div>
+				<div class="input-group col-md-6">
+					<label for="description_criteria" class="col-sm-12 col-md-12">Description</label>
 					<input type="text" id="description_criteria" placeholder="Description" class="form-control">
-					<div class="input-group-append">
-						<select class="form-control" id="select_type">
-							<option value="Inclusion">Inclusion</option>
-							<option value="Exclusion">Exclusion</option>
-						</select>
-						<button class="btn btn-success" type="button" onclick="add_criteria()"><span
-								class="fas fa-plus"></span></button>
-					</div>
+				</div>
+				<div class="input-group col-md-3">
+					<label for="" class="col-sm-12 col-md-12">Type</label>
+					<select class="form-control" id="select_type">
+						<option value="Inclusion">Inclusion</option>
+						<option value="Exclusion">Exclusion</option>
+					</select>
+					<button class="btn btn-success" type="button" onclick="add_criteria()"><span
+							class="fas fa-plus"></span></button>
 				</div>
 			</div>
 			<br>
-			<table id="table_criteria" class="table table-responsive-sm">
-				<caption>List of Criteria</caption>
+			<label><strong>Inclusion Criteria</strong></label>
+			<table id="table_criteria_inclusion" class="table table-responsive-sm">
+				<caption>List of Inclusion Criteria</caption>
 				<thead>
 				<tr>
 					<th>Select</th>
 					<th>ID</th>
 					<th>Criteria</th>
-					<th>Type</th>
 					<th>Delete</th>
 				</tr>
 				</thead>
@@ -499,22 +517,60 @@
 								<input id="selected_<?= str_replace(' ', '', $ic->get_id()); ?>"
 									   type="checkbox" <?= $checked ?>
 									   class="form-check-input"
-									   onchange="select_criteria($(this).parents('tr'))">
+									   onchange="select_criteria_inclusion($(this).parents('tr'))">
 							</div>
 						</td>
 						<td><?= $ic->get_id() ?></td>
 						<td><?= $ic->get_description() ?></td>
-						<td>Inclusion</td>
 						<td>
-							<button class="btn btn-warning opt" onClick="modal_criteria($(this).parents('tr'))">
+							<button class="btn btn-warning opt"
+									onClick="modal_criteria_inclusion($(this).parents('tr'))">
 								<span class="fas fa-edit"></span>
 							</button>
-							<button class="btn btn-danger" onClick="delete_criteria($(this).parents('tr'));">
+							<button class="btn btn-danger"
+									onClick="delete_criteria_inclusion($(this).parents('tr'));">
 								<span class="far fa-trash-alt"></span>
 							</button>
 						</td>
 					</tr>
 				<?php } ?>
+				</tbody>
+				<tfoot>
+				<tr>
+					<th>Select</th>
+					<th>ID</th>
+					<th>Criteria</th>
+					<th>Delete</th>
+				</tr>
+				</tfoot>
+			</table>
+			<div class="input-group col-md-2">
+				<label for="rule_inclusion" class="col-sm-12 col-md-12">Inclusion Rule</label>
+				<select class="form-control col-sm-12 opt" id="rule_inclusion"
+						onchange="edit_inclusion_rule();">
+					<?php foreach ($rules as $rule) {
+						$selected = "";
+						if ($rule == $project->get_inclusion_rule()) {
+							$selected = "selected";
+						}
+						?>
+						<option <?= $selected ?> value="<?= $rule ?>"><?= $rule ?></option>
+					<?php } ?>
+				</select>
+			</div>
+			<br/>
+			<label><strong>Exclusion Criteria</strong></label>
+			<table id="table_criteria_exclusion" class="table table-responsive-sm">
+				<caption>List of Exclusion Criteria</caption>
+				<thead>
+				<tr>
+					<th>Select</th>
+					<th>ID</th>
+					<th>Criteria</th>
+					<th>Delete</th>
+				</tr>
+				</thead>
+				<tbody>
 				<?php foreach ($project->get_exclusion_criteria() as $ec) {
 					if ($ec->get_pre_selected()) {
 						$checked = 'checked';
@@ -528,17 +584,18 @@
 								<input id="selected_<?= str_replace(' ', '', $ec->get_id()) ?>"
 									   type="checkbox" <?= $checked ?>
 									   class="form-check-input"
-									   onchange="select_criteria($(this).parents('tr'))">
+									   onchange="select_criteria_exclusion($(this).parents('tr'))">
 							</div>
 						</td>
 						<td><?= $ec->get_id() ?></td>
 						<td><?= $ec->get_description() ?></td>
-						<td>Exclusion</td>
 						<td>
-							<button class="btn btn-warning opt" onClick="modal_criteria($(this).parents('tr'))">
+							<button class="btn btn-warning opt"
+									onClick="modal_criteria_exclusion($(this).parents('tr'))">
 								<span class="fas fa-edit"></span>
 							</button>
-							<button class="btn btn-danger" onClick="delete_criteria($(this).parents('tr'));">
+							<button class="btn btn-danger"
+									onClick="delete_criteria_exclusion($(this).parents('tr'));">
 								<span class="far fa-trash-alt"></span>
 							</button>
 						</td>
@@ -550,43 +607,61 @@
 					<th>Select</th>
 					<th>ID</th>
 					<th>Criteria</th>
-					<th>Type</th>
 					<th>Delete</th>
 				</tr>
 				</tfoot>
 			</table>
+			<div class="input-group col-md-2">
+				<label for="rule_exclusion" class="col-sm-12 col-md-12">Exclusion Rule</label>
+				<select class="form-control col-sm-12 opt" id="rule_exclusion"
+						onchange="edit_exclusion_rule();">
+					<?php foreach ($rules as $rule) {
+						$selected = "";
+						if ($rule == $project->get_exclusion_rule()) {
+							$selected = "selected";
+						}
+						?>
+						<option <?= $selected ?> value="<?= $rule ?>"><?= $rule ?></option>
+					<?php } ?>
+				</select>
+			</div>
 			<br>
 			<div class="form-inline container justify-content-between">
-				<a href="#tab_search_strategy" class="btn btn-secondary"><span class="fas fa-backward"></span> Previous</a>
+				<a href="#tab_search_strategy" class="btn btn-secondary"><span class="fas fa-backward"></span>
+					Previous</a>
 				<a href="#tab_quality" class="btn btn-secondary opt">Next <span
 						class="fas fa-forward"></span></a>
 			</div>
 		</div>
 		<div class="tab-pane container" id="tab_quality">
 			<div class="form-inline">
-				<label for="start_interval" class="col-sm-12 col-md-4">General Score Interval</label>
-				<label for="general_score_desc" class="col-sm-12 col-md-8">General Score Description</label>
+				<label><strong>General Score</strong></label>
+				<a href="#" class="float-right opt"><i class="fas fa-question-circle "></i></a>
 			</div>
-			<div class="row">
-				<div class="input-group col-md-4">
-					<input type="number" id="start_interval" class="form-control" step="0.5" placeholder="4.5" min="0">
-					<input type="number" id="end_interval" class="form-control" step="0.5" placeholder="5" min="0.1">
+			<div class="form-inline">
+				<div class="input-group col-sm-12 col-md-3">
+					<label for="start_interval" class="col-sm-12">General Score Interval</label>
+					<input type="number" id="start_interval" class="form-control" step="0.5" placeholder="4.5"
+						   min="0">
+					<input type="number" id="end_interval" class="form-control" step="0.5" placeholder="5"
+						   min="0.1">
 				</div>
-				<div class="input-group col-md-8">
+				<div class="input-group col-sm-12 col-md-5">
+					<label for="general_score_desc" class="col-sm-12">General Score Description</label>
 					<input type="text" id="general_score_desc" class="form-control" placeholder="Description">
 					<div class="input-group-append">
 						<button class="btn btn-success" type="button" onclick="add_general_quality_score();"><span
 								class="fas fa-plus"></span></button>
 					</div>
 				</div>
-				<label for="min_score_to_app" class="col-md-12">Minimum General Score to Approve</label>
-				<div class="input-group container">
-					<select class="form-control col-md-3" id="min_score_to_app" onchange="edit_min_score();">
-						<?php foreach ($project->get_quality_scores() as $score) { ?>
-							<option value="<?= $score->get_description() ?>"><?= $score->get_description() ?></option>
-						<?php } ?>
-					</select>
-				</div>
+			</div>
+			<div class="input-group col-md-4">
+				<label for="min_score_to_app" class="col-sm-12">Minimum General Score to Approve</label>
+				<select class="form-control" id="min_score_to_app" onchange="edit_min_score();">
+					<?php foreach ($project->get_quality_scores() as $score) { ?>
+						<option value="<?= $score->get_description() ?>"><?= $score->get_description() ?></option>
+					<?php } ?>
+				</select>
 			</div>
 			<br>
 			<table id="table_general_score" class="table table-responsive-sm">
@@ -606,7 +681,8 @@
 						<td><?= $score->get_end_interval() ?></td>
 						<td><?= $score->get_description() ?></td>
 						<td>
-							<button class="btn btn-warning opt" onClick="modal_general_score($(this).parents('tr'))">
+							<button class="btn btn-warning opt"
+									onClick="modal_general_score($(this).parents('tr'))">
 								<span class="fas fa-edit"></span>
 							</button>
 							<button class="btn btn-danger"
@@ -619,7 +695,10 @@
 				</tbody>
 			</table>
 			<br>
-			<label for="id_qa"><strong>Question Quality</strong></label>
+			<div class="form-inline">
+				<label for="id_qa"><strong>Question Quality</strong></label>
+				<a href="#" class="float-right opt"><i class="fas fa-question-circle "></i></a>
+			</div>
 			<br>
 			<div class="form-inline">
 				<label for="id_qa" class="col-sm-12 col-md-2">ID</label>
@@ -821,7 +900,10 @@
 			</div>
 		</div>
 		<div class="tab-pane container" id="tab_data">
-			<label for="id_qa"><strong>Data Extraction</strong></label>
+			<div class="form-inline">
+				<label for="id_qa"><strong>Data Extraction</strong></label>
+				<a href="#" class="float-right opt"><i class="fas fa-question-circle "></i></a>
+			</div>
 			<div class="form-inline">
 				<label for="id_qa" class="col-sm-12 col-md-2">ID</label>
 				<label for="id_qa" class="col-sm-12 col-md-7">Description</label>

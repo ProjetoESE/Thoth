@@ -22,7 +22,7 @@
 						<?php } ?>
 					</select>
 				</div>
-				<button class="btn btn-success" type="button" onclick="add_research()"><span
+				<button class="btn btn-success float-right" type="button" onclick="add_research()"><span
 						class="fas fa-plus"></span>
 				</button>
 			</div>

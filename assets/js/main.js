@@ -25,33 +25,8 @@ $(document).ready(function () {
 	table_databases = $('#table_databases').DataTable(configDataTables);
 	table_search_string = $('#table_search_string').DataTable(configDataTables);
 	table_general_score = $('#table_general_score').DataTable(configDataTables);
-	table_criteria = $('#table_criteria').DataTable({
-		initComplete: function () {
-			this.api().columns(3).every(function () {
-				var column = this;
-				var select = $('<select><option value=""></option></select>')
-					.appendTo($(column.footer()).empty())
-					.on('change', function () {
-						var val = $.fn.dataTable.util.escapeRegex(
-							$(this).val()
-						);
-
-						column
-							.search(val ? '^' + val + '$' : '', true, false)
-							.draw();
-					});
-
-				select.append('<option value="Exclusion">Exclusion</option>')
-				select.append('<option value="Inclusion">Inclusion</option>')
-			});
-		},
-		language: lang,
-		responsive: true,
-		order: [[1, "asc"]],
-		paginate: false,
-		info: false,
-		ordering: false
-	});
+	table_criteria_inclusion = $('#table_criteria_inclusion').DataTable(configDataTables);
+	table_criteria_exclusion = $('#table_criteria_exclusion').DataTable(configDataTables);
 
 
 	$('#table_qa').DataTable(configDataTables);
