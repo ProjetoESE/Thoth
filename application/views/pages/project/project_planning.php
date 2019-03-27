@@ -2,6 +2,7 @@
 	<div class="text-center card-header">
 		<h4><?= $project->get_title(); ?></h4>
 		<input type="hidden" id="id_project" value="<?= $project->get_id(); ?>">
+		<br>
 		<a href="<?= base_url('project_controller/open/' . $project->get_id()) ?>"
 		   class="btn form-inline btn-outline-primary opt">Review</a>
 		<a href="<?= base_url('project_controller/planning/' . $project->get_id()) ?>"
@@ -12,7 +13,15 @@
 		   class="btn form-inline btn-outline-primary opt">Reporting</a>
 	</div>
 	<div class="card-body">
-		<h4>Planning</h4>
+		<div class="row justify-content-between">
+			<div class="col-sm-12 col-md-2">
+				<h4>Planning</h4>
+			</div>
+			<div class="col-md-2 col-sm-12">
+				<a href="#" class="opt btn btn-warning">Export <i
+						class="fas fa-file-word "></i></a>
+			</div>
+		</div>
 		<ul class="nav nav-pills nav-justified">
 			<li class="nav-item">
 				<a data-toggle="pill" class="nav-link active" href="#tab_overall">Overall information</a>
@@ -303,9 +312,15 @@
 								class="fas fa-plus"></span></button>
 					</div>
 				</div>
+			</div>
+			<div class="form-inline">
 				<div class="input-group col-md-4">
 					<label for="new_database" class="opt col-sm-12">Other Database </label>
 					<input type="text" class="form-control" id="new_database">
+				</div>
+				<div class="input-group col-md-4">
+					<label for="new_database_link" class="opt col-sm-12">Other Database Link</label>
+					<input type="text" class="form-control" id="new_database_link">
 					<div class="input-group-append">
 						<button class="btn btn-success" type="button" onclick="new_database();"><span
 								class="fas fa-plus"></span></button>

@@ -927,4 +927,24 @@ class Project_Controller extends CI_Controller
 		}
 	}
 
+	public function new_database()
+	{
+		try {
+			$database = $this->input->post('database');
+			$link = $this->input->post('link');
+			$id_project = $this->input->post('id_project');
+			$this->load->model("Project_Model");
+
+			$this->Project_Model->new_database($database, $link, $id_project);
+
+			$activity = $this->session->name . " added the database " . $database;
+			$this->insert_log($activity, 1);
+
+
+		} catch (Exception $e) {
+			$this->session->set_flashdata('error', $e->getMessage());
+			redirect(base_url());
+		}
+	}
+
 }

@@ -138,10 +138,6 @@
 					</div>
 					<div class="input-group col-md-8">
 						<input type="text" id="edit_general_score_desc" class="form-control" placeholder="Description">
-						<div class="input-group-append">
-							<button class="btn btn-success" type="button" onclick="add_general_quality_score();"><span
-									class="fas fa-plus"></span></button>
-						</div>
 					</div>
 				</div>
 				<div class="modal-footer">

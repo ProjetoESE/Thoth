@@ -1076,4 +1076,17 @@ class Project_Model extends CI_Model
 		$this->db->where('id_project', $id_project);
 		$this->db->update('project', $data);
 	}
+
+	public function new_database($database, $link, $id_project)
+	{
+		$data = array(
+			'name' => $database,
+			'link' => $link
+		);
+
+		$this->db->insert('data_base', $data);
+
+		$this->add_database($database, $id_project);
+
+	}
 }

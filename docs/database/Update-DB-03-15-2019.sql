@@ -1,7 +1,3 @@
-CREATE TABLE `thoth`.`members` ( `id_members` INT NOT NULL AUTO_INCREMENT , `id_user` INT NOT NULL , `id_project` INT NOT NULL , `level` INT NOT NULL , PRIMARY KEY (`id_members`)) ENGINE = InnoDB;
-
-CREATE TABLE `thoth`.`members` ( `id_members` INT NOT NULL AUTO_INCREMENT , `id_user` INT NOT NULL , `id_project` INT NOT NULL , `level` INT NOT NULL , PRIMARY KEY (`id_members`)) ENGINE = InnoDB;
-
 ALTER TABLE `levels` CHANGE `level` `level` VARCHAR(255) NOT NULL;
 
 INSERT INTO `levels` (`id_level`, `level`) VALUES (NULL, 'Administrator'), (NULL, 'Viewer'), (NULL, 'Researcher');
@@ -9,8 +5,6 @@ INSERT INTO `levels` (`id_level`, `level`) VALUES (NULL, 'Administrator'), (NULL
 ALTER TABLE `members` ADD FOREIGN KEY (`id_project`) REFERENCES `project`(`id_project`) ON DELETE RESTRICT ON UPDATE RESTRICT; ALTER TABLE `members` ADD FOREIGN KEY (`id_user`) REFERENCES `user`(`id_user`) ON DELETE RESTRICT ON UPDATE RESTRICT; ALTER TABLE `members` ADD FOREIGN KEY (`level`) REFERENCES `levels`(`id_level`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 INSERT INTO `members` (`id_members`, `id_user`, `id_project`, `level`) VALUES (NULL, '1', '1', '1'), (NULL, '2', '1', '3');
-
-INSERT INTO `user` (`id_user`, `email`, `password`, `name`, `institution`, `lattes_link`, `created_at`, `updated_at`) VALUES (NULL, 'bolfeguilherme@gmail.com', 'f781ca982eb8b25bbb7fcd2cdc0798ca', 'Gustavo Bolfe', NULL, NULL, NULL, NULL);
 
 ALTER TABLE `activity_log` DROP FOREIGN KEY `activity_log_ibfk_1`; ALTER TABLE `activity_log` ADD CONSTRAINT `activity_log_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `user`(`id_user`) ON DELETE CASCADE ON UPDATE CASCADE; ALTER TABLE `activity_log` DROP FOREIGN KEY `activity_log_ibfk_2`; ALTER TABLE `activity_log` ADD CONSTRAINT `activity_log_ibfk_2` FOREIGN KEY (`id_module`) REFERENCES `module`(`id_module`) ON DELETE CASCADE ON UPDATE CASCADE;
 
