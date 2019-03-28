@@ -25,8 +25,8 @@
 						<input type="text" id="edit_id_criteria" placeholder="ID" class="form-control">
 					</div>
 					<div class="input-group col-md-9">
-						<label for="edit_description_criteria" class="col-sm-12">Description</label>
-						<input type="text" id="edit_description_criteria" placeholder="Description"
+						<label for="edit_description_criteria_in" class="col-sm-12">Description</label>
+						<input type="text" id="edit_description_criteria_in" placeholder="Description"
 							   class="form-control">
 					</div>
 					<div class="input-group col-md-4">
@@ -63,8 +63,8 @@
 						<input type="text" id="edit_id_criteria" placeholder="ID" class="form-control">
 					</div>
 					<div class="input-group col-md-9">
-						<label for="edit_description_criteria" class="col-sm-12">Description</label>
-						<input type="text" id="edit_description_criteria" placeholder="Description"
+						<label for="edit_description_criteria_ex" class="col-sm-12">Description</label>
+						<input type="text" id="edit_description_criteria_ex" placeholder="Description"
 							   class="form-control">
 					</div>
 					<div class="input-group col-md-4">
