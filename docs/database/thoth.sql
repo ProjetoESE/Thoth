@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 11-Mar-2019 às 17:46
+-- Generation Time: 28-Mar-2019 às 23:26
 -- Versão do servidor: 10.1.34-MariaDB
 -- PHP Version: 7.2.7
 
@@ -35,88 +35,6 @@ CREATE TABLE `activity_log` (
   `activity` varchar(255) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- Extraindo dados da tabela `activity_log`
---
-
-INSERT INTO `activity_log` (`id_log`, `id_user`, `id_module`, `activity`) VALUES
-(1, 1, 1, 'Guilherme Bolfe updated criteria IC 01'),
-(2, 1, 2, 'Guilherme Bolfe logged in'),
-(3, 1, 2, 'Guilherme Bolfe logged in'),
-(4, 1, 1, 'Guilherme Bolfe added general quality score efwefwe'),
-(5, 1, 1, 'Guilherme Bolfe added general quality score sdfsdfsdf'),
-(6, 1, 1, 'Guilherme Bolfe added general quality score Ruim'),
-(7, 1, 1, 'Guilherme Bolfe deleted general quality score Ruim'),
-(8, 1, 1, 'Guilherme Bolfe selected criteria IC 01'),
-(9, 1, 1, 'Guilherme Bolfe selected criteria IC 01'),
-(10, 1, 1, 'Guilherme Bolfe added general quality score Ruim'),
-(11, 1, 1, 'Guilherme Bolfe added general quality score Bom'),
-(12, 1, 1, 'Guilherme Bolfe added general quality score Otimo'),
-(13, 1, 1, 'Guilherme Bolfe deleted general quality score Ruim'),
-(14, 1, 1, 'Guilherme Bolfe added general quality score ghgh'),
-(15, 1, 1, 'Guilherme Bolfe added general quality score hjghjgh'),
-(16, 1, 1, 'Guilherme Bolfe deleted general quality score ghgh'),
-(17, 1, 1, 'Guilherme Bolfe added general quality score 2112'),
-(18, 1, 1, 'Guilherme Bolfe added general quality score m,.m,.m,.m'),
-(19, 1, 1, 'Guilherme Bolfe added the term,.;,.;,.;'),
-(20, 1, 1, 'Guilherme Bolfe deleted the term,.;,.;,.;'),
-(21, 1, 1, 'Guilherme Bolfe deleted general quality score m,.m,.m,.m'),
-(22, 1, 1, 'Guilherme Bolfe deleted general quality score 2112'),
-(23, 1, 2, 'Guilherme Bolfe logged in'),
-(24, 1, 1, 'Guilherme Bolfe added general quality score Baixo'),
-(25, 1, 1, 'Guilherme Bolfe deleted general quality score Baixo'),
-(26, 1, 1, 'Guilherme Bolfe added general quality score Ruim'),
-(27, 1, 1, 'Guilherme Bolfe deleted general quality score Ruim'),
-(28, 1, 1, 'Guilherme Bolfe added general quality score Muito Ruim'),
-(29, 1, 1, 'Guilherme Bolfe added general quality score Ruim'),
-(30, 1, 1, 'Guilherme Bolfe added general quality score Bom'),
-(31, 1, 1, 'Guilherme Bolfe added general quality score Muito Bom'),
-(32, 1, 1, 'Guilherme Bolfe added general quality score Otimo'),
-(33, 1, 1, 'Guilherme Bolfe deleted general quality score Otimo'),
-(34, 1, 1, 'Guilherme Bolfe added general quality score gjhghj'),
-(35, 1, 1, 'Guilherme Bolfe added general quality score hjghj'),
-(36, 1, 1, 'Guilherme Bolfe deleted general quality score hjghj'),
-(37, 1, 1, 'Guilherme Bolfe deleted general quality score gjhghj'),
-(38, 1, 1, 'Guilherme Bolfe added general quality score yghgj'),
-(39, 1, 1, 'Guilherme Bolfe deleted general quality score yghgj'),
-(40, 1, 1, 'Guilherme Bolfe added general quality score hjlhhkhj'),
-(41, 1, 1, 'Guilherme Bolfe added general quality score jkljkljkljl'),
-(42, 1, 1, 'Guilherme Bolfe deleted general quality score jkljkljkljl'),
-(43, 1, 1, 'Guilherme Bolfe added general quality score a'),
-(44, 1, 1, 'Guilherme Bolfe added general quality score fghfgh'),
-(45, 1, 1, 'Guilherme Bolfe added general quality score fsdfsdf'),
-(46, 1, 1, 'Guilherme Bolfe added general quality score gjhm'),
-(47, 1, 1, 'Guilherme Bolfe added general quality score Muito Ruim'),
-(48, 1, 1, 'Guilherme Bolfe added general quality score Ruim'),
-(49, 1, 1, 'Guilherme Bolfe added general quality score Bom'),
-(50, 1, 1, 'Guilherme Bolfe deleted general quality score Ruim'),
-(51, 1, 1, 'Guilherme Bolfe deleted general quality score Bom'),
-(52, 1, 1, 'Guilherme Bolfe edited general quality score Muito Ruim'),
-(53, 1, 1, 'Guilherme Bolfe edited general quality score Muito Ruim'),
-(54, 1, 1, 'Guilherme Bolfe edited general quality score Muito Ruim2'),
-(55, 1, 1, 'Guilherme Bolfe edited general quality score Muito Ruim2'),
-(56, 1, 1, 'Guilherme Bolfe edited general quality score Muito Ruim2'),
-(57, 1, 1, 'Guilherme Bolfe deleted general quality score Muito Ruim2'),
-(58, 1, 1, 'Guilherme Bolfe added general quality score Ruim'),
-(59, 1, 1, 'Guilherme Bolfe added general quality score BOM'),
-(60, 1, 1, 'Guilherme Bolfe edited min general quality score to approvedBOM'),
-(61, 1, 1, 'Guilherme Bolfe edited min general quality score to approvedRuim'),
-(62, 1, 1, 'Guilherme Bolfe edited min general quality score to approvedBOM'),
-(63, 1, 1, 'Guilherme Bolfe edited min general quality score to approvedRuim'),
-(64, 1, 1, 'Guilherme Bolfe edited min general quality score to approvedBOM'),
-(65, 1, 1, 'Guilherme Bolfe edited min general quality score to approvedRuim'),
-(66, 1, 1, 'Guilherme Bolfe deleted general quality score '),
-(67, 1, 1, 'Guilherme Bolfe deleted general quality score Ruim'),
-(68, 1, 1, 'Guilherme Bolfe deleted general quality score BOM'),
-(69, 1, 1, 'Guilherme Bolfe added general quality score j'),
-(70, 1, 1, 'Guilherme Bolfe added general quality score m'),
-(71, 1, 1, 'Guilherme Bolfe added general quality score ç~]~ç'),
-(72, 1, 1, 'Guilherme Bolfe deleted general quality score ç~]~ç'),
-(73, 1, 1, 'Guilherme Bolfe added general quality score kkjljk'),
-(74, 1, 1, 'Guilherme Bolfe deleted general quality score kkjljk'),
-(75, 1, 1, 'Guilherme Bolfe deleted general quality score m'),
-(76, 1, 1, 'Guilherme Bolfe deleted general quality score j');
-
 -- --------------------------------------------------------
 
 --
@@ -137,7 +55,10 @@ CREATE TABLE `criteria` (
 --
 
 INSERT INTO `criteria` (`id_criteria`, `id`, `description`, `pre_selected`, `id_project`, `type`) VALUES
-(1, 'IC 01', 'Description 01', 0, 1, 'Inclusion');
+(2, 'EC 01', 'Description 02', 1, 1, 'Exclusion'),
+(4, 'EC 02', 'Description 04', 0, 1, 'Exclusion'),
+(5, 'IC', 'Description', 1, 1, 'Inclusion'),
+(6, 'IC01', 'Descriptio05', 0, 1, 'Inclusion');
 
 -- --------------------------------------------------------
 
@@ -162,7 +83,8 @@ INSERT INTO `data_base` (`id_database`, `name`, `link`) VALUES
 (4, 'SCIENCE DIRECT', 'https://www.sciencedirect.com/'),
 (5, 'ACM', 'https://dl.acm.org/'),
 (6, 'ENGINEERING VILLAGE', 'https://www.engineeringvillage.com/home.url'),
-(8, 'SPRINGER LINK', 'https://link.springer.com/');
+(8, 'SPRINGER LINK', 'https://link.springer.com/'),
+(10, 'SIEPE', 'http://seer.unipampa.edu.br/index.php/siepe/issue/archive');
 
 -- --------------------------------------------------------
 
@@ -181,9 +103,8 @@ CREATE TABLE `domain` (
 --
 
 INSERT INTO `domain` (`id_domain`, `description`, `id_project`) VALUES
-(6, 'Domain 02', 1),
-(7, 'Domain 06', 1),
-(9, 'Domain 04', 1);
+(9, 'Domain 04', 1),
+(10, 'Domain 09', 1);
 
 -- --------------------------------------------------------
 
@@ -202,7 +123,7 @@ CREATE TABLE `exclusion_rule` (
 --
 
 INSERT INTO `exclusion_rule` (`id_exclusion_rule`, `id_rule`, `id_project`) VALUES
-(1, 2, 1),
+(1, 3, 1),
 (2, 1, 2),
 (3, 1, 3),
 (4, 1, 4);
@@ -220,6 +141,14 @@ CREATE TABLE `general_score` (
   `description` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `id_project` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Extraindo dados da tabela `general_score`
+--
+
+INSERT INTO `general_score` (`id_general_score`, `start`, `end`, `description`, `id_project`) VALUES
+(1, 0, 1, 'Baixo', 1),
+(2, 1.1, 2, 'Medio', 1);
 
 -- --------------------------------------------------------
 
@@ -288,6 +217,46 @@ INSERT INTO `language` (`id_language`, `description`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Estrutura da tabela `levels`
+--
+
+CREATE TABLE `levels` (
+  `id_level` int(11) NOT NULL,
+  `level` varchar(255) COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Extraindo dados da tabela `levels`
+--
+
+INSERT INTO `levels` (`id_level`, `level`) VALUES
+(1, 'Administrator'),
+(2, 'Viewer'),
+(3, 'Researcher');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `members`
+--
+
+CREATE TABLE `members` (
+  `id_members` int(11) NOT NULL,
+  `id_user` int(11) NOT NULL,
+  `id_project` int(11) NOT NULL,
+  `level` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Extraindo dados da tabela `members`
+--
+
+INSERT INTO `members` (`id_members`, `id_user`, `id_project`, `level`) VALUES
+(1, 1, 1, 1);
+
+-- --------------------------------------------------------
+
+--
 -- Estrutura da tabela `min_to_app`
 --
 
@@ -296,6 +265,13 @@ CREATE TABLE `min_to_app` (
   `id_project` int(11) NOT NULL,
   `id_general_score` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Extraindo dados da tabela `min_to_app`
+--
+
+INSERT INTO `min_to_app` (`id_min_to_app`, `id_project`, `id_general_score`) VALUES
+(1, 1, 2);
 
 -- --------------------------------------------------------
 
@@ -337,7 +313,7 @@ CREATE TABLE `project` (
 --
 
 INSERT INTO `project` (`id_project`, `title`, `description`, `objectives`, `created_by`, `start_date`, `end_date`) VALUES
-(1, 'Project 01', 'Project Test 01', 'Objectives 01', 1, '2019-02-17', '2019-03-01'),
+(1, 'Project 1', 'Project Test 1', 'Objectives 1', 1, '2019-02-17', '2019-03-01'),
 (2, 'Project 02', 'Project Test 02', 'Objectives 02', 1, '0000-00-00', '0000-00-00'),
 (3, 'Project 03', 'Project Test 03', 'Objectives 03', 1, '0000-00-00', '0000-00-00'),
 (4, 'Project 04', 'Project Test 04', 'Objectives 04', 2, '0000-00-00', '0000-00-00');
@@ -365,7 +341,7 @@ INSERT INTO `project_databases` (`id_project_database`, `id_project`, `id_databa
 (15, 1, 8),
 (16, 1, 5),
 (17, 1, 4),
-(18, 1, 6);
+(20, 1, 10);
 
 -- --------------------------------------------------------
 
@@ -384,7 +360,6 @@ CREATE TABLE `project_languages` (
 --
 
 INSERT INTO `project_languages` (`id_project_lang`, `id_project`, `id_language`) VALUES
-(3, 1, 1),
 (8, 1, 2),
 (9, 1, 3);
 
@@ -407,7 +382,8 @@ CREATE TABLE `project_study_types` (
 INSERT INTO `project_study_types` (`id_project_study_types`, `id_project`, `id_study_type`) VALUES
 (2, 1, 2),
 (4, 1, 4),
-(5, 1, 6);
+(5, 1, 6),
+(6, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -491,13 +467,13 @@ CREATE TABLE `search_string` (
 --
 
 INSERT INTO `search_string` (`id_search_string`, `description`, `id_project_database`, `update_at`) VALUES
-(11, '(\"Term 01\" OR \"Synonym 04\" OR \"Synonym 05\") AND (\"Term 02\" OR \"Synonym 02\" OR \"Synonym 01\")', 10, '2019-02-18 12:13:59'),
-(12, '(\"Term 01\" OR \"Synonym 04\" OR \"Synonym 05\") AND (\"Term 02\" OR \"Synonym 02\" OR \"Synonym 01\")', 11, '2019-02-18 12:14:01'),
-(13, 'TITLE-ABS-KEY (\"Term 01\" OR \"Synonym 04\" OR \"Synonym 05\") AND (\"Term 02\" OR \"Synonym 02\" OR \"Synonym 01\")', 12, '2019-02-18 12:14:02'),
-(16, '(\"Term 01\" OR \"Synonym 04\" OR \"Synonym 05\") AND (\"Term 02\" OR \"Synonym 02\" OR \"Synonym 01\")', 15, '2019-02-18 12:14:03'),
-(17, '(\"Term 01\" \"Synonym 04\" \"Synonym 05\") AND (\"Term 02\" \"Synonym 02\" \"Synonym 01\")', 16, '2019-02-18 12:14:04'),
-(18, '(\"Term 01\" OR \"Synonym 04\" OR \"Synonym 05\") AND (\"Term 02\" OR \"Synonym 02\" OR \"Synonym 01\")', 17, '2019-02-18 12:14:05'),
-(19, '(((\"Term 01\" OR \"Synonym 04\" OR \"Synonym 05\") WN KY) AND ((\"Term 02\" OR \"Synonym 02\" OR \"Synonym 01\") WN KY) AND ({english} WN LA)', 18, '2019-02-18 12:15:11');
+(11, '(\"Term 02\" OR \"Synonym 01\")', 10, '2019-03-25 19:31:47'),
+(12, '(\"Term 02\" OR \"Synonym 01\")', 11, '2019-03-25 19:31:48'),
+(13, 'TITLE-ABS-KEY (\"Term 02\" OR \"Synonym 01\")', 12, '2019-03-25 19:31:49'),
+(16, '(\"Term 02\" OR \"Synonym 01\")', 15, '2019-03-25 19:31:50'),
+(17, '(\"Term 02\" \"Synonym 01\")', 16, '2019-03-25 19:31:51'),
+(18, '(\"Term 02\" OR \"Synonym 01\")', 17, '2019-03-25 19:31:52'),
+(21, '(\"Term 02\" OR \"Synonym 01\")', 20, '2019-03-26 23:55:56');
 
 -- --------------------------------------------------------
 
@@ -516,7 +492,7 @@ CREATE TABLE `search_string_generics` (
 --
 
 INSERT INTO `search_string_generics` (`id_search_string_generics`, `description`, `id_project`) VALUES
-(4, '(\"Term 01\" OR \"Synonym 04\" OR \"Synonym 05\") AND (\"Term 02\" OR \"Synonym 02\" OR \"Synonym 01\")', 1),
+(4, '(\"Term 02\" OR \"Synonym 01\")', 1),
 (5, ' ', 2),
 (6, ' ', 3),
 (7, ' ', 4);
@@ -561,9 +537,6 @@ CREATE TABLE `synonym` (
 --
 
 INSERT INTO `synonym` (`id_synonym`, `description`, `id_term`) VALUES
-(22, 'Synonym 04', 7),
-(23, 'Synonym 05', 7),
-(24, 'Synonym 02', 8),
 (25, 'Synonym 01', 8);
 
 -- --------------------------------------------------------
@@ -583,7 +556,6 @@ CREATE TABLE `term` (
 --
 
 INSERT INTO `term` (`id_term`, `description`, `id_project`) VALUES
-(7, 'Term 01', 1),
 (8, 'Term 02', 1);
 
 -- --------------------------------------------------------
@@ -609,7 +581,8 @@ CREATE TABLE `user` (
 
 INSERT INTO `user` (`id_user`, `email`, `password`, `name`, `institution`, `lattes_link`, `created_at`, `updated_at`) VALUES
 (1, 'guilhermebolfe11@gmail.com', 'f781ca982eb8b25bbb7fcd2cdc0798ca', 'Guilherme Bolfe', NULL, NULL, '2019-01-28 17:44:40', '2019-01-28 22:53:54'),
-(2, 'silviobolfe19@gmail.com', '9641fe65a41b6d722443bc12e796d52a', 'Silvio Bolfe', NULL, NULL, '2019-01-28 17:52:54', '2019-01-28 22:54:03');
+(2, 'silviobolfe19@gmail.com', '9641fe65a41b6d722443bc12e796d52a', 'Silvio Bolfe', NULL, NULL, '2019-01-28 17:52:54', '2019-01-28 22:54:03'),
+(4, 'bolfeguilherme@gmail.com', 'f781ca982eb8b25bbb7fcd2cdc0798ca', 'Gustavo Bolfe', NULL, NULL, '2019-03-14 11:00:00', '2019-03-14 11:00:00');
 
 --
 -- Indexes for dumped tables
@@ -678,6 +651,21 @@ ALTER TABLE `keyword`
 --
 ALTER TABLE `language`
   ADD PRIMARY KEY (`id_language`);
+
+--
+-- Indexes for table `levels`
+--
+ALTER TABLE `levels`
+  ADD PRIMARY KEY (`id_level`);
+
+--
+-- Indexes for table `members`
+--
+ALTER TABLE `members`
+  ADD PRIMARY KEY (`id_members`),
+  ADD KEY `members_ibfk_1` (`id_project`),
+  ADD KEY `members_ibfk_2` (`id_user`),
+  ADD KEY `members_ibfk_3` (`level`);
 
 --
 -- Indexes for table `min_to_app`
@@ -793,25 +781,25 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `activity_log`
 --
 ALTER TABLE `activity_log`
-  MODIFY `id_log` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
+  MODIFY `id_log` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `criteria`
 --
 ALTER TABLE `criteria`
-  MODIFY `id_criteria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_criteria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `data_base`
 --
 ALTER TABLE `data_base`
-  MODIFY `id_database` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id_database` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `domain`
 --
 ALTER TABLE `domain`
-  MODIFY `id_domain` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id_domain` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `exclusion_rule`
@@ -823,7 +811,7 @@ ALTER TABLE `exclusion_rule`
 -- AUTO_INCREMENT for table `general_score`
 --
 ALTER TABLE `general_score`
-  MODIFY `id_general_score` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id_general_score` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `inclusion_rule`
@@ -844,10 +832,22 @@ ALTER TABLE `language`
   MODIFY `id_language` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
+-- AUTO_INCREMENT for table `levels`
+--
+ALTER TABLE `levels`
+  MODIFY `id_level` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `members`
+--
+ALTER TABLE `members`
+  MODIFY `id_members` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `min_to_app`
 --
 ALTER TABLE `min_to_app`
-  MODIFY `id_min_to_app` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_min_to_app` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `module`
@@ -865,7 +865,7 @@ ALTER TABLE `project`
 -- AUTO_INCREMENT for table `project_databases`
 --
 ALTER TABLE `project_databases`
-  MODIFY `id_project_database` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id_project_database` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `project_languages`
@@ -877,7 +877,7 @@ ALTER TABLE `project_languages`
 -- AUTO_INCREMENT for table `project_study_types`
 --
 ALTER TABLE `project_study_types`
-  MODIFY `id_project_study_types` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_project_study_types` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `research_question`
@@ -901,7 +901,7 @@ ALTER TABLE `search_strategy`
 -- AUTO_INCREMENT for table `search_string`
 --
 ALTER TABLE `search_string`
-  MODIFY `id_search_string` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id_search_string` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `search_string_generics`
@@ -931,7 +931,7 @@ ALTER TABLE `term`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Constraints for dumped tables
@@ -941,116 +941,124 @@ ALTER TABLE `user`
 -- Limitadores para a tabela `activity_log`
 --
 ALTER TABLE `activity_log`
-  ADD CONSTRAINT `activity_log_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`),
-  ADD CONSTRAINT `activity_log_ibfk_2` FOREIGN KEY (`id_module`) REFERENCES `module` (`id_module`);
+  ADD CONSTRAINT `activity_log_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `activity_log_ibfk_2` FOREIGN KEY (`id_module`) REFERENCES `module` (`id_module`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Limitadores para a tabela `criteria`
 --
 ALTER TABLE `criteria`
-  ADD CONSTRAINT `criteria_ibfk_1` FOREIGN KEY (`id_project`) REFERENCES `project` (`id_project`);
+  ADD CONSTRAINT `criteria_ibfk_1` FOREIGN KEY (`id_project`) REFERENCES `project` (`id_project`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Limitadores para a tabela `domain`
 --
 ALTER TABLE `domain`
-  ADD CONSTRAINT `domain_ibfk_1` FOREIGN KEY (`id_project`) REFERENCES `project` (`id_project`);
+  ADD CONSTRAINT `domain_ibfk_1` FOREIGN KEY (`id_project`) REFERENCES `project` (`id_project`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Limitadores para a tabela `exclusion_rule`
 --
 ALTER TABLE `exclusion_rule`
-  ADD CONSTRAINT `exclusion_rule_ibfk_1` FOREIGN KEY (`id_project`) REFERENCES `project` (`id_project`),
-  ADD CONSTRAINT `exclusion_rule_ibfk_2` FOREIGN KEY (`id_rule`) REFERENCES `rule` (`id_rule`);
+  ADD CONSTRAINT `exclusion_rule_ibfk_1` FOREIGN KEY (`id_project`) REFERENCES `project` (`id_project`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `exclusion_rule_ibfk_2` FOREIGN KEY (`id_rule`) REFERENCES `rule` (`id_rule`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Limitadores para a tabela `general_score`
 --
 ALTER TABLE `general_score`
-  ADD CONSTRAINT `general_score_ibfk_1` FOREIGN KEY (`id_project`) REFERENCES `project` (`id_project`);
+  ADD CONSTRAINT `general_score_ibfk_1` FOREIGN KEY (`id_project`) REFERENCES `project` (`id_project`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Limitadores para a tabela `inclusion_rule`
 --
 ALTER TABLE `inclusion_rule`
-  ADD CONSTRAINT `inclusion_rule_ibfk_1` FOREIGN KEY (`id_project`) REFERENCES `project` (`id_project`),
-  ADD CONSTRAINT `inclusion_rule_ibfk_2` FOREIGN KEY (`id_rule`) REFERENCES `rule` (`id_rule`);
+  ADD CONSTRAINT `inclusion_rule_ibfk_1` FOREIGN KEY (`id_project`) REFERENCES `project` (`id_project`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `inclusion_rule_ibfk_2` FOREIGN KEY (`id_rule`) REFERENCES `rule` (`id_rule`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Limitadores para a tabela `keyword`
 --
 ALTER TABLE `keyword`
-  ADD CONSTRAINT `keyword_ibfk_1` FOREIGN KEY (`id_project`) REFERENCES `project` (`id_project`);
+  ADD CONSTRAINT `keyword_ibfk_1` FOREIGN KEY (`id_project`) REFERENCES `project` (`id_project`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Limitadores para a tabela `members`
+--
+ALTER TABLE `members`
+  ADD CONSTRAINT `members_ibfk_1` FOREIGN KEY (`id_project`) REFERENCES `project` (`id_project`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `members_ibfk_2` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `members_ibfk_3` FOREIGN KEY (`level`) REFERENCES `levels` (`id_level`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Limitadores para a tabela `min_to_app`
 --
 ALTER TABLE `min_to_app`
-  ADD CONSTRAINT `min_to_app_ibfk_1` FOREIGN KEY (`id_project`) REFERENCES `project` (`id_project`),
-  ADD CONSTRAINT `min_to_app_ibfk_2` FOREIGN KEY (`id_general_score`) REFERENCES `general_score` (`id_general_score`);
+  ADD CONSTRAINT `min_to_app_ibfk_1` FOREIGN KEY (`id_project`) REFERENCES `project` (`id_project`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `min_to_app_ibfk_2` FOREIGN KEY (`id_general_score`) REFERENCES `general_score` (`id_general_score`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Limitadores para a tabela `project`
 --
 ALTER TABLE `project`
-  ADD CONSTRAINT `project_ibfk_1` FOREIGN KEY (`created_by`) REFERENCES `user` (`id_user`);
+  ADD CONSTRAINT `project_ibfk_1` FOREIGN KEY (`created_by`) REFERENCES `user` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Limitadores para a tabela `project_databases`
 --
 ALTER TABLE `project_databases`
-  ADD CONSTRAINT `project_databases_ibfk_1` FOREIGN KEY (`id_project`) REFERENCES `project` (`id_project`),
-  ADD CONSTRAINT `project_databases_ibfk_2` FOREIGN KEY (`id_database`) REFERENCES `data_base` (`id_database`);
+  ADD CONSTRAINT `project_databases_ibfk_1` FOREIGN KEY (`id_project`) REFERENCES `project` (`id_project`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `project_databases_ibfk_2` FOREIGN KEY (`id_database`) REFERENCES `data_base` (`id_database`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Limitadores para a tabela `project_languages`
 --
 ALTER TABLE `project_languages`
-  ADD CONSTRAINT `project_languages_ibfk_1` FOREIGN KEY (`id_language`) REFERENCES `language` (`id_language`),
-  ADD CONSTRAINT `project_languages_ibfk_2` FOREIGN KEY (`id_project`) REFERENCES `project` (`id_project`);
+  ADD CONSTRAINT `project_languages_ibfk_1` FOREIGN KEY (`id_language`) REFERENCES `language` (`id_language`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `project_languages_ibfk_2` FOREIGN KEY (`id_project`) REFERENCES `project` (`id_project`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Limitadores para a tabela `project_study_types`
 --
 ALTER TABLE `project_study_types`
-  ADD CONSTRAINT `project_study_types_ibfk_1` FOREIGN KEY (`id_project`) REFERENCES `project` (`id_project`),
-  ADD CONSTRAINT `project_study_types_ibfk_2` FOREIGN KEY (`id_study_type`) REFERENCES `study_type` (`id_study_type`);
+  ADD CONSTRAINT `project_study_types_ibfk_1` FOREIGN KEY (`id_project`) REFERENCES `project` (`id_project`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `project_study_types_ibfk_2` FOREIGN KEY (`id_study_type`) REFERENCES `study_type` (`id_study_type`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Limitadores para a tabela `research_question`
 --
 ALTER TABLE `research_question`
-  ADD CONSTRAINT `research_question_ibfk_1` FOREIGN KEY (`id_project`) REFERENCES `project` (`id_project`);
+  ADD CONSTRAINT `research_question_ibfk_1` FOREIGN KEY (`id_project`) REFERENCES `project` (`id_project`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Limitadores para a tabela `search_strategy`
 --
 ALTER TABLE `search_strategy`
-  ADD CONSTRAINT `search_strategy_ibfk_1` FOREIGN KEY (`id_project`) REFERENCES `project` (`id_project`);
+  ADD CONSTRAINT `search_strategy_ibfk_1` FOREIGN KEY (`id_project`) REFERENCES `project` (`id_project`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Limitadores para a tabela `search_string`
 --
 ALTER TABLE `search_string`
-  ADD CONSTRAINT `search_string_ibfk_1` FOREIGN KEY (`id_project_database`) REFERENCES `project_databases` (`id_project_database`);
+  ADD CONSTRAINT `search_string_ibfk_1` FOREIGN KEY (`id_project_database`) REFERENCES `project_databases` (`id_project_database`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Limitadores para a tabela `search_string_generics`
 --
 ALTER TABLE `search_string_generics`
-  ADD CONSTRAINT `search_string_generics_ibfk_1` FOREIGN KEY (`id_project`) REFERENCES `project` (`id_project`);
+  ADD CONSTRAINT `search_string_generics_ibfk_1` FOREIGN KEY (`id_project`) REFERENCES `project` (`id_project`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Limitadores para a tabela `synonym`
 --
 ALTER TABLE `synonym`
-  ADD CONSTRAINT `synonym_ibfk_1` FOREIGN KEY (`id_term`) REFERENCES `term` (`id_term`);
+  ADD CONSTRAINT `synonym_ibfk_1` FOREIGN KEY (`id_term`) REFERENCES `term` (`id_term`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Limitadores para a tabela `term`
 --
 ALTER TABLE `term`
-  ADD CONSTRAINT `term_ibfk_1` FOREIGN KEY (`id_project`) REFERENCES `project` (`id_project`);
+  ADD CONSTRAINT `term_ibfk_1` FOREIGN KEY (`id_project`) REFERENCES `project` (`id_project`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
