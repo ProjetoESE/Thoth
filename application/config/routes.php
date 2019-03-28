@@ -49,6 +49,25 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | Examples:	my-controller/index	-> my_controller/index
 |		my-controller/my-method	-> my_controller/my_method
 */
-$route['default_controller'] = 'home';
+$route['default_controller'] = 'Home_Controller';
+$route['login'] = 'Login_Controller/sign_in';
+$route['sign_up'] = 'Login_Controller/sign_up';
+$route['sign_out'] = 'Login_Controller/sign_out';
+$route['profile'] = 'User_Controller/profile';
+$route['about'] = 'About_Controller';
+$route['help'] = 'Help_Controller';
+$route['search'] = 'Search_Controller';
+$route['search'] = 'Search_Controller';
+$route['dashboard'] = 'User_Controller';
+$route['open/(:num)'] = 'Project_Controller/open/$1';
+$route['planning/(:num)'] = 'Project_Controller/planning/$1';
+$route['conducting/(:num)'] = 'Project_Controller/conducting/$1';
+$route['reporting/(:num)'] = 'Project_Controller/reporting/$1';
+$route['study_selection/(:num)'] = 'Project_Controller/study_selection/$1';
+$route['quality_assessement/(:num)'] = 'Project_Controller/quality_assessement/$1';
+$route['data_extraction/(:num)'] = 'Project_Controller/data_extraction/$1';
+$route['edit/(:num)'] = 'Project_Controller/edit/$1';
+$route['new_project'] = 'Project_Controller/new_project';
+$route['add_research/(:num)'] = 'Project_Controller/add_research/$1';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

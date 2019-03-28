@@ -64,6 +64,7 @@
 	<script src="<?= base_url('assets/js/highcharts-more.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/funnel.js'); ?>"></script>
 
+
 	<!-- SweetAlert -->
 	<script src="<?= base_url('assets/js/sweetalert2.all.min.js'); ?>"></script>
 
@@ -72,7 +73,13 @@
 
 	<!-- My JS Files -->
 	<script src="<?= base_url('assets/js/main.js'); ?>"></script>
-	<script src="<?= base_url('assets/js/functions.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/overall.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/research_question.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/database.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/search_string.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/criteria.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/quality_assessment.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/project.js'); ?>"></script>
 
 </head>
 <body>

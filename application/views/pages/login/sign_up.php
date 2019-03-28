@@ -5,7 +5,7 @@
 				<h4>Join Thoth</h4>
 			</div>
 			<div class="card-body">
-				<?php echo form_open('login/log_up', array('class' => 'form-signup')); ?>
+				<?php echo form_open('Login_Controller/log_up', array('class' => 'form-signup')); ?>
 				<div class="form-group">
 					<label for="name">Name</label>
 					<input type="text" class="form-control" name="name" id="name" placeholder="Your Name" required>

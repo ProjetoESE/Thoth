@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Login extends CI_Controller
+class Login_Controller extends CI_Controller
 {
 
 	public function index()
@@ -19,7 +19,7 @@ class Login extends CI_Controller
 
 			if (is_null($user)) {
 				$this->session->set_flashdata('error', 'Email or Password invalid!');
-				redirect(base_url("login/sign_in"));
+				redirect(base_url("login"));
 			}
 
 			$session = array(
@@ -33,10 +33,10 @@ class Login extends CI_Controller
 			$activity = $this->session->name . " logged in";
 			$this->insert_log($activity, 2);
 
-			redirect(base_url("user_controller"));
+			redirect(base_url("dashboard"));
 		} catch (Exception $e) {
 			$this->session->set_flashdata('error', $e->getMessage());
-			redirect(base_url("login/sign_in"));
+			redirect(base_url("login"));
 		}
 	}
 
@@ -49,7 +49,7 @@ class Login extends CI_Controller
 
 			if (!$this->Login_Model->check_email_unique($email)) {
 				$this->session->set_flashdata('error', 'Email already used!');
-				redirect(base_url("login/sign_up"));
+				redirect(base_url("sign_up"));
 			}
 
 			$password = md5($this->input->post('password'));
@@ -68,10 +68,10 @@ class Login extends CI_Controller
 			$activity = $this->session->name . " created new user and logged in";
 			$this->insert_log($activity, 2);
 
-			redirect(base_url("user_controller"));
+			redirect(base_url("dashboard"));
 		} catch (Exception $e) {
 			$this->session->set_flashdata('error', $e->getMessage());
-			redirect(base_url("login/sign_up"));
+			redirect(base_url("sign_up"));
 		}
 	}
 
@@ -79,7 +79,7 @@ class Login extends CI_Controller
 	{
 		try {
 			if ($this->session->logged_in) {
-				redirect(base_url("user_controller"));
+				redirect(base_url("dashboard"));
 			}
 			load_templates('pages/login/sign_in', null);
 		} catch (Exception $e) {
@@ -106,7 +106,7 @@ class Login extends CI_Controller
 	{
 		try {
 			if ($this->session->logged_in) {
-				redirect(base_url("user_controller"));
+				redirect(base_url("dashboard"));
 			}
 			load_templates('pages/login/sign_up', null);
 		} catch (Exception $e) {

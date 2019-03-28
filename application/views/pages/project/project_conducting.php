@@ -2,13 +2,13 @@
 	<div class="text-center card-header">
 		<h4><?= $project->get_title(); ?></h4>
 		<input type="hidden" id="id_project" value="<?= $project->get_id(); ?>">
-		<a href="<?= base_url('project_controller/open/' . $project->get_id()) ?>"
+		<a href="<?= base_url('open/' . $project->get_id()) ?>"
 		   class="btn form-inline btn-outline-primary opt">Review</a>
-		<a href="<?= base_url('project_controller/planning/' . $project->get_id()) ?>"
+		<a href="<?= base_url('planning/' . $project->get_id()) ?>"
 		   class="btn form-inline btn-outline-primary opt">Planning</a>
-		<a href="<?= base_url('project_controller/conducting/' . $project->get_id()) ?>"
+		<a href="<?= base_url('conducting/' . $project->get_id()) ?>"
 		   class="btn form-inline btn-outline-primary opt">Conducting</a>
-		<a href="<?= base_url('project_controller/reporting/' . $project->get_id()) ?>"
+		<a href="<?= base_url('reporting/' . $project->get_id()) ?>"
 		   class="btn form-inline btn-outline-primary opt">Reporting</a>
 	</div>
 	<div class="card-body">
@@ -16,19 +16,19 @@
 		<ul class="nav nav-pills nav-justified">
 			<li class="nav-item">
 				<a class="nav-link active"
-				   href="<?= base_url('project_controller/conducting/' . $project->get_id()) ?>">Import Studies</a>
+				   href="<?= base_url('conducting/' . $project->get_id()) ?>">Import Studies</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link" href="<?= base_url('project_controller/study_selection/' . $project->get_id()) ?>">Study
+				<a class="nav-link" href="<?= base_url('study_selection/' . $project->get_id()) ?>">Study
 					Selection</a>
 			</li>
 			<li class="nav-item">
 				<a class="nav-link"
-				   href="<?= base_url('project_controller/quality_assessement/' . $project->get_id()) ?>">Quality
-					Assessement</a>
+				   href="<?= base_url('quality_assessement/' . $project->get_id()) ?>">Quality
+					Assessment</a>
 			</li>
 			<li class="nav-item">
-				<a class=" nav-link" href="<?= base_url('project_controller/data_extraction/' . $project->get_id()) ?>">Data
+				<a class=" nav-link" href="<?= base_url('data_extraction/' . $project->get_id()) ?>">Data
 					Extraction</a>
 			</li>
 		</ul>

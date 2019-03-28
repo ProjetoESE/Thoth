@@ -1,11 +1,12 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
 	<a class="navbar-brand"
-	   href="<?= (isset($_SESSION['logged_in']) ? base_url('user_controller') : base_url()) ?>"><img id="logo"
-																									 src="<?= base_url('assets/img/icone.svg'); ?>"
-																									 width="30"
-																									 height="30"
-																									 class="d-inline-block align-top"
-																									 alt="">
+	   href="<?= (isset($_SESSION['logged_in']) ? base_url('dashboard') : base_url()) ?>">
+		<img id="logo"
+			 src="<?= base_url('assets/img/icone.svg'); ?>"
+			 width="30"
+			 height="30"
+			 class="d-inline-block align-top"
+			 alt="">
 		Thoth</a>
 	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#menu" aria-controls="menu"
 			aria-expanded="false" aria-label="Toggle navigation">
@@ -21,8 +22,9 @@
 				<a class="nav-link" href="<?= base_url('help') ?>">Help</a>
 			</li>
 			<li class="nav-item">
-				<form class="form-inline my-2 my-lg-0" action="<?= base_url('search')?>">
-					<input class="form-control opt" name="search" type="search" placeholder="Search in Thoth" aria-label="Search">
+				<form class="form-inline my-2 my-lg-0" action="<?= base_url('search') ?>">
+					<input class="form-control opt" name="search" type="search" placeholder="Search in Thoth"
+						   aria-label="Search">
 					<button class="btn btn-outline-success my-2 my-sm-0 opt"><span class="fas fa-search"></span>
 						Search
 					</button>
@@ -34,11 +36,11 @@
 			if (isset($_SESSION['logged_in'])) {
 				?>
 				<li class="nav-item">
-					<a class="nav-link" href="<?= base_url('user_controller/profile') ?>"><span
-							class="fas fa-address-card fa-lg"></span> <?= $this->session->name;?></a>
+					<a class="nav-link" href="<?= base_url('profile') ?>"><span
+							class="fas fa-address-card fa-lg"></span> <?= $this->session->name; ?></a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="<?= base_url("login/sign_out/"); ?>"><span
+					<a class="nav-link" href="<?= base_url("sign_out"); ?>"><span
 							class="fas fa-sign-out-alt fa-lg"></span>
 						Sign out</a>
 				</li>
@@ -46,12 +48,12 @@
 			} else {
 				?>
 				<li class="nav-item">
-					<a class="nav-link aut" href="<?= base_url("login/sign_in/"); ?>"><span
+					<a class="nav-link aut" href="<?= base_url("login"); ?>"><span
 							class="fas fa-sign-in-alt fa-lg"></span>
 						Sign in</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="<?= base_url("login/sign_up/"); ?>"><span
+					<a class="nav-link" href="<?= base_url("sign_up"); ?>"><span
 							class="fas fa-user-plus fa-lg"></span>
 						Sign up</a>
 				</li>

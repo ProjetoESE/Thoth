@@ -5,7 +5,7 @@
 	<div class="card-body table-responsive">
 		<table id="tableMyProjects" class="table">
 			<thead>
-			<a href="<?= base_url('project_controller/new_project/'); ?>" class="btn btn-success new-project"><span
+			<a href="<?= base_url('new_project'); ?>" class="btn btn-success new-project"><span
 					class="fas fa-folder-plus"></span> Create New Project</a>
 			<tr>
 				<th scope="col">Title</th>
@@ -21,11 +21,11 @@
 					<td><?= $project->get_title(); ?></td>
 					<td><?= $project->get_created_by(); ?></td>
 					<td>
-						<a href="<?= base_url('project_controller/open/' . $project->get_id()); ?>"
+						<a href="<?= base_url('open/' . $project->get_id()); ?>"
 						   class="btn btn-outline-success opt"><span class="fas fa-folder-open"></span> Open</a>
-						<a href="<?= base_url('project_controller/edit/' . $project->get_id()); ?>"
+						<a href="<?= base_url('edit/' . $project->get_id()); ?>"
 						   class="btn btn-outline-warning opt"><span class="fas fa-edit"></span> Edit</a>
-						<a href="<?= base_url('project_controller/add_research/' . $project->get_id()); ?>"
+						<a href="<?= base_url('add_research/' . $project->get_id()); ?>"
 						   class="btn btn-outline-info opt"><span class="fas fa-users-cog"></span> Add</a>
 						<button type="button" onclick="delete_project(<?= $project->get_id() ?>)"
 								class="btn btn-outline-danger opt"><span

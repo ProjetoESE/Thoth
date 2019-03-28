@@ -3,23 +3,19 @@
 		<h4><?= $project->get_title(); ?></h4>
 		<input type="hidden" id="id_project" value="<?= $project->get_id(); ?>">
 		<br>
-		<a href="<?= base_url('project_controller/open/' . $project->get_id()) ?>"
+		<a href="<?= base_url('open/' . $project->get_id()) ?>"
 		   class="btn form-inline btn-outline-primary opt">Review</a>
-		<a href="<?= base_url('project_controller/planning/' . $project->get_id()) ?>"
+		<a href="<?= base_url('planning/' . $project->get_id()) ?>"
 		   class="btn form-inline btn-outline-primary opt">Planning</a>
-		<a href="<?= base_url('project_controller/conducting/' . $project->get_id()) ?>"
+		<a href="<?= base_url('conducting/' . $project->get_id()) ?>"
 		   class="btn form-inline btn-outline-primary opt">Conducting</a>
-		<a href="<?= base_url('project_controller/reporting/' . $project->get_id()) ?>"
+		<a href="<?= base_url('reporting/' . $project->get_id()) ?>"
 		   class="btn form-inline btn-outline-primary opt">Reporting</a>
 	</div>
 	<div class="card-body">
 		<div class="row justify-content-between">
 			<div class="col-sm-12 col-md-2">
 				<h4>Planning</h4>
-			</div>
-			<div class="col-md-2 col-sm-12">
-				<a href="#" class="opt btn btn-warning">Export <i
-						class="fas fa-file-word "></i></a>
 			</div>
 		</div>
 		<ul class="nav nav-pills nav-justified">
@@ -373,9 +369,14 @@
 					</div>
 				</div>
 			</div>
+			<br>
+			<div class="form-inline">
+				<label for="id_qa"><strong>Synonym</strong></label>
+				<a href="#" class="float-right opt"><i class="fas fa-question-circle "></i></a>
+			</div>
 			<div class="form-inline">
 				<div class="input-group col-md-4">
-					<label for="list_term" class="col-sm-12">Term for Synonym</label>
+					<label for="list_term" class="col-sm-12">Term</label>
 					<select class="form-control" id="list_term">
 						<?php foreach ($project->get_terms() as $term) { ?>
 							<option value="<?= $term->get_description() ?>"><?= $term->get_description() ?></option>
@@ -550,14 +551,6 @@
 					</tr>
 				<?php } ?>
 				</tbody>
-				<tfoot>
-				<tr>
-					<th>Select</th>
-					<th>ID</th>
-					<th>Criteria</th>
-					<th>Delete</th>
-				</tr>
-				</tfoot>
 			</table>
 			<div class="input-group col-md-2">
 				<label for="rule_inclusion" class="col-sm-12 col-md-12">Inclusion Rule</label>
@@ -617,14 +610,6 @@
 					</tr>
 				<?php } ?>
 				</tbody>
-				<tfoot>
-				<tr>
-					<th>Select</th>
-					<th>ID</th>
-					<th>Criteria</th>
-					<th>Delete</th>
-				</tr>
-				</tfoot>
 			</table>
 			<div class="input-group col-md-2">
 				<label for="rule_exclusion" class="col-sm-12 col-md-12">Exclusion Rule</label>
@@ -716,41 +701,57 @@
 			</div>
 			<br>
 			<div class="form-inline">
-				<label for="id_qa" class="col-sm-12 col-md-2">ID</label>
-				<label for="qa_description" class="col-sm-12 col-md-8">Description</label>
-				<label for="qa_weight" class="col-sm-12 col-md-2">Weight</label>
-			</div>
-			<div class="row">
 				<div class="input-group col-md-2">
+					<label for="id_qa" class="col-sm-12">ID</label>
 					<input type="text" class=" form-control" id="id_qa">
 				</div>
-				<div class="input-group col-md-8">
+				<div class="input-group col-md-7">
+					<label for="qa_description" class="col-sm-12">Description</label>
 					<input type="text" class=" form-control" id="desc_qa">
 				</div>
-				<div class="input-group col-md-2">
+				<div class="input-group col-md-3">
+					<label for="qa_weight" class="col-sm-12">Weight</label>
 					<input type="number" class="form-control" id="weight_qa" step="0.5">
+					<div class="input-group-append">
+						<button class="btn btn-success" type="button" onclick=""><span
+								class="fas fa-plus"></span></button>
+					</div>
 				</div>
 			</div>
 			<br>
 			<div class="form-inline">
-				<label for="abr_score" class="col-sm-12 col-md-2">Score Rule</label>
-				<label for="desc_score" class="col-sm-12 col-md-7">Description</label>
-				<label for="score" class="col-sm-12 col-md-2">Score: 50%</label>
+				<label for="list_qa"><strong>Question Score</strong></label>
+				<a href="#" class="float-right opt"><i class="fas fa-question-circle "></i></a>
 			</div>
-			<div class="row">
+
+			<div class="form-inline">
 				<div class="input-group col-md-2">
+					<label for="list_qa" class="col-sm-12">Question</label>
+					<select class="form-control" id="list_qa">
+					</select>
+				</div>
+				<div class="input-group col-md-2">
+					<label for="abr_score" class="col-sm-12">Score Rule</label>
 					<input type="text" class=" form-control" id="abr_score">
 				</div>
-				<div class="input-group col-md-7">
-					<input type="text" class=" form-control" id="desc_score">
-				</div>
 				<div class="input-group col-md-2">
-					<input type="range" min="0" max="100" class="form-control" id="score" step="0.5">
+					<label for="score" id="lbl_score" class="col-sm-12">Score: 50%</label>
+					<input type="range" min="0" max="100" class="form-control-range" id="score" step="5"
+						   oninput="update_text_score(this.value)" onchange="update_text_score(this.value)"">
 				</div>
-				<button class="btn btn-success" type="button"><span class="fas fa-plus"></span></button>
+
+				<div class="input-group col-md-6">
+					<label for="desc_score" class="col-sm-12">Description</label>
+					<input type="text" class=" form-control" id="desc_score">
+					<div class="input-group-append">
+						<button class="btn btn-success" type="button" onclick=""><span
+								class="fas fa-plus"></span></button>
+					</div>
+				</div>
+
 			</div>
 			<br>
-			<table id="table_qa" class="table table-responsive">
+			<table id="table_qa" class="table table-responsive-sm">
 				<caption>List of Question Quality</caption>
 				<thead>
 				<tr>
@@ -759,151 +760,9 @@
 					<th>Scores Rules</th>
 					<th>Weight</th>
 					<th>Minimum to Approve</th>
-					<th>Delete</th>
+					<th>Actions</th>
 				</tr>
 				</thead>
-				<tr>
-					<td contenteditable="true">QA1</td>
-					<td contenteditable="true">Descrição</td>
-					<td>
-						<table class="table table-responsive">
-							<thead>
-							<th>Score Rule</th>
-							<th>Description</th>
-							<th>Score</th>
-							<th>Delete</th>
-							</thead>
-							<tbody>
-							<tr>
-								<td contenteditable="true">Nova</td>
-								<td contenteditable="true">Descrição</td>
-								<td>
-									<div class="form-inline">
-										50%
-										<input type="range" min="0" max="100" class="form-control" id="edit_score"
-											   step="0.5">
-									</div>
-								</td>
-								<td>
-									<button class="btn btn-danger"><span class="far fa-trash-alt"></span></button>
-								</td>
-							</tr>
-							<tr>
-								<td contenteditable="true">Nova</td>
-								<td contenteditable="true">Descrição</td>
-								<td>
-									<div class="form-inline">
-										50%
-										<input type="range" min="0" max="100" class="form-control" id="edit_score"
-											   step="0.5">
-									</div>
-								</td>
-								<td>
-									<button class="btn btn-danger"><span class="far fa-trash-alt"></span></button>
-								</td>
-							</tr>
-							<tr>
-								<td contenteditable="true">Nova</td>
-								<td contenteditable="true">Descrição</td>
-								<td>
-									<div class="form-inline">
-										50%
-										<input type="range" min="0" max="100" class="form-control" id="edit_score"
-											   step="0.5">
-									</div>
-								</td>
-								<td>
-									<button class="btn btn-danger"><span class="far fa-trash-alt"></span></button>
-								</td>
-							</tr>
-							</tbody>
-						</table>
-					</td>
-					<td>
-						<input type="number" class="form-control" id="edit_qa_weight" step="0.5" value="5">
-					</td>
-					<td>
-						<select class="form-control" id="min_score_to_qa">
-							<option>Nova</option>
-							<option>Ruim</option>
-							<option>Bom</option>
-						</select>
-					</td>
-					<td>
-						<button class="btn btn-danger"><span class="far fa-trash-alt"></span></button>
-					</td>
-				</tr>
-				<tr>
-					<td contenteditable="true">QA1</td>
-					<td contenteditable="true">Descrição</td>
-					<td>
-						<table class="table table-responsive">
-							<thead>
-							<th>Score Rule</th>
-							<th>Description</th>
-							<th>Score</th>
-							<th>Delete</th>
-							</thead>
-							<tbody>
-							<tr>
-								<td contenteditable="true">Nova</td>
-								<td contenteditable="true">Descrição</td>
-								<td>
-									<div class="form-inline">
-										50%
-										<input type="range" min="0" max="100" class="form-control" id="edit_score""
-										step="0.5">
-									</div>
-								</td>
-								<td>
-									<button class="btn btn-danger"><span class="far fa-trash-alt"></span></button>
-								</td>
-							</tr>
-							<tr>
-								<td contenteditable="true">Nova</td>
-								<td contenteditable="true">Descrição</td>
-								<td>
-									<div class="form-inline">
-										50%
-										<input type="range" min="0" max="100" class="form-control" id="edit_score"
-											   step="0.5">
-									</div>
-								</td>
-								<td>
-									<button class="btn btn-danger"><span class="far fa-trash-alt"></span></button>
-								</td>
-							</tr>
-							<tr>
-								<td contenteditable="true">Nova</td>
-								<td contenteditable="true">Descrição</td>
-								<td>
-									<div class="form-inline">
-										50%
-										<input type="range" min="0" max="100" class="form-control" id="edit_score"
-											   step="0.5">
-									</div>
-								</td>
-								<td>
-									<button class="btn btn-danger"><span class="far fa-trash-alt"></span></button>
-								</td>
-							</tr>
-							</tbody>
-						</table>
-					</td>
-					<td>
-						<input type="number" class="form-control" id="edit_qa_weight" step="0.5" value="5">
-					</td>
-					<td>
-						<select class="form-control" id="min_score_to_qa">
-							<option>Nova</option>
-							<option>Ruim</option>
-							<option>Bom</option>
-						</select>
-					</td>
-					<td>
-						<button class="btn btn-danger"><span class="far fa-trash-alt"></span></button>
-					</td>
-				</tr>
 				<tbody>
 				</tbody>
 			</table>

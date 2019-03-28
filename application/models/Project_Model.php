@@ -21,7 +21,8 @@ class Project_Model extends CI_Model
 		$data = array(
 			'title' => $title,
 			'description' => $description,
-			'created_by' => $created_by
+			'created_by' => $created_by,
+			'objectives' => $objectives
 		);
 
 		$this->db->insert('project', $data);
@@ -59,7 +60,7 @@ class Project_Model extends CI_Model
 		$project->set_objectives($objectives);
 		$project->set_members($name);
 
-		return $project;
+		return $id_project;
 	}
 
 	public function get_project($id)

@@ -150,12 +150,12 @@ class Project_Controller extends CI_Controller
 			$description = $this->input->post('description');
 			$objectives = $this->input->post('objectives');
 
-			$data['project'] = $this->Project_Model->created_project($title, $description, $objectives, $this->session->email);
+			$id_project = $this->Project_Model->created_project($title, $description, $objectives, $this->session->email);
 
 			$activity = $this->session->name . " created the project " . $title;
 			$this->insert_log($activity, 1);
 
-			load_templates('pages/project/project', $data);
+			redirect('open/'.$id_project);
 
 		} catch (Exception $e) {
 			$this->session->set_flashdata('error', $e->getMessage());

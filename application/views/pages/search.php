@@ -15,7 +15,7 @@
 			<tr>
 				<td>Projeto 01</td>
 				<td>Guilherme Bolfe</td>
-				<td><a class="btn btn-outline-success opt" href="<?= base_url('project_controller/open/1');?>"><span class="far fa-folder-open"></span> Open</a>
+				<td><a class="btn btn-outline-success opt" href="<?= base_url('Project_Controller/open/1');?>"><span class="far fa-folder-open"></span> Open</a>
 				</td>
 			</tr>
 			</tbody>

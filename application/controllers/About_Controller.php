@@ -1,6 +1,6 @@
 <?php
 
-class About extends CI_Controller
+class About_Controller extends CI_Controller
 {
 
 	public function index(){
