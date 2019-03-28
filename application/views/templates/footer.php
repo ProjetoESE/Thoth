@@ -21,8 +21,8 @@
 				<input type="hidden" id="index_term">
 				<div class="form-inline">
 					<div class="input-group col-md-3">
-						<label for="edit_id_criteria" class="col-sm-12">ID</label>
-						<input type="text" id="edit_id_criteria" placeholder="ID" class="form-control">
+						<label for="edit_id_criteria_in" class="col-sm-12">ID</label>
+						<input type="text" id="edit_id_criteria_in" placeholder="ID" class="form-control">
 					</div>
 					<div class="input-group col-md-9">
 						<label for="edit_description_criteria_in" class="col-sm-12">Description</label>
@@ -59,8 +59,8 @@
 				<input type="hidden" id="index_term">
 				<div class="form-inline">
 					<div class="input-group col-md-3">
-						<label for="edit_id_criteria" class="col-sm-12">ID</label>
-						<input type="text" id="edit_id_criteria" placeholder="ID" class="form-control">
+						<label for="edit_id_criteria_ex" class="col-sm-12">ID</label>
+						<input type="text" id="edit_id_criteria-ex" placeholder="ID" class="form-control">
 					</div>
 					<div class="input-group col-md-9">
 						<label for="edit_description_criteria_ex" class="col-sm-12">Description</label>

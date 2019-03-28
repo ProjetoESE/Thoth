@@ -286,7 +286,7 @@ function delete_criteria_exclusion(value) {
 function modal_criteria_inclusion(value) {
 	let row = table_criteria_inclusion.row(value);
 	$('#modal_inclusion_criteria #index_term').val(row.index());
-	$('#modal_inclusion_criteria #edit_id_criteria').val(row.data()[1]);
+	$('#modal_inclusion_criteria #edit_id_criteria_in').val(row.data()[1]);
 	$('#modal_inclusion_criteria #edit_description_criteria_in').val(row.data()[2]);
 	$('#modal_inclusion_criteria #edit_select_type_inclusion').val("Inclusion");
 	$('#modal_inclusion_criteria').modal('show');
@@ -295,7 +295,7 @@ function modal_criteria_inclusion(value) {
 function modal_criteria_exclusion(value) {
 	let row = table_criteria_exclusion.row(value);
 	$('#modal_exclusion_criteria #index_term').val(row.index());
-	$('#modal_exclusion_criteria #edit_id_criteria').val(row.data()[1]);
+	$('#modal_exclusion_criteria #edit_id_criteria_ex').val(row.data()[1]);
 	$('#modal_exclusion_criteria #edit_description_criteria_ex').val(row.data()[2]);
 	$('#modal_exclusion_criteria #edit_select_type_exclusion').val("Exclusion");
 	$('#modal_exclusion_criteria').modal('show');
@@ -303,7 +303,7 @@ function modal_criteria_exclusion(value) {
 
 function edit_criteria_inclusion() {
 	let index = $('#modal_inclusion_criteria #index_term').val();
-	let id = $('#modal_inclusion_criteria #edit_id_criteria').val();
+	let id = $('#modal_inclusion_criteria #edit_id_criteria_in').val();
 	let description = $('#modal_inclusion_criteria #edit_description_criteria_in').val();
 	let type = $('#modal_inclusion_criteria #edit_select_type_inclusion option:selected').val();
 	let row = table_criteria_inclusion.row(index);
@@ -379,7 +379,7 @@ function edit_criteria_inclusion() {
 
 function edit_criteria_exclusion() {
 	let index = $('#modal_exclusion_criteria #index_term').val();
-	let id = $('#modal_exclusion_criteria #edit_id_criteria').val();
+	let id = $('#modal_exclusion_criteria #edit_id_criteria_ex').val();
 	let description = $('#modal_exclusion_criteria #edit_description_criteria_ex').val();
 	let type = $('#modal_exclusion_criteria #edit_select_type_exclusion option:selected').val();
 	let row = table_criteria_exclusion.row(index);
