@@ -282,7 +282,6 @@ function delete_criteria_exclusion(value) {
 
 }
 
-
 function modal_criteria_inclusion(value) {
 	let row = table_criteria_inclusion.row(value);
 	$('#modal_inclusion_criteria #index_term').val(row.index());

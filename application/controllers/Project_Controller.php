@@ -216,7 +216,6 @@ class Project_Controller extends CI_Controller
 		}
 	}
 
-
 	public function add_language()
 	{
 		try {
@@ -1001,6 +1000,45 @@ class Project_Controller extends CI_Controller
 			$this->Project_Model->add_score_quality($score_rule, $score, $description, $id_project, $id_qa);
 
 			$activity = $this->session->name . " added the score quality" . $score_rule;
+			$this->insert_log($activity, 1);
+
+
+		} catch (Exception $e) {
+			$this->session->set_flashdata('error', $e->getMessage());
+			redirect(base_url());
+		}
+	}
+
+	public function edit_min_score_qa()
+	{
+		try {
+			$score = $this->input->post('min');
+			$id = $this->input->post('qa');
+			$id_project = $this->input->post('id_project');
+			$this->load->model("Project_Model");
+
+			$this->Project_Model->edit_min_score_qa($score, $id, $id_project);
+
+			$activity = $this->session->name . " edited the minimum score quality" . $id;
+			$this->insert_log($activity, 1);
+
+
+		} catch (Exception $e) {
+			$this->session->set_flashdata('error', $e->getMessage());
+			redirect(base_url());
+		}
+	}
+
+	public function delete_score_quality(){
+		try {
+			$score = $this->input->post('score');
+			$id = $this->input->post('id_qa');
+			$id_project = $this->input->post('id_project');
+			$this->load->model("Project_Model");
+
+			$this->Project_Model->delete_score_quality($score, $id, $id_project);
+
+			$activity = $this->session->name . " deletes the score quality" . $score;
 			$this->insert_log($activity, 1);
 
 

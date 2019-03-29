@@ -714,7 +714,6 @@ class Project_Model extends CI_Model
 		$this->db->update('term', $data);
 	}
 
-
 	public function add_synonym($syn, $term, $id_project)
 	{
 
@@ -931,7 +930,6 @@ class Project_Model extends CI_Model
 
 		$this->db->insert('criteria', $data);
 	}
-
 
 	public function selected_pre_select($id, $pre_selected, $id_project)
 	{
@@ -1190,5 +1188,56 @@ class Project_Model extends CI_Model
 		);
 
 		$this->db->insert('score_quality', $data);
+	}
+
+	public function edit_min_score_qa($score, $id, $id_project)
+	{
+		$id_qa = null;
+		$this->db->select('id_qa');
+		$this->db->from('question_quality');
+		$this->db->where('id_project', $id_project);
+		$this->db->where('id', $id);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			$id_qa = $row->id_qa;
+		}
+
+		$id_min = null;
+		$this->db->select('id_score');
+		$this->db->from('score_quality');
+		$this->db->where('id_qa', $id_qa);
+		$this->db->where('score_rule', $score);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			$id_min = $row->id_score;
+		}
+
+		$data = array(
+			'min_to_app' => $id_min
+		);
+
+		$this->db->where('id_qa', $id_qa);
+		$this->db->update('question_quality', $data);
+	}
+
+	public function delete_score_quality($score, $id, $id_project)
+	{
+
+		$id_qa = null;
+		$this->db->select('id_qa');
+		$this->db->from('question_quality');
+		$this->db->where('id_project', $id_project);
+		$this->db->where('id', $id);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			$id_qa = $row->id_qa;
+		}
+
+		$this->db->where('id_qa', $id_qa);
+		$this->db->where('score_rule', $score);
+		$this->db->delete('score_quality');
 	}
 }

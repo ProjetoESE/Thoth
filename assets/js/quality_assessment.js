@@ -41,7 +41,6 @@ function add_general_quality_score() {
 	});
 }
 
-
 function delete_general_quality_score(value) {
 	let row = table_general_score.row(value);
 	let index = row.index();
@@ -276,7 +275,6 @@ function update_text_score(value) {
 	document.getElementById("lbl_score").innerHTML = 'Score: ' + value + '%';
 }
 
-
 function add_qa() {
 	let id = $("#id_qa").val();
 	let qa = $("#desc_qa").val();
@@ -497,7 +495,46 @@ function modal_score_quality(value) {
 }
 
 function delete_score_quality(value) {
+	let row = value.parentNode.parentNode;
+	let score = row.cells.item(0).innerHTML;
+	let id_project = $("#id_project").val();
+	let id_qa = row.parentNode.parentNode.parentNode.parentNode.cells.item(0).innerHTML;
+	let index = row.rowIndex;
+	let id2 = "min_to_" + id_qa;
 
+	Swal.fire({
+		title: 'Are you sure?',
+		text: "You will not be able to reverse this," +
+			" this can impact other areas of your project!",
+		type: 'warning',
+		showCancelButton: true,
+		confirmButtonColor: '#28a745',
+		cancelButtonColor: '#d33',
+		confirmButtonText: 'Yes, delete it!'
+	}).then((result) => {
+		if (result.value) {
+			$.ajax({
+				type: "POST",
+				url: base_url + 'project_controller/delete_score_quality/',
+				data: {
+					id_project: id_project,
+					id_qa: id_qa,
+					score: score
+				},
+				success: function () {
+					row.parentNode.removeChild(row);
+					let x = document.getElementById(id2);
+					x.remove(index);
+
+				}
+			});
+			Swal.fire(
+				'Deleted!',
+				'Your score has been deleted.',
+				'success'
+			)
+		}
+	});
 }
 
 function validate_score_quality(score_rule, score, description, id_table) {
@@ -564,4 +601,29 @@ function validate_score_quality(score_rule, score, description, id_table) {
 		}
 	}
 	return true;
+}
+
+function edit_min_score(element) {
+	let score = element.value;
+	let qa = element.dataset.qa;
+	let id_project = $("#id_project").val();
+
+	$.ajax({
+		type: "POST",
+		url: base_url + 'project_controller/edit_min_score_qa/',
+		data: {
+			id_project: id_project,
+			min: score,
+			qa: qa
+		},
+		success: function () {
+			Swal({
+				title: 'Success',
+				text: "The minimum to approve was edited",
+				type: 'success',
+				showCancelButton: false,
+				confirmButtonText: 'Ok'
+			});
+		}
+	});
 }

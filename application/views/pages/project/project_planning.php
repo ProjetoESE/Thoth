@@ -662,8 +662,9 @@
 						$selected = "";
 						if ($score->get_description() == $project->get_score_min()->get_description()) {
 							$selected = "selected";
-						}?>
-						<option <?= $selected ?> value="<?= $score->get_description() ?>"><?= $score->get_description() ?></option>
+						} ?>
+						<option <?= $selected ?>
+							value="<?= $score->get_description() ?>"><?= $score->get_description() ?></option>
 					<?php } ?>
 				</select>
 			</div>
@@ -802,10 +803,21 @@
 						</td>
 						<td><?= $qa->get_weight() ?></td>
 						<td>
-							<select class="form-control" id="min_to_<?= $qa->get_id(); ?>">
+							<select class="form-control" id="min_to_<?= $qa->get_id(); ?>"
+									data-qa="<?= $qa->get_id(); ?>" onchange="edit_min_score(this)">
 								<option value=""></option>
-								<?php foreach ($qa->get_scores() as $sc) {?>
-									<option value="<?= $sc->get_score_rule() ?>"><?= $sc->get_score_rule() ?></option>
+								<?php
+								$min = $qa->get_min_to_approve();
+								foreach ($qa->get_scores() as $sc) {
+									$selected = "";
+									if (!is_null($min)) {
+										if ($sc->get_score_rule() == $min->get_score_rule()) {
+											$selected = "selected";
+										}
+									}
+									?>
+									<option <?= $selected ?>
+										value="<?= $sc->get_score_rule() ?>"><?= $sc->get_score_rule() ?></option>
 								<?php } ?>
 							</select>
 						</td>

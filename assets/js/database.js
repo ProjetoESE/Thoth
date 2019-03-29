@@ -97,7 +97,6 @@ function delete_database(value) {
 	});
 }
 
-
 function new_database() {
 	let database = $("#new_database").val();
 	let id_project = $("#id_project").val();
