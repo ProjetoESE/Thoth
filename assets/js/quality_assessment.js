@@ -230,6 +230,7 @@ function edit_general_score() {
 			x = document.getElementById("min_score_to_app");
 			let option = document.createElement("option");
 			option.text = desc;
+			option.value = desc;
 			x.add(option);
 
 			Swal({
@@ -282,7 +283,7 @@ function add_qa() {
 	let weight = $("#weight_qa").val();
 	let id_project = $("#id_project").val();
 
-	if (!validate_term(term, null)) {
+	if (!validate_qa(id, qa, weight, null)) {
 		return false;
 	}
 
@@ -291,30 +292,276 @@ function add_qa() {
 		url: base_url + 'project_controller/add_qa/',
 		data: {
 			id_project: id_project,
-			term: term
+			id: id,
+			qa: qa,
+			weight: weight
 		},
 		success: function () {
-			table_search_string.row.add([
-				term, '' +
-				'<table id="table_' + term + '" class="table">' +
-				'<th>Synonym</th>' +
+			table_qa.row.add([
+				id,
+				qa,
+				'<table id="table_' + id + '" class="table">' +
+				'<th>Score Rule</th>' +
+				'<th>Score</th>' +
+				'<th>Description</th>' +
 				'<th>Actions</th>' +
 				'<tbody>' +
 				'</tbody>' +
 				'</table>',
-				'<button class="btn btn-warning opt" onClick="modal_term($(this).parents(\'tr\'))">' +
+				weight,
+				'<select class="form-control" id="min_to_"' + id + '>' +
+				'<option value=""></option>' +
+				'</select>',
+				'<button class="btn btn-warning opt" onClick="modal_qa($(this).parents(\'tr\'))">' +
 				'<span class="fas fa-edit"></span>' +
 				'</button>' +
-				'<button class="btn btn-danger" onClick="delete_term($(this).parents(\'tr\'));">' +
+				'<button class="btn btn-danger" onClick="delete_qa($(this).parents(\'tr\'));">' +
 				'<span class="far fa-trash-alt"></span>' +
 				'</button>'
 			]).draw();
 
-			let x = document.getElementById("list_term");
+			let x = document.getElementById("list_qa");
 			let option = document.createElement("option");
-			option.text = term;
+			option.text = id;
+			option.value = id;
 			x.add(option);
-			$("#term")[0].value = "";
+			$("#id_qa")[0].value = "";
+			$("#desc_qa")[0].value = "";
+			$("#weight_qa")[0].value = "";
 		}
 	});
+}
+
+function modal_qa(value) {
+
+}
+
+function delete_qa(value) {
+	let row = table_qa.row(value);
+	let index = row.index();
+	let id_project = $("#id_project").val();
+
+	Swal.fire({
+		title: 'Are you sure?',
+		text: "You will not be able to reverse this," +
+			" this can impact other areas of your project!",
+		type: 'warning',
+		showCancelButton: true,
+		confirmButtonColor: '#28a745',
+		cancelButtonColor: '#d33',
+		confirmButtonText: 'Yes, delete it!'
+	}).then((result) => {
+		if (result.value) {
+			$.ajax({
+				type: "POST",
+				url: base_url + 'project_controller/delete_qa/',
+				data: {
+					id_project: id_project,
+					id: row.data()[0]
+				},
+				success: function () {
+					let x = document.getElementById("list_qa");
+					x.remove(index);
+					row.remove();
+					table_qa.draw();
+
+				}
+			});
+			Swal.fire(
+				'Deleted!',
+				'Your question quality has been deleted.',
+				'success'
+			)
+		}
+	});
+}
+
+function validate_qa(id, qa, weight, index) {
+	if (!id) {
+		swal({
+			type: 'warning',
+			title: 'Warning',
+			text: 'The ID can not be empty!'
+		});
+		return false;
+	}
+
+	if (!qa) {
+		swal({
+			type: 'warning',
+			title: 'Warning',
+			text: 'The description can not be empty!'
+		});
+		return false;
+	}
+
+	if (!weight) {
+		swal({
+			type: 'warning',
+			title: 'Warning',
+			text: 'The weight can not be empty!'
+		});
+		return false;
+	}
+
+	let data = table_qa.rows().data().toArray();
+
+	for (let i = 0; i < data.length; i++) {
+		if (i != index) {
+			if (id.toLowerCase().trim() == data[i][0].toLowerCase().trim()) {
+				swal({
+					type: 'warning',
+					title: 'Warning',
+					text: 'The ID has already been registered!'
+				});
+				return false;
+			}
+		}
+	}
+
+	for (let i = 0; i < data.length; i++) {
+		if (i != index) {
+			if (qa.toLowerCase().trim() == data[i][1].toLowerCase().trim()) {
+				swal({
+					type: 'warning',
+					title: 'Warning',
+					text: 'The description has already been registered!'
+				});
+				return false;
+			}
+		}
+	}
+	return true;
+}
+
+function edit_qa() {
+
+}
+
+function add_score_quality() {
+	let id_qa = $("#list_qa").val();
+	let score_rule = $("#score_rule").val();
+	let score = $("#score").val();
+	let description = $("#desc_score").val();
+
+	let id = "table_" + id_qa;
+	let id2 = "min_to_" + id_qa;
+	let id_project = $("#id_project").val();
+
+
+	if (!validate_score_quality(score_rule, score, description, id)) {
+		return false;
+	}
+
+	$.ajax({
+		type: "POST",
+		url: base_url + 'project_controller/add_score_quality/',
+		data: {
+			id_project: id_project,
+			score_rule: score_rule,
+			score: score,
+			description: description,
+			id_qa: id_qa
+		},
+		success: function () {
+			let table_syn = document.getElementById(id);
+			let row = table_syn.insertRow();
+			let cell1 = row.insertCell(0);
+			let cell2 = row.insertCell(1);
+			let cell3 = row.insertCell(2);
+			let cell4 = row.insertCell(3);
+			cell1.innerHTML = score_rule;
+			cell2.innerHTML = score + "%";
+			cell3.innerHTML = description;
+			cell4.innerHTML = '<button class="btn btn-warning opt" onClick="modal_score_quality(this)">' +
+				'<span class="fas fa-edit"></span>' +
+				'</button>' +
+				'<button class="btn btn-danger" onClick="delete_score_quality(this)">' +
+				'<span class="far fa-trash-alt"></span>' +
+				'</button>';
+			let x = document.getElementById(id2);
+			let option = document.createElement("option");
+			option.text = score_rule;
+			option.value = score_rule;
+			x.add(option);
+
+			$("#score_rule")[0].value = "";
+			$("#score")[0].value = "";
+			$("#desc_score")[0].value = "";
+		}
+	});
+}
+
+function modal_score_quality(value) {
+
+}
+
+function delete_score_quality(value) {
+
+}
+
+function validate_score_quality(score_rule, score, description, id_table) {
+
+	if (!score_rule) {
+		swal({
+			type: 'warning',
+			title: 'Warning',
+			text: 'The score rule can not be empty!'
+		});
+		return false;
+	}
+
+	if (!score) {
+		swal({
+			type: 'warning',
+			title: 'Warning',
+			text: 'The score can not be empty!'
+		});
+		return false;
+	}
+
+	if (!description) {
+		swal({
+			type: 'warning',
+			title: 'Warning',
+			text: 'The description can not be empty!'
+		});
+		return false;
+	}
+
+	let size = document.getElementById(id_table).rows.length;
+	let rows = document.getElementById(id_table).rows;
+	for (let i = 0; i < size; i++) {
+		if (score_rule.toLowerCase().trim() == rows[i].cells.item(0).innerHTML.toLowerCase().trim()) {
+			swal({
+				type: 'warning',
+				title: 'Warning',
+				text: 'The score rule has already been registered!'
+			});
+			return false;
+		}
+	}
+
+	for (let i = 0; i < size; i++) {
+		if (description.toLowerCase().trim() == rows[i].cells.item(2).innerHTML.toLowerCase().trim()) {
+			swal({
+				type: 'warning',
+				title: 'Warning',
+				text: 'The description has already been registered!'
+			});
+			return false;
+		}
+	}
+
+	for (let i = 0; i < size; i++) {
+		if (score.trim() + "%" == rows[i].cells.item(1).innerHTML.trim()) {
+			swal({
+				type: 'warning',
+				title: 'Warning',
+				text: 'The score has already been registered!'
+			});
+			return false;
+		}
+	}
+	return true;
 }

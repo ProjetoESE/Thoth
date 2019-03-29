@@ -9,8 +9,8 @@ class Question_Quality
 {
 
 	private $weight;
-	private $min_to_approve;
-	private $scores;
+	private $min_to_approve = null;
+	private $scores = array();
 	private $id;
 	private $description;
 
@@ -22,26 +22,10 @@ class Question_Quality
 	}
 
 	/**
-	 * Question_Quality constructor for data in the database and new registry.
-	 * @param String $id
-	 * @param String $description
-	 * @param float $weight
-	 * @param Score_Rule $min_to_approve
-	 * @param array(Score_Rule) $scores
-	 */
-	public function __construct_New_DB($id, $description, $weight, $min_to_approve, $scores)
-	{
-		Question::__construct($id, $description);
-		$this->weight = $weight;
-		$this->min_to_approve = $min_to_approve;
-		$this->scores = $scores;
-	}
-
-	/**
 	 * Method to retrieve the question quality weight.
 	 * @return float weight
 	 */
-	public function getWeight()
+	public function get_weight()
 	{
 		return $this->weight;
 	}
@@ -51,7 +35,7 @@ class Question_Quality
 	 * @param float $weight
 	 * @throws InvalidArgumentException
 	 */
-	public function setWeight($weight)
+	public function set_weight($weight)
 	{
 		if (is_null($weight) || empty($weight)) {
 			throw  new  InvalidArgumentException("Question Quality Weight Invalid!");
@@ -63,7 +47,7 @@ class Question_Quality
 	 * Method to retrieve the question quality min to approve.
 	 * @return Score_Rule min_to_approve
 	 */
-	public function getMinToApprove()
+	public function get_min_to_approve()
 	{
 		return $this->min_to_approve;
 	}
@@ -73,11 +57,8 @@ class Question_Quality
 	 * @param Score_Rule $min_to_approve
 	 * @throws InvalidArgumentException
 	 */
-	public function setMinToApprove($min_to_approve)
+	public function set_min_to_approve($min_to_approve)
 	{
-		if (is_null($min_to_approve)) {
-			throw  new  InvalidArgumentException("Question Quality Minimum To Approve Invalid!");
-		}
 		$this->min_to_approve = $min_to_approve;
 	}
 
@@ -85,7 +66,7 @@ class Question_Quality
 	 * Method to retrieve the question quality scores.
 	 * @return array(Score_Rule) scores
 	 */
-	public function getScores()
+	public function get_scores()
 	{
 		return $this->scores;
 	}
@@ -95,19 +76,19 @@ class Question_Quality
 	 * @param Score_Rule $scores
 	 * @throws InvalidArgumentException
 	 */
-	public function setScores($scores)
+	public function set_scores($scores)
 	{
 		if (is_null($scores) || empty($scores)) {
 			throw  new  InvalidArgumentException("Question Quality Scores Invalid!");
 		}
-		$this->scores = $scores;
+		array_push($this->scores, $scores);
 	}
 
 	/**
 	 * Method to retrieve the question id.
 	 * @return String id
 	 */
-	public function getId()
+	public function get_id()
 	{
 		return $this->id;
 	}
@@ -117,7 +98,7 @@ class Question_Quality
 	 * @param String $id
 	 * @throws InvalidArgumentException
 	 */
-	public function setId($id)
+	public function set_id($id)
 	{
 		if (is_null($id) || empty($id)) {
 			throw  new  InvalidArgumentException("Question Id Invalid!");
@@ -129,7 +110,7 @@ class Question_Quality
 	 * Method to retrieve the question description.
 	 * @return String description
 	 */
-	public function getDescription()
+	public function get_description()
 	{
 		return $this->description;
 	}
@@ -139,7 +120,7 @@ class Question_Quality
 	 * @param String $description
 	 * @throws InvalidArgumentException
 	 */
-	public function setDescription($description)
+	public function set_description($description)
 	{
 		if (is_null($description) || empty($description)) {
 			throw  new  InvalidArgumentException("Question Description Invalid!");
