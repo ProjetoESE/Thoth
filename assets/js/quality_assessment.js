@@ -273,6 +273,7 @@ function edit_min_score() {
 
 function update_text_score(value) {
 	document.getElementById("lbl_score").innerHTML = 'Score: ' + value + '%';
+	document.getElementById("edit_lbl_score").innerHTML = 'Score: ' + value + '%';
 }
 
 function add_qa() {
@@ -285,6 +286,7 @@ function add_qa() {
 		return false;
 	}
 
+	console.log(id);
 	$.ajax({
 		type: "POST",
 		url: base_url + 'project_controller/add_qa/',
@@ -307,7 +309,7 @@ function add_qa() {
 				'</tbody>' +
 				'</table>',
 				weight,
-				'<select class="form-control" id="min_to_"' + id + '>' +
+				'<select class="form-control" id="min_to_' + id + '" onchange="edit_min_score_qa(this)">' +
 				'<option value=""></option>' +
 				'</select>',
 				'<button class="btn btn-warning opt" onClick="modal_qa($(this).parents(\'tr\'))">' +
@@ -331,7 +333,13 @@ function add_qa() {
 }
 
 function modal_qa(value) {
-
+	let row = table_qa.row(value);
+	$('#modal_question_quality #index_score').val(row.index());
+	$('#modal_question_quality #edit_id_qa').val(row.data()[0]);
+	$('#modal_question_quality #old_id_qa').val(row.data()[0]);
+	$('#modal_question_quality #edit_desc_qa').val(row.data()[1]);
+	$('#modal_question_quality #edit_weight_qa').val(row.data()[3]);
+	$('#modal_question_quality').modal('show');
 }
 
 function delete_qa(value) {
@@ -433,7 +441,75 @@ function validate_qa(id, qa, weight, index) {
 }
 
 function edit_qa() {
+	let index = $("#index_score").val();
+	let id = $("#edit_id_qa").val();
+	let qa = $("#edit_desc_qa").val();
+	let weight = $("#edit_weight_qa").val();
+	let id_project = $("#id_project").val();
+	let row = table_qa.row(index);
+	let old_id = row.data()[0];
 
+	let id_table = "table_" + old_id;
+	let table_score = document.getElementById(id_table);
+	let id_now = "table_" + id;
+	table_score.id = id_now;
+
+	let id_select = "min_to_" + old_id;
+	let slect_score = document.getElementById(id_select);
+	let id_new = "min_to_" + id;
+	slect_score.id = id_new;
+
+	if (!validate_qa(id, qa, weight, index)) {
+		return false;
+	}
+
+	$.ajax({
+		type: "POST",
+		url: base_url + 'project_controller/edit_qa/',
+		data: {
+			id_project: id_project,
+			id: id,
+			qa: qa,
+			weight: weight,
+			old_id: old_id
+		},
+		success: function () {
+			row.remove();
+			let x = document.getElementById("list_qa");
+			x.remove(index);
+			table_qa.row.add([
+				id,
+				qa,
+				table_score.outerHTML,
+				weight,
+				slect_score.outerHTML,
+				'<button class="btn btn-warning opt" onClick="modal_qa($(this).parents(\'tr\'))">' +
+				'<span class="fas fa-edit"></span>' +
+				'</button>' +
+				'<button class="btn btn-danger" onClick="delete_qa($(this).parents(\'tr\'));">' +
+				'<span class="far fa-trash-alt"></span>' +
+				'</button>'
+			]).draw();
+
+			let option = document.createElement("option");
+			option.text = id;
+			option.value = id;
+			x.add(option);
+
+			Swal({
+				title: 'Success',
+				text: "The question quality was edited",
+				type: 'success',
+				showCancelButton: false,
+				confirmButtonText: 'Ok'
+
+			}).then((result) => {
+				if (result.value) {
+					$('#modal_question_quality').modal('hide');
+				}
+			});
+		}
+	});
 }
 
 function add_score_quality() {
@@ -442,12 +518,13 @@ function add_score_quality() {
 	let score = $("#score").val();
 	let description = $("#desc_score").val();
 
+
 	let id = "table_" + id_qa;
 	let id2 = "min_to_" + id_qa;
 	let id_project = $("#id_project").val();
 
 
-	if (!validate_score_quality(score_rule, score, description, id)) {
+	if (!validate_score_quality(score_rule, score, description, id, null)) {
 		return false;
 	}
 
@@ -462,8 +539,15 @@ function add_score_quality() {
 			id_qa: id_qa
 		},
 		success: function () {
-			let table_syn = document.getElementById(id);
-			let row = table_syn.insertRow();
+			let table_score = document.getElementById(id);
+
+			let x = document.getElementById(id2);
+			let option = document.createElement("option");
+			option.text = score_rule;
+			option.value = score_rule;
+			x.add(option);
+
+			let row = table_score.insertRow();
 			let cell1 = row.insertCell(0);
 			let cell2 = row.insertCell(1);
 			let cell3 = row.insertCell(2);
@@ -477,21 +561,28 @@ function add_score_quality() {
 				'<button class="btn btn-danger" onClick="delete_score_quality(this)">' +
 				'<span class="far fa-trash-alt"></span>' +
 				'</button>';
-			let x = document.getElementById(id2);
-			let option = document.createElement("option");
-			option.text = score_rule;
-			option.value = score_rule;
-			x.add(option);
+
 
 			$("#score_rule")[0].value = "";
-			$("#score")[0].value = "";
+			$("#score")[0].value = 50;
+			document.getElementById("lbl_score").innerHTML = 'Score: 50%';
 			$("#desc_score")[0].value = "";
 		}
 	});
 }
 
 function modal_score_quality(value) {
+	let row = value.parentNode.parentNode;
+	let id_qa = row.parentNode.parentNode.parentNode.parentNode.cells.item(0).innerHTML;
 
+	$('#modal_score_quality #index_score').val(row.rowIndex);
+	$('#modal_score_quality #id_qa_score').val(id_qa);
+	$('#modal_score_quality #edit_score_rule').val(row.cells.item(0).innerHTML);
+	$('#modal_score_quality #old_score_rule').val(row.cells.item(0).innerHTML);
+	$('#modal_score_quality #edit_score').val(row.cells.item(1).innerHTML.replace("%", ""));
+	$('#modal_score_quality #edit_lbl_score').text("Score: " + row.cells.item(1).innerHTML.replace("%", "") + "%");
+	$('#modal_score_quality #edit_desc_score').val(row.cells.item(2).innerHTML);
+	$('#modal_score_quality').modal('show');
 }
 
 function delete_score_quality(value) {
@@ -537,7 +628,7 @@ function delete_score_quality(value) {
 	});
 }
 
-function validate_score_quality(score_rule, score, description, id_table) {
+function validate_score_quality(score_rule, score, description, id_table, index) {
 
 	if (!score_rule) {
 		swal({
@@ -569,41 +660,115 @@ function validate_score_quality(score_rule, score, description, id_table) {
 	let size = document.getElementById(id_table).rows.length;
 	let rows = document.getElementById(id_table).rows;
 	for (let i = 0; i < size; i++) {
-		if (score_rule.toLowerCase().trim() == rows[i].cells.item(0).innerHTML.toLowerCase().trim()) {
-			swal({
-				type: 'warning',
-				title: 'Warning',
-				text: 'The score rule has already been registered!'
-			});
-			return false;
+		if (i != index) {
+			if (score_rule.toLowerCase().trim() == rows[i].cells.item(0).innerHTML.toLowerCase().trim()) {
+				swal({
+					type: 'warning',
+					title: 'Warning',
+					text: 'The score rule has already been registered!'
+				});
+				return false;
+			}
 		}
 	}
 
 	for (let i = 0; i < size; i++) {
-		if (description.toLowerCase().trim() == rows[i].cells.item(2).innerHTML.toLowerCase().trim()) {
-			swal({
-				type: 'warning',
-				title: 'Warning',
-				text: 'The description has already been registered!'
-			});
-			return false;
+		if (i != index) {
+			if (description.toLowerCase().trim() == rows[i].cells.item(2).innerHTML.toLowerCase().trim()) {
+				swal({
+					type: 'warning',
+					title: 'Warning',
+					text: 'The description has already been registered!'
+				});
+				return false;
+			}
 		}
 	}
 
 	for (let i = 0; i < size; i++) {
-		if (score.trim() + "%" == rows[i].cells.item(1).innerHTML.trim()) {
-			swal({
-				type: 'warning',
-				title: 'Warning',
-				text: 'The score has already been registered!'
-			});
-			return false;
+		if (i != index) {
+			if (score.trim() + "%" == rows[i].cells.item(1).innerHTML.trim()) {
+				swal({
+					type: 'warning',
+					title: 'Warning',
+					text: 'The score has already been registered!'
+				});
+				return false;
+			}
 		}
 	}
 	return true;
 }
 
-function edit_min_score(element) {
+function edit_score_quality() {
+	let index = $('#modal_score_quality #index_score').val();
+	let score_rule = $('#modal_score_quality #edit_score_rule').val();
+	let old_score_rule = $('#modal_score_quality #old_score_rule').val();
+	let score = $('#modal_score_quality #edit_score').val();
+	let description = $('#modal_score_quality #edit_desc_score').val();
+	let id_qa = $('#modal_score_quality #id_qa_score').val();
+	let id_project = $("#id_project").val();
+
+	let id_table = 'table_' + id_qa;
+	let id_min = 'min_to_' + id_qa;
+
+	if (!validate_score_quality(score_rule, score, description, id_table, index)) {
+		return false;
+	}
+
+	$.ajax({
+		type: "POST",
+		url: base_url + 'project_controller/edit_score_quality/',
+		data: {
+			id_project: id_project,
+			score_rule: score_rule,
+			old_score_rule: old_score_rule,
+			description: description,
+			score: score,
+			id_qa: id_qa
+		},
+		success: function () {
+			let table_score = document.getElementById(id_table);
+			let select_score = document.getElementById(id_min);
+
+			select_score.remove(index);
+			let option = document.createElement("option");
+			option.text = score_rule;
+			option.value = score_rule;
+			select_score.add(option);
+
+			table_score.deleteRow(index);
+
+			let row = table_score.insertRow();
+			let cell1 = row.insertCell(0);
+			let cell2 = row.insertCell(1);
+			let cell3 = row.insertCell(2);
+			let cell4 = row.insertCell(3);
+			cell1.innerHTML = score_rule;
+			cell2.innerHTML = score + "%";
+			cell3.innerHTML = description;
+			cell4.innerHTML = '<button class="btn btn-warning opt" onClick="modal_score_quality(this)">' +
+				'<span class="fas fa-edit"></span>' +
+				'</button>' +
+				'<button class="btn btn-danger" onClick="delete_score_quality(this)">' +
+				'<span class="far fa-trash-alt"></span>' +
+				'</button>';
+			Swal({
+				title: 'Success',
+				text: "The score quality was edited",
+				type: 'success',
+				showCancelButton: false,
+				confirmButtonText: 'Ok'
+			}).then((result) => {
+				if (result.value) {
+					$('#modal_score_quality').modal('hide');
+				}
+			});
+		}
+	});
+}
+
+function edit_min_score_qa(element) {
 	let score = element.value;
 	let qa = element.dataset.qa;
 	let id_project = $("#id_project").val();

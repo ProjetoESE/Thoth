@@ -711,7 +711,7 @@
 					<input type="text" class=" form-control" id="id_qa">
 				</div>
 				<div class="input-group col-md-7">
-					<label for="qa_description" class="col-sm-12">Description</label>
+					<label for="desc_qa" class="col-sm-12">Description</label>
 					<input type="text" class=" form-control" id="desc_qa">
 				</div>
 				<div class="input-group col-md-2">
@@ -804,7 +804,7 @@
 						<td><?= $qa->get_weight() ?></td>
 						<td>
 							<select class="form-control" id="min_to_<?= $qa->get_id(); ?>"
-									data-qa="<?= $qa->get_id(); ?>" onchange="edit_min_score(this)">
+									data-qa="<?= $qa->get_id(); ?>" onchange="edit_min_score_qa(this)">
 								<option value=""></option>
 								<?php
 								$min = $qa->get_min_to_approve();

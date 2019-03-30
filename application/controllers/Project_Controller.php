@@ -1029,7 +1029,8 @@ class Project_Controller extends CI_Controller
 		}
 	}
 
-	public function delete_score_quality(){
+	public function delete_score_quality()
+	{
 		try {
 			$score = $this->input->post('score');
 			$id = $this->input->post('id_qa');
@@ -1039,6 +1040,51 @@ class Project_Controller extends CI_Controller
 			$this->Project_Model->delete_score_quality($score, $id, $id_project);
 
 			$activity = $this->session->name . " deletes the score quality" . $score;
+			$this->insert_log($activity, 1);
+
+
+		} catch (Exception $e) {
+			$this->session->set_flashdata('error', $e->getMessage());
+			redirect(base_url());
+		}
+	}
+
+	public function edit_qa()
+	{
+		try {
+			$id = $this->input->post('id');
+			$qa = $this->input->post('qa');
+			$weight = $this->input->post('weight');
+			$id_project = $this->input->post('id_project');
+			$old_id = $this->input->post('old_id');
+			$this->load->model("Project_Model");
+
+			$this->Project_Model->edit_qa($id, $qa, $weight, $old_id, $id_project);
+
+			$activity = $this->session->name . " edited the question quality" . $id;
+			$this->insert_log($activity, 1);
+
+
+		} catch (Exception $e) {
+			$this->session->set_flashdata('error', $e->getMessage());
+			redirect(base_url());
+		}
+	}
+
+	public function edit_score_quality()
+	{
+		try {
+			$score_rule = $this->input->post('score_rule');
+			$old_score_rule = $this->input->post('old_score_rule');
+			$score = $this->input->post('score');
+			$description = $this->input->post('description');
+			$id_project = $this->input->post('id_project');
+			$id_qa = $this->input->post('id_qa');
+			$this->load->model("Project_Model");
+
+			$this->Project_Model->edit_score_quality($score_rule, $old_score_rule, $score, $description, $id_project, $id_qa);
+
+			$activity = $this->session->name . " edited the score quality" . $score_rule;
 			$this->insert_log($activity, 1);
 
 

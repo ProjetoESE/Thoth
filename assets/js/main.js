@@ -16,7 +16,6 @@ $(document).ready(function () {
 		ordering: false
 	};
 
-
 	table_domains = $('#table_domains').DataTable(configDataTables);
 	table_languages = $('#table_languages').DataTable(configDataTables);
 	table_study_type = $('#table_study_type').DataTable(configDataTables);
