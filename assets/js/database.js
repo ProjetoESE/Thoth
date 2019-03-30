@@ -26,7 +26,7 @@ function add_database() {
 
 	$.ajax({
 		type: "POST",
-		url: base_url + 'project_controller/add_database/',
+		url: base_url + 'Project_Controller/add_database/',
 		data: {
 			id_project: id_project,
 			database: databases
@@ -74,7 +74,7 @@ function delete_database(value) {
 		if (result.value) {
 			$.ajax({
 				type: "POST",
-				url: base_url + 'project_controller/delete_database/',
+				url: base_url + 'Project_Controller/delete_database/',
 				data: {
 					id_project: id_project,
 					database: row.data()[0]
@@ -136,7 +136,7 @@ function new_database() {
 
 	$.ajax({
 		type: "POST",
-		url: base_url + 'project_controller/new_database/',
+		url: base_url + 'Project_Controller/new_database/',
 		data: {
 			id_project: id_project,
 			database: database,

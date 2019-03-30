@@ -11,7 +11,7 @@ function add_research() {
 
 	$.ajax({
 		type: "POST",
-		url: base_url + 'project_controller/add_member/',
+		url: base_url + 'Project_Controller/add_member/',
 		data: {
 			id_project: id_project,
 			email: email,
@@ -67,7 +67,7 @@ function edit_project() {
 
 	$.ajax({
 		type: "POST",
-		url: base_url + 'project_controller/edited_project/',
+		url: base_url + 'Project_Controller/edited_project/',
 		data: {
 			id_project: id_project,
 			objectives: objectives,

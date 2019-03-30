@@ -8,7 +8,7 @@ function add_research_question() {
 	}
 	$.ajax({
 		type: "POST",
-		url: base_url + 'project_controller/add_research_question/',
+		url: base_url + 'Project_Controller/add_research_question/',
 		data: {
 			id_project: id_project,
 			id_rq: id_rq,
@@ -53,7 +53,7 @@ function edit_research() {
 
 	$.ajax({
 		type: "POST",
-		url: base_url + 'project_controller/edit_research_question/',
+		url: base_url + 'Project_Controller/edit_research_question/',
 		data: {
 			id_project: id_project,
 			now_id: now_id,
@@ -154,7 +154,7 @@ function delete_research_question(value) {
 		if (result.value) {
 			$.ajax({
 				type: "POST",
-				url: base_url + 'project_controller/delete_research_question/',
+				url: base_url + 'Project_Controller/delete_research_question/',
 				data: {
 					id_project: id_project,
 					id_rq: row.data()[0]

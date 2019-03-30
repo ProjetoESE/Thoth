@@ -10,7 +10,7 @@ function add_general_quality_score() {
 
 	$.ajax({
 		type: "POST",
-		url: base_url + 'project_controller/add_general_quality_score/',
+		url: base_url + 'Project_Controller/add_general_quality_score/',
 		data: {
 			start_interval: start_interval,
 			end_interval: end_interval,
@@ -59,7 +59,7 @@ function delete_general_quality_score(value) {
 		if (result.value) {
 			$.ajax({
 				type: "POST",
-				url: base_url + 'project_controller/delete_general_quality_score/',
+				url: base_url + 'Project_Controller/delete_general_quality_score/',
 				data: {
 					id_project: id_project,
 					description: row.data()[2]
@@ -202,7 +202,7 @@ function edit_general_score() {
 
 	$.ajax({
 		type: "POST",
-		url: base_url + 'project_controller/edit_general_score/',
+		url: base_url + 'Project_Controller/edit_general_score/',
 		data: {
 			id_project: id_project,
 			start: start,
@@ -254,7 +254,7 @@ function edit_min_score() {
 
 	$.ajax({
 		type: "POST",
-		url: base_url + 'project_controller/edit_min_score/',
+		url: base_url + 'Project_Controller/edit_min_score/',
 		data: {
 			id_project: id_project,
 			score: score
@@ -289,7 +289,7 @@ function add_qa() {
 	console.log(id);
 	$.ajax({
 		type: "POST",
-		url: base_url + 'project_controller/add_qa/',
+		url: base_url + 'Project_Controller/add_qa/',
 		data: {
 			id_project: id_project,
 			id: id,
@@ -360,7 +360,7 @@ function delete_qa(value) {
 		if (result.value) {
 			$.ajax({
 				type: "POST",
-				url: base_url + 'project_controller/delete_qa/',
+				url: base_url + 'Project_Controller/delete_qa/',
 				data: {
 					id_project: id_project,
 					id: row.data()[0]
@@ -465,7 +465,7 @@ function edit_qa() {
 
 	$.ajax({
 		type: "POST",
-		url: base_url + 'project_controller/edit_qa/',
+		url: base_url + 'Project_Controller/edit_qa/',
 		data: {
 			id_project: id_project,
 			id: id,
@@ -530,7 +530,7 @@ function add_score_quality() {
 
 	$.ajax({
 		type: "POST",
-		url: base_url + 'project_controller/add_score_quality/',
+		url: base_url + 'Project_Controller/add_score_quality/',
 		data: {
 			id_project: id_project,
 			score_rule: score_rule,
@@ -606,7 +606,7 @@ function delete_score_quality(value) {
 		if (result.value) {
 			$.ajax({
 				type: "POST",
-				url: base_url + 'project_controller/delete_score_quality/',
+				url: base_url + 'Project_Controller/delete_score_quality/',
 				data: {
 					id_project: id_project,
 					id_qa: id_qa,
@@ -718,7 +718,7 @@ function edit_score_quality() {
 
 	$.ajax({
 		type: "POST",
-		url: base_url + 'project_controller/edit_score_quality/',
+		url: base_url + 'Project_Controller/edit_score_quality/',
 		data: {
 			id_project: id_project,
 			score_rule: score_rule,
@@ -775,7 +775,7 @@ function edit_min_score_qa(element) {
 
 	$.ajax({
 		type: "POST",
-		url: base_url + 'project_controller/edit_min_score_qa/',
+		url: base_url + 'Project_Controller/edit_min_score_qa/',
 		data: {
 			id_project: id_project,
 			min: score,
