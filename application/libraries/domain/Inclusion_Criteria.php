@@ -18,7 +18,6 @@ class Inclusion_Criteria
 	{
 	}
 
-
 	/**
 	 * Method to retrieve the criteria id.
 	 * @return String id

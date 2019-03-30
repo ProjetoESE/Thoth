@@ -1,0 +1,1 @@
+ALTER TABLE `question_quality` DROP FOREIGN KEY `question_quality_ibfk_2`; ALTER TABLE `question_quality` ADD CONSTRAINT `question_quality_ibfk_2` FOREIGN KEY (`min_to_app`) REFERENCES `score_quality`(`id_score`) ON DELETE SET NULL ON UPDATE SET NULL;

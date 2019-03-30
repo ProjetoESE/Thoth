@@ -60,7 +60,7 @@ $autoload['packages'] = array();
 */
 $autoload['libraries'] = array('database', 'session', 'domain/User', 'domain/Project', 'domain/Research_Question',
 	'domain/Term', 'domain/Database', 'domain/Search_String', 'domain/Exclusion_Criteria', 'domain/Inclusion_Criteria',
-	'domain/Quality_Score');
+	'domain/Quality_Score','domain/Question_Quality','domain/Score_Quality');
 
 /*
 | -------------------------------------------------------------------

@@ -83,7 +83,8 @@ class Question_Extraction
 	 * Method to retrieve the question id.
 	 * @return String id
 	 */
-	public function getId(){
+	public function getId()
+	{
 		return $this->id;
 	}
 
@@ -92,8 +93,9 @@ class Question_Extraction
 	 * @param String $id
 	 * @throws InvalidArgumentException
 	 */
-	public function setId($id){
-		if(is_null($id) || empty($id)){
+	public function setId($id)
+	{
+		if (is_null($id) || empty($id)) {
 			throw  new  InvalidArgumentException("Question Id Invalid!");
 		}
 		$this->id = $id;
@@ -103,7 +105,8 @@ class Question_Extraction
 	 * Method to retrieve the question description.
 	 * @return String description
 	 */
-	public function getDescription(){
+	public function getDescription()
+	{
 		return $this->description;
 	}
 
@@ -112,8 +115,9 @@ class Question_Extraction
 	 * @param String $description
 	 * @throws InvalidArgumentException
 	 */
-	public function setDescription($description){
-		if(is_null($description) || empty($description)){
+	public function setDescription($description)
+	{
+		if (is_null($description) || empty($description)) {
 			throw  new  InvalidArgumentException("Question Description Invalid!");
 		}
 		$this->description = $description;

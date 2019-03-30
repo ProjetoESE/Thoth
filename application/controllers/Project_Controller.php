@@ -155,7 +155,7 @@ class Project_Controller extends CI_Controller
 			$activity = $this->session->name . " created the project " . $title;
 			$this->insert_log($activity, 1);
 
-			redirect('open/'.$id_project);
+			redirect('open/' . $id_project);
 
 		} catch (Exception $e) {
 			$this->session->set_flashdata('error', $e->getMessage());
@@ -215,7 +215,6 @@ class Project_Controller extends CI_Controller
 			redirect(base_url());
 		}
 	}
-
 
 	public function add_language()
 	{
@@ -938,6 +937,154 @@ class Project_Controller extends CI_Controller
 			$this->Project_Model->new_database($database, $link, $id_project);
 
 			$activity = $this->session->name . " added the database " . $database;
+			$this->insert_log($activity, 1);
+
+
+		} catch (Exception $e) {
+			$this->session->set_flashdata('error', $e->getMessage());
+			redirect(base_url());
+		}
+	}
+
+	public function add_qa()
+	{
+		try {
+			$id = $this->input->post('id');
+			$qa = $this->input->post('qa');
+			$weight = $this->input->post('weight');
+			$id_project = $this->input->post('id_project');
+			$this->load->model("Project_Model");
+
+			$this->Project_Model->add_qa($id, $qa, $weight, $id_project);
+
+			$activity = $this->session->name . " added the question quality" . $id;
+			$this->insert_log($activity, 1);
+
+
+		} catch (Exception $e) {
+			$this->session->set_flashdata('error', $e->getMessage());
+			redirect(base_url());
+		}
+	}
+
+	public function delete_qa()
+	{
+
+		try {
+			$id = $this->input->post('id');
+			$id_project = $this->input->post('id_project');
+			$this->load->model("Project_Model");
+
+			$this->Project_Model->delete_qa($id, $id_project);
+
+			$activity = $this->session->name . " deleted the question quality" . $id;
+			$this->insert_log($activity, 1);
+
+
+		} catch (Exception $e) {
+			$this->session->set_flashdata('error', $e->getMessage());
+			redirect(base_url());
+		}
+	}
+
+	public function add_score_quality()
+	{
+		try {
+			$score_rule = $this->input->post('score_rule');
+			$score = $this->input->post('score');
+			$description = $this->input->post('description');
+			$id_project = $this->input->post('id_project');
+			$id_qa = $this->input->post('id_qa');
+			$this->load->model("Project_Model");
+
+			$this->Project_Model->add_score_quality($score_rule, $score, $description, $id_project, $id_qa);
+
+			$activity = $this->session->name . " added the score quality" . $score_rule;
+			$this->insert_log($activity, 1);
+
+
+		} catch (Exception $e) {
+			$this->session->set_flashdata('error', $e->getMessage());
+			redirect(base_url());
+		}
+	}
+
+	public function edit_min_score_qa()
+	{
+		try {
+			$score = $this->input->post('min');
+			$id = $this->input->post('qa');
+			$id_project = $this->input->post('id_project');
+			$this->load->model("Project_Model");
+
+			$this->Project_Model->edit_min_score_qa($score, $id, $id_project);
+
+			$activity = $this->session->name . " edited the minimum score quality" . $id;
+			$this->insert_log($activity, 1);
+
+
+		} catch (Exception $e) {
+			$this->session->set_flashdata('error', $e->getMessage());
+			redirect(base_url());
+		}
+	}
+
+	public function delete_score_quality()
+	{
+		try {
+			$score = $this->input->post('score');
+			$id = $this->input->post('id_qa');
+			$id_project = $this->input->post('id_project');
+			$this->load->model("Project_Model");
+
+			$this->Project_Model->delete_score_quality($score, $id, $id_project);
+
+			$activity = $this->session->name . " deletes the score quality" . $score;
+			$this->insert_log($activity, 1);
+
+
+		} catch (Exception $e) {
+			$this->session->set_flashdata('error', $e->getMessage());
+			redirect(base_url());
+		}
+	}
+
+	public function edit_qa()
+	{
+		try {
+			$id = $this->input->post('id');
+			$qa = $this->input->post('qa');
+			$weight = $this->input->post('weight');
+			$id_project = $this->input->post('id_project');
+			$old_id = $this->input->post('old_id');
+			$this->load->model("Project_Model");
+
+			$this->Project_Model->edit_qa($id, $qa, $weight, $old_id, $id_project);
+
+			$activity = $this->session->name . " edited the question quality" . $id;
+			$this->insert_log($activity, 1);
+
+
+		} catch (Exception $e) {
+			$this->session->set_flashdata('error', $e->getMessage());
+			redirect(base_url());
+		}
+	}
+
+	public function edit_score_quality()
+	{
+		try {
+			$score_rule = $this->input->post('score_rule');
+			$old_score_rule = $this->input->post('old_score_rule');
+			$score = $this->input->post('score');
+			$description = $this->input->post('description');
+			$id_project = $this->input->post('id_project');
+			$id_qa = $this->input->post('id_qa');
+			$this->load->model("Project_Model");
+
+			$this->Project_Model->edit_score_quality($score_rule, $old_score_rule, $score, $description, $id_project, $id_qa);
+
+			$activity = $this->session->name . " edited the score quality" . $score_rule;
 			$this->insert_log($activity, 1);
 
 

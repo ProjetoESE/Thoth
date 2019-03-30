@@ -658,8 +658,13 @@
 			<div class="input-group col-md-4">
 				<label for="min_score_to_app" class="col-sm-12">Minimum General Score to Approve</label>
 				<select class="form-control" id="min_score_to_app" onchange="edit_min_score();">
-					<?php foreach ($project->get_quality_scores() as $score) { ?>
-						<option value="<?= $score->get_description() ?>"><?= $score->get_description() ?></option>
+					<?php foreach ($project->get_quality_scores() as $score) {
+						$selected = "";
+						if ($score->get_description() == $project->get_score_min()->get_description()) {
+							$selected = "selected";
+						} ?>
+						<option <?= $selected ?>
+							value="<?= $score->get_description() ?>"><?= $score->get_description() ?></option>
 					<?php } ?>
 				</select>
 			</div>
@@ -706,14 +711,14 @@
 					<input type="text" class=" form-control" id="id_qa">
 				</div>
 				<div class="input-group col-md-7">
-					<label for="qa_description" class="col-sm-12">Description</label>
+					<label for="desc_qa" class="col-sm-12">Description</label>
 					<input type="text" class=" form-control" id="desc_qa">
 				</div>
-				<div class="input-group col-md-3">
+				<div class="input-group col-md-2">
 					<label for="qa_weight" class="col-sm-12">Weight</label>
 					<input type="number" class="form-control" id="weight_qa" step="0.5">
 					<div class="input-group-append">
-						<button class="btn btn-success" type="button" onclick=""><span
+						<button class="btn btn-success" type="button" onclick="add_qa()"><span
 								class="fas fa-plus"></span></button>
 					</div>
 				</div>
@@ -728,11 +733,14 @@
 				<div class="input-group col-md-2">
 					<label for="list_qa" class="col-sm-12">Question</label>
 					<select class="form-control" id="list_qa">
+						<?php foreach ($project->get_questions_quality() as $qa) { ?>
+							<option value="<?= $qa->get_id() ?>"><?= $qa->get_id() ?></option>
+						<?php } ?>
 					</select>
 				</div>
 				<div class="input-group col-md-2">
-					<label for="abr_score" class="col-sm-12">Score Rule</label>
-					<input type="text" class=" form-control" id="abr_score">
+					<label for="score_rule" class="col-sm-12">Score Rule</label>
+					<input type="text" class=" form-control" id="score_rule">
 				</div>
 				<div class="input-group col-md-2">
 					<label for="score" id="lbl_score" class="col-sm-12">Score: 50%</label>
@@ -744,7 +752,7 @@
 					<label for="desc_score" class="col-sm-12">Description</label>
 					<input type="text" class=" form-control" id="desc_score">
 					<div class="input-group-append">
-						<button class="btn btn-success" type="button" onclick=""><span
+						<button class="btn btn-success" type="button" onclick="add_score_quality()"><span
 								class="fas fa-plus"></span></button>
 					</div>
 				</div>
@@ -764,6 +772,65 @@
 				</tr>
 				</thead>
 				<tbody>
+				<?php foreach ($project->get_questions_quality() as $qa) { ?>
+					<tr>
+						<td><?= $qa->get_id(); ?></td>
+						<td><?= $qa->get_description(); ?></td>
+						<td>
+							<table id="table_<?= $qa->get_id(); ?>" class="table">
+								<th>Score Rule</th>
+								<th>Score</th>
+								<th>Description</th>
+								<th>Actions</th>
+								<tbody>
+								<?php foreach ($qa->get_scores() as $sc) { ?>
+									<tr>
+										<td><?= $sc->get_score_rule(); ?></td>
+										<td><?= $sc->get_score(); ?>%</td>
+										<td><?= $sc->get_description(); ?></td>
+										<td>
+											<button class="btn btn-warning opt" onClick="modal_score_quality(this)">
+												<span class="fas fa-edit"></span>
+											</button>
+											<button class="btn btn-danger" onClick="delete_score_quality(this)">
+												<span class="far fa-trash-alt"></span>
+											</button>
+										</td>
+									</tr>
+								<?php } ?>
+								</tbody>
+							</table>
+						</td>
+						<td><?= $qa->get_weight() ?></td>
+						<td>
+							<select class="form-control" id="min_to_<?= $qa->get_id(); ?>"
+									data-qa="<?= $qa->get_id(); ?>" onchange="edit_min_score_qa(this)">
+								<option value=""></option>
+								<?php
+								$min = $qa->get_min_to_approve();
+								foreach ($qa->get_scores() as $sc) {
+									$selected = "";
+									if (!is_null($min)) {
+										if ($sc->get_score_rule() == $min->get_score_rule()) {
+											$selected = "selected";
+										}
+									}
+									?>
+									<option <?= $selected ?>
+										value="<?= $sc->get_score_rule() ?>"><?= $sc->get_score_rule() ?></option>
+								<?php } ?>
+							</select>
+						</td>
+						<td>
+							<button class="btn btn-warning opt" onClick="modal_qa($(this).parents('tr'))">
+								<span class="fas fa-edit"></span>
+							</button>
+							<button class="btn btn-danger" onClick="delete_qa($(this).parents('tr'));">
+								<span class="far fa-trash-alt"></span>
+							</button>
+						</td>
+					</tr>
+				<?php } ?>
 				</tbody>
 			</table>
 			<br>

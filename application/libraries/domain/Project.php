@@ -28,7 +28,7 @@ class Project
 	private $search_strategy;
 	private $inclusion_criteria = array();
 	private $exclusion_criteria = array();
-	private $questions_quality;
+	private $questions_quality = array();
 	private $questions_extraction;
 	private $papers;
 	private $terms = array();
@@ -526,7 +526,7 @@ class Project
 		if (is_null($questions_quality) || empty($questions_quality)) {
 			throw  new  InvalidArgumentException("Project Questions Quality Invalid!");
 		}
-		$this->questions_quality = $questions_quality;
+		array_push($this->questions_quality, $questions_quality);
 	}
 
 	/**
