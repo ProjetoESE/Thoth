@@ -9,7 +9,7 @@ $(document).ready(function () {
 	let configDataTables = {
 		language: lang,
 		responsive: true,
-		order: [[1, "asc"]],
+		order: [[0, "asc"]],
 		paginate: false,
 		info: false,
 		searching: false,

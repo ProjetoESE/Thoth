@@ -13,6 +13,8 @@ function add_database() {
 
 	let data = table_databases.rows().data().toArray();
 
+	console.log(data);
+
 	for (let i = 0; i < data.length; i++) {
 		if (databases.toLowerCase().trim() == data[i][0].toLowerCase().trim()) {
 			swal({
@@ -26,7 +28,7 @@ function add_database() {
 
 	$.ajax({
 		type: "POST",
-		url: base_url + 'Project_Controller/add_database/',
+		url: base_url + 'Database_Controller/add_database/',
 		data: {
 			id_project: id_project,
 			database: databases
@@ -74,7 +76,7 @@ function delete_database(value) {
 		if (result.value) {
 			$.ajax({
 				type: "POST",
-				url: base_url + 'Project_Controller/delete_database/',
+				url: base_url + 'Database_Controller/delete_database/',
 				data: {
 					id_project: id_project,
 					database: row.data()[0]
@@ -136,7 +138,7 @@ function new_database() {
 
 	$.ajax({
 		type: "POST",
-		url: base_url + 'Project_Controller/new_database/',
+		url: base_url + 'Database_Controller/new_database/',
 		data: {
 			id_project: id_project,
 			database: database,

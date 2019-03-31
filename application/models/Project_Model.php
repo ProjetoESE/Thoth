@@ -1297,4 +1297,25 @@ class Project_Model extends CI_Model
 		$this->db->where('id_score', $id_score);
 		$this->db->update('score_quality', $data);
 	}
+
+	public function get_logs($id_project)
+	{
+		$data = array();
+		$this->db->select('name,activity,time');
+		$this->db->from('activity_log');
+		$this->db->join('user', 'user.id_user = activity_log.id_user');
+		$this->db->where('activity_log.id_project', $id_project);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			$data2 = array(
+				'name' => $row->name,
+				'activity' => $row->activity,
+				'time' => $row->time
+			);
+			array_push($data, $data2);
+		}
+
+		return array_reverse($data);
+	}
 }

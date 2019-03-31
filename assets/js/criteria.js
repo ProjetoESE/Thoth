@@ -10,7 +10,7 @@ function add_criteria() {
 
 	$.ajax({
 		type: "POST",
-		url: base_url + 'Project_Controller/add_criteria/',
+		url: base_url + 'Criteria_Controller/add_criteria/',
 		data: {
 			id_project: id_project,
 			id: id,
@@ -64,7 +64,7 @@ function select_criteria_inclusion(value, msg = null) {
 
 	$.ajax({
 		type: "POST",
-		url: base_url + 'Project_Controller/selected_pre_select/',
+		url: base_url + 'Criteria_Controller/selected_pre_select/',
 		data: {
 			id_project: id_project,
 			id: row.data()[1],
@@ -103,7 +103,7 @@ function select_criteria_exclusion(value, msg = null) {
 
 	$.ajax({
 		type: "POST",
-		url: base_url + 'Project_Controller/selected_pre_select/',
+		url: base_url + 'Criteria_Controller/selected_pre_select/',
 		data: {
 			id_project: id_project,
 			id: row.data()[1],
@@ -225,7 +225,7 @@ function delete_criteria_inclusion(value) {
 		if (result.value) {
 			$.ajax({
 				type: "POST",
-				url: base_url + 'Project_Controller/delete_criteria/',
+				url: base_url + 'Criteria_Controller/delete_criteria/',
 				data: {
 					id_project: id_project,
 					id: row.data()[1]
@@ -261,7 +261,7 @@ function delete_criteria_exclusion(value) {
 		if (result.value) {
 			$.ajax({
 				type: "POST",
-				url: base_url + 'Project_Controller/delete_criteria/',
+				url: base_url + 'Criteria_Controller/delete_criteria/',
 				data: {
 					id_project: id_project,
 					id: row.data()[1]
@@ -317,7 +317,7 @@ function edit_criteria_inclusion() {
 
 	$.ajax({
 		type: "POST",
-		url: base_url + 'Project_Controller/edit_criteria/',
+		url: base_url + 'Criteria_Controller/edit_criteria/',
 		data: {
 			id_project: id_project,
 			new_id: id,
@@ -393,7 +393,7 @@ function edit_criteria_exclusion() {
 
 	$.ajax({
 		type: "POST",
-		url: base_url + 'Project_Controller/edit_criteria/',
+		url: base_url + 'Criteria_Controller/edit_criteria/',
 		data: {
 			id_project: id_project,
 			new_id: id,
@@ -458,7 +458,7 @@ function edit_inclusion_rule() {
 
 	$.ajax({
 		type: "POST",
-		url: base_url + 'Project_Controller/edit_inclusion_rule/',
+		url: base_url + 'Criteria_Controller/edit_inclusion_rule/',
 		data: {
 			id_project: id_project,
 			rule: rule
@@ -511,7 +511,7 @@ function edit_exclusion_rule() {
 
 	$.ajax({
 		type: "POST",
-		url: base_url + 'Project_Controller/edit_exclusion_rule/',
+		url: base_url + 'Criteria_Controller/edit_exclusion_rule/',
 		data: {
 			id_project: id_project,
 			rule: rule

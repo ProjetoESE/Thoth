@@ -23,15 +23,23 @@ body {
 	background-color: #ffffff !important;
 }
 
-.opt{
+.scroll {
+	max-height: 22em;
+	overflow-y: auto;
+}
+
+.opt {
 	margin: 0.1em;
 }
-span{
+
+span {
 	margin: 0.1em;
 }
-.new-project{
+
+.new-project {
 	margin-bottom: 0.5em;
 }
-.min-height{
+
+.min-height {
 	min-height: 65px;
 }

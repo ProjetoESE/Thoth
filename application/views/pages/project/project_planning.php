@@ -704,7 +704,6 @@
 				<label for="id_qa"><strong>Question Quality</strong></label>
 				<a href="#" class="float-right opt"><i class="fas fa-question-circle "></i></a>
 			</div>
-			<br>
 			<div class="form-inline">
 				<div class="input-group col-md-2">
 					<label for="id_qa" class="col-sm-12">ID</label>
@@ -728,7 +727,6 @@
 				<label for="list_qa"><strong>Question Score</strong></label>
 				<a href="#" class="float-right opt"><i class="fas fa-question-circle "></i></a>
 			</div>
-
 			<div class="form-inline">
 				<div class="input-group col-md-2">
 					<label for="list_qa" class="col-sm-12">Question</label>

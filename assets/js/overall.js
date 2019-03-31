@@ -8,7 +8,7 @@ function add_domain() {
 
 	$.ajax({
 		type: "POST",
-		url: base_url + 'Project_Controller/add_domain/',
+		url: base_url + 'Overall_Controller/add_domain/',
 		data: {
 			id_project: id_project,
 			domain: domain
@@ -47,7 +47,7 @@ function delete_domain(value) {
 		if (result.value) {
 			$.ajax({
 				type: "POST",
-				url: base_url + 'Project_Controller/delete_domain/',
+				url: base_url + 'Overall_Controller/delete_domain/',
 				data: {
 					id_project: id_project,
 					domain: row.data()[0]
@@ -87,7 +87,7 @@ function edit_domain() {
 
 	$.ajax({
 		type: "POST",
-		url: base_url + 'Project_Controller/edit_domain/',
+		url: base_url + 'Overall_Controller/edit_domain/',
 		data: {
 			id_project: id_project,
 			old: old,
@@ -157,7 +157,7 @@ function add_language() {
 
 	$.ajax({
 		type: "POST",
-		url: base_url + 'Project_Controller/add_language/',
+		url: base_url + 'Overall_Controller/add_language/',
 		data: {
 			id_project: id_project,
 			language: language
@@ -218,7 +218,7 @@ function delete_language(value) {
 		if (result.value) {
 			$.ajax({
 				type: "POST",
-				url: base_url + 'Project_Controller/delete_language/',
+				url: base_url + 'Overall_Controller/delete_language/',
 				data: {
 					id_project: id_project,
 					language: row.data()[0]
@@ -247,7 +247,7 @@ function add_study_type() {
 
 	$.ajax({
 		type: "POST",
-		url: base_url + 'Project_Controller/add_study_type/',
+		url: base_url + 'Overall_Controller/add_study_type/',
 		data: {
 			id_project: id_project,
 			study_type: study_type
@@ -309,7 +309,7 @@ function delete_study_type(value) {
 		if (result.value) {
 			$.ajax({
 				type: "POST",
-				url: base_url + 'Project_Controller/delete_study_type/',
+				url: base_url + 'Overall_Controller/delete_study_type/',
 				data: {
 					id_project: id_project,
 					study_type: row.data()[0]
@@ -338,7 +338,7 @@ function add_keywords() {
 
 	$.ajax({
 		type: "POST",
-		url: base_url + 'Project_Controller/add_keywords/',
+		url: base_url + 'Overall_Controller/add_keywords/',
 		data: {
 			id_project: id_project,
 			keywords: keywords
@@ -379,7 +379,7 @@ function edit_keyword() {
 
 	$.ajax({
 		type: "POST",
-		url: base_url + 'Project_Controller/edit_keywords/',
+		url: base_url + 'Overall_Controller/edit_keywords/',
 		data: {
 			id_project: id_project,
 			now: now,
@@ -455,7 +455,7 @@ function delete_keywords(value) {
 
 			$.ajax({
 				type: "POST",
-				url: base_url + 'Project_Controller/delete_keywords/',
+				url: base_url + 'Overall_Controller/delete_keywords/',
 				data: {
 					id_project: id_project,
 					keywords: row.data()[0]
@@ -485,7 +485,7 @@ function add_date() {
 	}
 	$.ajax({
 		type: "POST",
-		url: base_url + 'Project_Controller/add_date/',
+		url: base_url + 'Overall_Controller/add_date/',
 		data: {
 			id_project: id_project,
 			start_date: start_date,

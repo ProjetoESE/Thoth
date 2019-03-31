@@ -8,7 +8,7 @@ function add_term() {
 
 	$.ajax({
 		type: "POST",
-		url: base_url + 'Project_Controller/add_term/',
+		url: base_url + 'Search_String_Controller/add_term/',
 		data: {
 			id_project: id_project,
 			term: term
@@ -64,7 +64,7 @@ function edit_term() {
 
 	$.ajax({
 		type: "POST",
-		url: base_url + 'Project_Controller/edit_term/',
+		url: base_url + 'Search_String_Controller/edit_term/',
 		data: {
 			id_project: id_project,
 			now: now,
@@ -149,7 +149,7 @@ function delete_term(value) {
 		if (result.value) {
 			$.ajax({
 				type: "POST",
-				url: base_url + 'Project_Controller/delete_term/',
+				url: base_url + 'Search_String_Controller/delete_term/',
 				data: {
 					id_project: id_project,
 					term: row.data()[0]
@@ -184,7 +184,7 @@ function add_synonym() {
 
 	$.ajax({
 		type: "POST",
-		url: base_url + 'Project_Controller/add_synonym/',
+		url: base_url + 'Search_String_Controller/add_synonym/',
 		data: {
 			id_project: id_project,
 			term: term,
@@ -232,7 +232,7 @@ function edit_synonym() {
 
 	$.ajax({
 		type: "POST",
-		url: base_url + 'Project_Controller/edit_synonym/',
+		url: base_url + 'Search_String_Controller/edit_synonym/',
 		data: {
 			id_project: id_project,
 			term: term,
@@ -320,7 +320,7 @@ function delete_synonym(btn) {
 		if (result.value) {
 			$.ajax({
 				type: "POST",
-				url: base_url + 'Project_Controller/delete_synonym/',
+				url: base_url + 'Search_String_Controller/delete_synonym/',
 				data: {
 					id_project: id_project,
 					term: term,
@@ -345,7 +345,7 @@ function generate_string(database) {
 	let id_project = $("#id_project").val();
 	$.ajax({
 		type: "POST",
-		url: base_url + 'Project_Controller/generate_string/',
+		url: base_url + 'Search_String_Controller/generate_string/',
 		data: {
 			id_project: id_project,
 			database: database
@@ -378,7 +378,7 @@ function edit_search_strategy() {
 	}
 	$.ajax({
 		type: "POST",
-		url: base_url + 'Project_Controller/edit_search_strategy/',
+		url: base_url + 'Search_String_Controller/edit_search_strategy/',
 		data: {
 			id_project: id_project,
 			search_strategy: search_strategy

@@ -29,4 +29,10 @@ class User_Controller extends CI_Controller
 		load_templates('pages/user/profile', null);
 	}
 
+	public function insert_log($activity, $module, $id_project)
+	{
+		$this->load->model("User_Model");
+		$this->User_Model->insert_log($activity, $module, $id_project);
+	}
+
 }
