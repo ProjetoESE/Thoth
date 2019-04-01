@@ -52,6 +52,7 @@ class Project_Controller extends CI_Controller
 			$data['study_types'] = $this->Project_Model->get_study_types();
 			$data['databases'] = $this->Project_Model->get_databases();
 			$data['rules'] = $this->Project_Model->get_rules();
+			$data['question_types'] = $this->Project_Model->get_types();
 
 			if (!isset($_SESSION['logged_in'])) {
 				load_templates('pages/visitor/project_planning_visitor', $data);

@@ -29,7 +29,7 @@ class Project
 	private $inclusion_criteria = array();
 	private $exclusion_criteria = array();
 	private $questions_quality = array();
-	private $questions_extraction;
+	private $questions_extraction = array();
 	private $papers;
 	private $terms = array();
 	private $members = array();
@@ -548,7 +548,7 @@ class Project
 		if (is_null($questions_extraction) || empty($questions_extraction)) {
 			throw  new  InvalidArgumentException("Project Questions extraction Invalid!");
 		}
-		$this->questions_extraction = $questions_extraction;
+		array_push($this->questions_extraction, $questions_extraction);
 	}
 
 	/**

@@ -330,6 +330,30 @@ class Project_Model extends CI_Model
 			$project->set_questions_quality($qa);
 		}
 
+		$this->db->select('id_de,id,description,types_question.type');
+		$this->db->from('question_extraction');
+		$this->db->join('types_question', 'types_question.id_type = question_extraction.type');
+		$this->db->where('id_project', $id);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			$qe = new Question_Extraction();
+			$qe->set_description($row->description);
+			$qe->set_id($row->id);
+			$qe->set_type($row->type);
+
+			$this->db->select('description');
+			$this->db->from('options_extraction');
+			$this->db->where('id_de', $row->id_de);
+			$query2 = $this->db->get();
+
+			foreach ($query2->result() as $row2) {
+				$qe->set_options($row2->description);
+			}
+
+			$project->set_questions_extraction($qe);
+		}
+
 		return $project;
 	}
 
@@ -517,5 +541,20 @@ class Project_Model extends CI_Model
 		}
 
 		return array_reverse($data);
+	}
+
+	public function get_types()
+	{
+		$data = array();
+
+		$this->db->select('*');
+		$this->db->from('types_question');
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			array_push($data, $row->type);
+		}
+
+		return $data;
 	}
 }

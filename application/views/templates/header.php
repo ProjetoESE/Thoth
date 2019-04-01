@@ -80,6 +80,7 @@
 	<script src="<?= base_url('assets/js/criteria.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/quality_assessment.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/project.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/data_extraction.js'); ?>"></script>
 
 </head>
 <body>

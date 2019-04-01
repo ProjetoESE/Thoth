@@ -10,7 +10,7 @@ class Question_Extraction
 
 	private $id;
 	private $description;
-	private $options;
+	private $options = array();
 	private $type;
 
 	/**
@@ -21,25 +21,10 @@ class Question_Extraction
 	}
 
 	/**
-	 * Question_Extraction constructor for data in the database and new registry.
-	 * @param $options
-	 * @param $type
-	 * @param $description
-	 * @param $id
-	 *
-	 */
-	public function __construct_New_DB($id, $description, $options, $type)
-	{
-		Question::__construct($id, $description);
-		$this->options = $options;
-		$this->type = $type;
-	}
-
-	/**
 	 * Method to retrieve the question extraction options.
 	 * @return array(String) options
 	 */
-	public function getOptions()
+	public function get_options()
 	{
 		return $this->options;
 	}
@@ -49,29 +34,29 @@ class Question_Extraction
 	 * @param array(String) $options
 	 * @throws InvalidArgumentException
 	 */
-	public function setOptions($options)
+	public function set_options($options)
 	{
 		if (is_null($options) || empty($options)) {
 			throw  new  InvalidArgumentException("Question Extraction Options Invalid!");
 		}
-		$this->options = $options;
+		array_push($this->options, $options);
 	}
 
 	/**
 	 * Method to retrieve the question extraction type.
-	 * @return Question_Extraction_Type type
+	 * @return String type
 	 */
-	public function getType()
+	public function get_type()
 	{
 		return $this->type;
 	}
 
 	/**
 	 * Method to change the question extraction type.
-	 * @param Question_Extraction_Type $type
+	 * @param String $type
 	 * @throws InvalidArgumentException
 	 */
-	public function setType($type)
+	public function set_type($type)
 	{
 		if (is_null($type)) {
 			throw  new  InvalidArgumentException("Question Extraction Type Invalid!");
@@ -83,7 +68,7 @@ class Question_Extraction
 	 * Method to retrieve the question id.
 	 * @return String id
 	 */
-	public function getId()
+	public function get_id()
 	{
 		return $this->id;
 	}
@@ -93,7 +78,7 @@ class Question_Extraction
 	 * @param String $id
 	 * @throws InvalidArgumentException
 	 */
-	public function setId($id)
+	public function set_id($id)
 	{
 		if (is_null($id) || empty($id)) {
 			throw  new  InvalidArgumentException("Question Id Invalid!");
@@ -105,7 +90,7 @@ class Question_Extraction
 	 * Method to retrieve the question description.
 	 * @return String description
 	 */
-	public function getDescription()
+	public function get_description()
 	{
 		return $this->description;
 	}
@@ -115,7 +100,7 @@ class Question_Extraction
 	 * @param String $description
 	 * @throws InvalidArgumentException
 	 */
-	public function setDescription($description)
+	public function set_description($description)
 	{
 		if (is_null($description) || empty($description)) {
 			throw  new  InvalidArgumentException("Question Description Invalid!");

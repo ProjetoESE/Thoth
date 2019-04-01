@@ -236,7 +236,7 @@
 		</div>
 		<div class="tab-pane container" id="tab_research">
 			<div class="form-inline">
-				<label for="research_question"><strong>Research Questions</strong></label>
+				<label for="id_research_question"><strong>Research Questions</strong></label>
 				<a href="#" class="float-right opt"><i class="fas fa-question-circle "></i></a>
 			</div>
 			<div class="form-inline">
@@ -371,7 +371,7 @@
 			</div>
 			<br>
 			<div class="form-inline">
-				<label for="id_qa"><strong>Synonym</strong></label>
+				<label for="list_term"><strong>Synonym</strong></label>
 				<a href="#" class="float-right opt"><i class="fas fa-question-circle "></i></a>
 			</div>
 			<div class="form-inline">
@@ -485,7 +485,7 @@
 		</div>
 		<div class="tab-pane container" id="tab_criteria">
 			<div class="form-inline">
-				<label><strong>Criteria</strong></label>
+				<label for="id_criteria"><strong>Criteria</strong></label>
 				<a href="#" class="float-right opt"><i class="fas fa-question-circle "></i></a>
 			</div>
 			<div class="form-inline">
@@ -635,7 +635,7 @@
 		</div>
 		<div class="tab-pane container" id="tab_quality">
 			<div class="form-inline">
-				<label><strong>General Score</strong></label>
+				<label for="start_interval"><strong>General Score</strong></label>
 				<a href="#" class="float-right opt"><i class="fas fa-question-circle "></i></a>
 			</div>
 			<div class="form-inline">
@@ -840,12 +840,12 @@
 		</div>
 		<div class="tab-pane container" id="tab_data">
 			<div class="form-inline">
-				<label for="id_qa"><strong>Data Extraction</strong></label>
+				<label for="id_data_extraction"><strong>Data Extraction</strong></label>
 				<a href="#" class="float-right opt"><i class="fas fa-question-circle "></i></a>
 			</div>
 			<div class="form-inline">
 				<div class="input-group col-md-2">
-					<label for="id_qa" class="col-sm-12">ID</label>
+					<label for="id_data_extraction" class="col-sm-12">ID</label>
 					<input type="text" class=" form-control" id="id_data_extraction">
 				</div>
 				<div class="input-group col-md-7">
@@ -855,7 +855,30 @@
 				<div class="input-group col-md-3">
 					<label for="qa_description" class="col-sm-12">Type of Data</label>
 					<select class="form-control" id="type_data_extraction">
+						<?php foreach ($question_types as $type) { ?>
+							<option value="<?= $type ?>"><?= $type ?></option>
+						<?php } ?>
 					</select>
+					<div class="input-group-append">
+						<button class="btn btn-success" type="button" onclick="add_question_extraction();"><span
+								class="fas fa-plus"></span></button>
+					</div>
+				</div>
+			</div>
+			<br>
+			<div class="form-inline">
+				<label for="list_qde"><strong>Option</strong></label>
+				<a href="#" class="float-right opt"><i class="fas fa-question-circle "></i></a>
+			</div>
+			<div class="form-inline">
+				<div class="input-group col-md-2">
+					<label for="list_qde" class="col-sm-12">Question</label>
+					<select class="form-control" id="list_qde">
+					</select>
+				</div>
+				<div class="input-group col-md-7">
+					<label for="desc_op" class="col-sm-12">Option</label>
+					<input type="text" class=" form-control" id="desc_op">
 					<div class="input-group-append">
 						<button class="btn btn-success" type="button" onclick=""><span
 								class="fas fa-plus"></span></button>
@@ -875,6 +898,46 @@
 				</tr>
 				</thead>
 				<tbody>
+				<?php foreach ($project->get_questions_extraction() as $qe) { ?>
+					<tr>
+						<td><?= $qe->get_id(); ?></td>
+						<td><?= $qe->get_description(); ?></td>
+						<td><?= $qe->get_type(); ?></td>
+						<td>
+							<?php if ($qe->get_type() == "Text") { ?>
+						</td>
+						<?php } else { ?>
+							<table id="table_<?= $qe->get_id(); ?>" class="table">
+								<th>Option</th>
+								<th>Actions</th>
+								<tbody>
+								<?php foreach ($qe->get_options() as $op) { ?>
+									<tr>
+										<td><?= $op ?></td>
+										<td>
+											<button class="btn btn-warning opt" onClick="">
+												<span class="fas fa-edit"></span>
+											</button>
+											<button class="btn btn-danger" onClick="">
+												<span class="far fa-trash-alt"></span>
+											</button>
+										</td>
+									</tr>
+								<?php } ?>
+								</tbody>
+							</table>
+							</td>
+						<?php } ?>
+						<td>
+							<button class="btn btn-warning opt" onClick="modal_extraction($(this).parents('tr'));">
+								<span class="fas fa-edit"></span>
+							</button>
+							<button class="btn btn-danger" onClick="delete_extraction($(this).parents('tr'));">
+								<span class="far fa-trash-alt"></span>
+							</button>
+						</td>
+					</tr>
+				<?php } ?>
 				</tbody>
 			</table>
 			<br>

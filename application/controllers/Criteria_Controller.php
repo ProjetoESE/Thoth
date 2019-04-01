@@ -22,7 +22,7 @@ class Criteria_Controller extends CI_Controller
 
 			$this->Criteria_Model->edit_exclusion_rule($rule, $id_project);
 
-			$activity = "Edited exclusion rule " . $id_project;
+			$activity = "Edited exclusion rule";
 			$this->insert_log($activity, 1, $id_project);
 
 		} catch (Exception $e) {
@@ -40,7 +40,7 @@ class Criteria_Controller extends CI_Controller
 
 			$this->Criteria_Model->edit_inclusion_rule($rule, $id_project);
 
-			$activity = "Edited inclusion rule " . $id_project;
+			$activity = "Edited inclusion rule";
 			$this->insert_log($activity, 1, $id_project);
 
 		} catch (Exception $e) {
