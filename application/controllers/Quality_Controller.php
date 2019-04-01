@@ -20,9 +20,9 @@ class Quality_Controller extends CI_Controller
 			$qa = $this->input->post('qa');
 			$weight = $this->input->post('weight');
 			$id_project = $this->input->post('id_project');
-			$this->load->model("Project_Model");
+			$this->load->model("Quality_Model");
 
-			$this->Project_Model->add_qa($id, $qa, $weight, $id_project);
+			$this->Quality_Model->add_qa($id, $qa, $weight, $id_project);
 
 			$activity = "Added the question quality" . $id;
 			$this->insert_log($activity, 1, $id_project);
@@ -40,9 +40,9 @@ class Quality_Controller extends CI_Controller
 		try {
 			$id = $this->input->post('id');
 			$id_project = $this->input->post('id_project');
-			$this->load->model("Project_Model");
+			$this->load->model("Quality_Model");
 
-			$this->Project_Model->delete_qa($id, $id_project);
+			$this->Quality_Model->delete_qa($id, $id_project);
 
 			$activity = "Deleted the question quality" . $id;
 			$this->insert_log($activity, 1, $id_project);
@@ -62,9 +62,9 @@ class Quality_Controller extends CI_Controller
 			$description = $this->input->post('description');
 			$id_project = $this->input->post('id_project');
 			$id_qa = $this->input->post('id_qa');
-			$this->load->model("Project_Model");
+			$this->load->model("Quality_Model");
 
-			$this->Project_Model->add_score_quality($score_rule, $score, $description, $id_project, $id_qa);
+			$this->Quality_Model->add_score_quality($score_rule, $score, $description, $id_project, $id_qa);
 
 			$activity = "Added the score quality" . $score_rule;
 			$this->insert_log($activity, 1, $id_project);
@@ -82,9 +82,9 @@ class Quality_Controller extends CI_Controller
 			$score = $this->input->post('min');
 			$id = $this->input->post('qa');
 			$id_project = $this->input->post('id_project');
-			$this->load->model("Project_Model");
+			$this->load->model("Quality_Model");
 
-			$this->Project_Model->edit_min_score_qa($score, $id, $id_project);
+			$this->Quality_Model->edit_min_score_qa($score, $id, $id_project);
 
 			$activity = "Edited the minimum score quality" . $id;
 			$this->insert_log($activity, 1, $id_project);
@@ -102,9 +102,9 @@ class Quality_Controller extends CI_Controller
 			$score = $this->input->post('score');
 			$id = $this->input->post('id_qa');
 			$id_project = $this->input->post('id_project');
-			$this->load->model("Project_Model");
+			$this->load->model("Quality_Model");
 
-			$this->Project_Model->delete_score_quality($score, $id, $id_project);
+			$this->Quality_Model->delete_score_quality($score, $id, $id_project);
 
 			$activity = "Deletes the score quality" . $score;
 			$this->insert_log($activity, 1, $id_project);
@@ -123,9 +123,9 @@ class Quality_Controller extends CI_Controller
 			$weight = $this->input->post('weight');
 			$id_project = $this->input->post('id_project');
 			$old_id = $this->input->post('old_id');
-			$this->load->model("Project_Model");
+			$this->load->model("Quality_Model");
 
-			$this->Project_Model->edit_qa($id, $qa, $weight, $old_id, $id_project);
+			$this->Quality_Model->edit_qa($id, $qa, $weight, $old_id, $id_project);
 
 			$activity = "Edited the question quality" . $id;
 			$this->insert_log($activity, 1, $id_project);
@@ -146,9 +146,9 @@ class Quality_Controller extends CI_Controller
 			$description = $this->input->post('description');
 			$id_project = $this->input->post('id_project');
 			$id_qa = $this->input->post('id_qa');
-			$this->load->model("Project_Model");
+			$this->load->model("Quality_Model");
 
-			$this->Project_Model->edit_score_quality($score_rule, $old_score_rule, $score, $description, $id_project, $id_qa);
+			$this->Quality_Model->edit_score_quality($score_rule, $old_score_rule, $score, $description, $id_project, $id_qa);
 
 			$activity = $this->session->name . "Edited the score quality" . $score_rule;
 			$this->insert_log($activity, 1, $id_project);
@@ -167,9 +167,9 @@ class Quality_Controller extends CI_Controller
 			$id_project = $this->input->post('id_project');
 			$end_interval = $this->input->post('end_interval');
 			$general_score_desc = $this->input->post('general_score_desc');
-			$this->load->model("Project_Model");
+			$this->load->model("Quality_Model");
 
-			$this->Project_Model->add_general_quality_score($start_interval, $end_interval, $general_score_desc, $id_project);
+			$this->Quality_Model->add_general_quality_score($start_interval, $end_interval, $general_score_desc, $id_project);
 
 			$activity = "Added general quality score " . $general_score_desc;
 			$this->insert_log($activity, 1, $id_project);
@@ -185,9 +185,9 @@ class Quality_Controller extends CI_Controller
 		try {
 			$description = $this->input->post('description');
 			$id_project = $this->input->post('id_project');
-			$this->load->model("Project_Model");
+			$this->load->model("Quality_Model");
 
-			$this->Project_Model->delete_general_quality_score($description, $id_project);
+			$this->Quality_Model->delete_general_quality_score($description, $id_project);
 
 			$activity = "Deleted general quality score " . $description;
 			$this->insert_log($activity, 1, $id_project);
@@ -206,9 +206,9 @@ class Quality_Controller extends CI_Controller
 			$old_desc = $this->input->post('old_desc');
 			$start = $this->input->post('start');
 			$end = $this->input->post('end');
-			$this->load->model("Project_Model");
+			$this->load->model("Quality_Model");
 
-			$this->Project_Model->edit_general_score($description, $start, $end, $old_desc, $id_project);
+			$this->Quality_Model->edit_general_score($description, $start, $end, $old_desc, $id_project);
 
 			$activity = "Edited general quality score " . $description;
 			$this->insert_log($activity, 1, $id_project);
@@ -224,9 +224,9 @@ class Quality_Controller extends CI_Controller
 		try {
 			$score = $this->input->post('score');
 			$id_project = $this->input->post('id_project');
-			$this->load->model("Project_Model");
+			$this->load->model("Quality_Model");
 
-			$this->Project_Model->edit_min_score($score, $id_project);
+			$this->Quality_Model->edit_min_score($score, $id_project);
 
 			$activity = "Edited min general quality score to approved" . $score;
 			$this->insert_log($activity, 1, $id_project);

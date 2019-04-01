@@ -13,8 +13,6 @@ function add_database() {
 
 	let data = table_databases.rows().data().toArray();
 
-	console.log(data);
-
 	for (let i = 0; i < data.length; i++) {
 		if (databases.toLowerCase().trim() == data[i][0].toLowerCase().trim()) {
 			swal({

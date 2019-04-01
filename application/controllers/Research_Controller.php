@@ -19,9 +19,9 @@ class Research_Controller extends CI_Controller
 			$id_rq = $this->input->post('id_rq');
 			$description = $this->input->post('description');
 			$id_project = $this->input->post('id_project');
-			$this->load->model("Project_Model");
+			$this->load->model("Research_Model");
 
-			$this->Project_Model->add_research_question($id_rq, $description, $id_project);
+			$this->Research_Model->add_research_question($id_rq, $description, $id_project);
 
 			$activity = "Added the research question " . $id_rq;
 			$this->insert_log($activity, 1, $id_project);
@@ -38,9 +38,9 @@ class Research_Controller extends CI_Controller
 		try {
 			$id_rq = $this->input->post('id_rq');
 			$id_project = $this->input->post('id_project');
-			$this->load->model("Project_Model");
+			$this->load->model("Research_Model");
 
-			$this->Project_Model->delete_research_question($id_rq, $id_project);
+			$this->Research_Model->delete_research_question($id_rq, $id_project);
 
 			$activity = "Deleted the research question " . $id_rq;
 			$this->insert_log($activity, 1, $id_project);
@@ -59,9 +59,9 @@ class Research_Controller extends CI_Controller
 			$now_question = $this->input->post('now_question');
 			$old_id = $this->input->post('old_id');
 			$id_project = $this->input->post('id_project');
-			$this->load->model("Project_Model");
+			$this->load->model("Research_Model");
 
-			$this->Project_Model->edit_research_question($now_id, $now_question, $old_id, $id_project);
+			$this->Research_Model->edit_research_question($now_id, $now_question, $old_id, $id_project);
 
 			$activity = $this->session->name . "Edited the research_question " . $now_id;
 			$this->insert_log($activity, 1, $id_project);

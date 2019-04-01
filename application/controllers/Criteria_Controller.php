@@ -18,9 +18,9 @@ class Criteria_Controller extends CI_Controller
 		try {
 			$rule = $this->input->post('rule');
 			$id_project = $this->input->post('id_project');
-			$this->load->model("Project_Model");
+			$this->load->model("Criteria_Model");
 
-			$this->Project_Model->edit_exclusion_rule($rule, $id_project);
+			$this->Criteria_Model->edit_exclusion_rule($rule, $id_project);
 
 			$activity = "Edited exclusion rule " . $id_project;
 			$this->insert_log($activity, 1, $id_project);
@@ -36,9 +36,9 @@ class Criteria_Controller extends CI_Controller
 		try {
 			$rule = $this->input->post('rule');
 			$id_project = $this->input->post('id_project');
-			$this->load->model("Project_Model");
+			$this->load->model("Criteria_Model");
 
-			$this->Project_Model->edit_inclusion_rule($rule, $id_project);
+			$this->Criteria_Model->edit_inclusion_rule($rule, $id_project);
 
 			$activity = "Edited inclusion rule " . $id_project;
 			$this->insert_log($activity, 1, $id_project);
@@ -56,9 +56,9 @@ class Criteria_Controller extends CI_Controller
 			$type = $this->input->post('type');
 			$description = $this->input->post('description');
 			$id_project = $this->input->post('id_project');
-			$this->load->model("Project_Model");
+			$this->load->model("Criteria_Model");
 
-			$this->Project_Model->add_criteria($id, $description, false, $id_project, $type);
+			$this->Criteria_Model->add_criteria($id, $description, false, $id_project, $type);
 			$activity = "Added inclusion criteria " . $id;
 			$this->insert_log($activity, 1, $id_project);
 
@@ -75,9 +75,9 @@ class Criteria_Controller extends CI_Controller
 			$id = $this->input->post('id');
 			$pre_selected = $this->input->post('pre_selected');
 			$id_project = $this->input->post('id_project');
-			$this->load->model("Project_Model");
+			$this->load->model("Criteria_Model");
 
-			$this->Project_Model->selected_pre_select($id, $pre_selected, $id_project);
+			$this->Criteria_Model->selected_pre_select($id, $pre_selected, $id_project);
 
 			if ($pre_selected) {
 				$activity = "Selected criteria " . $id;
@@ -98,9 +98,9 @@ class Criteria_Controller extends CI_Controller
 		try {
 			$id = $this->input->post('id');
 			$id_project = $this->input->post('id_project');
-			$this->load->model("Project_Model");
+			$this->load->model("Criteria_Model");
 
-			$this->Project_Model->delete_criteria($id, $id_project);
+			$this->Criteria_Model->delete_criteria($id, $id_project);
 
 			$activity = "Deleted criteria " . $id;
 			$this->insert_log($activity, 1, $id_project);
@@ -121,9 +121,9 @@ class Criteria_Controller extends CI_Controller
 			$new_type = $this->input->post('new_type');
 			$pre_selected = $this->input->post('pre_selected');
 
-			$this->load->model("Project_Model");
+			$this->load->model("Criteria_Model");
 
-			$this->Project_Model->update_criteria($old_id, $new_id, $description, $pre_selected, $id_project, $new_type);
+			$this->Criteria_Model->update_criteria($old_id, $new_id, $description, $pre_selected, $id_project, $new_type);
 
 			$activity = "Updated criteria " . $new_id;
 			$this->insert_log($activity, 1, $id_project);

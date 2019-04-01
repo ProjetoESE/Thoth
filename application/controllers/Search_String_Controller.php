@@ -18,9 +18,9 @@ class Search_String_Controller extends CI_Controller
 		try {
 			$term = $this->input->post('term');
 			$id_project = $this->input->post('id_project');
-			$this->load->model("Project_Model");
+			$this->load->model("Search_String_Model");
 
-			$this->Project_Model->add_term($term, $id_project);
+			$this->Search_String_Model->add_term($term, $id_project);
 
 			$activity = "Added the term" . $term;
 			$this->insert_log($activity, 1, $id_project);
@@ -37,9 +37,9 @@ class Search_String_Controller extends CI_Controller
 		try {
 			$term = $this->input->post('term');
 			$id_project = $this->input->post('id_project');
-			$this->load->model("Project_Model");
+			$this->load->model("Search_String_Model");
 
-			$this->Project_Model->delete_term($term, $id_project);
+			$this->Search_String_Model->delete_term($term, $id_project);
 
 			$activity = "Deleted the term" . $term;
 			$this->insert_log($activity, 1, $id_project);
@@ -57,9 +57,9 @@ class Search_String_Controller extends CI_Controller
 			$now = $this->input->post('now');
 			$old = $this->input->post('old');
 			$id_project = $this->input->post('id_project');
-			$this->load->model("Project_Model");
+			$this->load->model("Search_String_Model");
 
-			$this->Project_Model->edit_term($now, $old, $id_project);
+			$this->Search_String_Model->edit_term($now, $old, $id_project);
 
 			$activity = "Edited the term " . $old . " for " . $now;
 			$this->insert_log($activity, 1, $id_project);
@@ -76,9 +76,9 @@ class Search_String_Controller extends CI_Controller
 			$term = $this->input->post('term');
 			$syn = $this->input->post('syn');
 			$id_project = $this->input->post('id_project');
-			$this->load->model("Project_Model");
+			$this->load->model("Search_String_Model");
 
-			$this->Project_Model->add_synonym($syn, $term, $id_project);
+			$this->Search_String_Model->add_synonym($syn, $term, $id_project);
 
 			$activity = "Added the synonym" . $syn;
 			$this->insert_log($activity, 1, $id_project);
@@ -96,9 +96,9 @@ class Search_String_Controller extends CI_Controller
 			$term = $this->input->post('term');
 			$syn = $this->input->post('syn');
 			$id_project = $this->input->post('id_project');
-			$this->load->model("Project_Model");
+			$this->load->model("Search_String_Model");
 
-			$this->Project_Model->delete_synonym($syn, $term, $id_project);
+			$this->Search_String_Model->delete_synonym($syn, $term, $id_project);
 
 			$activity = "Deleted the synonym" . $syn;
 			$this->insert_log($activity, 1, $id_project);
@@ -117,9 +117,9 @@ class Search_String_Controller extends CI_Controller
 			$old = $this->input->post('old');
 			$term = $this->input->post('term');
 			$id_project = $this->input->post('id_project');
-			$this->load->model("Project_Model");
+			$this->load->model("Search_String_Model");
 
-			$this->Project_Model->edit_synonym($now, $old, $term, $id_project);
+			$this->Search_String_Model->edit_synonym($now, $old, $term, $id_project);
 
 			$activity = "Edited the synonym " . $old . " for " . $now;
 			$this->insert_log($activity, 1, $id_project);
@@ -135,10 +135,10 @@ class Search_String_Controller extends CI_Controller
 		try {
 			$database = $this->input->post('database');
 			$id_project = $this->input->post('id_project');
-			$this->load->model("Project_Model");
+			$this->load->model("Search_String_Model");
 			$string = null;
 
-			$data = $this->Project_Model->get_terms_and_syn($id_project);
+			$data = $this->Search_String_Model->get_terms_and_syn($id_project);
 
 			switch ($database) {
 				case "SCOPUS":
@@ -204,11 +204,11 @@ class Search_String_Controller extends CI_Controller
 
 			if ($database != "Generic") {
 
-				$id_project_database = $this->Project_Model->get_id_project_database($database, $id_project);
-				$this->Project_Model->generate_string($string, $id_project_database);
+				$id_project_database = $this->Search_String_Model->get_id_project_database($database, $id_project);
+				$this->Search_String_Model->generate_string($string, $id_project_database);
 
 			} else {
-				$this->Project_Model->generate_string_generic($string, $id_project);
+				$this->Search_String_Model->generate_string_generic($string, $id_project);
 			}
 
 
@@ -228,9 +228,9 @@ class Search_String_Controller extends CI_Controller
 		try {
 			$search_strategy = $this->input->post('search_strategy');
 			$id_project = $this->input->post('id_project');
-			$this->load->model("Project_Model");
+			$this->load->model("Search_String_Model");
 
-			$this->Project_Model->edit_search_strategy($search_strategy, $id_project);
+			$this->Search_String_Model->edit_search_strategy($search_strategy, $id_project);
 
 			$activity = "Edited search strategy";
 			$this->insert_log($activity, 1, $id_project);

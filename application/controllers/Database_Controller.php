@@ -12,9 +12,9 @@ class Database_Controller extends CI_Controller
 		try {
 			$database = $this->input->post('database');
 			$id_project = $this->input->post('id_project');
-			$this->load->model("Project_Model");
+			$this->load->model("Database_Model");
 
-			$this->Project_Model->add_database($database, $id_project);
+			$this->Database_Model->add_database($database, $id_project);
 
 			$activity = "Added the database " . $database;
 			$this->insert_log($activity, 1, $id_project);
@@ -31,9 +31,9 @@ class Database_Controller extends CI_Controller
 		try {
 			$database = $this->input->post('database');
 			$id_project = $this->input->post('id_project');
-			$this->load->model("Project_Model");
+			$this->load->model("Database_Model");
 
-			$this->Project_Model->delete_database($database, $id_project);
+			$this->Database_Model->delete_database($database, $id_project);
 
 			$activity = "Deleted the database " . $database;
 			$this->insert_log($activity, 1, $id_project);
@@ -51,9 +51,9 @@ class Database_Controller extends CI_Controller
 			$database = $this->input->post('database');
 			$link = $this->input->post('link');
 			$id_project = $this->input->post('id_project');
-			$this->load->model("Project_Model");
+			$this->load->model("Database_Model");
 
-			$this->Project_Model->new_database($database, $link, $id_project);
+			$this->Database_Model->new_database($database, $link, $id_project);
 
 			$activity = "Added the database " . $database;
 			$this->insert_log($activity, 1, $id_project);

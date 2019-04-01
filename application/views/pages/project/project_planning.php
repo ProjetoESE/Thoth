@@ -844,24 +844,23 @@
 				<a href="#" class="float-right opt"><i class="fas fa-question-circle "></i></a>
 			</div>
 			<div class="form-inline">
-				<label for="id_qa" class="col-sm-12 col-md-2">ID</label>
-				<label for="id_qa" class="col-sm-12 col-md-7">Description</label>
-				<label for="qa_description" class="col-sm-12 col-md-2">Type of Data</label>
-			</div>
-			<div class="row">
 				<div class="input-group col-md-2">
+					<label for="id_qa" class="col-sm-12">ID</label>
 					<input type="text" class=" form-control" id="id_data_extraction">
 				</div>
 				<div class="input-group col-md-7">
+					<label for="id_qa" class="col-sm-12">Description</label>
 					<input type="text" class=" form-control" id="desc_data_extraction">
 				</div>
-				<div class="input-group col-md-2">
+				<div class="input-group col-md-3">
+					<label for="qa_description" class="col-sm-12">Type of Data</label>
 					<select class="form-control" id="type_data_extraction">
-						<option>Text</option>
-						<option>List</option>
 					</select>
+					<div class="input-group-append">
+						<button class="btn btn-success" type="button" onclick=""><span
+								class="fas fa-plus"></span></button>
+					</div>
 				</div>
-				<button class="btn btn-success" type="button"><span class="fas fa-plus"></span></button>
 			</div>
 			<br>
 			<table id="table_data_extraction" class="table table-responsive-sm">
@@ -872,57 +871,10 @@
 					<th>Description</th>
 					<th>Type</th>
 					<th>Options</th>
-					<th>Delete</th>
+					<th>Actions</th>
 				</tr>
 				</thead>
 				<tbody>
-				<tr>
-					<td contenteditable="true">ID</td>
-					<td contenteditable="true">Description</td>
-					<td>
-						<select class="form-control">
-							<option>Text</option>
-							<option>List</option>
-						</select>
-					</td>
-					<td>
-						<div class="row">
-							<div class="input-group col-sm-12 opt">
-								<input type="text" class="form-control" id="edit_opt" value="Option">
-								<div class="input-group-append">
-									<button class="btn btn-danger" type="button">
-										<span class="far fa-trash-alt"></span></button>
-								</div>
-							</div>
-							<div class="input-group col-sm-12 opt">
-								<input type="text" class="form-control" placeholder="Add a Option to Question"
-									   id="add_options">
-								<div class="input-group-append">
-									<button class="btn btn-success" type="button"><span class="fas fa-plus"></span>
-									</button>
-								</div>
-							</div>
-						</div>
-					</td>
-					<td>
-						<button class="btn btn-danger"><span class="far fa-trash-alt"></span></button>
-					</td>
-				</tr>
-				<tr>
-					<td contenteditable="true">ID</td>
-					<td contenteditable="true">Description</td>
-					<td>
-						<select class="form-control">
-							<option>Text</option>
-							<option>List</option>
-						</select>
-					</td>
-					<td>
-					</td>
-					<td>
-						<button class="btn btn-danger"><span class="far fa-trash-alt"></span></button>
-					</td>
-				</tr>
 				</tbody>
 			</table>
 			<br>

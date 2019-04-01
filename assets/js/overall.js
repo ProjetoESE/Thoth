@@ -164,7 +164,7 @@ function add_language() {
 		},
 		success: function () {
 			table_languages.row.add([
-				language[0].value,
+				language,
 				'<button class="btn btn-danger" onClick="delete_language($(this).parents(\'tr\'));">' +
 				'<span class="far fa-trash-alt"></span>' +
 				'</button>'
@@ -188,6 +188,7 @@ function validate_language(language) {
 
 	let data = table_languages.rows().data().toArray();
 
+
 	for (let i = 0; i < data.length; i++) {
 		if (language.toLowerCase().trim() == data[i][0].toLowerCase().trim()) {
 			swal({
@@ -198,7 +199,6 @@ function validate_language(language) {
 			return false;
 		}
 	}
-
 	return true;
 }
 

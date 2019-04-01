@@ -14,7 +14,7 @@ class Project_Controller extends CI_Controller
 			$this->load->model("Project_Model");
 
 			$data['project'] = $this->Project_Model->get_project($id);
-			$data['logs'] = $this->Project_Model->get_logs($id);
+			$data['logs'] = $this->Project_Model->get_logs_project($id);
 
 			if (!isset($_SESSION['logged_in'])) {
 				load_templates('pages/visitor/project_visitor', $data);
