@@ -5,7 +5,7 @@
 				<h4>New Project</h4>
 			</div>
 			<div class="card-body">
-				<?php echo form_open('project_controller/created_project'); ?>
+				<?php echo form_open('Project_Controller/created_project'); ?>
 				<div class="form-group">
 					<label for="title">Title</label>
 					<input type="text" name="title" class="form-control" id="title" placeholder="Enter title" required>
