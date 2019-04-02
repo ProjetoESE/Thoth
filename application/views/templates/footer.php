@@ -18,6 +18,8 @@ $this->load->view('modal/modal_domain');
 $this->load->view('modal/modal_paper');
 $this->load->view('modal/modal_question_quality');
 $this->load->view('modal/modal_score_quality');
+$this->load->view('modal/modal_question_extraction');
+$this->load->view('modal/modal_option');
 ?>
 <input type="hidden" id="base_url" value="<?= base_url() ?>">
 </body>

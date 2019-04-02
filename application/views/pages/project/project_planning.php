@@ -849,11 +849,11 @@
 					<input type="text" class=" form-control" id="id_data_extraction">
 				</div>
 				<div class="input-group col-md-7">
-					<label for="id_qa" class="col-sm-12">Description</label>
+					<label for="desc_data_extraction" class="col-sm-12">Description</label>
 					<input type="text" class=" form-control" id="desc_data_extraction">
 				</div>
 				<div class="input-group col-md-3">
-					<label for="qa_description" class="col-sm-12">Type of Data</label>
+					<label for="type_data_extraction" class="col-sm-12">Type of Data</label>
 					<select class="form-control" id="type_data_extraction">
 						<?php foreach ($question_types as $type) { ?>
 							<option value="<?= $type ?>"><?= $type ?></option>
@@ -874,13 +874,18 @@
 				<div class="input-group col-md-2">
 					<label for="list_qde" class="col-sm-12">Question</label>
 					<select class="form-control" id="list_qde">
+						<?php foreach ($project->get_questions_extraction() as $qe) {
+							if ($qe->get_type() != "Text") { ?>
+								<option value="<?= $qe->get_id(); ?>"><?= $qe->get_id(); ?></option>
+							<?php }
+						} ?>
 					</select>
 				</div>
 				<div class="input-group col-md-7">
 					<label for="desc_op" class="col-sm-12">Option</label>
 					<input type="text" class=" form-control" id="desc_op">
 					<div class="input-group-append">
-						<button class="btn btn-success" type="button" onclick=""><span
+						<button class="btn btn-success" type="button" onclick="add_option();"><span
 								class="fas fa-plus"></span></button>
 					</div>
 				</div>
@@ -915,10 +920,10 @@
 									<tr>
 										<td><?= $op ?></td>
 										<td>
-											<button class="btn btn-warning opt" onClick="">
+											<button class="btn btn-warning opt" onClick="modal_option(this)">
 												<span class="fas fa-edit"></span>
 											</button>
-											<button class="btn btn-danger" onClick="">
+											<button class="btn btn-danger" onClick="delete_option(this)">
 												<span class="far fa-trash-alt"></span>
 											</button>
 										</td>
@@ -929,11 +934,11 @@
 							</td>
 						<?php } ?>
 						<td>
-							<button class="btn btn-warning opt" onClick="modal_extraction($(this).parents('tr'));">
-								<span class="fas fa-edit"></span>
+							<button class="btn btn-warning opt" onClick="modal_extraction($(this).parents('tr'));"><span
+									class="fas fa-edit"></span>
 							</button>
-							<button class="btn btn-danger" onClick="delete_extraction($(this).parents('tr'));">
-								<span class="far fa-trash-alt"></span>
+							<button class="btn btn-danger" onClick="delete_extraction($(this).parents('tr'));"><span
+									class="far fa-trash-alt"></span>
 							</button>
 						</td>
 					</tr>
