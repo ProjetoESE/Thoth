@@ -420,32 +420,6 @@ class Project_Model extends CI_Model
 		return $study_types;
 	}
 
-	public function get_id_project_database($database, $id_project)
-	{
-		$id_database = null;
-
-		$this->db->select('id_database');
-		$this->db->from('data_base');
-		$this->db->where('name', $database);
-		$query = $this->db->get();
-
-		foreach ($query->result() as $row) {
-			$id_database = $row->id_database;
-		}
-
-		$this->db->select('id_project_database');
-		$this->db->from('project_databases');
-		$this->db->where('id_project', $id_project);
-		$this->db->where('id_database', $id_database);
-		$query = $this->db->get();
-
-		foreach ($query->result() as $row) {
-			$r = $row->id_project_database;
-			return $r;
-
-		}
-	}
-
 	public function get_users()
 	{
 		$users = array();
