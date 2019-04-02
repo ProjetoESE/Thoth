@@ -658,13 +658,16 @@
 			<div class="input-group col-md-4">
 				<label for="min_score_to_app" class="col-sm-12">Minimum General Score to Approve</label>
 				<select class="form-control" id="min_score_to_app" onchange="edit_min_score();">
-					<?php foreach ($project->get_quality_scores() as $score) {
+					<?php $mini = $project->get_score_min();
+					foreach ($project->get_quality_scores() as $scores) {
 						$selected = "";
-						if ($score->get_description() == $project->get_score_min()->get_description()) {
-							$selected = "selected";
+						if ($mini != null) {
+							if ($scores->get_description() == $mini->get_description()) {
+								$selected = "selected";
+							}
 						} ?>
 						<option <?= $selected ?>
-							value="<?= $score->get_description() ?>"><?= $score->get_description() ?></option>
+							value="<?= $scores->get_description() ?>"><?= $scores->get_description() ?></option>
 					<?php } ?>
 				</select>
 			</div>
