@@ -55,14 +55,15 @@ class User_Model extends CI_Model
 		return $projects;
 	}
 
-	public function insert_log($activity, $module)
+	public function insert_log($activity, $module, $id_project)
 	{
 		$id_user = $this->get_id_user($this->session->email);
 
 		$data = array(
 			'id_user' => $id_user,
 			'activity' => $activity,
-			'id_module' => $module
+			'id_module' => $module,
+			'id_project' => $id_project
 		);
 
 		$this->db->insert('activity_log', $data);

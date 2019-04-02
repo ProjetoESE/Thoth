@@ -30,8 +30,8 @@ class Login_Controller extends CI_Controller
 
 			$this->session->set_userdata($session);
 
-			$activity = $this->session->name . " logged in";
-			$this->insert_log($activity, 2);
+			$activity = "Logged in";
+			$this->insert_log($activity, 2, null);
 
 			redirect(base_url("dashboard"));
 		} catch (Exception $e) {
@@ -65,8 +65,8 @@ class Login_Controller extends CI_Controller
 
 			$this->session->set_userdata($session);
 
-			$activity = $this->session->name . " created new user and logged in";
-			$this->insert_log($activity, 2);
+			$activity = "Created new user and logged in";
+			$this->insert_log($activity, 2, null);
 
 			redirect(base_url("dashboard"));
 		} catch (Exception $e) {
@@ -91,8 +91,8 @@ class Login_Controller extends CI_Controller
 	public function sign_out()
 	{
 		try {
-			$activity = $this->session->name . " logged out";
-			$this->insert_log($activity, 2);
+			$activity = "Logged out";
+			$this->insert_log($activity, 2, null);
 
 			$this->session->sess_destroy();
 			redirect(base_url());
@@ -115,10 +115,10 @@ class Login_Controller extends CI_Controller
 		}
 	}
 
-	public function insert_log($activity, $module)
+	public function insert_log($activity, $module, $id_project)
 	{
 		$this->load->model("User_Model");
-		$this->User_Model->insert_log($activity, $module);
+		$this->User_Model->insert_log($activity, $module, $id_project);
 	}
 
 }

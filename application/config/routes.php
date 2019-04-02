@@ -57,7 +57,6 @@ $route['profile'] = 'User_Controller/profile';
 $route['about'] = 'About_Controller';
 $route['help'] = 'Help_Controller';
 $route['search'] = 'Search_Controller';
-$route['search'] = 'Search_Controller';
 $route['dashboard'] = 'User_Controller';
 $route['open/(:num)'] = 'Project_Controller/open/$1';
 $route['planning/(:num)'] = 'Project_Controller/planning/$1';

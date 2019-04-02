@@ -9,7 +9,7 @@ $(document).ready(function () {
 	let configDataTables = {
 		language: lang,
 		responsive: true,
-		order: [[1, "asc"]],
+		order: [[0, "asc"]],
 		paginate: false,
 		info: false,
 		searching: false,
@@ -27,10 +27,7 @@ $(document).ready(function () {
 	table_criteria_inclusion = $('#table_criteria_inclusion').DataTable(configDataTables);
 	table_criteria_exclusion = $('#table_criteria_exclusion').DataTable(configDataTables);
 	table_qa = $('#table_qa').DataTable(configDataTables);
-
-
-	$('#table_question_quality').DataTable(configDataTables);
-	$('#table_data_extraction').DataTable(configDataTables);
+	table_data_extraction = $('#table_data_extraction').DataTable(configDataTables);
 
 
 	$('#table_imported_studies').DataTable({

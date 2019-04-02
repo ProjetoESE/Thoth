@@ -44,13 +44,35 @@
 		</div>
 		<hr>
 		<div class="row">
-			<div class="col-sm-12">
+			<div class="col-sm-12 col-md-6">
 				<div class="form-inline">
 					<span class="fas fa-recycle opt fa-2x"></span>
 					<h5>Systematic Review Process</h5>
 				</div>
 				<div class="text-center">
 					<img src="<?= base_url('assets/img/slr_process.png'); ?>" class="img-thumbnail">
+				</div>
+			</div>
+			<div class="col-sm-12 col-md-6">
+				<div class="form-inline">
+					<span class="fas fa-history opt fa-2x"></span>
+					<h5>Activity Record</h5>
+				</div>
+				<div class="scroll">
+					<?php foreach ($logs as $log) { ?>
+						<div class="card">
+							<div class="card-header">
+								<?= $log['name']; ?>
+							</div>
+							<div class="card-body">
+								<?= $log['activity']; ?>
+							</div>
+							<div class="card-footer">
+								<small class="text-muted"><?= $log['time']; ?></small>
+							</div>
+						</div>
+						<br>
+					<?php } ?>
 				</div>
 			</div>
 		</div>
