@@ -12,14 +12,14 @@
 				<input type="hidden" id="index_score">
 				<input type="hidden" id="old_desc">
 				<div class="form-inline">
-					<div class="input-group col-md-4">
+					<div class="input-group col-md-5">
 						<label for="edit_start_interval" class="col-sm-12'">General Score Interval</label>
 						<input type="number" id="edit_start_interval" class="form-control" step="0.5" placeholder="4.5"
 							   min="0">
 						<input type="number" id="edit_end_interval" class="form-control" step="0.5" placeholder="5"
 							   min="0.1">
 					</div>
-					<div class="input-group col-md-8">
+					<div class="input-group col-md-7">
 						<label for="edit_general_score_desc" class="col-sm-12">General Score Description</label>
 						<input type="text" id="edit_general_score_desc" class="form-control" placeholder="Description">
 					</div>
