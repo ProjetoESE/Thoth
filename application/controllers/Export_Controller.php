@@ -10,7 +10,7 @@ class Export_Controller extends CI_Controller
 
 	public function export_doc()
 	{
-		include('C:\xampp\htdocs\Thoth\vendor\autoload.php');
+		require_once('C:\xampp\htdocs\Thoth\application\third_party\vendor\autoload.php');
 
 		$id_project = $this->input->post('id_project');
 		$this->load->model('Project_Model');
@@ -163,7 +163,7 @@ class Export_Controller extends CI_Controller
 			$scores = "";
 			$len = sizeof($rules);
 			for ($j = 0; $j < $len; $j++) {
-				$scores.= $rules[$j]->get_score()."\n";
+				$scores .= $rules[$j]->get_score() . "\n";
 			}
 			$templateProcessor->setValue($id3, $scores);
 
@@ -192,7 +192,7 @@ class Export_Controller extends CI_Controller
 			$options = "";
 			$len = sizeof($ops);
 			for ($j = 0; $j < $len; $j++) {
-				$options.= $ops[$j]."\n";
+				$options .= $ops[$j] . "\n";
 			}
 			$templateProcessor->setValue($id4, $options);
 

@@ -7,6 +7,13 @@ function export_to_doc() {
 			id_project: id_project
 		},
 		success: function () {
+			Swal({
+				title: 'Success',
+				text: "The planning was exported",
+				type: 'success',
+				showCancelButton: false,
+				confirmButtonText: 'Ok'
+			})
 		}
 	});
 }
