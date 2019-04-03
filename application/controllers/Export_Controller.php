@@ -11,12 +11,14 @@ class Export_Controller extends CI_Controller
 	public function export_doc()
 	{
 		require_once('C:\xampp\htdocs\Thoth\application\third_party\vendor\autoload.php');
+		//require_once(APPPATH.'third_party/vendor/autoload.php');
 
 		$id_project = $this->input->post('id_project');
 		$this->load->model('Project_Model');
 
 		$project = $this->Project_Model->get_project($id_project);
 		$templateProcessor = new \PhpOffice\PhpWord\TemplateProcessor('C:\xampp\htdocs\Thoth\export\template.docx');
+		//$templateProcessor = new \PhpOffice\PhpWord\TemplateProcessor(base_url('export/template.docx'));
 
 		$templateProcessor->setValue('title', $project->get_title());
 
@@ -134,7 +136,8 @@ class Export_Controller extends CI_Controller
 			$templateProcessor->setValue($id2, $ex_criteria[$i]->get_description());
 		}
 
-		$templateProcessor->setValue('ge_min_to_app', $project->get_score_min());
+		$score_min = $project->get_score_min();
+		$templateProcessor->setValue('ge_min_to_app', $score_min->get_description());
 		$qa_scores = $project->get_quality_scores();
 		$size = sizeof($qa_scores);
 		$templateProcessor->cloneRow('start_in', $size);
@@ -163,14 +166,14 @@ class Export_Controller extends CI_Controller
 			$scores = "";
 			$len = sizeof($rules);
 			for ($j = 0; $j < $len; $j++) {
-				$scores .= $rules[$j]->get_score() . "\n";
+				$scores .= $rules[$j]->set_score_rule() . "\n";
 			}
 			$templateProcessor->setValue($id3, $scores);
 
 			$templateProcessor->setValue($id4, $qa_questions[$i]->get_weight());
 			$minimum = $qa_questions[$i]->get_min_to_approve();
 			if ($minimum != null) {
-				$templateProcessor->setValue($id5, $minimum->get_score());
+				$templateProcessor->setValue($id5, $minimum->set_score_rule());
 			} else {
 				$templateProcessor->setValue($id5, "");
 			}
@@ -199,6 +202,7 @@ class Export_Controller extends CI_Controller
 		}
 
 		$file = 'C:\xampp\htdocs\Thoth\export\E' . $id_project . '.docx';
+		//$file = './export/E' . $id_project . '.docx';
 		$templateProcessor->saveAs($file);
 
 	}
