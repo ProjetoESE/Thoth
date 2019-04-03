@@ -20,7 +20,7 @@
 					<textarea name="objectives" class="form-control min-height" id="objectives" placeholder="Objectives"
 							  required></textarea>
 				</div>
-				<button type="submit" class="btn btn-success">Created Project</button>
+				<button type="submit" class="btn btn-success">Create Project</button>
 				</form>
 			</div>
 		</div>

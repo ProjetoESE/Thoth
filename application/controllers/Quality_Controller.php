@@ -24,7 +24,7 @@ class Quality_Controller extends CI_Controller
 
 			$this->Quality_Model->add_qa($id, $qa, $weight, $id_project);
 
-			$activity = "Added the question quality" . $id;
+			$activity = "Added the question quality " . $id;
 			$this->insert_log($activity, 1, $id_project);
 
 
@@ -44,7 +44,7 @@ class Quality_Controller extends CI_Controller
 
 			$this->Quality_Model->delete_qa($id, $id_project);
 
-			$activity = "Deleted the question quality" . $id;
+			$activity = "Deleted the question quality " . $id;
 			$this->insert_log($activity, 1, $id_project);
 
 
@@ -66,7 +66,7 @@ class Quality_Controller extends CI_Controller
 
 			$this->Quality_Model->add_score_quality($score_rule, $score, $description, $id_project, $id_qa);
 
-			$activity = "Added the score quality" . $score_rule;
+			$activity = "Added the score quality " . $score_rule;
 			$this->insert_log($activity, 1, $id_project);
 
 
@@ -86,7 +86,7 @@ class Quality_Controller extends CI_Controller
 
 			$this->Quality_Model->edit_min_score_qa($score, $id, $id_project);
 
-			$activity = "Edited the minimum score quality" . $id;
+			$activity = "Edited the minimum score quality " . $id;
 			$this->insert_log($activity, 1, $id_project);
 
 
@@ -106,7 +106,7 @@ class Quality_Controller extends CI_Controller
 
 			$this->Quality_Model->delete_score_quality($score, $id, $id_project);
 
-			$activity = "Deletes the score quality" . $score;
+			$activity = "Deletes the score quality " . $score;
 			$this->insert_log($activity, 1, $id_project);
 
 		} catch (Exception $e) {
@@ -127,7 +127,7 @@ class Quality_Controller extends CI_Controller
 
 			$this->Quality_Model->edit_qa($id, $qa, $weight, $old_id, $id_project);
 
-			$activity = "Edited the question quality" . $id;
+			$activity = "Edited the question quality " . $id;
 			$this->insert_log($activity, 1, $id_project);
 
 
@@ -150,7 +150,7 @@ class Quality_Controller extends CI_Controller
 
 			$this->Quality_Model->edit_score_quality($score_rule, $old_score_rule, $score, $description, $id_project, $id_qa);
 
-			$activity = $this->session->name . "Edited the score quality" . $score_rule;
+			$activity = $this->session->name . "Edited the score quality " . $score_rule;
 			$this->insert_log($activity, 1, $id_project);
 
 
@@ -228,7 +228,7 @@ class Quality_Controller extends CI_Controller
 
 			$this->Quality_Model->edit_min_score($score, $id_project);
 
-			$activity = "Edited min general quality score to approved" . $score;
+			$activity = "Edited min general quality score to approved " . $score;
 			$this->insert_log($activity, 1, $id_project);
 
 		} catch (Exception $e) {

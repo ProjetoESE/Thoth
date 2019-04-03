@@ -3,7 +3,7 @@
 		<h4>My Projects</h4>
 	</div>
 	<div class="card-body table-responsive">
-		<table id="tableMyProjects" class="table">
+		<table id="table_my_projects" class="table">
 			<thead>
 			<a href="<?= base_url('new_project'); ?>" class="btn btn-success new-project"><span
 					class="fas fa-folder-plus"></span> Create New Project</a>
@@ -27,7 +27,7 @@
 						   class="btn btn-outline-warning opt"><span class="fas fa-edit"></span> Edit</a>
 						<a href="<?= base_url('add_research/' . $project->get_id()); ?>"
 						   class="btn btn-outline-info opt"><span class="fas fa-users-cog"></span> Add</a>
-						<button type="button" onclick="delete_project(<?= $project->get_id() ?>)"
+						<button type="button" onclick="delete_project(<?= $project->get_id() ?>,$(this).parents('tr'))"
 								class="btn btn-outline-danger opt"><span
 								class="fas fa-trash-alt"></span> Delete
 						</button>

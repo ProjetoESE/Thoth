@@ -115,7 +115,8 @@ function validate_edit_project(objectives, description, title) {
 	return true;
 }
 
-function delete_project(id) {
+function delete_project(id, value) {
+	let row = table_my_projects.row(value);
 	Swal.fire({
 		title: 'Are you sure?',
 		text: "You will not be able to reverse this," +
@@ -127,11 +128,22 @@ function delete_project(id) {
 		confirmButtonText: 'Yes, delete it!'
 	}).then((result) => {
 		if (result.value) {
-			Swal.fire(
-				'Deleted!',
-				'Your project has been deleted.',
-				'success'
-			)
+			$.ajax({
+				type: "POST",
+				url: base_url + 'Project_Controller/deleted_project/',
+				data: {
+					id_project: id
+				},
+				success: function () {
+					row.remove();
+					table_my_projects.draw();
+					Swal.fire(
+						'Deleted!',
+						'Your project has been deleted.',
+						'success'
+					)
+				}
+			});
 		}
 	});
 }

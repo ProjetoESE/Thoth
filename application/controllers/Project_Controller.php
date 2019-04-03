@@ -205,4 +205,20 @@ class Project_Controller extends CI_Controller
 		}
 	}
 
+	public function deleted_project()
+	{
+		try {
+			$id_project = $this->input->post('id_project');
+			$this->load->model("Project_Model");
+
+			$this->Project_Model->deleted_project($id_project);
+
+			$activity = "Deleted project " . $id_project;
+			$this->insert_log($activity, 1, null);
+
+		} catch (Exception $e) {
+			$this->session->set_flashdata('error', $e->getMessage());
+			redirect(base_url());
+		}
+	}
 }
