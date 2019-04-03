@@ -56,7 +56,7 @@
 			<div class="row">
 				<div class="col-sm-12 col-md-6">
 					<label for="domain"><strong>Domains</strong></label>
-					<a onclick="modal_help_domain()" class="float-right btn btn-warning opt"><i class="far fa-question-circle "></i></a>
+					<a onclick="modal_help_domain()" class="float-right btn btn-warning opt"><i class="fas fa-question-circle "></i></a>
 					<div class="input-group">
 						<input type="text" class="form-control" id="domain">
 						<div class="input-group-append">
