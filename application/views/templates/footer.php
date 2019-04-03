@@ -20,6 +20,7 @@ $this->load->view('modal/modal_question_quality');
 $this->load->view('modal/modal_score_quality');
 $this->load->view('modal/modal_question_extraction');
 $this->load->view('modal/modal_option');
+$this->load->view('modal/modal_help_domain');
 ?>
 <input type="hidden" id="base_url" value="<?= base_url() ?>">
 </body>

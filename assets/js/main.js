@@ -40,7 +40,7 @@ $(document).ready(function () {
 			{"orderable": false, "targets": 2}]
 
 	});
-	$('#tableMyProjects').DataTable({
+	table_my_projects = $('#table_my_projects').DataTable({
 		responsive: true,
 		order: [[0, "asc"]],
 		columnDefs: [

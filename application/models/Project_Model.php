@@ -534,4 +534,11 @@ class Project_Model extends CI_Model
 
 		return $data;
 	}
+
+	public function deleted_project($id_project)
+	{
+		$this->db->where('id_project', $id_project);
+		$this->db->delete('project');
+
+	}
 }
