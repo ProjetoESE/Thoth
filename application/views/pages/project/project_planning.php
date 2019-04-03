@@ -44,6 +44,10 @@
 			<li class="nav-item">
 				<a data-toggle="pill" class="nav-link" href="#tab_data">Data Extraction</a>
 			</li>
+			<li class="nav-item">
+				<a data-toggle="pill" class="nav-link" href="#tab_export_planning" onclick="export_to_doc();">Export
+					Planning</a>
+			</li>
 		</ul>
 	</div>
 
@@ -951,7 +955,14 @@
 			<br>
 			<div class="form-inline container justify-content-between">
 				<a href="#tab_quality" class="btn btn-secondary"><span class="fas fa-backward"></span> Previous</a>
-				<a class="btn btn-secondary disabled">Next <span class="fas fa-forward"></span></a>
+				<a href="#tab_export_planning" class="btn btn-secondary" onclick="export_to_doc();">Next <span
+						class="fas fa-forward"></span></a>
+			</div>
+		</div>
+		<div class="tab-pane container" id="tab_export_planning">
+			<div class="form-inline">
+				<a href="<?= base_url('export/E' . $project->get_id() . '.docx') ?>" id="btn_export_planning"
+				   class="btn btn-success opt">Export to Doc<i class="fa far-file-word"></i></a>
 			</div>
 		</div>
 	</div>

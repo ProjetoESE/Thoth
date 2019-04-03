@@ -258,7 +258,7 @@ class Project_Model extends CI_Model
 
 		foreach ($query->result() as $row) {
 			$score = new Quality_Score();
-			$score->setDescription($row->description);
+			$score->set_description($row->description);
 			$score->set_end_interval($row->end);
 			$score->set_start_interval($row->start);
 			$project->set_quality_scores($score);
@@ -273,20 +273,23 @@ class Project_Model extends CI_Model
 
 		foreach ($query->result() as $row) {
 			$score = new Quality_Score();
-			$score->setDescription($row->description);
+			$score->set_description($row->description);
 			$score->set_end_interval($row->end);
 			$score->set_start_interval($row->start);
 			$project->set_score_min($score);
 		}
 
-		$this->db->select('name');
+		$this->db->select('name,email');
 		$this->db->from('members');
 		$this->db->join('user', 'user.id_user = members.id_user');
 		$this->db->where('id_project', $id);
 		$query = $this->db->get();
 
 		foreach ($query->result() as $row) {
-			$project->set_members($row->name);
+			$user = new User();
+			$user->set_email($row->email);
+			$user->set_name($row->name);
+			$project->set_members($user);
 		}
 
 		$this->db->select('*');

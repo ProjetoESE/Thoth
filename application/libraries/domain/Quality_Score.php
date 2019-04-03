@@ -77,7 +77,7 @@ class Quality_Score
 	 * @param String $description
 	 * @throws InvalidArgumentException
 	 */
-	public function setDescription($description)
+	public function set_description($description)
 	{
 		if (is_null($description)) {
 			throw  new  InvalidArgumentException("Quality Score Description Invalid!");
