@@ -962,7 +962,7 @@
 		<div class="tab-pane container" id="tab_export_planning">
 			<div class="form-inline">
 				<a href="<?= base_url('export/E' . $project->get_id() . '.docx') ?>" id="btn_export_planning"
-				   class="btn btn-success opt">Export to Doc<i class="fa far-file-word"></i></a>
+				   class="btn btn-success opt">Export to Doc</a>
 			</div>
 		</div>
 	</div>
