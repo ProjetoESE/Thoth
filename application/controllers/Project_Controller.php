@@ -79,44 +79,48 @@ class Project_Controller extends CI_Controller
 
 	public function reporting($id)
 	{
+		$this->load->model("Project_Model");
+		$data['project'] = $this->Project_Model->get_project($id);
+
 		if (!isset($_SESSION['logged_in'])) {
-			$data['project'] = $id;
 			load_templates('pages/visitor/project_reporting_visitor', $data);
 		} else {
-			$data['project'] = $id;
 			load_templates('pages/project/project_reporting', $data);
 		}
 	}
 
 	public function study_selection($id)
 	{
+		$this->load->model("Project_Model");
+		$data['project'] = $this->Project_Model->get_project($id);
+
 		if (!isset($_SESSION['logged_in'])) {
-			$data['project'] = $id;
 			load_templates('pages/visitor/project_study_selection_visitor', $data);
 		} else {
-			$data['project'] = $id;
 			load_templates('pages/project/project_study_selection', $data);
 		}
 	}
 
 	public function quality_assessement($id)
 	{
+		$this->load->model("Project_Model");
+		$data['project'] = $this->Project_Model->get_project($id);
+
 		if (!isset($_SESSION['logged_in'])) {
-			$data['project'] = $id;
 			load_templates('pages/visitor/project_quality_assessement_visitor', $data);
 		} else {
-			$data['project'] = $id;
 			load_templates('pages/project/project_quality_assessement', $data);
 		}
 	}
 
 	public function data_extraction($id)
 	{
+		$this->load->model("Project_Model");
+		$data['project'] = $this->Project_Model->get_project($id);
+
 		if (!isset($_SESSION['logged_in'])) {
-			$data['project'] = $id;
 			load_templates('pages/visitor/project_data_extraction_visitor', $data);
 		} else {
-			$data['project'] = $id;
 			load_templates('pages/project/project_data_extraction', $data);
 		}
 	}
