@@ -36,7 +36,7 @@
 				<ul>
 					<?php foreach ($project->get_members() as $member) { ?>
 						<li>
-							<?= $member ?>
+							<?= $member->get_name(); ?>
 						</li>
 					<?php } ?>
 				</ul>
