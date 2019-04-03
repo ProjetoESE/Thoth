@@ -166,14 +166,14 @@ class Export_Controller extends CI_Controller
 			$scores = "";
 			$len = sizeof($rules);
 			for ($j = 0; $j < $len; $j++) {
-				$scores .= $rules[$j]->set_score_rule() . "\n";
+				$scores .= $rules[$j]->get_score_rule() . "\n";
 			}
 			$templateProcessor->setValue($id3, $scores);
 
 			$templateProcessor->setValue($id4, $qa_questions[$i]->get_weight());
 			$minimum = $qa_questions[$i]->get_min_to_approve();
 			if ($minimum != null) {
-				$templateProcessor->setValue($id5, $minimum->set_score_rule());
+				$templateProcessor->setValue($id5, $minimum->get_score_rule());
 			} else {
 				$templateProcessor->setValue($id5, "");
 			}
