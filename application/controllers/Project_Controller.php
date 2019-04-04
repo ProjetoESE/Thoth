@@ -35,18 +35,29 @@ class Project_Controller extends CI_Controller
 
 	public function edit($id)
 	{
-		$this->load->model("Project_Model");
-		$data['project'] = $this->Project_Model->get_project($id);
-		load_templates('pages/project/project_edit', $data);
+		try {
+			$this->load->model("Project_Model");
+			$data['project'] = $this->Project_Model->get_project($id);
+			load_templates('pages/project/project_edit', $data);
+		} catch (Exception $e) {
+			$this->session->set_flashdata('error', $e->getMessage());
+			redirect(base_url());
+		}
 	}
 
 	public function add_research($id)
 	{
-		$this->load->model("Project_Model");
-		$data['project'] = $this->Project_Model->get_project($id);
-		$data['users'] = $this->Project_Model->get_users();
-		$data['levels'] = $this->Project_Model->get_levels();
-		load_templates('pages/project/project_add_research', $data);
+		try {
+			$this->logged_in();
+			$this->load->model("Project_Model");
+			$data['project'] = $this->Project_Model->get_project($id);
+			$data['users'] = $this->Project_Model->get_users();
+			$data['levels'] = $this->Project_Model->get_levels();
+			load_templates('pages/project/project_add_research', $data);
+		} catch (Exception $e) {
+			$this->session->set_flashdata('error', $e->getMessage());
+			redirect(base_url());
+		}
 	}
 
 	public function planning($id)
@@ -74,91 +85,113 @@ class Project_Controller extends CI_Controller
 
 	public function conducting($id)
 	{
-		$this->load->model("Project_Model");
-		$data['project'] = $this->Project_Model->get_project($id);
-		$data['progress_planning'] = $this->progress_planning($data['project']);
-		$data['progress_import_studies'] = $this->progress_import_studies($data['project']);
-		$data['progress_study_selection'] = $this->progress_study_selection($data['project']);
-		$data['progress_quality_assessement'] = $this->progress_quality_assessement($data['project']);
-		$data['progress_data_extraction'] = $this->progress_data_extraction($data['project']);
+		try {
+			$this->load->model("Project_Model");
+			$data['project'] = $this->Project_Model->get_project($id);
+			$data['progress_planning'] = $this->progress_planning($data['project']);
+			$data['progress_import_studies'] = $this->progress_import_studies($data['project']);
+			$data['progress_study_selection'] = $this->progress_study_selection($data['project']);
+			$data['progress_quality_assessement'] = $this->progress_quality_assessement($data['project']);
+			$data['progress_data_extraction'] = $this->progress_data_extraction($data['project']);
 
-		if (!isset($_SESSION['logged_in'])) {
-			load_templates('pages/visitor/project_conducting_visitor', $data);
-		} else {
-			load_templates('pages/project/project_conducting', $data);
+			if (!isset($_SESSION['logged_in'])) {
+				load_templates('pages/visitor/project_conducting_visitor', $data);
+			} else {
+				load_templates('pages/project/project_conducting', $data);
+			}
+		} catch (Exception $e) {
+			$this->session->set_flashdata('error', $e->getMessage());
+			redirect(base_url());
 		}
 	}
 
 	public function reporting($id)
 	{
-		$this->load->model("Project_Model");
-		$data['project'] = $this->Project_Model->get_project($id);
-		$data['progress_planning'] = $this->progress_planning($data['project']);
-		$data['progress_import_studies'] = $this->progress_import_studies($data['project']);
-		$data['progress_study_selection'] = $this->progress_study_selection($data['project']);
-		$data['progress_quality_assessement'] = $this->progress_quality_assessement($data['project']);
-		$data['progress_data_extraction'] = $this->progress_data_extraction($data['project']);
+		try {
+			$this->load->model("Project_Model");
+			$data['project'] = $this->Project_Model->get_project($id);
+			$data['progress_planning'] = $this->progress_planning($data['project']);
+			$data['progress_import_studies'] = $this->progress_import_studies($data['project']);
+			$data['progress_study_selection'] = $this->progress_study_selection($data['project']);
+			$data['progress_quality_assessement'] = $this->progress_quality_assessement($data['project']);
+			$data['progress_data_extraction'] = $this->progress_data_extraction($data['project']);
 
-		if (!isset($_SESSION['logged_in'])) {
-			load_templates('pages/visitor/project_reporting_visitor', $data);
-		} else {
-			load_templates('pages/project/project_reporting', $data);
+			if (!isset($_SESSION['logged_in'])) {
+				load_templates('pages/visitor/project_reporting_visitor', $data);
+			} else {
+				load_templates('pages/project/project_reporting', $data);
+			}
+		} catch (Exception $e) {
+			$this->session->set_flashdata('error', $e->getMessage());
+			redirect(base_url());
 		}
 	}
 
 	public function study_selection($id)
 	{
-		$this->load->model("Project_Model");
-		$data['project'] = $this->Project_Model->get_project($id);
-		$data['progress_study_selection'] = $this->progress_study_selection($data['project']);
-		$data['progress_quality_assessement'] = $this->progress_quality_assessement($data['project']);
-		$data['progress_data_extraction'] = $this->progress_data_extraction($data['project']);
+		try {
+			$this->load->model("Project_Model");
+			$data['project'] = $this->Project_Model->get_project($id);
+			$data['progress_study_selection'] = $this->progress_study_selection($data['project']);
+			$data['progress_quality_assessement'] = $this->progress_quality_assessement($data['project']);
+			$data['progress_data_extraction'] = $this->progress_data_extraction($data['project']);
 
-		if (!isset($_SESSION['logged_in'])) {
-			load_templates('pages/visitor/project_study_selection_visitor', $data);
-		} else {
-			load_templates('pages/project/project_study_selection', $data);
+			if (!isset($_SESSION['logged_in'])) {
+				load_templates('pages/visitor/project_study_selection_visitor', $data);
+			} else {
+				load_templates('pages/project/project_study_selection', $data);
+			}
+		} catch (Exception $e) {
+			$this->session->set_flashdata('error', $e->getMessage());
+			redirect(base_url());
 		}
 	}
 
 	public function quality_assessement($id)
 	{
-		$this->load->model("Project_Model");
-		$data['project'] = $this->Project_Model->get_project($id);
-		$data['progress_quality_assessement'] = $this->progress_quality_assessement($data['project']);
-		$data['progress_data_extraction'] = $this->progress_data_extraction($data['project']);
+		try {
+			$this->load->model("Project_Model");
+			$data['project'] = $this->Project_Model->get_project($id);
+			$data['progress_quality_assessement'] = $this->progress_quality_assessement($data['project']);
+			$data['progress_data_extraction'] = $this->progress_data_extraction($data['project']);
 
-		if (!isset($_SESSION['logged_in'])) {
-			load_templates('pages/visitor/project_quality_assessement_visitor', $data);
-		} else {
-			load_templates('pages/project/project_quality_assessement', $data);
+			if (!isset($_SESSION['logged_in'])) {
+				load_templates('pages/visitor/project_quality_assessement_visitor', $data);
+			} else {
+				load_templates('pages/project/project_quality_assessement', $data);
+			}
+		} catch (Exception $e) {
+			$this->session->set_flashdata('error', $e->getMessage());
+			redirect(base_url());
 		}
 	}
 
 	public function data_extraction($id)
 	{
-		$this->load->model("Project_Model");
-		$data['project'] = $this->Project_Model->get_project($id);
-		$data['progress_data_extraction'] = $this->progress_data_extraction($data['project']);
+		try {
+			$this->load->model("Project_Model");
+			$data['project'] = $this->Project_Model->get_project($id);
+			$data['progress_data_extraction'] = $this->progress_data_extraction($data['project']);
 
-		if (!isset($_SESSION['logged_in'])) {
-			load_templates('pages/visitor/project_data_extraction_visitor', $data);
-		} else {
-			load_templates('pages/project/project_data_extraction', $data);
+			if (!isset($_SESSION['logged_in'])) {
+				load_templates('pages/visitor/project_data_extraction_visitor', $data);
+			} else {
+				load_templates('pages/project/project_data_extraction', $data);
+			}
+		} catch (Exception $e) {
+			$this->session->set_flashdata('error', $e->getMessage());
+			redirect(base_url());
 		}
 	}
 
 	public function new_project()
 	{
 		try {
-			if (!$this->session->logged_in) {
-				redirect(base_url());
-			}
-
+			$this->logged_in();
 			load_templates('pages/project/project_new', null);
 		} catch (Exception $e) {
 			$this->session->set_flashdata('error', $e->getMessage());
-			load_templates('pages/project/project_new', null);
+			redirect(base_url());
 		}
 	}
 
@@ -171,10 +204,7 @@ class Project_Controller extends CI_Controller
 	public function created_project()
 	{
 		try {
-			if (!$this->session->logged_in) {
-				redirect(base_url());
-			}
-
+			$this->logged_in();
 			$this->load->model("Project_Model");
 			$title = $this->input->post('title');
 			$description = $this->input->post('description');
@@ -196,6 +226,7 @@ class Project_Controller extends CI_Controller
 	public function add_member()
 	{
 		try {
+			$this->logged_in();
 			$email = $this->input->post('email');
 			$id_project = $this->input->post('id_project');
 			$level = $this->input->post('level');
@@ -215,6 +246,7 @@ class Project_Controller extends CI_Controller
 	public function edited_project()
 	{
 		try {
+			$this->logged_in();
 			$title = $this->input->post('title');
 			$id_project = $this->input->post('id_project');
 			$description = $this->input->post('description');
@@ -235,6 +267,7 @@ class Project_Controller extends CI_Controller
 	public function deleted_project()
 	{
 		try {
+			$this->logged_in();
 			$id_project = $this->input->post('id_project');
 			$this->load->model("Project_Model");
 
@@ -249,7 +282,7 @@ class Project_Controller extends CI_Controller
 		}
 	}
 
-	public function export_doc($id_project)
+	private function export_doc($id_project)
 	{
 		try {
 			require_once('C:\xampp\htdocs\Thoth\application\third_party\vendor\autoload.php');
@@ -264,20 +297,39 @@ class Project_Controller extends CI_Controller
 			$templateProcessor->setValue('title', $project->get_title());
 
 			$members = "";
-			foreach ($project->get_members() as $member) {
-				$members .= $member->get_name() . ", ";
+			$array = $project->get_members();
+			foreach ($array as $key => $member) {
+				end($array);
+				if ($key === key($array)) {
+					$members .= $member->get_name();
+				} else {
+					$members .= $member->get_name() . ", ";
+				}
 			}
 			$templateProcessor->setValue('member', $members);
 
 			$emails = "";
-			foreach ($project->get_members() as $member) {
-				$emails .= $member->get_email() . ", ";
+			$array = $project->get_members();
+			foreach ($array as $key => $member) {
+				end($array);
+				if ($key === key($array)) {
+					$emails .= $member->get_email();
+				} else {
+					$emails .= $member->get_email() . ", ";
+				}
 			}
 			$templateProcessor->setValue('email', $emails);
 
 			$inst = "";
-			foreach ($project->get_members() as $member) {
-				$inst .= $member->get_institution() . ", ";
+			$array = $project->get_members();
+			foreach ($array as $key => $member) {
+				end($array);
+				if ($key === key($array)) {
+					$inst .= $member->get_institution();
+				} else {
+					$inst .= $member->get_institution() . ", ";
+				}
+
 			}
 			$templateProcessor->setValue('instituition', $inst);
 
@@ -286,26 +338,51 @@ class Project_Controller extends CI_Controller
 			$templateProcessor->setValue('objectives', $project->get_objectives());
 
 			$domains = "";
-			foreach ($project->get_domains() as $domain) {
-				$domains .= $domain . ", ";
+			$array = $project->get_domains();
+			foreach ($array as $key => $domain) {
+				end($array);
+				if ($key === key($array)) {
+					$domains .= $domain;
+				} else {
+					$domains .= $domain . ", ";
+				}
 			}
 			$templateProcessor->setValue('domain', $domains);
 
 			$languages = "";
-			foreach ($project->get_languages() as $language) {
-				$languages .= $language . ", ";
+			$array = $project->get_languages();
+			foreach ($array as $key => $language) {
+				end($array);
+				if ($key === key($array)) {
+					$languages .= $language;
+				} else {
+					$languages .= $language . ", ";
+				}
+
 			}
 			$templateProcessor->setValue('language', $languages);
 
 			$studies = "";
-			foreach ($project->get_study_types() as $study) {
-				$studies .= $study . ", ";
+			$array = $project->get_languages();
+			foreach ($array as $key => $study) {
+				end($array);
+				if ($key === key($array)) {
+					$studies .= $study;
+				} else {
+					$studies .= $study . ", ";
+				}
 			}
 			$templateProcessor->setValue('study_type', $studies);
 
 			$keywords = "";
-			foreach ($project->get_keywords() as $keyword) {
-				$keywords .= $keyword . ", ";
+			$array = $project->get_keywords();
+			foreach ($array as $key => $keyword) {
+				end($array);
+				if ($key === key($array)) {
+					$keywords .= $keyword;
+				} else {
+					$keywords .= $keyword . ", ";
+				}
 			}
 			$templateProcessor->setValue('keyword', $keywords);
 
@@ -337,8 +414,15 @@ class Project_Controller extends CI_Controller
 				$id2 = 'synonym#' . ($i + 1);
 				$templateProcessor->setValue($id1, $terms[$i]->get_description());
 				$synonyms = "";
-				foreach ($terms[$i]->get_synonyms() as $syn) {
-					$synonyms .= $syn . ' OR ';
+				$array = $terms[$i]->get_synonyms();
+				foreach ($array as $key => $syn) {
+					end($array);
+					if ($key === key($array)) {
+						$synonyms .= $syn;
+					} else {
+						$synonyms .= $syn . ' OR ';
+					}
+
 				}
 				$templateProcessor->setValue($id2, $synonyms);
 			}
@@ -413,7 +497,8 @@ class Project_Controller extends CI_Controller
 				$scores = "";
 				$len = sizeof($rules);
 				for ($j = 0; $j < $len; $j++) {
-					$scores .= $rules[$j]->get_score_rule() . "\n";
+					$scores .= $rules[$j]->get_score_rule() . " - " . $rules[$j]->get_description() . ";\n";
+
 				}
 				$templateProcessor->setValue($id3, $scores);
 
@@ -442,7 +527,7 @@ class Project_Controller extends CI_Controller
 				$options = "";
 				$len = sizeof($ops);
 				for ($j = 0; $j < $len; $j++) {
-					$options .= $ops[$j] . "\n";
+					$options .= $ops[$j] . ";\n";
 				}
 				$templateProcessor->setValue($id4, $options);
 
@@ -669,6 +754,13 @@ class Project_Controller extends CI_Controller
 		$data['errors'] = $errors;
 		$data['progress'] = $progress;
 		return $data;
+	}
+
+	private function logged_in()
+	{
+		if (!$this->session->logged_in) {
+			redirect(base_url());
+		}
 	}
 
 }

@@ -951,8 +951,7 @@
 			<br>
 			<div class="form-inline container justify-content-between">
 				<a href="#tab_quality" class="btn btn-secondary"><span class="fas fa-backward"></span> Previous</a>
-				<a href="#tab_export_planning" class="btn btn-secondary <?= $disable ?>" onclick="export_to_doc();">Next
-					<span
+				<a href="#tab_export_planning" class="btn btn-secondary disabled">Next<span
 						class="fas fa-forward"></span></a>
 			</div>
 		</div>

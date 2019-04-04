@@ -38,7 +38,7 @@ class Project_Model extends CI_Model
 
 		$data = array(
 			'id_project' => $id_project,
-			'id_rule' => 1
+			'id_rule' => 2
 		);
 
 		$this->db->insert('inclusion_rule', $data);

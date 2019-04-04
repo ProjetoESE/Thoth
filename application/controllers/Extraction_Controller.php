@@ -7,7 +7,7 @@ class Extraction_Controller extends CI_Controller
 	{
 	}
 
-	public function insert_log($activity, $module, $id_project)
+	private function insert_log($activity, $module, $id_project)
 	{
 		$this->load->model("User_Model");
 		$this->User_Model->insert_log($activity, $module, $id_project);
@@ -15,7 +15,9 @@ class Extraction_Controller extends CI_Controller
 
 	public function add_question_extraction()
 	{
+		$id_project = null;
 		try {
+			$this->logged_in();
 			$id = $this->input->post('id');
 			$desc = $this->input->post('desc');
 			$type = $this->input->post('type');
@@ -29,13 +31,19 @@ class Extraction_Controller extends CI_Controller
 
 		} catch (Exception $e) {
 			$this->session->set_flashdata('error', $e->getMessage());
-			redirect(base_url());
+			if (is_null($id_project) || empty($id_project)) {
+				redirect(base_url());
+			} else {
+				redirect(base_url('planning/' . $id_project));
+			}
 		}
 	}
 
 	public function add_option()
 	{
+		$id_project = null;
 		try {
+			$this->logged_in();
 			$id_qe = $this->input->post('id_qe');
 			$desc = $this->input->post('desc');
 			$id_project = $this->input->post('id_project');
@@ -48,13 +56,19 @@ class Extraction_Controller extends CI_Controller
 
 		} catch (Exception $e) {
 			$this->session->set_flashdata('error', $e->getMessage());
-			redirect(base_url());
+			if (is_null($id_project) || empty($id_project)) {
+				redirect(base_url());
+			} else {
+				redirect(base_url('planning/' . $id_project));
+			}
 		}
 	}
 
 	public function delete_extraction()
 	{
+		$id_project = null;
 		try {
+			$this->logged_in();
 			$id = $this->input->post('id');
 			$id_project = $this->input->post('id_project');
 			$this->load->model("Extraction_Model");
@@ -66,13 +80,19 @@ class Extraction_Controller extends CI_Controller
 
 		} catch (Exception $e) {
 			$this->session->set_flashdata('error', $e->getMessage());
-			redirect(base_url());
+			if (is_null($id_project) || empty($id_project)) {
+				redirect(base_url());
+			} else {
+				redirect(base_url('planning/' . $id_project));
+			}
 		}
 	}
 
 	public function delete_option()
 	{
+		$id_project = null;
 		try {
+			$this->logged_in();
 			$id_qe = $this->input->post('id_qe');
 			$desc = $this->input->post('desc');
 			$id_project = $this->input->post('id_project');
@@ -85,13 +105,19 @@ class Extraction_Controller extends CI_Controller
 
 		} catch (Exception $e) {
 			$this->session->set_flashdata('error', $e->getMessage());
-			redirect(base_url());
+			if (is_null($id_project) || empty($id_project)) {
+				redirect(base_url());
+			} else {
+				redirect(base_url('planning/' . $id_project));
+			}
 		}
 	}
 
 	public function edit_de()
 	{
+		$id_project = null;
 		try {
+			$this->logged_in();
 			$id = $this->input->post('id');
 			$desc = $this->input->post('desc');
 			$type = $this->input->post('type');
@@ -107,13 +133,19 @@ class Extraction_Controller extends CI_Controller
 
 		} catch (Exception $e) {
 			$this->session->set_flashdata('error', $e->getMessage());
-			redirect(base_url());
+			if (is_null($id_project) || empty($id_project)) {
+				redirect(base_url());
+			} else {
+				redirect(base_url('planning/' . $id_project));
+			}
 		}
 	}
 
 	public function edit_option()
 	{
+		$id_project = null;
 		try {
+			$this->logged_in();
 			$id_qe = $this->input->post('qe');
 			$op = $this->input->post('now');
 			$old_op = $this->input->post('old');
@@ -127,6 +159,17 @@ class Extraction_Controller extends CI_Controller
 
 		} catch (Exception $e) {
 			$this->session->set_flashdata('error', $e->getMessage());
+			if (is_null($id_project) || empty($id_project)) {
+				redirect(base_url());
+			} else {
+				redirect(base_url('planning/' . $id_project));
+			}
+		}
+	}
+
+	private function logged_in()
+	{
+		if (!$this->session->logged_in) {
 			redirect(base_url());
 		}
 	}

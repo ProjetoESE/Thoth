@@ -7,7 +7,7 @@ class Research_Controller extends CI_Controller
 	{
 	}
 
-	public function insert_log($activity, $module, $id_project)
+	private function insert_log($activity, $module, $id_project)
 	{
 		$this->load->model("User_Model");
 		$this->User_Model->insert_log($activity, $module, $id_project);
@@ -15,7 +15,9 @@ class Research_Controller extends CI_Controller
 
 	public function add_research_question()
 	{
+		$id_project = null;
 		try {
+			$this->logged_in();
 			$id_rq = $this->input->post('id_rq');
 			$description = $this->input->post('description');
 			$id_project = $this->input->post('id_project');
@@ -29,13 +31,19 @@ class Research_Controller extends CI_Controller
 
 		} catch (Exception $e) {
 			$this->session->set_flashdata('error', $e->getMessage());
-			redirect(base_url());
+			if (is_null($id_project) || empty($id_project)) {
+				redirect(base_url());
+			} else {
+				redirect(base_url('planning/' . $id_project));
+			}
 		}
 	}
 
 	public function delete_research_question()
 	{
+		$id_project = null;
 		try {
+			$this->logged_in();
 			$id_rq = $this->input->post('id_rq');
 			$id_project = $this->input->post('id_project');
 			$this->load->model("Research_Model");
@@ -48,13 +56,19 @@ class Research_Controller extends CI_Controller
 
 		} catch (Exception $e) {
 			$this->session->set_flashdata('error', $e->getMessage());
-			redirect(base_url());
+			if (is_null($id_project) || empty($id_project)) {
+				redirect(base_url());
+			} else {
+				redirect(base_url('planning/' . $id_project));
+			}
 		}
 	}
 
 	public function edit_research_question()
 	{
+		$id_project = null;
 		try {
+			$this->logged_in();
 			$now_id = $this->input->post('now_id');
 			$now_question = $this->input->post('now_question');
 			$old_id = $this->input->post('old_id');
@@ -68,6 +82,17 @@ class Research_Controller extends CI_Controller
 
 		} catch (Exception $e) {
 			$this->session->set_flashdata('error', $e->getMessage());
+			if (is_null($id_project) || empty($id_project)) {
+				redirect(base_url());
+			} else {
+				redirect(base_url('planning/' . $id_project));
+			}
+		}
+	}
+
+	private function logged_in()
+	{
+		if (!$this->session->logged_in) {
 			redirect(base_url());
 		}
 	}
