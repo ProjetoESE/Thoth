@@ -94,9 +94,7 @@
 				<?php
 				foreach ($progress_planning['errors'] as $error) {
 					?>
-					<li><strong>
-							<?= $error ?>
-						</strong></li>
+					<li><?= $error ?></li>
 					<?php
 				}
 				}

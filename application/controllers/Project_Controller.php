@@ -622,7 +622,7 @@ class Project_Controller extends CI_Controller
 		if (!is_null($project->get_questions_extraction())) {
 			$size = sizeof($project->get_questions_extraction());
 			if ($size > 0) {
-				$progress += 11;
+				$progress += 12;
 			} else {
 				array_push($errors, "Add Question Extraction");
 			}

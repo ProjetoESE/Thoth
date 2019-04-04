@@ -1,7 +1,3 @@
-<?php $disable = 'disabled';
-if ($progress_planning == 100) {
-	$disable = '';
-} ?>
 <div class="card">
 	<div class="text-center card-header">
 		<h4><?= $project->get_title(); ?></h4>
@@ -49,7 +45,7 @@ if ($progress_planning == 100) {
 				<a data-toggle="pill" class="nav-link" href="#tab_data">Data Extraction</a>
 			</li>
 			<li class="nav-item ">
-				<a data-toggle="pill" class="nav-link <?= $disable ?>" href="#tab_export_planning" onclick="export_to_doc();">Export
+				<a data-toggle="pill" class="nav-link <?= $progress_planning['progress'] == 100 ? :"disabled" ?>" href="#tab_export_planning" onclick="export_to_doc();">Export
 					Planning</a>
 			</li>
 		</ul>
