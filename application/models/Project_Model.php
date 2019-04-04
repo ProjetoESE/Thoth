@@ -423,13 +423,23 @@ class Project_Model extends CI_Model
 		return $study_types;
 	}
 
-	public function get_users()
+	public function get_users($id)
 	{
 		$users = array();
-		$this->db->select('*');
+		$id_users = array();
+		$this->db->select('id_user');
+		$this->db->from('members');
+		$this->db->where('id_project', $id);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			array_push($id_users, $row->id_user);
+		}
+
+		$this->db->select('user.*');
 		$this->db->from('user');
-		$this->db->join('members', 'members.id_user = user.id_user', 'left');
-		$this->db->where('members.id_user', null);
+		$this->db->join('members', 'members.id_user = user.id_user');
+		$this->db->where_not_in('members.id_user', $id_users);
 		$query = $this->db->get();
 
 		foreach ($query->result() as $row) {
@@ -541,4 +551,21 @@ class Project_Model extends CI_Model
 		$this->db->delete('project');
 
 	}
+
+	public function get_level($email, $id_project)
+	{
+		$level = null;
+		$this->db->select('level');
+		$this->db->from('user');
+		$this->db->join('members', 'members.id_user = user.id_user');
+		$this->db->where('user.email', $email);
+		$this->db->where('id_project', $id_project);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			$level = $row->level;
+		}
+		return $level;
+	}
+
 }
