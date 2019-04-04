@@ -14,7 +14,7 @@
 	<div class="card-body">
 		<h4>Conducting</h4>
 		<?php
-		if ($progress_planning['progress'] == 100) {
+		if (strval($progress_planning['progress']) == strval(100)) {
 			?>
 			<ul class="nav nav-pills nav-justified">
 				<li class="nav-item">
@@ -97,9 +97,11 @@
 					<li><?= $error ?></li>
 					<?php
 				}
-				}
 				?>
 			</ul>
 		</div>
+			<?php
+		}
+		?>
 	</div>
 </div>
