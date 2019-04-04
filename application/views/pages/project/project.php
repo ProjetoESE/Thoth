@@ -46,11 +46,104 @@
 		<div class="row">
 			<div class="col-sm-12 col-md-6">
 				<div class="form-inline">
-					<span class="fas fa-recycle opt fa-2x"></span>
-					<h5>Systematic Review Process</h5>
+					<span class="fas fa-tasks opt fa-2x"></span>
+					<h5>Progress of Systematic Review</h5>
 				</div>
 				<div class="text-center">
-					<img src="<?= base_url('assets/img/slr_process.png'); ?>" class="img-thumbnail">
+					<h6>Planning</h6>
+					<div class="form-inline">
+						<div class="col-md-10">
+							<div class="progress">
+								<div class="progress-bar bg-success" role="progressbar"
+									 style="width: <?= $progress_planning['progress']?>%"
+									 aria-valuenow="<?= $progress_planning['progress'] ?>" aria-valuemin="0"
+									 aria-valuemax="100"><?= $progress_planning['progress'] ?>%
+								</div>
+							</div>
+						</div>
+						<?php
+						$disable = 'disabled';
+						if ($progress_planning['progress'] == 100) {
+							$disable = '';
+						} ?>
+						<a href="<?= base_url('export/P' . $project->get_id() . '.docx') ?>"
+						   class="btn btn-success col-md-2 <?= $disable ?>">Export</a>
+					</div>
+					<h6>Import Studies</h6>
+					<div class="form-inline">
+						<div class="col-md-10">
+							<div class="progress">
+								<div class="progress-bar bg-info" role="progressbar"
+									 style="width: <?= $progress_import_studies['progress'] ?>%"
+									 aria-valuenow="<?= $progress_import_studies['progress'] ?>" aria-valuemin="0"
+									 aria-valuemax="100">
+									<?= $progress_import_studies['progress'] ?>%
+								</div>
+							</div>
+						</div>
+						<?php
+						$disable = 'disabled';
+						if ($progress_import_studies['progress'] == 100) {
+							$disable = '';
+						} ?>
+						<a href="#" class="btn btn-info col-md-2 <?= $disable ?>">Export</a>
+					</div>
+					<h6>Study Selection</h6>
+					<div class="form-inline">
+						<div class="col-md-10">
+							<div class="progress">
+								<div class="progress-bar bg-warning" role="progressbar"
+									 style="width: <?= $progress_study_selection['progress'] ?>%"
+									 aria-valuenow="<?= $progress_study_selection['progress'] ?>" aria-valuemin="0"
+									 aria-valuemax="100">
+									<?= $progress_study_selection['progress'] ?>%
+								</div>
+							</div>
+						</div>
+						<?php
+						$disable = 'disabled';
+						if ($progress_study_selection['progress'] == 100) {
+							$disable = '';
+						} ?>
+						<a href="#" class="btn btn-warning col-md-2 <?= $disable ?>">Export</a>
+					</div>
+					<h6>Quality Assessment</h6>
+					<div class="form-inline">
+						<div class="col-md-10">
+							<div class="progress">
+								<div class="progress-bar bg-secondary" role="progressbar"
+									 style="width: <?= $progress_quality_assessement['progress'] ?>%"
+									 aria-valuenow="<?= $progress_quality_assessement['progress'] ?>" aria-valuemin="0"
+									 aria-valuemax="100">
+									<?= $progress_quality_assessement['progress'] ?>%
+								</div>
+							</div>
+						</div>
+						<?php
+						$disable = 'disabled';
+						if ($progress_quality_assessement['progress'] == 100) {
+							$disable = '';
+						} ?>
+						<a href="#" class="btn btn-secondary col-md-2 disabled">Export</a>
+					</div>
+					<h6>Data Extraction</h6>
+					<div class="form-inline">
+						<div class="col-md-10">
+							<div class="progress">
+								<div class="progress-bar bg-danger" role="progressbar"
+									 style="width: <?= $progress_data_extraction['progress'] ?>%"
+									 aria-valuenow="<?= $progress_data_extraction['progress'] ?>" aria-valuemin="0"
+									 aria-valuemax="100"><?= $progress_data_extraction['progress'] ?>%
+								</div>
+							</div>
+						</div>
+						<?php
+						$disable = 'disabled';
+						if ($progress_data_extraction['progress'] == 100) {
+							$disable = '';
+						} ?>
+						<a href="#" class="btn btn-danger col-md-2 disabled">Export</a>
+					</div>
 				</div>
 			</div>
 			<div class="col-sm-12 col-md-6">

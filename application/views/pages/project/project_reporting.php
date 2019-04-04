@@ -1,4 +1,3 @@
-<script src="<?= base_url('assets/js/chars.js'); ?>"></script>
 <div class="card">
 	<div class="text-center card-header">
 		<h4><?= $project->get_title(); ?></h4>
@@ -14,19 +13,41 @@
 	</div>
 	<div class="card-body">
 		<h4>Reporting</h4>
-		<br>
-		<div id="chart_line"></div>
-		<br>
-		<div id="basic_bar"></div>
-		<br>
-		<div id="stacked_bar"></div>
-		<br>
-		<div id="pier_chart"></div>
-		<br>
-		<div id="bubble_chart"></div>
-		<br>
-		<div id="boxplot_chart"></div>
-		<br>
-		<div id="funnel_chart"></div>
+		<?php
+		if ($progress_planning['progress'] == 100) {
+			?>
+			<script src="<?= base_url('assets/js/chars.js'); ?>"></script>
+			<br>
+			<div id="chart_line"></div>
+			<br>
+			<div id="basic_bar"></div>
+			<br>
+			<div id="stacked_bar"></div>
+			<br>
+			<div id="pier_chart"></div>
+			<br>
+			<div id="bubble_chart"></div>
+			<br>
+			<div id="boxplot_chart"></div>
+			<br>
+			<div id="funnel_chart"></div><?php
+		} else {
+		?>
+		<div class="alert alert-warning container alert-dismissible fade show" role="alert">
+			<h5>Complete Planning</h5>
+			<ul>
+				<?php
+				foreach ($progress_planning['errors'] as $error) {
+					?>
+					<li><strong>
+							<?= $error ?>
+						</strong></li>
+					<?php
+				}
+				}
+				?>
+			</ul>
+		</div>
+
 	</div>
 </div>
