@@ -45,6 +45,7 @@ class Project_Controller extends CI_Controller
 	{
 		try {
 			$this->logged_in();
+			$this->validate_level($id, array(1));
 			$this->load->model("Project_Model");
 			$data['project'] = $this->Project_Model->get_project($id);
 			$data['users'] = $this->Project_Model->get_users($id);
@@ -206,6 +207,7 @@ class Project_Controller extends CI_Controller
 			$this->logged_in();
 			$email = $this->input->post('email');
 			$id_project = $this->input->post('id_project');
+			$this->validate_level($id_project, array(1));
 			$level = $this->input->post('level');
 			$this->load->model("Project_Model");
 
@@ -226,6 +228,7 @@ class Project_Controller extends CI_Controller
 			$this->logged_in();
 			$title = $this->input->post('title');
 			$id_project = $this->input->post('id_project');
+			$this->validate_level($id_project, array(1));
 			$description = $this->input->post('description');
 			$objectives = $this->input->post('objectives');
 			$this->load->model("Project_Model");
@@ -246,6 +249,7 @@ class Project_Controller extends CI_Controller
 		try {
 			$this->logged_in();
 			$id_project = $this->input->post('id_project');
+			$this->validate_level($id_project, array(1));
 			$this->load->model("Project_Model");
 
 			$this->Project_Model->deleted_project($id_project);
@@ -763,6 +767,21 @@ class Project_Controller extends CI_Controller
 		} else {
 			load_templates($view . '_visitor', $data);
 		}
+	}
+
+	private function validate_level($project_id, $levels)
+	{
+		$this->load->model("Project_Model");
+		$res_level = $this->Project_Model->get_level($this->session->email, $project_id);
+
+		foreach ($levels as $l) {
+			if ($l == $res_level) {
+				return;
+			}
+		}
+
+		redirect(base_url());
+
 	}
 
 }
