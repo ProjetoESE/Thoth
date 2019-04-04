@@ -61,13 +61,8 @@
 								</div>
 							</div>
 						</div>
-						<?php
-						$disable = 'disabled';
-						if ($progress_planning['progress'] == 100) {
-							$disable = '';
-						} ?>
 						<a href="<?= base_url('export/P' . $project->get_id() . '.docx') ?>"
-						   class="btn btn-success col-md-2 <?= $disable ?>">Export</a>
+						   class="btn btn-success col-md-2 <?= $progress_planning['progress'] == 100 ? :"disabled" ?>">Export</a>
 					</div>
 					<h6>Import Studies</h6>
 					<div class="form-inline">
@@ -81,12 +76,7 @@
 								</div>
 							</div>
 						</div>
-						<?php
-						$disable = 'disabled';
-						if ($progress_import_studies['progress'] == 100) {
-							$disable = '';
-						} ?>
-						<a href="#" class="btn btn-info col-md-2 <?= $disable ?>">Export</a>
+						<a href="#" class="btn btn-info col-md-2 <?= $progress_import_studies['progress'] == 100 ? :"disabled" ?>">Export</a>
 					</div>
 					<h6>Study Selection</h6>
 					<div class="form-inline">
@@ -100,12 +90,7 @@
 								</div>
 							</div>
 						</div>
-						<?php
-						$disable = 'disabled';
-						if ($progress_study_selection['progress'] == 100) {
-							$disable = '';
-						} ?>
-						<a href="#" class="btn btn-warning col-md-2 <?= $disable ?>">Export</a>
+						<a href="#" class="btn btn-warning col-md-2 <?= $progress_study_selection['progress'] == 100 ? :"disabled" ?>">Export</a>
 					</div>
 					<h6>Quality Assessment</h6>
 					<div class="form-inline">
@@ -119,12 +104,7 @@
 								</div>
 							</div>
 						</div>
-						<?php
-						$disable = 'disabled';
-						if ($progress_quality_assessement['progress'] == 100) {
-							$disable = '';
-						} ?>
-						<a href="#" class="btn btn-secondary col-md-2 disabled">Export</a>
+						<a href="#" class="btn btn-secondary col-md-2 <?= $progress_quality_assessement['progress'] == 100 ? :"disabled" ?>">Export</a>
 					</div>
 					<h6>Data Extraction</h6>
 					<div class="form-inline">
@@ -137,12 +117,7 @@
 								</div>
 							</div>
 						</div>
-						<?php
-						$disable = 'disabled';
-						if ($progress_data_extraction['progress'] == 100) {
-							$disable = '';
-						} ?>
-						<a href="#" class="btn btn-danger col-md-2 disabled">Export</a>
+						<a href="#" class="btn btn-danger col-md-2 <?= $progress_data_extraction['progress'] == 100 ? :"disabled" ?>">Export</a>
 					</div>
 				</div>
 			</div>
