@@ -21,12 +21,8 @@ class Project_Controller extends CI_Controller
 			$data['progress_quality_assessement'] = $this->progress_quality_assessement($data['project']);
 			$data['progress_data_extraction'] = $this->progress_data_extraction($data['project']);
 
+			$this->load_views($id, 'pages/project/project', $data);
 
-			if (!isset($_SESSION['logged_in'])) {
-				load_templates('pages/visitor/project_visitor', $data);
-			} else {
-				load_templates('pages/project/project', $data);
-			}
 		} catch (Exception $e) {
 			$this->session->set_flashdata('error', $e->getMessage());
 			redirect(base_url());
@@ -51,7 +47,7 @@ class Project_Controller extends CI_Controller
 			$this->logged_in();
 			$this->load->model("Project_Model");
 			$data['project'] = $this->Project_Model->get_project($id);
-			$data['users'] = $this->Project_Model->get_users();
+			$data['users'] = $this->Project_Model->get_users($id);
 			$data['levels'] = $this->Project_Model->get_levels();
 			load_templates('pages/project/project_add_research', $data);
 		} catch (Exception $e) {
@@ -72,11 +68,7 @@ class Project_Controller extends CI_Controller
 			$data['question_types'] = $this->Project_Model->get_types();
 			$data['progress_planning'] = $this->progress_planning($data['project']);
 
-			if (!isset($_SESSION['logged_in'])) {
-				load_templates('pages/visitor/project_planning_visitor', $data);
-			} else {
-				load_templates('pages/project/project_planning', $data);
-			}
+			$this->load_views($id, 'pages/project/project_planning', $data);
 		} catch (Exception $e) {
 			$this->session->set_flashdata('error', $e->getMessage());
 			redirect(base_url());
@@ -94,11 +86,8 @@ class Project_Controller extends CI_Controller
 			$data['progress_quality_assessement'] = $this->progress_quality_assessement($data['project']);
 			$data['progress_data_extraction'] = $this->progress_data_extraction($data['project']);
 
-			if (!isset($_SESSION['logged_in'])) {
-				load_templates('pages/visitor/project_conducting_visitor', $data);
-			} else {
-				load_templates('pages/project/project_conducting', $data);
-			}
+			$this->load_views($id, 'pages/project/project_conducting', $data);
+
 		} catch (Exception $e) {
 			$this->session->set_flashdata('error', $e->getMessage());
 			redirect(base_url());
@@ -116,11 +105,8 @@ class Project_Controller extends CI_Controller
 			$data['progress_quality_assessement'] = $this->progress_quality_assessement($data['project']);
 			$data['progress_data_extraction'] = $this->progress_data_extraction($data['project']);
 
-			if (!isset($_SESSION['logged_in'])) {
-				load_templates('pages/visitor/project_reporting_visitor', $data);
-			} else {
-				load_templates('pages/project/project_reporting', $data);
-			}
+			$this->load_views($id, 'pages/project/project_reporting', $data);
+
 		} catch (Exception $e) {
 			$this->session->set_flashdata('error', $e->getMessage());
 			redirect(base_url());
@@ -136,11 +122,8 @@ class Project_Controller extends CI_Controller
 			$data['progress_quality_assessement'] = $this->progress_quality_assessement($data['project']);
 			$data['progress_data_extraction'] = $this->progress_data_extraction($data['project']);
 
-			if (!isset($_SESSION['logged_in'])) {
-				load_templates('pages/visitor/project_study_selection_visitor', $data);
-			} else {
-				load_templates('pages/project/project_study_selection', $data);
-			}
+			$this->load_views($id, 'pages/project/project_study_selection', $data);
+
 		} catch (Exception $e) {
 			$this->session->set_flashdata('error', $e->getMessage());
 			redirect(base_url());
@@ -155,11 +138,8 @@ class Project_Controller extends CI_Controller
 			$data['progress_quality_assessement'] = $this->progress_quality_assessement($data['project']);
 			$data['progress_data_extraction'] = $this->progress_data_extraction($data['project']);
 
-			if (!isset($_SESSION['logged_in'])) {
-				load_templates('pages/visitor/project_quality_assessement_visitor', $data);
-			} else {
-				load_templates('pages/project/project_quality_assessement', $data);
-			}
+			$this->load_views($id, 'pages/project/project_quality_assessement', $data);
+
 		} catch (Exception $e) {
 			$this->session->set_flashdata('error', $e->getMessage());
 			redirect(base_url());
@@ -173,11 +153,8 @@ class Project_Controller extends CI_Controller
 			$data['project'] = $this->Project_Model->get_project($id);
 			$data['progress_data_extraction'] = $this->progress_data_extraction($data['project']);
 
-			if (!isset($_SESSION['logged_in'])) {
-				load_templates('pages/visitor/project_data_extraction_visitor', $data);
-			} else {
-				load_templates('pages/project/project_data_extraction', $data);
-			}
+			$this->load_views($id, 'pages/project/project_data_extraction', $data);
+
 		} catch (Exception $e) {
 			$this->session->set_flashdata('error', $e->getMessage());
 			redirect(base_url());
@@ -760,6 +737,31 @@ class Project_Controller extends CI_Controller
 	{
 		if (!$this->session->logged_in) {
 			redirect(base_url());
+		}
+	}
+
+	private function load_views($project_id, $view, $data)
+	{
+		$this->load->model("Project_Model");
+		$level = $this->Project_Model->get_level($this->session->email, $project_id);
+		if ($this->session->logged_in) {
+			if (!is_null($level)) {
+				switch ($level) {
+					case 1:
+						load_templates($view, $data);
+						break;
+					case 2:
+						load_templates($view . '_visitor', $data);
+						break;
+					case 3:
+						load_templates($view, $data);
+						break;
+				}
+			} else {
+				load_templates($view . '_visitor', $data);
+			}
+		} else {
+			load_templates($view . '_visitor', $data);
 		}
 	}
 

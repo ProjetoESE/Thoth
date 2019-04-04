@@ -26,6 +26,7 @@ class Criteria_Controller extends CI_Controller
 		try {
 			$this->logged_in();
 			$rule = $this->input->post('rule');
+			$id_project = $this->input->post('id_project');
 			$this->load->model("Criteria_Model");
 
 			$this->Criteria_Model->edit_exclusion_rule($rule, $id_project);
@@ -75,6 +76,7 @@ class Criteria_Controller extends CI_Controller
 			$id = $this->input->post('id');
 			$type = $this->input->post('type');
 			$description = $this->input->post('description');
+			$id_project = $this->input->post('id_project');
 			$this->load->model("Criteria_Model");
 
 			$this->Criteria_Model->add_criteria($id, $description, false, $id_project, $type);
@@ -99,16 +101,16 @@ class Criteria_Controller extends CI_Controller
 			$this->logged_in();
 			$id = $this->input->post('id');
 			$pre_selected = $this->input->post('pre_selected');
+			$id_project = $this->input->post('id_project');
 			$this->load->model("Criteria_Model");
 
 			$this->Criteria_Model->selected_pre_select($id, $pre_selected, $id_project);
-
 			if ($pre_selected) {
 				$activity = "Selected criteria " . $id;
 				$this->insert_log($activity, 1, $id_project);
 			} else {
 				$activity = $this->session->name . " deselected criteria " . $id;
-				$this->insert_log($activity, 1);
+				$this->insert_log($activity, 1, $id_project);
 			}
 
 		} catch (Exception $e) {
@@ -127,6 +129,7 @@ class Criteria_Controller extends CI_Controller
 		try {
 			$this->logged_in();
 			$id = $this->input->post('id');
+			$id_project = $this->input->post('id_project');
 			$this->load->model("Criteria_Model");
 
 			$this->Criteria_Model->delete_criteria($id, $id_project);

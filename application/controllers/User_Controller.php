@@ -6,17 +6,15 @@ class User_Controller extends CI_Controller
 	{
 		$data = null;
 		try {
-			if (!$this->session->logged_in) {
-				redirect(base_url());
-			}
+			$this->logged_in();
 			$this->load->model("User_Model");
 
 			$data['projects'] = $this->User_Model->get_projects($this->session->email);
+			load_templates('pages/dashboard', $data);
 		} catch (Exception $e) {
 			$this->session->set_flashdata('error', $e->getMessage());
 			load_templates('pages/dashboard', $data);
 		}
-		load_templates('pages/dashboard', $data);
 
 	}
 

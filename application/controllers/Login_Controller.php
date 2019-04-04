@@ -30,7 +30,8 @@ class Login_Controller extends CI_Controller
 			$session = array(
 				'name' => $user->get_name(),
 				'email' => $user->get_email(),
-				'logged_in' => true
+				'logged_in' => true,
+				'level' => null
 			);
 
 			$this->session->set_userdata($session);
@@ -65,7 +66,8 @@ class Login_Controller extends CI_Controller
 			$session = array(
 				'name' => $user->get_name(),
 				'email' => $user->get_email(),
-				'logged_in' => true
+				'logged_in' => true,
+				'level' => null
 			);
 
 			$this->session->set_userdata($session);
