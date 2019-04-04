@@ -22,8 +22,8 @@
 				<a class="nav-link" href="<?= base_url('study_selection/' . $project->get_id()) ?>">Study
 					Selection</a>
 			</li>
-			<li class="nav-item active">
-				<a class="nav-link"
+			<li class="nav-item">
+				<a class="nav-link active"
 				   href="<?= base_url('quality_assessement/' . $project->get_id()) ?>">Quality
 					Assessment</a>
 			</li>

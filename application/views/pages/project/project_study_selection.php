@@ -18,8 +18,8 @@
 				<a class="nav-link "
 				   href="<?= base_url('conducting/' . $project->get_id()) ?>">Import Studies</a>
 			</li>
-			<li class="nav-item active">
-				<a class="nav-link" href="<?= base_url('study_selection/' . $project->get_id()) ?>">Study
+			<li class="nav-item">
+				<a class="nav-link active" href="<?= base_url('study_selection/' . $project->get_id()) ?>">Study
 					Selection</a>
 			</li>
 			<li class="nav-item">

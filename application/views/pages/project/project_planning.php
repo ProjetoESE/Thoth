@@ -1,3 +1,7 @@
+<?php $disable = 'disabled';
+if ($progress_planning == 100) {
+	$disable = '';
+} ?>
 <div class="card">
 	<div class="text-center card-header">
 		<h4><?= $project->get_title(); ?></h4>
@@ -44,8 +48,8 @@
 			<li class="nav-item">
 				<a data-toggle="pill" class="nav-link" href="#tab_data">Data Extraction</a>
 			</li>
-			<li class="nav-item">
-				<a data-toggle="pill" class="nav-link" href="#tab_export_planning" onclick="export_to_doc();">Export
+			<li class="nav-item ">
+				<a data-toggle="pill" class="nav-link <?= $disable ?>" href="#tab_export_planning" onclick="export_to_doc();">Export
 					Planning</a>
 			</li>
 		</ul>
@@ -56,7 +60,7 @@
 			<div class="row">
 				<div class="col-sm-12 col-md-6">
 					<label for="domain"><strong>Domains</strong></label>
-					<a onclick="modal_help_domain()" class="float-right btn btn-warning opt"><i class="fas fa-question-circle "></i></a>
+					<a onclick="modal_help_domain()" class="float-right opt"><i class="fas fa-question-circle "></i></a>
 					<div class="input-group">
 						<input type="text" class="form-control" id="domain">
 						<div class="input-group-append">
@@ -70,7 +74,7 @@
 						<thead>
 						<tr>
 							<th>Domain</th>
-							<th>Delete</th>
+							<th>Actions</th>
 						</tr>
 						</thead>
 						<tbody>
@@ -190,7 +194,7 @@
 						<thead>
 						<tr>
 							<th>Keyword</th>
-							<th>Delete</th>
+							<th>Actions</th>
 						</tr>
 						</thead>
 						<tbody>
@@ -955,13 +959,13 @@
 			<br>
 			<div class="form-inline container justify-content-between">
 				<a href="#tab_quality" class="btn btn-secondary"><span class="fas fa-backward"></span> Previous</a>
-				<a href="#tab_export_planning" class="btn btn-secondary" onclick="export_to_doc();">Next <span
+				<a href="#tab_export_planning" class="btn btn-secondary <?= $disable ?>" onclick="export_to_doc();">Next <span
 						class="fas fa-forward"></span></a>
 			</div>
 		</div>
 		<div class="tab-pane container" id="tab_export_planning">
 			<div class="form-inline">
-				<a href="<?= base_url('export/E' . $project->get_id() . '.docx') ?>" id="btn_export_planning"
+				<a href="<?= base_url('export/P' . $project->get_id() . '.docx') ?>" id="btn_export_planning"
 				   class="btn btn-success opt">Export to Doc</a>
 			</div>
 		</div>
