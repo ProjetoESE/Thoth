@@ -55,14 +55,14 @@
 						<div class="col-md-10">
 							<div class="progress">
 								<div class="progress-bar bg-success" role="progressbar"
-									 style="width: <?= $progress_planning['progress']?>%"
+									 style="width: <?= $progress_planning['progress'] ?>%"
 									 aria-valuenow="<?= $progress_planning['progress'] ?>" aria-valuemin="0"
 									 aria-valuemax="100"><?= $progress_planning['progress'] ?>%
 								</div>
 							</div>
 						</div>
 						<a href="<?= base_url('export/P' . $project->get_id() . '.docx') ?>"
-						   class="btn btn-success col-md-2 <?= $progress_planning['progress'] == 100 ? :"disabled" ?>">Export</a>
+						   class="btn btn-success col-md-2 <?= strval($progress_planning['progress']) == strval(100) ? "" : "disabled" ?>">Export</a>
 					</div>
 					<h6>Import Studies</h6>
 					<div class="form-inline">
@@ -76,7 +76,8 @@
 								</div>
 							</div>
 						</div>
-						<a href="#" class="btn btn-info col-md-2 <?= $progress_import_studies['progress'] == 100 ? :"disabled" ?>">Export</a>
+						<a href="#"
+						   class="btn btn-info col-md-2 <?= strval($progress_import_studies['progress']) == strval(100) ? "" : "disabled" ?>">Export</a>
 					</div>
 					<h6>Study Selection</h6>
 					<div class="form-inline">
@@ -90,7 +91,8 @@
 								</div>
 							</div>
 						</div>
-						<a href="#" class="btn btn-warning col-md-2 <?= $progress_study_selection['progress'] == 100 ? :"disabled" ?>">Export</a>
+						<a href="#"
+						   class="btn btn-warning col-md-2 <?= strval($progress_study_selection['progress']) == strval(100) ? "" : "disabled" ?>">Export</a>
 					</div>
 					<h6>Quality Assessment</h6>
 					<div class="form-inline">
@@ -104,11 +106,12 @@
 								</div>
 							</div>
 						</div>
-						<a href="#" class="btn btn-secondary col-md-2 <?= $progress_quality_assessement['progress'] == 100 ? :"disabled" ?>">Export</a>
+						<a href="#"
+						   class="btn btn-secondary col-md-2 <?= strval($progress_quality_assessement['progress']) == strval(100) ? "" : "disabled" ?>">Export</a>
 					</div>
 					<h6>Data Extraction</h6>
 					<div class="form-inline">
-						<div class="col-md-10">
+						<div class="col-sm-10">
 							<div class="progress">
 								<div class="progress-bar bg-danger" role="progressbar"
 									 style="width: <?= $progress_data_extraction['progress'] ?>%"
@@ -117,9 +120,11 @@
 								</div>
 							</div>
 						</div>
-						<a href="#" class="btn btn-danger col-md-2 <?= $progress_data_extraction['progress'] == 100 ? :"disabled" ?>">Export</a>
+						<a href="#"
+						   class="btn btn-danger col-md-2 <?= strval($progress_data_extraction['progress']) == strval(100) ? "" : "disabled" ?>">Export</a>
 					</div>
 				</div>
+				</br>
 			</div>
 			<div class="col-sm-12 col-md-6">
 				<div class="form-inline">

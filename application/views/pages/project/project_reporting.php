@@ -14,7 +14,7 @@
 	<div class="card-body">
 		<h4>Reporting</h4>
 		<?php
-		if ($progress_planning['progress'] == 100) {
+		if (strval($progress_planning['progress']) == strval(100)) {
 			?>
 			<script src="<?= base_url('assets/js/chars.js'); ?>"></script>
 			<br>
@@ -39,15 +39,14 @@
 				<?php
 				foreach ($progress_planning['errors'] as $error) {
 					?>
-					<li><strong>
-							<?= $error ?>
-						</strong></li>
+					<li><?= $error ?></li>
 					<?php
-				}
 				}
 				?>
 			</ul>
 		</div>
-
+			<?php
+		}
+		?>
 	</div>
 </div>
