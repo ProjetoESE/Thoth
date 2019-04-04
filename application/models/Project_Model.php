@@ -438,8 +438,7 @@ class Project_Model extends CI_Model
 
 		$this->db->select('user.*');
 		$this->db->from('user');
-		$this->db->join('members', 'members.id_user = user.id_user');
-		$this->db->where_not_in('members.id_user', $id_users);
+		$this->db->where_not_in('id_user', $id_users);
 		$query = $this->db->get();
 
 		foreach ($query->result() as $row) {

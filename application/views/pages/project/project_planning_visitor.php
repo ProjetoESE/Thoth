@@ -51,53 +51,84 @@
 		<div class="tab-pane active container" id="tab_overall">
 			<div class="row">
 				<div class="col-sm-12 col-md-6">
-					<label><strong>Domains</strong></label>
 					<br>
-					<ul>
-						<?php
-						foreach ($project->get_domains() as $domain) { ?>
-							<li><?= $domain ?></li>
+					<table id="table_domains" class="table table-responsive-sm ">
+						<thead>
+						<tr>
+							<th>Domain</th>
+						</tr>
+						</thead>
+						<tbody>
+						<?php foreach ($project->get_domains() as $domain) { ?>
+							<tr>
+								<td><?= $domain ?></td>
+							</tr>
 						<?php } ?>
-					</ul>
+						</tbody>
+					</table>
 				</div>
 
 				<div class="col-sm-12 col-md-6">
-					<label><strong>Select languages</strong></label>
 					<br>
-					<ul>
-						<?php
-						foreach ($project->get_languages() as $language) { ?>
-							<li><?= $language ?></li>
+					<table id="table_languages" class="table table-responsive-sm">
+						<thead>
+						<tr>
+							<th>Language</th>
+						</tr>
+						</thead>
+						<tbody>
+						<?php foreach ($project->get_languages() as $language) { ?>
+							<tr>
+								<td><?= $language ?></td>
+							</tr>
 						<?php } ?>
-					</ul>
+						</tbody>
+					</table>
 				</div>
 				<br>
 				<div class="col-sm-12 col-md-6">
-					<label><strong>Select study type</strong></label>
 					<br>
-					<ul>
-						<?php
-						foreach ($project->get_study_types() as $types) { ?>
-							<li><?= $types ?></li>
+					<table id="table_study_type" class="table table-responsive-sm">
+						<thead>
+						<tr>
+							<th>Study Type</th>
+						</tr>
+						</thead>
+						<tbody>
+						<?php foreach ($project->get_study_types() as $types) { ?>
+							<tr>
+								<td><?= $types ?></td>
+							</tr>
 						<?php } ?>
-					</ul>
+						</tbody>
+					</table>
 				</div>
 				<div class="col-sm-12 col-md-6">
-					<label for="keywords"><strong>Keywords</strong></label>
 					<br>
-					<ul>
-						<?php
-						foreach ($project->get_keywords() as $keyword) { ?>
-							<li><?= $keyword ?></li>
+					<table id="table_keywords" class="table table-responsive-sm">
+						<thead>
+						<tr>
+							<th>Keyword</th>
+						</tr>
+						</thead>
+						<tbody>
+						<?php foreach ($project->get_keywords() as $keyword) { ?>
+							<tr>
+								<td><?= $keyword ?></td>
+							</tr>
 						<?php } ?>
-					</ul>
+						</tbody>
+					</table>
 				</div>
 				<div class="col-sm-12 col-md-4">
+					<label for="start_date"><strong>Start and End Date</strong></label>
 					<div class="input-group">
-						<strong>Start Date: </strong><?= $project->get_start_date() ?>
+						<button class="btn btn-success opt"><span class="far fa-calendar-check "></span></button>
+						<?= $project->get_start_date() ?>
 					</div>
 					<div class="input-group">
-						<strong>End Date: </strong><?= $project->get_end_date() ?>
+						<button class="btn btn-danger opt"><span class="far fa-calendar-check "></span></button>
+						<p><?= $project->get_end_date() ?></p>
 					</div>
 				</div>
 			</div>
@@ -108,12 +139,8 @@
 			</div>
 		</div>
 		<div class="tab-pane container" id="tab_research">
-			<div class="form-inline">
-				<label><strong>Research Questions</strong></label>
-			</div>
 			<br>
 			<table id="table_research_question" class="table table-responsive-sm">
-				<caption>List of Research Questions</caption>
 				<thead>
 				<tr>
 					<th>ID</th>
@@ -136,16 +163,23 @@
 			</div>
 		</div>
 		<div class="tab-pane container" id="tab_databases">
-			<div class="form-inline">
-				<label for="databases"><strong>Data Bases</strong></label>
-			</div>
 			<br>
-			<ul>
-				<?php
-				foreach ($project->get_databases() as $database) { ?>
-					<li><?= $database->get_name() ?></li>
+			<table id="table_databases" class="table table-responsive-sm">
+				<thead>
+				<tr>
+					<th>Database</th>
+				</tr>
+				</thead>
+				<tbody>
+				<?php foreach ($project->get_databases() as $database) { ?>
+					<tr>
+						<td>
+							<?= $database->get_name() ?>
+						</td>
+					</tr>
 				<?php } ?>
-			</ul>
+				</tbody>
+			</table>
 			<br>
 			<div class="form-inline container justify-content-between">
 				<a href="#tab_research" class="btn btn-secondary"><span class="fas fa-backward"></span> Previous</a>
@@ -159,7 +193,6 @@
 			</div>
 			<br>
 			<table id="table_search_string" class="table table-responsive-sm">
-				<caption>List of Term</caption>
 				<thead>
 				<tr>
 					<th>Term</th>
@@ -220,13 +253,9 @@
 			</div>
 		</div>
 		<div class="tab-pane container" id="tab_criteria">
-			<div class="form-inline">
-				<label><strong>Criteria</strong></label>
-			</div>
 			<br>
 			<label><strong>Inclusion Criteria</strong></label>
 			<table id="table_criteria_inclusion" class="table table-responsive-sm">
-				<caption>List of Inclusion Criteria</caption>
 				<thead>
 				<tr>
 					<th>Select</th>
@@ -253,12 +282,11 @@
 				</tbody>
 			</table>
 			<div class="form-inline col-md-3">
-				<strong>Inclusion Rule: </strong><?= $project->get_inclusion_rule() ?>
+				<strong >Inclusion Rule: </strong><?= $project->get_inclusion_rule() ?>
 			</div>
 			<br/>
 			<label><strong>Exclusion Criteria</strong></label>
 			<table id="table_criteria_exclusion" class="table table-responsive-sm">
-				<caption>List of Exclusion Criteria</caption>
 				<thead>
 				<tr>
 					<th>Select</th>
@@ -285,7 +313,7 @@
 				</tbody>
 			</table>
 			<div class="input-group col-md-3">
-				<strong>Exclusion Rule: </strong><?= $project->get_exclusion_rule() ?>
+				<strong >Exclusion Rule: </strong><?= $project->get_exclusion_rule() ?>
 			</div>
 			<br>
 			<div class="form-inline container justify-content-between">
@@ -306,13 +334,12 @@
 					<strong>Minimum General Score to Approve: </strong><?= $mini->get_description(); ?>
 				<?php } else {
 					?>
-					<strong>Minimum General Score to Approve: </strong><span></span>
+					<strong>Minimum General Score to Approve: </strong>
 				<?php }
 				?>
 			</div>
 			<br>
 			<table id="table_general_score" class="table table-responsive-sm">
-				<caption>List of General Score</caption>
 				<thead>
 				<tr>
 					<th>Start Score Interval</th>
@@ -336,7 +363,6 @@
 			</div>
 			<br>
 			<table id="table_qa" class="table table-responsive-sm">
-				<caption>List of Question Quality</caption>
 				<thead>
 				<tr>
 					<th>ID</th>
@@ -393,7 +419,6 @@
 			</div>
 			<br>
 			<table id="table_data_extraction" class="table table-responsive-sm">
-				<caption>List of Data Extraction</caption>
 				<thead>
 				<tr>
 					<th>ID</th>
@@ -412,9 +437,9 @@
 							<?php if ($qe->get_type() == "Text") { ?>
 						</td>
 						<?php } else {
-								foreach ($qe->get_options() as $op) { ?>
-									<?= $op . "</br>" ?>
-								<?php } ?>
+							foreach ($qe->get_options() as $op) { ?>
+								<?= $op . "</br>" ?>
+							<?php } ?>
 							</td>
 						<?php } ?>
 					</tr>
