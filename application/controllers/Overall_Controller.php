@@ -7,7 +7,7 @@ class Overall_Controller extends CI_Controller
 	{
 	}
 
-	public function insert_log($activity, $module, $id_project)
+	private function insert_log($activity, $module, $id_project)
 	{
 		$this->load->model("User_Model");
 		$this->User_Model->insert_log($activity, $module, $id_project);
@@ -15,7 +15,9 @@ class Overall_Controller extends CI_Controller
 
 	public function add_domain()
 	{
+		$id_project = null;
 		try {
+			$this->logged_in();
 			$domain = $this->input->post('domain');
 			$id_project = $this->input->post('id_project');
 			$this->load->model("Overall_Model");
@@ -25,13 +27,19 @@ class Overall_Controller extends CI_Controller
 			$this->insert_log($activity, 1, $id_project);
 		} catch (Exception $e) {
 			$this->session->set_flashdata('error', $e->getMessage());
-			redirect(base_url());
+			if (is_null($id_project) || empty($id_project)) {
+				redirect(base_url());
+			} else {
+				redirect(base_url('planning/' . $id_project));
+			}
 		}
 	}
 
 	public function delete_domain()
 	{
+		$id_project = null;
 		try {
+			$this->logged_in();
 			$domain = $this->input->post('domain');
 			$id_project = $this->input->post('id_project');
 			$this->load->model("Overall_Model");
@@ -43,13 +51,19 @@ class Overall_Controller extends CI_Controller
 
 		} catch (Exception $e) {
 			$this->session->set_flashdata('error', $e->getMessage());
-			redirect(base_url());
+			if (is_null($id_project) || empty($id_project)) {
+				redirect(base_url());
+			} else {
+				redirect(base_url('planning/' . $id_project));
+			}
 		}
 	}
 
 	public function edit_domain()
 	{
+		$id_project = null;
 		try {
+			$this->logged_in();
 			$now = $this->input->post('now');
 			$old = $this->input->post('old');
 			$id_project = $this->input->post('id_project');
@@ -62,13 +76,19 @@ class Overall_Controller extends CI_Controller
 
 		} catch (Exception $e) {
 			$this->session->set_flashdata('error', $e->getMessage());
-			redirect(base_url());
+			if (is_null($id_project) || empty($id_project)) {
+				redirect(base_url());
+			} else {
+				redirect(base_url('planning/' . $id_project));
+			}
 		}
 	}
 
 	public function add_language()
 	{
+		$id_project = null;
 		try {
+			$this->logged_in();
 			$language = $this->input->post('language');
 			$id_project = $this->input->post('id_project');
 			$this->load->model("Overall_Model");
@@ -80,13 +100,19 @@ class Overall_Controller extends CI_Controller
 
 		} catch (Exception $e) {
 			$this->session->set_flashdata('error', $e->getMessage());
-			redirect(base_url());
+			if (is_null($id_project) || empty($id_project)) {
+				redirect(base_url());
+			} else {
+				redirect(base_url('planning/' . $id_project));
+			}
 		}
 	}
 
 	public function delete_language()
 	{
+		$id_project = null;
 		try {
+			$this->logged_in();
 			$language = $this->input->post('language');
 			$id_project = $this->input->post('id_project');
 			$this->load->model("Overall_Model");
@@ -98,13 +124,19 @@ class Overall_Controller extends CI_Controller
 
 		} catch (Exception $e) {
 			$this->session->set_flashdata('error', $e->getMessage());
-			redirect(base_url());
+			if (is_null($id_project) || empty($id_project)) {
+				redirect(base_url());
+			} else {
+				redirect(base_url('planning/' . $id_project));
+			}
 		}
 	}
 
 	public function add_study_type()
 	{
+		$id_project = null;
 		try {
+			$this->logged_in();
 			$study_type = $this->input->post('study_type');
 			$id_project = $this->input->post('id_project');
 			$this->load->model("Overall_Model");
@@ -116,13 +148,19 @@ class Overall_Controller extends CI_Controller
 
 		} catch (Exception $e) {
 			$this->session->set_flashdata('error', $e->getMessage());
-			redirect(base_url());
+			if (is_null($id_project) || empty($id_project)) {
+				redirect(base_url());
+			} else {
+				redirect(base_url('planning/' . $id_project));
+			}
 		}
 	}
 
 	public function delete_study_type()
 	{
+		$id_project = null;
 		try {
+			$this->logged_in();
 			$study_type = $this->input->post('study_type');
 			$id_project = $this->input->post('id_project');
 			$this->load->model("Overall_Model");
@@ -134,13 +172,19 @@ class Overall_Controller extends CI_Controller
 
 		} catch (Exception $e) {
 			$this->session->set_flashdata('error', $e->getMessage());
-			redirect(base_url());
+			if (is_null($id_project) || empty($id_project)) {
+				redirect(base_url());
+			} else {
+				redirect(base_url('planning/' . $id_project));
+			}
 		}
 	}
 
 	public function add_keywords()
 	{
+		$id_project = null;
 		try {
+			$this->logged_in();
 			$keywords = $this->input->post('keywords');
 			$id_project = $this->input->post('id_project');
 			$this->load->model("Overall_Model");
@@ -152,13 +196,19 @@ class Overall_Controller extends CI_Controller
 
 		} catch (Exception $e) {
 			$this->session->set_flashdata('error', $e->getMessage());
-			redirect(base_url());
+			if (is_null($id_project) || empty($id_project)) {
+				redirect(base_url());
+			} else {
+				redirect(base_url('planning/' . $id_project));
+			}
 		}
 	}
 
 	public function delete_keywords()
 	{
+		$id_project = null;
 		try {
+			$this->logged_in();
 			$keywords = $this->input->post('keywords');
 			$id_project = $this->input->post('id_project');
 			$this->load->model("Overall_Model");
@@ -170,13 +220,19 @@ class Overall_Controller extends CI_Controller
 
 		} catch (Exception $e) {
 			$this->session->set_flashdata('error', $e->getMessage());
-			redirect(base_url());
+			if (is_null($id_project) || empty($id_project)) {
+				redirect(base_url());
+			} else {
+				redirect(base_url('planning/' . $id_project));
+			}
 		}
 	}
 
 	public function edit_keywords()
 	{
+		$id_project = null;
 		try {
+			$this->logged_in();
 			$now = $this->input->post('now');
 			$old = $this->input->post('old');
 			$id_project = $this->input->post('id_project');
@@ -189,13 +245,19 @@ class Overall_Controller extends CI_Controller
 
 		} catch (Exception $e) {
 			$this->session->set_flashdata('error', $e->getMessage());
-			redirect(base_url());
+			if (is_null($id_project) || empty($id_project)) {
+				redirect(base_url());
+			} else {
+				redirect(base_url('planning/' . $id_project));
+			}
 		}
 	}
 
 	public function add_date()
 	{
+		$id_project = null;
 		try {
+			$this->logged_in();
 			$start_date = $this->input->post('start_date');
 			$end_date = $this->input->post('end_date');
 			$id_project = $this->input->post('id_project');
@@ -208,6 +270,17 @@ class Overall_Controller extends CI_Controller
 
 		} catch (Exception $e) {
 			$this->session->set_flashdata('error', $e->getMessage());
+			if (is_null($id_project) || empty($id_project)) {
+				redirect(base_url());
+			} else {
+				redirect(base_url('planning/' . $id_project));
+			}
+		}
+	}
+
+	private function logged_in()
+	{
+		if (!$this->session->logged_in) {
 			redirect(base_url());
 		}
 	}

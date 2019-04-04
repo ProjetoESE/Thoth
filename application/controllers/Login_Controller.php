@@ -11,6 +11,11 @@ class Login_Controller extends CI_Controller
 
 	public function log_into()
 	{
+		if ($this->form_validation->run() == FALSE)
+		{
+			$this->session->set_flashdata('error', trim(validation_errors()));
+			redirect(base_url("login"));
+		}
 		try {
 			$this->load->model("Login_Model");
 			$email = $this->input->post('email');
@@ -115,7 +120,7 @@ class Login_Controller extends CI_Controller
 		}
 	}
 
-	public function insert_log($activity, $module, $id_project)
+	private function insert_log($activity, $module, $id_project)
 	{
 		$this->load->model("User_Model");
 		$this->User_Model->insert_log($activity, $module, $id_project);

@@ -17,10 +17,6 @@
 					<input type="password" name="password" class="form-control" id="InputPassword"
 						   placeholder="Password" required>
 				</div>
-				<div class="form-group form-check">
-					<input type="checkbox" class="form-check-input" id="remember">
-					<label class="form-check-label" for="remember">Remember?</label>
-				</div>
 				<button type="submit" class="btn btn-success">Sign In</button>
 				</form>
 			</div>

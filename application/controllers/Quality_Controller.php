@@ -7,7 +7,7 @@ class Quality_Controller extends CI_Controller
 	{
 	}
 
-	public function insert_log($activity, $module, $id_project)
+	private function insert_log($activity, $module, $id_project)
 	{
 		$this->load->model("User_Model");
 		$this->User_Model->insert_log($activity, $module, $id_project);
@@ -15,7 +15,9 @@ class Quality_Controller extends CI_Controller
 
 	public function add_qa()
 	{
+		$id_project = null;
 		try {
+			$this->logged_in();
 			$id = $this->input->post('id');
 			$qa = $this->input->post('qa');
 			$weight = $this->input->post('weight');
@@ -30,14 +32,20 @@ class Quality_Controller extends CI_Controller
 
 		} catch (Exception $e) {
 			$this->session->set_flashdata('error', $e->getMessage());
-			redirect(base_url());
+			if (is_null($id_project) || empty($id_project)) {
+				redirect(base_url());
+			} else {
+				redirect(base_url('planning/' . $id_project));
+			}
 		}
 	}
 
 	public function delete_qa()
 	{
 
+		$id_project = null;
 		try {
+			$this->logged_in();
 			$id = $this->input->post('id');
 			$id_project = $this->input->post('id_project');
 			$this->load->model("Quality_Model");
@@ -50,13 +58,19 @@ class Quality_Controller extends CI_Controller
 
 		} catch (Exception $e) {
 			$this->session->set_flashdata('error', $e->getMessage());
-			redirect(base_url());
+			if (is_null($id_project) || empty($id_project)) {
+				redirect(base_url());
+			} else {
+				redirect(base_url('planning/' . $id_project));
+			}
 		}
 	}
 
 	public function add_score_quality()
 	{
+		$id_project = null;
 		try {
+			$this->logged_in();
 			$score_rule = $this->input->post('score_rule');
 			$score = $this->input->post('score');
 			$description = $this->input->post('description');
@@ -72,13 +86,19 @@ class Quality_Controller extends CI_Controller
 
 		} catch (Exception $e) {
 			$this->session->set_flashdata('error', $e->getMessage());
-			redirect(base_url());
+			if (is_null($id_project) || empty($id_project)) {
+				redirect(base_url());
+			} else {
+				redirect(base_url('planning/' . $id_project));
+			}
 		}
 	}
 
 	public function edit_min_score_qa()
 	{
+		$id_project = null;
 		try {
+			$this->logged_in();
 			$score = $this->input->post('min');
 			$id = $this->input->post('qa');
 			$id_project = $this->input->post('id_project');
@@ -92,13 +112,19 @@ class Quality_Controller extends CI_Controller
 
 		} catch (Exception $e) {
 			$this->session->set_flashdata('error', $e->getMessage());
-			redirect(base_url());
+			if (is_null($id_project) || empty($id_project)) {
+				redirect(base_url());
+			} else {
+				redirect(base_url('planning/' . $id_project));
+			}
 		}
 	}
 
 	public function delete_score_quality()
 	{
+		$id_project = null;
 		try {
+			$this->logged_in();
 			$score = $this->input->post('score');
 			$id = $this->input->post('id_qa');
 			$id_project = $this->input->post('id_project');
@@ -111,13 +137,19 @@ class Quality_Controller extends CI_Controller
 
 		} catch (Exception $e) {
 			$this->session->set_flashdata('error', $e->getMessage());
-			redirect(base_url());
+			if (is_null($id_project) || empty($id_project)) {
+				redirect(base_url());
+			} else {
+				redirect(base_url('planning/' . $id_project));
+			}
 		}
 	}
 
 	public function edit_qa()
 	{
+		$id_project = null;
 		try {
+			$this->logged_in();
 			$id = $this->input->post('id');
 			$qa = $this->input->post('qa');
 			$weight = $this->input->post('weight');
@@ -133,13 +165,19 @@ class Quality_Controller extends CI_Controller
 
 		} catch (Exception $e) {
 			$this->session->set_flashdata('error', $e->getMessage());
-			redirect(base_url());
+			if (is_null($id_project) || empty($id_project)) {
+				redirect(base_url());
+			} else {
+				redirect(base_url('planning/' . $id_project));
+			}
 		}
 	}
 
 	public function edit_score_quality()
 	{
+		$id_project = null;
 		try {
+			$this->logged_in();
 			$score_rule = $this->input->post('score_rule');
 			$old_score_rule = $this->input->post('old_score_rule');
 			$score = $this->input->post('score');
@@ -156,13 +194,19 @@ class Quality_Controller extends CI_Controller
 
 		} catch (Exception $e) {
 			$this->session->set_flashdata('error', $e->getMessage());
-			redirect(base_url());
+			if (is_null($id_project) || empty($id_project)) {
+				redirect(base_url());
+			} else {
+				redirect(base_url('planning/' . $id_project));
+			}
 		}
 	}
 
 	public function add_general_quality_score()
 	{
+		$id_project = null;
 		try {
+			$this->logged_in();
 			$start_interval = $this->input->post('start_interval');
 			$id_project = $this->input->post('id_project');
 			$end_interval = $this->input->post('end_interval');
@@ -176,13 +220,19 @@ class Quality_Controller extends CI_Controller
 
 		} catch (Exception $e) {
 			$this->session->set_flashdata('error', $e->getMessage());
-			redirect(base_url());
+			if (is_null($id_project) || empty($id_project)) {
+				redirect(base_url());
+			} else {
+				redirect(base_url('planning/' . $id_project));
+			}
 		}
 	}
 
 	public function delete_general_quality_score()
 	{
+		$id_project = null;
 		try {
+			$this->logged_in();
 			$description = $this->input->post('description');
 			$id_project = $this->input->post('id_project');
 			$this->load->model("Quality_Model");
@@ -194,13 +244,19 @@ class Quality_Controller extends CI_Controller
 
 		} catch (Exception $e) {
 			$this->session->set_flashdata('error', $e->getMessage());
-			redirect(base_url());
+			if (is_null($id_project) || empty($id_project)) {
+				redirect(base_url());
+			} else {
+				redirect(base_url('planning/' . $id_project));
+			}
 		}
 	}
 
 	public function edit_general_score()
 	{
+		$id_project = null;
 		try {
+			$this->logged_in();
 			$description = $this->input->post('desc');
 			$id_project = $this->input->post('id_project');
 			$old_desc = $this->input->post('old_desc');
@@ -215,13 +271,19 @@ class Quality_Controller extends CI_Controller
 
 		} catch (Exception $e) {
 			$this->session->set_flashdata('error', $e->getMessage());
-			redirect(base_url());
+			if (is_null($id_project) || empty($id_project)) {
+				redirect(base_url());
+			} else {
+				redirect(base_url('planning/' . $id_project));
+			}
 		}
 	}
 
 	public function edit_min_score()
 	{
+		$id_project = null;
 		try {
+			$this->logged_in();
 			$score = $this->input->post('score');
 			$id_project = $this->input->post('id_project');
 			$this->load->model("Quality_Model");
@@ -233,6 +295,17 @@ class Quality_Controller extends CI_Controller
 
 		} catch (Exception $e) {
 			$this->session->set_flashdata('error', $e->getMessage());
+			if (is_null($id_project) || empty($id_project)) {
+				redirect(base_url());
+			} else {
+				redirect(base_url('planning/' . $id_project));
+			}
+		}
+	}
+
+	private function logged_in()
+	{
+		if (!$this->session->logged_in) {
 			redirect(base_url());
 		}
 	}
