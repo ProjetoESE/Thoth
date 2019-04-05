@@ -20,6 +20,7 @@ class Search_String_Controller extends CI_Controller
 			$this->logged_in();
 			$term = $this->input->post('term');
 			$id_project = $this->input->post('id_project');
+			$this->validate_level($id_project, array(1, 3));
 			$this->load->model("Search_String_Model");
 
 			$this->Search_String_Model->add_term($term, $id_project);
@@ -45,6 +46,7 @@ class Search_String_Controller extends CI_Controller
 			$this->logged_in();
 			$term = $this->input->post('term');
 			$id_project = $this->input->post('id_project');
+			$this->validate_level($id_project, array(1, 3));
 			$this->load->model("Search_String_Model");
 
 			$this->Search_String_Model->delete_term($term, $id_project);
@@ -71,6 +73,7 @@ class Search_String_Controller extends CI_Controller
 			$now = $this->input->post('now');
 			$old = $this->input->post('old');
 			$id_project = $this->input->post('id_project');
+			$this->validate_level($id_project, array(1, 3));
 			$this->load->model("Search_String_Model");
 
 			$this->Search_String_Model->edit_term($now, $old, $id_project);
@@ -96,6 +99,7 @@ class Search_String_Controller extends CI_Controller
 			$term = $this->input->post('term');
 			$syn = $this->input->post('syn');
 			$id_project = $this->input->post('id_project');
+			$this->validate_level($id_project, array(1, 3));
 			$this->load->model("Search_String_Model");
 
 			$this->Search_String_Model->add_synonym($syn, $term, $id_project);
@@ -122,6 +126,7 @@ class Search_String_Controller extends CI_Controller
 			$term = $this->input->post('term');
 			$syn = $this->input->post('syn');
 			$id_project = $this->input->post('id_project');
+			$this->validate_level($id_project, array(1, 3));
 			$this->load->model("Search_String_Model");
 
 			$this->Search_String_Model->delete_synonym($syn, $term, $id_project);
@@ -149,6 +154,7 @@ class Search_String_Controller extends CI_Controller
 			$old = $this->input->post('old');
 			$term = $this->input->post('term');
 			$id_project = $this->input->post('id_project');
+			$this->validate_level($id_project, array(1, 3));
 			$this->load->model("Search_String_Model");
 
 			$this->Search_String_Model->edit_synonym($now, $old, $term, $id_project);
@@ -173,6 +179,7 @@ class Search_String_Controller extends CI_Controller
 			$this->logged_in();
 			$database = $this->input->post('database');
 			$id_project = $this->input->post('id_project');
+			$this->validate_level($id_project, array(1, 3));
 			$this->load->model("Search_String_Model");
 			$string = null;
 
@@ -272,6 +279,7 @@ class Search_String_Controller extends CI_Controller
 			$this->logged_in();
 			$search_strategy = $this->input->post('search_strategy');
 			$id_project = $this->input->post('id_project');
+			$this->validate_level($id_project, array(1, 3));
 			$this->load->model("Search_String_Model");
 
 			$this->Search_String_Model->edit_search_strategy($search_strategy, $id_project);
@@ -294,5 +302,20 @@ class Search_String_Controller extends CI_Controller
 		if (!$this->session->logged_in) {
 			redirect(base_url());
 		}
+	}
+
+	private function validate_level($project_id, $levels)
+	{
+		$this->load->model("Project_Model");
+		$res_level = $this->Project_Model->get_level($this->session->email, $project_id);
+
+		foreach ($levels as $l) {
+			if ($l == $res_level) {
+				return;
+			}
+		}
+
+		redirect(base_url());
+
 	}
 }

@@ -52,7 +52,7 @@
 			<div class="row">
 				<div class="col-sm-12 col-md-6">
 					<label for="domain"><strong>Domains</strong></label>
-					<a onclick="modal_help_domain()" class="float-right opt"><i class="fas fa-question-circle "></i></a>
+					<a onclick="modal_help('modal_help_domain')" class="float-right opt"><i class="fas fa-question-circle "></i></a>
 					<div class="input-group">
 						<input type="text" class="form-control" id="domain">
 						<div class="input-group-append">
@@ -89,7 +89,7 @@
 
 				<div class="col-sm-12 col-md-6">
 					<label for="language"><strong>Select languages</strong></label>
-					<a href="#" class="float-right opt"><i class="fas fa-question-circle "></i></a>
+					<a onclick="modal_help('modal_help_languages')" class="float-right opt"><i class="fas fa-question-circle "></i></a>
 					<div class="input-group">
 						<select class="form-control" id="language">
 							<?php
@@ -131,7 +131,7 @@
 				<br>
 				<div class="col-sm-12 col-md-6">
 					<label for="study_type"><strong>Select study type</strong></label>
-					<a href="#" class="float-right opt"><i class="fas fa-question-circle "></i></a>
+					<a onclick="modal_help('modal_help_study_type')" class="float-right opt"><i class="fas fa-question-circle "></i></a>
 					<div class="input-group">
 						<select class="form-control" id="study_type">
 							<?php
@@ -172,7 +172,8 @@
 				</div>
 				<div class="col-sm-12 col-md-6">
 					<label for="keywords"><strong>Keywords</strong></label>
-					<a href="#" class="float-right opt"><i class="fas fa-question-circle "></i></a>
+					<a onclick="modal_help('modal_help_keyword')" class="float-right opt"><i
+							class="fas fa-question-circle "></i></a>
 					<div class="input-group">
 						<input type="text" class="form-control" id="keywords">
 						<div class="input-group-append">
@@ -209,7 +210,7 @@
 				</div>
 				<div class="col-sm-12 col-md-4">
 					<label for="start_date"><strong>Start and End Date</strong></label>
-					<a href="#" class="float-right opt"><i class="fas fa-question-circle "></i></a>
+					<a onclick="modal_help('modal_help_date')" class="float-right opt"><i class="fas fa-question-circle "></i></a>
 					<div class="input-group">
 						<div class="input-group-prepend">
 							<button class="btn btn-success"><span class="far fa-calendar-check "></span></button>
@@ -237,7 +238,8 @@
 		<div class="tab-pane container" id="tab_research">
 			<div class="form-inline">
 				<label for="id_research_question"><strong>Research Questions</strong></label>
-				<a href="#" class="float-right opt"><i class="fas fa-question-circle "></i></a>
+				<span onclick="modal_help('modal_help_rq')" class="float-right opt"><i
+						class="fas fa-question-circle "></i></span>
 			</div>
 			<div class="form-inline">
 				<div class="input-group opt col-sm-12 col-md-2">
@@ -293,7 +295,8 @@
 		<div class="tab-pane container" id="tab_databases">
 			<div class="form-inline">
 				<label for="databases"><strong>Data Bases</strong></label>
-				<a href="#" class="float-right opt"><i class="fas fa-question-circle "></i></a>
+				<a onclick="modal_help('modal_help_database')" class="float-right opt"><i
+						class="fas fa-question-circle "></i></a>
 			</div>
 			<div class="form-inline">
 				<div class="input-group col-md-3">
@@ -357,7 +360,8 @@
 		<div class="tab-pane container" id="tab_search_string">
 			<div class="form-inline">
 				<label for="term"><strong>Search String</strong></label>
-				<a href="#" class="float-right opt"><i class="fas fa-question-circle "></i></a>
+				<a onclick="modal_help('modal_help_ss')" class="float-right opt"><i
+						class="fas fa-question-circle "></i></a>
 			</div>
 			<div class="form-inline">
 				<div class="input-group col-md-4">
@@ -372,7 +376,6 @@
 			<br>
 			<div class="form-inline">
 				<label for="list_term"><strong>Synonym</strong></label>
-				<a href="#" class="float-right opt"><i class="fas fa-question-circle "></i></a>
 			</div>
 			<div class="form-inline">
 				<div class="input-group col-md-4">
@@ -445,7 +448,8 @@
 			<div id="strings">
 				<div class="form-inline">
 					<label><strong>Strings</strong></label>
-					<a href="#" class="float-right opt"><i class="fas fa-question-circle "></i></a>
+					<a onclick="modal_help('modal_help_strings')" class="float-right opt"><i
+							class="fas fa-question-circle "></i></a>
 				</div>
 				<?php foreach ($project->get_search_strings() as $search_string) { ?>
 					<div class="form-group" id="div_string_<?= $search_string->get_database() ?>">
@@ -470,7 +474,8 @@
 		<div class="tab-pane container" id="tab_search_strategy">
 			<div class="form-inline">
 				<label for="search_strategy"><strong>Search Strategy</strong></label>
-				<a href="#" class="float-right opt"><i class="fas fa-question-circle "></i></a>
+				<a onclick="modal_help('modal_help_strategy')" class="float-right opt"><i
+						class="fas fa-question-circle "></i></a>
 			</div>
 			<textarea rows="8" class="form-control"
 					  id="search_strategy"><?= $project->get_search_strategy() ?></textarea>
@@ -486,7 +491,8 @@
 		<div class="tab-pane container" id="tab_criteria">
 			<div class="form-inline">
 				<label for="id_criteria"><strong>Criteria</strong></label>
-				<a href="#" class="float-right opt"><i class="fas fa-question-circle "></i></a>
+				<a onclick="modal_help('modal_help_criteria')" class="float-right opt"><i
+						class="fas fa-question-circle "></i></a>
 			</div>
 			<div class="form-inline">
 				<div class="input-group col-md-2">
@@ -636,7 +642,8 @@
 		<div class="tab-pane container" id="tab_quality">
 			<div class="form-inline">
 				<label for="start_interval"><strong>General Score</strong></label>
-				<a href="#" class="float-right opt"><i class="fas fa-question-circle "></i></a>
+				<a onclick="modal_help('modal_help_general_score')" class="float-right opt"><i
+						class="fas fa-question-circle "></i></a>
 			</div>
 			<div class="form-inline">
 				<div class="input-group col-sm-12 col-md-3">
@@ -705,7 +712,8 @@
 			<br>
 			<div class="form-inline">
 				<label for="id_qa"><strong>Question Quality</strong></label>
-				<a href="#" class="float-right opt"><i class="fas fa-question-circle "></i></a>
+				<a onclick="modal_help('modal_help_qa')" class="float-right opt"><i
+						class="fas fa-question-circle "></i></a>
 			</div>
 			<div class="form-inline">
 				<div class="input-group col-md-2">
@@ -728,7 +736,6 @@
 			<br>
 			<div class="form-inline">
 				<label for="list_qa"><strong>Question Score</strong></label>
-				<a href="#" class="float-right opt"><i class="fas fa-question-circle "></i></a>
 			</div>
 			<div class="form-inline">
 				<div class="input-group col-md-2">
@@ -844,7 +851,8 @@
 		<div class="tab-pane container" id="tab_data">
 			<div class="form-inline">
 				<label for="id_data_extraction"><strong>Data Extraction</strong></label>
-				<a href="#" class="float-right opt"><i class="fas fa-question-circle "></i></a>
+				<a onclick="modal_help('modal_help_data_extraction')" class="float-right opt"><i
+						class="fas fa-question-circle "></i></a>
 			</div>
 			<div class="form-inline">
 				<div class="input-group col-md-2">
@@ -871,7 +879,6 @@
 			<br>
 			<div class="form-inline">
 				<label for="list_qde"><strong>Option</strong></label>
-				<a href="#" class="float-right opt"><i class="fas fa-question-circle "></i></a>
 			</div>
 			<div class="form-inline">
 				<div class="input-group col-md-2">
@@ -958,3 +965,32 @@
 	</div>
 	<br>
 </div>
+<?php
+$this->load->view('modal/modal_inclusion_criteria');
+$this->load->view('modal/modal_exclusion_criteria');
+$this->load->view('modal/modal_synonym');
+$this->load->view('modal/modal_general_score');
+$this->load->view('modal/modal_term');
+$this->load->view('modal/modal_research');
+$this->load->view('modal/modal_keyword');
+$this->load->view('modal/modal_domain');
+$this->load->view('modal/modal_paper');
+$this->load->view('modal/modal_question_quality');
+$this->load->view('modal/modal_score_quality');
+$this->load->view('modal/modal_question_extraction');
+$this->load->view('modal/modal_option');
+$this->load->view('modal/modal_help_domain');
+$this->load->view('modal/modal_help_languages');
+$this->load->view('modal/modal_help_study_type');
+$this->load->view('modal/modal_help_keyword');
+$this->load->view('modal/modal_help_date');
+$this->load->view('modal/modal_help_research_question');
+$this->load->view('modal/modal_help_database');
+$this->load->view('modal/modal_help_ss');
+$this->load->view('modal/modal_help_strings');
+$this->load->view('modal/modal_help_criteria');
+$this->load->view('modal/modal_help_general_score');
+$this->load->view('modal/modal_help_qa');
+$this->load->view('modal/modal_help_data_extraction');
+$this->load->view('modal/modal_help_strategy');
+?>

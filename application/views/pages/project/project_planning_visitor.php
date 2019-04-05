@@ -282,7 +282,7 @@
 				</tbody>
 			</table>
 			<div class="form-inline col-md-3">
-				<strong >Inclusion Rule: </strong><?= $project->get_inclusion_rule() ?>
+				<strong>Inclusion Rule: </strong><?= $project->get_inclusion_rule() ?>
 			</div>
 			<br/>
 			<label><strong>Exclusion Criteria</strong></label>
@@ -313,7 +313,7 @@
 				</tbody>
 			</table>
 			<div class="input-group col-md-3">
-				<strong >Exclusion Rule: </strong><?= $project->get_exclusion_rule() ?>
+				<strong>Exclusion Rule: </strong><?= $project->get_exclusion_rule() ?>
 			</div>
 			<br>
 			<div class="form-inline container justify-content-between">
