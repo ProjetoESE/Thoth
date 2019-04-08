@@ -13,31 +13,31 @@
 	</div>
 	<div class="card-body">
 		<h4>Conducting</h4>
+		<ul class="nav nav-pills nav-justified">
+			<li class="nav-item">
+				<a class="nav-link "
+				   href="<?= base_url('conducting/' . $project->get_id()) ?>">Import Studies</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="<?= base_url('study_selection/' . $project->get_id()) ?>">Study
+					Selection</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link active"
+				   href="<?= base_url('quality_assessement/' . $project->get_id()) ?>">Quality
+					Assessment</a>
+			</li>
+			<li class="nav-item ">
+				<a class=" nav-link" href="<?= base_url('data_extraction/' . $project->get_id()) ?>">Data
+					Extraction</a>
+			</li>
+		</ul>
+		<br>
+		<label><strong>Quality Assessement</strong></label>
+		<br>
 		<?php
 		if (strval($progress_planning['progress']) == strval(100) && strval($progress_import_studies['progress']) == strval(100)) {
 			?>
-			<ul class="nav nav-pills nav-justified">
-				<li class="nav-item">
-					<a class="nav-link "
-					   href="<?= base_url('conducting/' . $project->get_id()) ?>">Import Studies</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="<?= base_url('study_selection/' . $project->get_id()) ?>">Study
-						Selection</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link active"
-					   href="<?= base_url('quality_assessement/' . $project->get_id()) ?>">Quality
-						Assessment</a>
-				</li>
-				<li class="nav-item ">
-					<a class=" nav-link" href="<?= base_url('data_extraction/' . $project->get_id()) ?>">Data
-						Extraction</a>
-				</li>
-			</ul>
-			<br>
-			<label><strong>Quality Assessement</strong></label>
-			<br>
 			<div class="form-inline">
 				<div class="input-group col-md-3">
 					<label class="text-success">
