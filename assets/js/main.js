@@ -5,7 +5,6 @@ $(document).ready(function () {
 		"sZeroRecords": "No options added"
 	};
 
-
 	let configDataTables = {
 		language: lang,
 		responsive: true,
@@ -30,7 +29,7 @@ $(document).ready(function () {
 	table_data_extraction = $('#table_data_extraction').DataTable(configDataTables);
 
 
-	$('#table_imported_studies').DataTable({
+	table_imported_studies = $('#table_imported_studies').DataTable({
 		responsive: true,
 		order: [[1, "asc"]],
 		paginate: false,

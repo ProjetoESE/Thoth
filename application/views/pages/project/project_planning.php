@@ -452,12 +452,12 @@
 							class="fas fa-question-circle "></i></a>
 				</div>
 				<?php foreach ($project->get_search_strings() as $search_string) { ?>
-					<div class="form-group" id="div_string_<?= $search_string->get_database() ?>">
-						<label><?= $search_string->get_database() ?></label>
+					<div class="form-group" id="div_string_<?= $search_string->get_database()->get_name() ?>">
+						<a target="_blank" href="<?= $search_string->get_database()->get_link() ?>"><?= $search_string->get_database()->get_name() ?></a>
 						<textarea class="form-control"
-								  id="string_<?= $search_string->get_database() ?>"><?= $search_string->get_description() ?></textarea>
+								  id="string_<?= $search_string->get_database()->get_name() ?>"><?= $search_string->get_description() ?></textarea>
 						<button type="button" class="btn btn-info opt"
-								onclick="generate_string('<?= $search_string->get_database() ?>');">
+								onclick="generate_string('<?= $search_string->get_database()->get_name() ?>');">
 							Generate
 						</button>
 						<hr>

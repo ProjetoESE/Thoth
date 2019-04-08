@@ -163,11 +163,14 @@ class Project_Model extends CI_Model
 		foreach ($query->result() as $row) {
 			$ss = new Search_String();
 			$ss->set_description($row->description);
-			$ss->set_database('Generic');
+			$db = new Database();
+			$db->set_name("Generic");
+			$db->set_link("#");
+			$ss->set_database($db);
 			$project->set_search_strings($ss);
 		}
 
-		$this->db->select('search_string.description, data_base.name');
+		$this->db->select('search_string.description, data_base.name,data_base.link');
 		$this->db->from('search_string');
 		$this->db->join('project_databases', 'project_databases.id_project_database = search_string.id_project_database');
 		$this->db->join('data_base', 'data_base.id_database = project_databases.id_database');
@@ -177,7 +180,10 @@ class Project_Model extends CI_Model
 		foreach ($query->result() as $row) {
 			$ss = new Search_String();
 			$ss->set_description($row->description);
-			$ss->set_database($row->name);
+			$db = new Database();
+			$db->set_name($row->name);
+			$db->set_link($row->link);
+			$ss->set_database($db);
 			$project->set_search_strings($ss);
 		}
 
@@ -565,6 +571,321 @@ class Project_Model extends CI_Model
 			$level = $row->level;
 		}
 		return $level;
+	}
+
+	public function bib_upload($papers, $database, $name, $id_project)
+	{
+		$id_database = null;
+		$this->db->select('id_database');
+		$this->db->from('data_base');
+		$this->db->where('name', $database);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			$id_database = $row->id_database;
+		}
+
+		$id_project_database = null;
+		$this->db->select('id_project_database');
+		$this->db->from('project_databases');
+		$this->db->where('id_database', $id_database);
+		$this->db->where('id_project', $id_project);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			$id_project_database = $row->id_project_database;
+		}
+
+		$data3 = array(
+			'name' => $name,
+			'id_project_database' => $id_project_database,
+		);
+		$this->db->insert('bib_upload', $data3);
+		$id_bib = $this->db->insert_id();
+
+		$data = array();
+
+		foreach ($papers as $p) {
+			$data2['id_bib'] = $id_bib;
+
+			if (!empty($p['EntryType'])) {
+				$data2['type'] = $p['EntryType'];
+			} else {
+				$data2['type'] = "";
+			}
+
+			if (!empty($p['EntryKey'])) {
+				$data2['bib_key'] = $p['EntryKey'];
+			} else {
+				$data2['bib_key'] = "";
+			}
+
+
+			if (!empty($p['Fields']['title'])) {
+				$data2['title'] = $p['Fields']['title'];
+			} else {
+				$data2['title'] = "";
+			}
+
+			if (!empty($p['Fields']['author'])) {
+				$data2['author'] = $p['Fields']['author'];
+			} else {
+				$data2['author'] = "";
+			}
+
+			if (!empty($p['Fields']['booktitle'])) {
+				$data2['book_title'] = $p['Fields']['booktitle'];
+			} else {
+				$data2['book_title'] = "";
+			}
+
+			if (!empty($p['Fields']['volume'])) {
+				$data2['volume'] = $p['Fields']['volume'];
+			} else {
+				$data2['volume'] = "";
+			}
+
+			if (!empty($p['Fields']['pages'])) {
+				$data2['pages'] = $p['Fields']['pages'];
+			} else {
+				$data2['pages'] = "";
+			}
+
+			if (!empty($p['Fields']['numpages'])) {
+				$data2['num_pages'] = $p['Fields']['numpages'];
+			} else {
+				$data2['num_pages'] = "";
+			}
+
+			if (!empty($p['Fields']['abstract'])) {
+				$data2['abstract'] = $p['Fields']['abstract'];
+			} else {
+				$data2['abstract'] = "";
+			}
+
+			if (!empty($p['Fields']['keywords'])) {
+				$data2['keywords'] = $p['Fields']['keywords'];
+			} else {
+				$data2['keywords'] = "";
+			}
+
+			if (!empty($p['Fields']['doi'])) {
+				$data2['doi'] = $p['Fields']['doi'];
+			} else {
+				$data2['doi'] = "";
+			}
+
+			if (!empty($p['Fields']['journal'])) {
+				$data2['journal'] = $p['Fields']['journal'];
+			} else {
+				$data2['journal'] = "";
+			}
+
+			if (!empty($p['Fields']['issn'])) {
+				$data2['issn'] = $p['Fields']['issn'];
+			} else {
+				$data2['issn'] = "";
+			}
+
+			if (!empty($p['Fields']['location'])) {
+				$data2['location'] = $p['Fields']['location'];
+			} else {
+				$data2['location'] = "";
+			}
+
+			if (!empty($p['Fields']['isbn'])) {
+				$data2['isbn'] = $p['Fields']['isbn'];
+			} else {
+				$data2['isbn'] = "";
+			}
+
+			if (!empty($p['Fields']['address'])) {
+				$data2['address'] = $p['Fields']['address'];
+			} else {
+				$data2['address'] = "";
+			}
+
+			if (!empty($p['Fields']['month'])) {
+				$data2['month'] = $p['Fields']['month'];
+			} else {
+				$data2['month'] = "";
+			}
+
+			if (!empty($p['Fields']['url'])) {
+				$data2['url'] = $p['Fields']['url'];
+			} else {
+				$data2['url'] = "";
+			}
+
+			if (!empty($p['Fields']['publisher'])) {
+				$data2['publisher'] = $p['Fields']['publisher'];
+			} else {
+				$data2['publisher'] = "";
+			}
+
+			array_push($data, $data2);
+		}
+
+		$this->db->insert_batch('papers', $data);
+
+
+	}
+
+	public function delete_bib($database, $name, $id_project)
+	{
+		$id_database = null;
+		$this->db->select('id_database');
+		$this->db->from('data_base');
+		$this->db->where('name', $database);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			$id_database = $row->id_database;
+		}
+
+		$id_project_database = null;
+		$this->db->select('id_project_database');
+		$this->db->from('project_databases');
+		$this->db->where('id_database', $id_database);
+		$this->db->where('id_project', $id_project);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			$id_project_database = $row->id_project_database;
+		}
+
+		$id_bib = null;
+		$this->db->select('id_bib');
+		$this->db->from('bib_upload');
+		$this->db->where('id_project_database', $id_project_database);
+		$this->db->where('name', $name);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			$id_bib = $row->id_bib;
+		}
+
+		$this->db->where('id_bib', $id_bib);
+		$this->db->from('papers');
+		$papers = $this->db->count_all_results();
+
+		$this->db->where('id_bib', $id_bib);
+		$this->db->delete('bib_upload');
+
+		return $papers;
+	}
+
+	public function get_num_bib($database, $id_project)
+	{
+		$id_database = null;
+		$this->db->select('id_database');
+		$this->db->from('data_base');
+		$this->db->where('name', $database);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			$id_database = $row->id_database;
+		}
+
+		$id_project_database = null;
+		$this->db->select('id_project_database');
+		$this->db->from('project_databases');
+		$this->db->where('id_database', $id_database);
+		$this->db->where('id_project', $id_project);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			$id_project_database = $row->id_project_database;
+		}
+
+		$this->db->where('id_project_database', $id_project_database);
+		$this->db->from('bib_upload');
+		return $this->db->count_all_results();
+	}
+
+	public function get_bib($project)
+	{
+		$data2 = array();
+		foreach ($project->get_databases() as $database) {
+			$id_database = null;
+			$this->db->select('id_database');
+			$this->db->from('data_base');
+			$this->db->where('name', $database->get_name());
+			$query = $this->db->get();
+
+			foreach ($query->result() as $row) {
+				$id_database = $row->id_database;
+			}
+
+			$id_project_database = null;
+			$this->db->select('id_project_database');
+			$this->db->from('project_databases');
+			$this->db->where('id_database', $id_database);
+			$this->db->where('id_project', $project->get_id());
+			$query = $this->db->get();
+
+			foreach ($query->result() as $row) {
+				$id_project_database = $row->id_project_database;
+			}
+
+			$this->db->select('name');
+			$this->db->from('bib_upload');
+			$this->db->where('id_project_database', $id_project_database);
+			$query = $this->db->get();
+
+			$data = array();
+			foreach ($query->result() as $row) {
+				array_push($data, $row->name);
+			}
+			$data2[$database->get_name()] = $data;
+		}
+		return $data2;
+	}
+
+	public function get_num_papers($project)
+	{
+		$data2 = array();
+		foreach ($project->get_databases() as $database) {
+			$id_database = null;
+			$this->db->select('id_database');
+			$this->db->from('data_base');
+			$this->db->where('name', $database->get_name());
+			$query = $this->db->get();
+
+			foreach ($query->result() as $row) {
+				$id_database = $row->id_database;
+			}
+
+			$id_project_database = null;
+			$this->db->select('id_project_database');
+			$this->db->from('project_databases');
+			$this->db->where('id_database', $id_database);
+			$this->db->where('id_project', $project->get_id());
+			$query = $this->db->get();
+
+			foreach ($query->result() as $row) {
+				$id_project_database = $row->id_project_database;
+			}
+
+			$id_bib = array();
+			$this->db->select('id_bib');
+			$this->db->from('bib_upload');
+			$this->db->where('id_project_database', $id_project_database);
+			$query = $this->db->get();
+
+			foreach ($query->result() as $row) {
+				array_push($id_bib, $row->id_bib);
+			}
+
+			if (sizeof($id_bib) > 0) {
+				$this->db->where_in('id_bib', $id_bib);
+				$this->db->from('papers');
+				$data2[$database->get_name()] = $this->db->count_all_results();
+			} else {
+				$data2[$database->get_name()] = 0;
+			}
+		}
+		return $data2;
 	}
 
 }
