@@ -17,11 +17,12 @@ class Database_Controller extends CI_Controller
 			$this->validate_level($id_project, array(1, 3));
 			$this->load->model("Database_Model");
 
-			$this->Database_Model->add_database($database, $id_project);
+			$link = $this->Database_Model->add_database($database, $id_project);
 
 			$activity = "Added the database " . $database;
 			$this->insert_log($activity, 1, $id_project);
 
+			echo $link;
 
 		} catch (Exception $e) {
 			$this->session->set_flashdata('error', $e->getMessage());

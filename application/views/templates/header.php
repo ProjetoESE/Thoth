@@ -71,6 +71,9 @@
 	<!-- Select -->
 	<script src="<?= base_url('assets/js/select2.full.min.js'); ?>"></script>
 
+	<!-- Bib2Json -->
+	<script src="<?= base_url('assets/js/bib2json.js'); ?>"></script>
+
 	<!-- My JS Files -->
 	<script src="<?= base_url('assets/js/main.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/overall.js'); ?>"></script>

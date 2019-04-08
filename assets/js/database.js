@@ -31,7 +31,7 @@ function add_database() {
 			id_project: id_project,
 			database: databases
 		},
-		success: function () {
+		success: function (link) {
 			table_databases.row.add([
 				databases,
 				'<button class="btn btn-danger" onClick="delete_database($(this).parents(\'tr\'));">' +
@@ -45,7 +45,7 @@ function add_database() {
 			let node = document.createElement("DIV");
 			node.id = 'div_string_' + databases;
 			node.classList.add("form-group")
-			node.innerHTML = '<label>' + databases + '</label>' +
+			node.innerHTML = '<a target="_blank" href="' + link + '">' + databases + '</a>' +
 				'<textarea class="form-control" id="string_' + databases + '"></textarea>' +
 				'<button type="button" class="btn btn-info opt" onclick="generate_string(\'' + databases + '\');">Generate</button>' +
 				'<hr>';
@@ -161,7 +161,7 @@ function new_database() {
 			let node = document.createElement("DIV");
 			node.id = 'div_string_' + database;
 			node.classList.add("form-group")
-			node.innerHTML = '<label>' + database + '</label>' +
+			node.innerHTML = '<a target="_blank" href="' + link + '">' + database + '</a>' +
 				'<textarea class="form-control" id="string_' + database + '"></textarea>' +
 				'<button type="button" class="btn btn-info opt" onclick="generate_string(\'' + database + '\');">Generate</button>' +
 				'<hr>';

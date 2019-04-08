@@ -14,7 +14,7 @@
 	<div class="card-body">
 		<h4>Reporting</h4>
 		<?php
-		if (strval($progress_planning['progress']) == strval(100)) {
+		if (strval($progress_planning['progress']) == strval(100) && strval($progress_import_studies['progress']) == strval(100)) {
 			?>
 			<script src="<?= base_url('assets/js/chars.js'); ?>"></script>
 		<br>
@@ -32,6 +32,7 @@
 		<br>
 			<div id="funnel_chart"></div><?php
 		} else {
+		if (sizeof($progress_planning['errors']) > 0) {
 		?>
 			<div class="alert alert-warning container alert-dismissible fade show" role="alert">
 				<h5>Complete Planning</h5>
@@ -45,7 +46,22 @@
 					?>
 				</ul>
 			</div>
+		<?php }
+		if (sizeof($progress_import_studies['errors']) > 0) { ?>
+			<div class="alert alert-warning container alert-dismissible fade show" role="alert">
+				<h5>Complete Import Studies</h5>
+				<ul>
+					<?php
+					foreach ($progress_import_studies['errors'] as $error) {
+						?>
+						<li><?= $error ?></li>
+						<?php
+					}
+					?>
+				</ul>
+			</div>
 			<?php
+		}
 		}
 		?>
 	</div>

@@ -86,6 +86,8 @@ class Project_Controller extends CI_Controller
 			$data['progress_study_selection'] = $this->progress_study_selection($data['project']);
 			$data['progress_quality_assessement'] = $this->progress_quality_assessement($data['project']);
 			$data['progress_data_extraction'] = $this->progress_data_extraction($data['project']);
+			$data['bib'] = $this->Project_Model->get_bib($data['project']);
+			$data['num_papers'] = $this->Project_Model->get_num_papers($data['project']);
 
 			$this->load_views($id, 'pages/project/project_conducting', $data);
 
@@ -119,6 +121,8 @@ class Project_Controller extends CI_Controller
 		try {
 			$this->load->model("Project_Model");
 			$data['project'] = $this->Project_Model->get_project($id);
+			$data['progress_planning'] = $this->progress_planning($data['project']);
+			$data['progress_import_studies'] = $this->progress_import_studies($data['project']);
 			$data['progress_study_selection'] = $this->progress_study_selection($data['project']);
 			$data['progress_quality_assessement'] = $this->progress_quality_assessement($data['project']);
 			$data['progress_data_extraction'] = $this->progress_data_extraction($data['project']);
@@ -136,6 +140,9 @@ class Project_Controller extends CI_Controller
 		try {
 			$this->load->model("Project_Model");
 			$data['project'] = $this->Project_Model->get_project($id);
+			$data['progress_planning'] = $this->progress_planning($data['project']);
+			$data['progress_import_studies'] = $this->progress_import_studies($data['project']);
+			$data['progress_study_selection'] = $this->progress_study_selection($data['project']);
 			$data['progress_quality_assessement'] = $this->progress_quality_assessement($data['project']);
 			$data['progress_data_extraction'] = $this->progress_data_extraction($data['project']);
 
@@ -152,6 +159,10 @@ class Project_Controller extends CI_Controller
 		try {
 			$this->load->model("Project_Model");
 			$data['project'] = $this->Project_Model->get_project($id);
+			$data['progress_planning'] = $this->progress_planning($data['project']);
+			$data['progress_import_studies'] = $this->progress_import_studies($data['project']);
+			$data['progress_study_selection'] = $this->progress_study_selection($data['project']);
+			$data['progress_quality_assessement'] = $this->progress_quality_assessement($data['project']);
 			$data['progress_data_extraction'] = $this->progress_data_extraction($data['project']);
 
 			$this->load_views($id, 'pages/project/project_data_extraction', $data);
@@ -414,7 +425,7 @@ class Project_Controller extends CI_Controller
 			for ($i = 0; $i < $size; $i++) {
 				$id1 = 'db_string#' . ($i + 1);
 				$id2 = 'string#' . ($i + 1);
-				$templateProcessor->setValue($id1, $strings[$i]->get_database());
+				$templateProcessor->setValue($id1, $strings[$i]->get_database()->get_name());
 				$templateProcessor->setValue($id2, $strings[$i]->get_description());
 			}
 
@@ -705,8 +716,19 @@ class Project_Controller extends CI_Controller
 	{
 		$errors = array();
 		$progress = 0;
+
+		$peso = 100 / sizeof($project->get_databases());
+
+		foreach ($project->get_databases() as $database) {
+			if ($this->Project_Model->get_num_bib($database->get_name(), $project->get_id()) > 0) {
+				$progress += $peso;
+			} else {
+				array_push($errors, "Add papers at " . $database->get_name());
+			}
+		}
+
 		$data['errors'] = $errors;
-		$data['progress'] = $progress;
+		$data['progress'] = number_format($progress);
 		return $data;
 	}
 
@@ -781,6 +803,51 @@ class Project_Controller extends CI_Controller
 		}
 
 		redirect(base_url());
+
+	}
+
+	public function bib_upload()
+	{
+		try {
+			$this->logged_in();
+			$papers = $this->input->post('papers');
+			$database = $this->input->post('database');
+			$id_project = $this->input->post('id_project');
+			$name = $this->input->post('name');
+
+			$this->validate_level($id_project, array(1, 3));
+			$this->load->model("Project_Model");
+
+			$this->Project_Model->bib_upload($papers, $database, $name, $id_project);
+
+			$activity = "Added " . sizeof($papers) . " papers at " . $database . " for file " . $name;
+			$this->insert_log($activity, 3, $id_project);
+		} catch (Exception $e) {
+			$this->session->set_flashdata('error', $e->getMessage());
+			redirect(base_url());
+		}
+
+	}
+
+	public function delete_bib()
+	{
+		try {
+			$this->logged_in();
+			$database = $this->input->post('database');
+			$id_project = $this->input->post('id_project');
+			$name = $this->input->post('name');
+			$this->load->model("Project_Model");
+
+			$this->validate_level($id_project, array(1, 3));
+			$papers = $this->Project_Model->delete_bib($database, $name, $id_project);
+
+			$activity = "Delete papers at " . $database . " for file " . $name;
+			$this->insert_log($activity, 3, $id_project);
+			echo $papers;
+		} catch (Exception $e) {
+			$this->session->set_flashdata('error', $e->getMessage());
+			redirect(base_url());
+		}
 
 	}
 

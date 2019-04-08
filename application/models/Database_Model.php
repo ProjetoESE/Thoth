@@ -20,13 +20,15 @@ class Database_Model extends CI_Model
 	{
 
 		$id_database = null;
-		$this->db->select('id_database');
+		$link = "";
+		$this->db->select('*');
 		$this->db->from('data_base');
 		$this->db->where('name', $database);
 		$query = $this->db->get();
 
 		foreach ($query->result() as $row) {
 			$id_database = $row->id_database;
+			$link = $row->link;
 		}
 
 
@@ -45,6 +47,7 @@ class Database_Model extends CI_Model
 
 		$this->db->insert('search_string', $data);
 
+		return $link;
 	}
 
 	public function delete_database($database, $id_project)

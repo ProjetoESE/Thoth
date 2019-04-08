@@ -12,19 +12,21 @@ class Paper
 	private $abstract;
 	private $year;
 	private $keywords;
-	private $document_type;
-	private $publication_type;
+	private $type;
 	private $publisher;
 	private $journal;
 	private $pages;
+	private $num_pages;
 	private $volume;
 	private $doi;
 	private $url;
-	private $affiliation;
 	private $issn;
-	private $language;
+	private $adress;
+	private $location;
+	private $isbn;
 	private $note;
-	private $bibtex_key;
+	private $book_title;
+	private $bib_key;
 	private $added_by;
 	private $updated_by;
 	private $added_at;
@@ -43,132 +45,12 @@ class Paper
 	{
 	}
 
-	/**
-	 * Paper constructor for data in database.
-	 * @param String $title
-	 * @param String $author
-	 * @param String $abstract
-	 * @param int $year
-	 * @param String $keywords
-	 * @param String $document_type
-	 * @param String $publication_type
-	 * @param String $publisher
-	 * @param String $journal
-	 * @param int $pages
-	 * @param int $volume
-	 * @param String $doi
-	 * @param String $url
-	 * @param String $affiliation
-	 * @param String $issn
-	 * @param String $language
-	 * @param String $note
-	 * @param String $bibtex_key
-	 * @param User $added_by
-	 * @param User $updated_by
-	 * @param DateTime $added_at
-	 * @param DateTime $updated_at
-	 * @param Database $database
-	 * @param Status_Selection_Type $status_selection
-	 * @param Status_Extraction_Type $status_extraction
-	 * @param Reading_Priority_Type $reding_priority
-	 * @param float $score
-	 * @param Quality_Score $quality_score
-	 */
-	public function __construct_DB($title, $author, $abstract, $year, $keywords, $document_type, $publication_type,
-								   $publisher, $journal, $pages, $volume, $doi, $url, $affiliation, $issn, $language,
-								   $note, $bibtex_key, $added_by, $updated_by, $added_at, $updated_at, $database,
-								   $status_selection, $status_extraction, $reding_priority, $score, $quality_score)
-	{
-		$this->title = $title;
-		$this->author = $author;
-		$this->abstract = $abstract;
-		$this->year = $year;
-		$this->keywords = $keywords;
-		$this->document_type = $document_type;
-		$this->publication_type = $publication_type;
-		$this->publisher = $publisher;
-		$this->journal = $journal;
-		$this->pages = $pages;
-		$this->volume = $volume;
-		$this->doi = $doi;
-		$this->url = $url;
-		$this->affiliation = $affiliation;
-		$this->issn = $issn;
-		$this->language = $language;
-		$this->note = $note;
-		$this->bibtex_key = $bibtex_key;
-		$this->added_by = $added_by;
-		$this->updated_by = $updated_by;
-		$this->added_at = $added_at;
-		$this->updated_at = $updated_at;
-		$this->database = $database;
-		$this->status_selection = $status_selection;
-		$this->status_extraction = $status_extraction;
-		$this->reding_priority = $reding_priority;
-		$this->score = $score;
-		$this->quality_score = $quality_score;
-	}
-
-
-	/**
-	 * Paper constructor for new registry.
-	 * @param String $title
-	 * @param String $author
-	 * @param String $abstract
-	 * @param int $year
-	 * @param String $keywords
-	 * @param String $document_type
-	 * @param String $publication_type
-	 * @param String $publisher
-	 * @param String $journal
-	 * @param int $pages
-	 * @param int $volume
-	 * @param String $doi
-	 * @param String $url
-	 * @param String $affiliation
-	 * @param String $issn
-	 * @param String $language
-	 *
-	 */
-	public function __construct_New($title, $author, $abstract, $year, $keywords, $document_type, $publication_type,
-									$publisher, $journal, $pages, $volume, $doi, $url, $affiliation, $issn, $language)
-	{
-		$this->title = $title;
-		$this->author = $author;
-		$this->abstract = $abstract;
-		$this->year = $year;
-		$this->keywords = $keywords;
-		$this->document_type = $document_type;
-		$this->publication_type = $publication_type;
-		$this->publisher = $publisher;
-		$this->journal = $journal;
-		$this->pages = $pages;
-		$this->volume = $volume;
-		$this->doi = $doi;
-		$this->url = $url;
-		$this->affiliation = $affiliation;
-		$this->issn = $issn;
-		$this->language = $language;
-		$this->note = null;
-		$this->bibtex_key = null;
-		$this->added_by = null;
-		$this->updated_by = null;
-		$this->added_at = null;
-		$this->updated_at = null;
-		$this->database = null;
-		$this->status_selection = null;
-		$this->status_extraction = null;
-		$this->reding_priority = null;
-		$this->score = null;
-		$this->quality_score = null;
-	}
-
 
 	/**
 	 * Method to retrieve the paper note.
 	 * @return String note
 	 */
-	public function getNote()
+	public function get_note()
 	{
 		return $this->note;
 	}
@@ -178,7 +60,7 @@ class Paper
 	 * @param String $note
 	 * @throws InvalidArgumentException
 	 */
-	public function setNote($note)
+	public function set_note($note)
 	{
 		if (is_null($note) || empty($note)) {
 			throw  new  InvalidArgumentException("Paper Note Invalid!");
@@ -190,7 +72,7 @@ class Paper
 	 * Method to retrieve the paper bibtex key.
 	 * @return String bibitex_key
 	 */
-	public function getBibtexKey()
+	public function get_bibtex_key()
 	{
 		return $this->bibtex_key;
 	}
@@ -200,7 +82,7 @@ class Paper
 	 * @param String $bibtex_key
 	 * @throws InvalidArgumentException
 	 */
-	public function setBibtexKey($bibtex_key)
+	public function set_bibtex_key($bibtex_key)
 	{
 		if (is_null($bibtex_key) || empty($bibtex_key)) {
 			throw  new  InvalidArgumentException("Paper Bibtex Key Invalid!");
@@ -212,7 +94,7 @@ class Paper
 	 * Method to retrieve the paper added by.
 	 * @return User added_by
 	 */
-	public function getAddedBy()
+	public function get_added_by()
 	{
 		return $this->added_by;
 	}

@@ -1,3 +1,4 @@
+<script src="<?= base_url('assets/js/bibupload.js'); ?>"></script>
 <div class="card">
 	<div class="text-center card-header">
 		<h4><?= $project->get_title(); ?></h4>
@@ -36,53 +37,34 @@
 				</li>
 			</ul>
 			<br>
-			<label for="database_import"><strong>Import Studies</strong></label>
-			<div class="form-inline">
-				<label for="database_import" class="col-sm-12 col-md-2">Database</label>
-			</div>
-			<div class="row">
-				<div class="input-group col-md-3">
-					<select class="form-control" id="database_import">
-						<?php foreach ($project->get_databases() as $database) { ?>
-							<option><?= $database->get_name() ?></option>
-						<?php } ?>
-					</select>
-				</div>
-				<div class="input-group col-md-3">
-					<a class="btn btn-outline-primary"><span class="fas fa-file-upload "></span> BibTex File Upload</a>
-				</div>
-				<div class="input-group col-md-3">
-					<a class="btn btn-outline-primary"><span class="fas fa-search"></span> Automated Search</a>
-				</div>
-				<div class="input-group col-md-3">
-					<a class="btn btn-outline-primary"><span class="fas fa-copy"></span> Check for Duplicates</a>
-				</div>
-			</div>
-			<br>
-			<table id="table_imported_studies" class="table">
+			<table id="table_imported_studies" class="table table-responsive-sm">
 				<caption>List of Imports of Data Tables</caption>
 				<thead>
 				<tr>
 					<th>Database</th>
 					<th>Imported Studies</th>
-					<th>Delete Studies</th>
+					<th>Files Imported</th>
 				</tr>
 				</thead>
 				<tbody>
-				<tr>
-					<td>Scopus</td>
-					<td>1542</td>
-					<td>
-						<button class="btn btn-danger"><span class="far fa-trash-alt"></span></button>
-					</td>
-				</tr>
-				<tr>
-					<td>IEEE</td>
-					<td>1000</td>
-					<td>
-						<button class="btn btn-danger"><span class="far fa-trash-alt"></span></button>
-					</td>
-				</tr>
+				<?php foreach ($project->get_databases() as $database) { ?>
+					<tr>
+						<td><?= $database->get_name() ?></td>
+						<td><?= $num_papers[$database->get_name()] ?></td>
+						<td>
+							<table id="table_<?= $database->get_name() ?>" class="table">
+								<th>File</th>
+								<tbody>
+								<?php foreach ($bib[$database->get_name()] as $b) { ?>
+									<tr>
+										<td><?= $b ?></td>
+									</tr>
+								<?php } ?>
+								</tbody>
+							</table>
+						</td>
+					</tr>
+				<?php } ?>
 				</tbody>
 			</table>
 			<?php
