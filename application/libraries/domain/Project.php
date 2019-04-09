@@ -30,7 +30,7 @@ class Project
 	private $exclusion_criteria = array();
 	private $questions_quality = array();
 	private $questions_extraction = array();
-	private $papers;
+	private $papers = array();
 	private $terms = array();
 	private $members = array();
 	private $quality_scores = array();
@@ -570,7 +570,7 @@ class Project
 		if (is_null($papers) || empty($papers)) {
 			throw  new  InvalidArgumentException("Project Papers Invalid!");
 		}
-		$this->papers = $papers;
+		array_push($this->papers, $papers);
 	}
 
 	/**
