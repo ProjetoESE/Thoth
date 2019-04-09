@@ -278,7 +278,7 @@ class Project_Controller extends CI_Controller
 	{
 		try {
 			//require_once('C:\xampp\htdocs\Thoth\application\third_party\vendor\autoload.php');
-			require_once(APPPATH.'third_party/vendor/autoload.php');
+			require_once(APPPATH . 'third_party/vendor/autoload.php');
 
 			$this->load->model('Project_Model');
 
@@ -716,9 +716,11 @@ class Project_Controller extends CI_Controller
 	{
 		$errors = array();
 		$progress = 0;
+		$peso = 0;
 
-		$peso = 100 / sizeof($project->get_databases());
-
+		if (sizeof($project->get_databases()) > 0) {
+			$peso = 100 / sizeof($project->get_databases());
+		}
 		foreach ($project->get_databases() as $database) {
 			if ($this->Project_Model->get_num_bib($database->get_name(), $project->get_id()) > 0) {
 				$progress += $peso;
