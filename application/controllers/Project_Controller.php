@@ -277,14 +277,14 @@ class Project_Controller extends CI_Controller
 	private function export_doc($id_project)
 	{
 		try {
-			require_once('C:\xampp\htdocs\Thoth\application\third_party\vendor\autoload.php');
-			//require_once(APPPATH.'third_party/vendor/autoload.php');
+			//require_once('C:\xampp\htdocs\Thoth\application\third_party\vendor\autoload.php');
+			require_once(APPPATH.'third_party/vendor/autoload.php');
 
 			$this->load->model('Project_Model');
 
 			$project = $this->Project_Model->get_project($id_project);
-			$templateProcessor = new \PhpOffice\PhpWord\TemplateProcessor('C:\xampp\htdocs\Thoth\export\template.docx');
-			//$templateProcessor = new \PhpOffice\PhpWord\TemplateProcessor(base_url('export/template.docx'));
+			//$templateProcessor = new \PhpOffice\PhpWord\TemplateProcessor('C:\xampp\htdocs\Thoth\export\template.docx');
+			$templateProcessor = new \PhpOffice\PhpWord\TemplateProcessor(base_url('export/template.docx'));
 
 			$templateProcessor->setValue('title', $project->get_title());
 
@@ -525,8 +525,8 @@ class Project_Controller extends CI_Controller
 
 			}
 
-			$file = 'C:\xampp\htdocs\Thoth\export\P' . $id_project . '.docx';
-			//$file = './export/P' . $id_project . '.docx';
+			//$file = 'C:\xampp\htdocs\Thoth\export\P' . $id_project . '.docx';
+			$file = './export/P' . $id_project . '.docx';
 			$templateProcessor->saveAs($file);
 
 		} catch

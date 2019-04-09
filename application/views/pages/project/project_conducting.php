@@ -50,11 +50,16 @@
 						<?php } ?>
 					</select>
 				</div>
-				<div class="input-group col-md-5">
+				<div class="input-group col-md-6">
 					<label for="upload_bib" class="col-sm-12">Choose file</label>
 					<div class="custom-file">
-						<input type="file" class="custom-file-input" id="upload_bib" accept=".bib,.csv">
+						<input type="file" class="custom-file-input" id="upload_bib" accept=".bib,.csv" onchange="change_name()">
 						<label class="custom-file-label" id="name_bib_upload" for="upload_bib"></label>
+					</div>
+					<div class="input-group-append">
+						<button class="btn btn-success" type="button" onclick="readFileAsString();"><span
+								class="fas fa-plus"></span>
+						</button>
 					</div>
 				</div>
 			</div>
