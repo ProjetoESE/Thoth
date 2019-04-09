@@ -53,7 +53,7 @@
 				<div class="input-group col-md-5">
 					<label for="upload_bib" class="col-sm-12">Choose file</label>
 					<div class="custom-file">
-						<input type="file" class="custom-file-input" id="upload_bib" accept=".bib">
+						<input type="file" class="custom-file-input" id="upload_bib" accept=".bib,.csv">
 						<label class="custom-file-label" id="name_bib_upload" for="upload_bib"></label>
 					</div>
 				</div>

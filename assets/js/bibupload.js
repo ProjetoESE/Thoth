@@ -1,74 +1,101 @@
 function readFileAsString() {
-	let files = this.files;
-	let database = $('#database_import').val();
-	let id_project = $("#id_project").val();
-	let id = "table_" + database;
+	try {
+		let files = this.files;
+		let database = $('#database_import').val();
+		let id_project = $("#id_project").val();
+		let id = "table_" + database;
 
-	if (!validate_upload(files, database, id)) {
-		return false;
-	}
-	let name = files[0].name;
-
-	let reader = new FileReader();
-	reader.onload = function (event) {
-		let text = event.target.result;
-		let papers = BibtexParser(text);
-		if (papers.entries.length > 0) {
-			$.ajax({
-				type: "POST",
-				url: base_url + 'Project_Controller/bib_upload/',
-				data: {
-					papers: papers.entries,
-					database: database,
-					id_project: id_project,
-					name: name
-				},
-				success: function () {
-					let table_bib = document.getElementById(id);
-					let p = table_bib.parentNode.parentNode.cells.item(1).innerHTML;
-					table_bib.parentNode.parentNode.cells.item(1).innerHTML = parseInt(p) + papers.entries.length;
-
-					let row = table_bib.insertRow();
-					let cell1 = row.insertCell(0);
-					let cell2 = row.insertCell(1);
-					cell1.innerHTML = name;
-					cell2.innerHTML =
-						'<button class="btn btn-danger" onClick="delete_bib(this)">' +
-						'<span class="far fa-trash-alt"></span>' +
-						'</button>';
-					if (papers.errors.length > 0) {
-						Swal({
-							title: 'Success',
-							text: "The " + papers.entries.length + " was upload and " + papers.errors.length + " not upload!",
-							type: 'success',
-							showCancelButton: false,
-							confirmButtonText: 'Ok'
-						});
-					} else {
-						Swal({
-							title: 'Success',
-							text: "The " + papers.entries.length + " papers was upload",
-							type: 'success',
-							showCancelButton: false,
-							confirmButtonText: 'Ok'
-						});
-					}
-				}
-			});
-		} else {
-			Swal({
-				title: 'Error',
-				text: "The all papers not upload!",
-				type: 'success',
-				showCancelButton: false,
-				confirmButtonText: 'Ok'
-			});
+		if (!validate_upload(files, database, id)) {
+			return false;
 		}
+		let name = files[0].name;
 
-	};
+		let reader = new FileReader();
+		reader.onload = function (event) {
+			let text = event.target.result;
+			let papers = null;
 
-	reader.readAsText(files[0]);
-	$("#name_bib_upload")[0].innerHTML = name;
+			if (name.split('.')[1] == 'csv') {
+				papers = csvJSON(text);
+			} else {
+				papers = BibtexParser(text);
+			}
+
+			if (papers != null) {
+				if (papers.entries.length > 0) {
+					$.ajax({
+						type: "POST",
+						url: base_url + 'Project_Controller/bib_upload/',
+						data: {
+							papers: papers.entries,
+							database: database,
+							id_project: id_project,
+							name: name
+						},
+						success: function () {
+							let table_bib = document.getElementById(id);
+							let p = table_bib.parentNode.parentNode.cells.item(1).innerHTML;
+							table_bib.parentNode.parentNode.cells.item(1).innerHTML = parseInt(p) + papers.entries.length;
+
+							let row = table_bib.insertRow();
+							let cell1 = row.insertCell(0);
+							let cell2 = row.insertCell(1);
+							cell1.innerHTML = name;
+							cell2.innerHTML =
+								'<button class="btn btn-danger" onClick="delete_bib(this)">' +
+								'<span class="far fa-trash-alt"></span>' +
+								'</button>';
+							if (papers.errors.length > 0) {
+								Swal({
+									title: 'Success',
+									text: "The " + papers.entries.length + " was upload and " + papers.errors.length + " not upload!",
+									type: 'success',
+									showCancelButton: false,
+									confirmButtonText: 'Ok'
+								});
+							} else {
+								Swal({
+									title: 'Success',
+									text: "The " + papers.entries.length + " papers was upload",
+									type: 'success',
+									showCancelButton: false,
+									confirmButtonText: 'Ok'
+								});
+							}
+						}
+					});
+				} else {
+					Swal({
+						title: 'Error',
+						text: "The all papers not upload!",
+						type: 'error',
+						showCancelButton: false,
+						confirmButtonText: 'Ok'
+					});
+				}
+			} else {
+				Swal({
+					title: 'Error',
+					text: "The file have a problem!",
+					type: 'error',
+					showCancelButton: false,
+					confirmButtonText: 'Ok'
+				});
+			}
+		};
+
+		reader.readAsText(files[0]);
+		$("#name_bib_upload")[0].innerHTML = name;
+	} catch (e) {
+		Swal({
+			title: 'Error',
+			text: e.toString(),
+			type: 'error',
+			showCancelButton: false,
+			confirmButtonText: 'Ok'
+		});
+	}
+
 }
 
 $(document).ready(function () {
@@ -151,4 +178,52 @@ function delete_bib(value) {
 			)
 		}
 	});
+}
+
+function csvJSON(csv) {
+
+	let lines = csv.split("\n");
+
+	let result = [];
+	let entries = [];
+	let errors = [];
+
+	for (let i = 1; i < lines.length; i++) {
+		let current_line = lines[i].split(",");
+		if (current_line.length == 10) {
+			let entry = {};
+
+			entry['EntryType'] = current_line[9];
+			entry['EntryKey'] = "";
+			let obj = {};
+			obj['title'] = current_line[0];
+			obj['author'] = current_line[6];
+			obj['booktitle'] = current_line[2];
+			obj['volume'] = current_line[3];
+			obj['pages'] = "";
+			obj['numpages'] = "";
+			obj['abstract'] = "";
+			obj['keywords'] = "";
+			obj['doi'] = current_line[5];
+			obj['journal'] = "";
+			obj['issn'] = "";
+			obj['location'] = "";
+			obj['isbn'] = "";
+			obj['address'] = "";
+			obj['month'] = "";
+			obj['url'] = current_line[8];
+			obj['publisher'] = current_line[1];
+			obj['year'] = current_line[7];
+			entry['Fields'] = obj;
+			entries.push(entry);
+		} else {
+			errors.push("Article " + i + " in the wrong format, containing some in the title");
+		}
+
+	}
+	result['entries'] = entries;
+	result['errors'] = errors;
+
+	//return result; //JavaScript object
+	return result; //JSON
 }
