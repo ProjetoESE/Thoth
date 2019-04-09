@@ -717,10 +717,16 @@ class Project_Model extends CI_Model
 				$data2['url'] = "";
 			}
 
-			if (!empty($p['Fields']['publisher'])) {
-				$data2['publisher'] = $p['Fields']['publisher'];
+			if (!empty($p['Fields']['series'])) {
+				$data2['publisher'] = $p['Fields']['series'];
 			} else {
 				$data2['publisher'] = "";
+			}
+
+			if (!empty($p['Fields']['year'])) {
+				$data2['year'] = $p['Fields']['year'];
+			} else {
+				$data2['year'] = "";
 			}
 
 			array_push($data, $data2);
