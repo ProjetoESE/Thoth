@@ -7,6 +7,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Paper
 {
 
+	private $id;
 	private $title;
 	private $author;
 	private $abstract;
@@ -21,20 +22,17 @@ class Paper
 	private $doi;
 	private $url;
 	private $issn;
-	private $adress;
+	private $address;
 	private $location;
 	private $isbn;
 	private $note;
 	private $book_title;
 	private $bib_key;
-	private $added_by;
-	private $updated_by;
 	private $added_at;
 	private $updated_at;
 	private $database;
 	private $status_selection;
 	private $status_extraction;
-	private $reding_priority;
 	private $score;
 	private $quality_score;
 
@@ -45,10 +43,332 @@ class Paper
 	{
 	}
 
+	/**
+	 * @return mixed
+	 */
+	public function get_id()
+	{
+		return $this->id;
+	}
 
 	/**
-	 * Method to retrieve the paper note.
-	 * @return String note
+	 * @param mixed $id
+	 * @return Paper
+	 */
+	public function set_id($id)
+	{
+		$this->id = $id;
+		return $this;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function get_title()
+	{
+		return $this->title;
+	}
+
+	/**
+	 * @param mixed $title
+	 * @return Paper
+	 */
+	public function set_title($title)
+	{
+		$this->title = $title;
+		return $this;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function get_author()
+	{
+		return $this->author;
+	}
+
+	/**
+	 * @param mixed $author
+	 * @return Paper
+	 */
+	public function set_author($author)
+	{
+		$this->author = $author;
+		return $this;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function get_abstract()
+	{
+		return $this->abstract;
+	}
+
+	/**
+	 * @param mixed $abstract
+	 * @return Paper
+	 */
+	public function set_abstract($abstract)
+	{
+		$this->abstract = $abstract;
+		return $this;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function get_year()
+	{
+		return $this->year;
+	}
+
+	/**
+	 * @param mixed $year
+	 * @return Paper
+	 */
+	public function set_year($year)
+	{
+		$this->year = $year;
+		return $this;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function get_keywords()
+	{
+		return $this->keywords;
+	}
+
+	/**
+	 * @param mixed $keywords
+	 * @return Paper
+	 */
+	public function set_keywords($keywords)
+	{
+		$this->keywords = $keywords;
+		return $this;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function get_type()
+	{
+		return $this->type;
+	}
+
+	/**
+	 * @param mixed $type
+	 * @return Paper
+	 */
+	public function set_type($type)
+	{
+		$this->type = $type;
+		return $this;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function get_publisher()
+	{
+		return $this->publisher;
+	}
+
+	/**
+	 * @param mixed $publisher
+	 * @return Paper
+	 */
+	public function set_publisher($publisher)
+	{
+		$this->publisher = $publisher;
+		return $this;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function get_journal()
+	{
+		return $this->journal;
+	}
+
+	/**
+	 * @param mixed $journal
+	 * @return Paper
+	 */
+	public function set_journal($journal)
+	{
+		$this->journal = $journal;
+		return $this;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function get_pages()
+	{
+		return $this->pages;
+	}
+
+	/**
+	 * @param mixed $pages
+	 * @return Paper
+	 */
+	public function set_pages($pages)
+	{
+		$this->pages = $pages;
+		return $this;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function get_num_pages()
+	{
+		return $this->num_pages;
+	}
+
+	/**
+	 * @param mixed $num_pages
+	 * @return Paper
+	 */
+	public function set_num_pages($num_pages)
+	{
+		$this->num_pages = $num_pages;
+		return $this;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function get_volume()
+	{
+		return $this->volume;
+	}
+
+	/**
+	 * @param mixed $volume
+	 * @return Paper
+	 */
+	public function set_volume($volume)
+	{
+		$this->volume = $volume;
+		return $this;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function get_doi()
+	{
+		return $this->doi;
+	}
+
+	/**
+	 * @param mixed $doi
+	 * @return Paper
+	 */
+	public function set_doi($doi)
+	{
+		$this->doi = $doi;
+		return $this;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function get_url()
+	{
+		return $this->url;
+	}
+
+	/**
+	 * @param mixed $url
+	 * @return Paper
+	 */
+	public function set_url($url)
+	{
+		$this->url = $url;
+		return $this;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function get_issn()
+	{
+		return $this->issn;
+	}
+
+	/**
+	 * @param mixed $issn
+	 * @return Paper
+	 */
+	public function set_issn($issn)
+	{
+		$this->issn = $issn;
+		return $this;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function get_address()
+	{
+		return $this->address;
+	}
+
+	/**
+	 * @param mixed $address
+	 * @return Paper
+	 */
+	public function set_address($address)
+	{
+		$this->address = $address;
+		return $this;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function get_location()
+	{
+		return $this->location;
+	}
+
+	/**
+	 * @param mixed $location
+	 * @return Paper
+	 */
+	public function set_location($location)
+	{
+		$this->location = $location;
+		return $this;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function get_isbn()
+	{
+		return $this->isbn;
+	}
+
+	/**
+	 * @param mixed $isbn
+	 * @return Paper
+	 */
+	public function set_isbn($isbn)
+	{
+		$this->isbn = $isbn;
+		return $this;
+	}
+
+	/**
+	 * @return mixed
 	 */
 	public function get_note()
 	{
@@ -56,403 +376,175 @@ class Paper
 	}
 
 	/**
-	 * Method to change the paper note.
-	 * @param String $note
-	 * @throws InvalidArgumentException
+	 * @param mixed $note
+	 * @return Paper
 	 */
 	public function set_note($note)
 	{
-		if (is_null($note) || empty($note)) {
-			throw  new  InvalidArgumentException("Paper Note Invalid!");
-		}
 		$this->note = $note;
+		return $this;
 	}
 
 	/**
-	 * Method to retrieve the paper bibtex key.
-	 * @return String bibitex_key
+	 * @return mixed
 	 */
-	public function get_bibtex_key()
+	public function get_book_title()
 	{
-		return $this->bibtex_key;
+		return $this->book_title;
 	}
 
 	/**
-	 * Method to change the paper bibtex key.
-	 * @param String $bibtex_key
-	 * @throws InvalidArgumentException
+	 * @param mixed $book_title
+	 * @return Paper
 	 */
-	public function set_bibtex_key($bibtex_key)
+	public function set_book_title($book_title)
 	{
-		if (is_null($bibtex_key) || empty($bibtex_key)) {
-			throw  new  InvalidArgumentException("Paper Bibtex Key Invalid!");
-		}
-		$this->bibtex_key = $bibtex_key;
+		$this->book_title = $book_title;
+		return $this;
 	}
 
 	/**
-	 * Method to retrieve the paper added by.
-	 * @return User added_by
+	 * @return mixed
 	 */
-	public function get_added_by()
+	public function get_bib_key()
 	{
-		return $this->added_by;
+		return $this->bib_key;
 	}
 
 	/**
-	 * Method to change the paper added by.
-	 * @param String $added_by
-	 * @throws InvalidArgumentException
+	 * @param mixed $bib_key
+	 * @return Paper
 	 */
-	public function setAddedBy($added_by)
+	public function set_bib_key($bib_key)
 	{
-		if (is_null($added_by)) {
-			throw  new  InvalidArgumentException("Paper Added By Invalid!");
-		}
-		$this->added_by = $added_by;
+		$this->bib_key = $bib_key;
+		return $this;
 	}
 
 	/**
-	 * Method to retrieve the paper update by.
-	 * @return User update_by
+	 * @return mixed
 	 */
-	public function getUpdatedBy()
-	{
-		return $this->updated_by;
-	}
-
-	/**
-	 * Method to change the paper update by.
-	 * @param String $updated_by
-	 * @throws InvalidArgumentException
-	 */
-	public function setUpdatedBy($updated_by)
-	{
-		if (is_null($updated_by)) {
-			throw  new  InvalidArgumentException("Paper Updated By Invalid!");
-		}
-		$this->updated_by = $updated_by;
-	}
-
-	/**
-	 * Method to retrieve the paper added at.
-	 * @return DateTime added_at
-	 */
-	public function getAddedAt()
+	public function get_added_at()
 	{
 		return $this->added_at;
 	}
 
 	/**
-	 * Method to change the paper added at.
-	 * @param DateTime $added_at
-	 * @throws InvalidArgumentException
+	 * @param mixed $added_at
+	 * @return Paper
 	 */
-	public function setAddedAt($added_at)
+	public function set_added_at($added_at)
 	{
-		if (is_null($added_at)) {
-			throw  new  InvalidArgumentException("Paper Added At Invalid!");
-		}
 		$this->added_at = $added_at;
+		return $this;
 	}
 
 	/**
-	 * Method to retrieve the paper updated at.
-	 * @return DateTime updated_at
+	 * @return mixed
 	 */
-	public function getUpdatedAt()
+	public function get_updated_at()
 	{
 		return $this->updated_at;
 	}
 
 	/**
-	 * Method to change the paper updated at.
-	 * @param DateTime $updated_at
-	 * @throws InvalidArgumentException
+	 * @param mixed $updated_at
+	 * @return Paper
 	 */
-	public function setUpdatedAt($updated_at)
+	public function set_updated_at($updated_at)
 	{
-		if (is_null($updated_at)) {
-			throw  new  InvalidArgumentException("Paper Updated At Invalid!");
-		}
 		$this->updated_at = $updated_at;
+		return $this;
 	}
 
 	/**
-	 * Method to retrieve the paper database.
-	 * @return Database database
+	 * @return mixed
 	 */
-	public function getDatabase()
+	public function get_database()
 	{
 		return $this->database;
 	}
 
 	/**
-	 * Method to change the paper database.
-	 * @param Database $database
-	 * @throws InvalidArgumentException
+	 * @param mixed $database
+	 * @return Paper
 	 */
-	public function setDatabase($database)
+	public function set_database($database)
 	{
-		if (is_null($database)) {
-			throw  new  InvalidArgumentException("Paper Database Invalid!");
-		}
 		$this->database = $database;
+		return $this;
 	}
 
 	/**
-	 * Method to retrieve the paper status selection.
-	 * @return Status_Selection_Type status_selection
+	 * @return mixed
 	 */
-	public function getStatusSelection()
+	public function get_status_selection()
 	{
 		return $this->status_selection;
 	}
 
 	/**
-	 * Method to change the paper status selection.
-	 * @param Status_Selection_Type $status_selection
-	 * @throws InvalidArgumentException
+	 * @param mixed $status_selection
+	 * @return Paper
 	 */
-	public function setStatusSelection($status_selection)
+	public function set_status_selection($status_selection)
 	{
-		if (is_null($status_selection)) {
-			throw  new  InvalidArgumentException("Paper Status Selection Invalid!");
-		}
 		$this->status_selection = $status_selection;
+		return $this;
 	}
 
 	/**
-	 * Method to retrieve the paper status extraction.
-	 * @return Status_Extraction_Type status_extraction
+	 * @return mixed
 	 */
-	public function getStatusExtraction()
+	public function get_status_extraction()
 	{
 		return $this->status_extraction;
 	}
 
 	/**
-	 * Method to change the paper status extraction.
-	 * @param Status_Extraction_Type $status_extraction
-	 * @throws InvalidArgumentException
+	 * @param mixed $status_extraction
+	 * @return Paper
 	 */
-	public function setStatusExtraction($status_extraction)
+	public function set_status_extraction($status_extraction)
 	{
-		if (is_null($status_extraction)) {
-			throw  new  InvalidArgumentException("Paper Status Extraction Invalid!");
-		}
 		$this->status_extraction = $status_extraction;
+		return $this;
 	}
 
 	/**
-	 * Method to retrieve the paper reading priority.
-	 * @return Reading_Priority_Type reading_priority
+	 * @return mixed
 	 */
-	public function getRedingPriority()
-	{
-		return $this->reding_priority;
-	}
-
-	/**
-	 * Method to change the paper reading priority.
-	 * @param Reading_Priority_Type $reding_priority
-	 * @throws InvalidArgumentException
-	 */
-	public function setRedingPriority($reding_priority)
-	{
-		if (is_null($reding_priority)) {
-			throw  new  InvalidArgumentException("Paper Reading Priority Invalid!");
-		}
-		$this->reding_priority = $reding_priority;
-	}
-
-	/**
-	 * Method to retrieve the paper title.
-	 * @return String title
-	 */
-	public function getTitle()
-	{
-		return $this->title;
-	}
-
-	/**
-	 * Method to retrieve the paper author.
-	 * @return String author
-	 */
-	public function getAuthor()
-	{
-		return $this->author;
-	}
-
-	/**
-	 * Method to retrieve the paper abstract.
-	 * @return String abstract
-	 */
-	public function getAbstract()
-	{
-		return $this->abstract;
-	}
-
-	/**
-	 * Method to retrieve the paper year.
-	 * @return int year
-	 */
-	public function getYear()
-	{
-		return $this->year;
-	}
-
-	/**
-	 * Method to retrieve the paper Keywords.
-	 * @return String keywords
-	 */
-	public function getKeywords()
-	{
-		return $this->keywords;
-	}
-
-	/**
-	 * Method to retrieve the paper document type.
-	 * @return String document_type
-	 */
-	public function getDocumentType()
-	{
-		return $this->document_type;
-	}
-
-	/**
-	 * Method to retrieve the paper publication type.
-	 * @return String publication_type
-	 */
-	public function getPublicationType()
-	{
-
-		return $this->publication_type;
-	}
-
-	/**
-	 * Method to retrieve the paper publisher.
-	 * @return String publisher
-	 */
-	public function getPublisher()
-	{
-		return $this->publisher;
-	}
-
-	/**
-	 * Method to retrieve the paper journal.
-	 * @return String journal
-	 */
-	public function getJournal()
-	{
-		return $this->journal;
-	}
-
-	/**
-	 * Method to retrieve the paper pages.
-	 * @return int pages
-	 */
-	public function getPages()
-	{
-		return $this->pages;
-	}
-
-	/**
-	 * Method to retrieve the paper volume.
-	 * @return int volume
-	 */
-	public function getVolume()
-	{
-		return $this->volume;
-	}
-
-	/**
-	 * Method to retrieve the paper doi.
-	 * @return String doi
-	 */
-	public function getDoi()
-	{
-		return $this->doi;
-	}
-
-	/**
-	 * Method to retrieve the paper url.
-	 * @return String url
-	 */
-	public function getUrl()
-	{
-		return $this->url;
-	}
-
-	/**
-	 * Method to retrieve the paper affiliation.
-	 * @return String affiliation
-	 */
-	public function getAffiliation()
-	{
-		return $this->affiliation;
-	}
-
-	/**
-	 * Method to retrieve the paper issn.
-	 * @return int issn
-	 */
-	public function getIssn()
-	{
-		return $this->issn;
-	}
-
-	/**
-	 * Method to retrieve the paper language.
-	 * @return String language
-	 */
-	public function getLanguage()
-	{
-		return $this->language;
-	}
-
-	/**
-	 * Method to retrieve the paper score.
-	 * @return float url
-	 */
-	public function getScore()
+	public function get_score()
 	{
 		return $this->score;
 	}
 
 	/**
-	 * Method to change the paper  score.
-	 * @param float $score
-	 * @throws InvalidArgumentException
+	 * @param mixed $score
+	 * @return Paper
 	 */
-	public function setScore($score)
+	public function set_score($score)
 	{
-		if (is_null($score) || !is_float($score)) {
-			throw  new  InvalidArgumentException("Paper Score Invalid!");
-		}
 		$this->score = $score;
+		return $this;
 	}
 
 	/**
-	 * Method to retrieve the paper quality score.
-	 * @return Quality_Score quality_score
+	 * @return mixed
 	 */
-	public function getQualityScore()
+	public function get_quality_score()
 	{
 		return $this->quality_score;
 	}
 
 	/**
-	 * Method to change the paper quality score.
-	 * @param Quality_Score $quality_score
-	 * @throws InvalidArgumentException
+	 * @param mixed $quality_score
+	 * @return Paper
 	 */
-	public function setQualityScore($quality_score)
+	public function set_quality_score($quality_score)
 	{
-		if (is_null($quality_score)) {
-			throw  new  InvalidArgumentException("Paper Quality Score Invalid!");
-		}
 		$this->quality_score = $quality_score;
+		return $this;
 	}
 
 

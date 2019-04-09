@@ -69,7 +69,6 @@
 				<caption>List of Papers Imported</caption>
 				<thead>
 				<tr>
-					<th>ID</th>
 					<th>Title</th>
 					<th>Author</th>
 					<th>Year</th>
@@ -79,49 +78,22 @@
 				</tr>
 				</thead>
 				<tbody>
-				<tr>
-					<td>52</td>
-					<td>A compact, low-cost, high-performance test fixture for electrical test and control of smart
-						pixel
-						integrated circuits
-					</td>
-					<td>F. Kiamilev and R. Rozier and J. Rieve</td>
-					<td>1996</td>
-					<td>SCOPUS</td>
-					<td class="text-success">Accepted</td>
-					<td>
-						<button class="btn btn-danger"><span class="far fa-trash-alt"></span></button>
-					</td>
-				</tr>
-				<tr>
-					<td>65</td>
-					<td>A IPv6 Network Performance Test System using Multi-Agent</td>
-					<td>Y. Chengqing and W. Yinglong and W. Jizhi</td>
-					<td>2007</td>
-					<td>IEEE</td>
-					<td class="text-danger">Rejected</td>
-					<td>
-						<button class="btn btn-danger"><span class="far fa-trash-alt"></span></button>
-					</td>
-				</tr>
-				<tr>
-					<td>69</td>
-					<td>A novel on-die GHz AC stress test methodology for high speed IO application</td>
-					<td>P. Z. Kang and T. Y. Yew and K. W. Shih and M. H. Hsieh and W. S. Chou and C. M. Fu and Y. C.
-						Huang
-						and W. Wang and Y. C. Peng and Y. H. Lee
-					</td>
-					<td>2017</td>
-					<td>IEEE</td>
-					<td class="text-dark">Unclassified</td>
-					<td>
-						<button class="btn btn-danger"><span class="far fa-trash-alt"></span></button>
-					</td>
-				</tr>
-				</tbody>
+				<?php foreach ($project->get_papers() as $paper) { ?>
+					<tr>
+						<td><?=$paper->get_title();?></td>
+						<td><?=$paper->get_author();?></td>
+						<td><?=$paper->get_year();?></td>
+						<td><?=$paper->get_added_at();?></td>
+						<td><?=$paper->get_status_selection();?></td>
+						<td>
+							<button class="btn btn-danger">
+								<span class="far fa-trash-alt"></span>
+							</button>
+						</td>
+					</tr>
+				<?php } ?>
 				<tfoot>
 				<tr>
-					<th>ID</th>
 					<th>Title</th>
 					<th>Author</th>
 					<th>Year</th>
@@ -167,3 +139,6 @@
 		?>
 	</div>
 </div>
+<?php
+$this->load->view('modal/modal_paper');
+?>

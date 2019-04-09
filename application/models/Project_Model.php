@@ -121,7 +121,8 @@ class Project_Model extends CI_Model
 			$project->set_keywords($row->description);
 		}
 
-		$this->db->select('data_base.*');
+		$project_datbases = array();
+		$this->db->select('data_base.*,project_databases.id_project_database');
 		$this->db->from('project_databases');
 		$this->db->join('data_base', 'data_base.id_database = project_databases.id_database');
 		$this->db->where('id_project', $id);
@@ -132,6 +133,7 @@ class Project_Model extends CI_Model
 			$database->set_name($row->name);
 			$database->set_link($row->link);
 			$project->set_databases($database);
+			array_push($project_datbases, $row->id_project_database);
 		}
 
 		$this->db->select('*');
@@ -361,6 +363,52 @@ class Project_Model extends CI_Model
 			}
 
 			$project->set_questions_extraction($qe);
+		}
+
+		$id_bibs = array();
+		$this->db->select('id_bib');
+		$this->db->from('bib_upload');
+		$this->db->where_in('id_project_database', $project_datbases);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			array_push($id_bibs, $row->id_bib);
+		}
+
+		$this->db->select('papers.*');
+		$this->db->from('papers');
+		$this->db->where_in('id_bib', $id_bibs);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			$p = new Paper();
+			$p->set_title($row->title);
+			$p->set_author($row->author);
+			$p->set_book_title($row->book_title);
+			$p->set_volume($row->volume);
+			$p->set_pages($row->pages);
+			$p->set_num_pages($row->num_pages);
+			$p->set_abstract($row->abstract);
+			$p->set_keywords($row->keywords);
+			$p->set_doi($row->doi);
+			$p->set_journal($row->journal);
+			$p->set_issn($row->issn);
+			$p->set_location($row->location);
+			$p->set_isbn($row->isbn);
+			$p->set_address($row->address);
+			$p->set_type($row->type);
+			$p->set_bib_key($row->bib_key);
+			$p->set_url($row->url);
+			$p->set_publisher($row->publisher);
+			$p->set_year($row->year);
+			$p->set_added_at($row->added_at);
+			$p->set_updated_at($row->update_at);
+			$p->set_note($row->note);
+			$p->set_status_selection($row->status_selection);
+			$p->set_status_extraction($row->status_extraction);
+			$p->set_score($row->score);
+			$p->set_quality_score($row->score_quality);
+			$project->set_papers($p);
 		}
 
 		return $project;
@@ -705,12 +753,6 @@ class Project_Model extends CI_Model
 				$data2['address'] = "";
 			}
 
-			if (!empty($p['Fields']['month'])) {
-				$data2['month'] = $p['Fields']['month'];
-			} else {
-				$data2['month'] = "";
-			}
-
 			if (!empty($p['Fields']['url'])) {
 				$data2['url'] = $p['Fields']['url'];
 			} else {
@@ -893,5 +935,4 @@ class Project_Model extends CI_Model
 		}
 		return $data2;
 	}
-
 }

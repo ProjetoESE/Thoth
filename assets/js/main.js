@@ -61,7 +61,7 @@ $(document).ready(function () {
 
 	let table_papers = $('#table_papers').DataTable({
 		columnDefs: [{
-			targets: 6,
+			targets: 5,
 			orderable: false
 		}],
 		responsive: true,
@@ -78,11 +78,10 @@ $(document).ready(function () {
 
 	table_papers.on('select', function (e, dt, type, indexes) {
 		let rowData = table_papers.rows(indexes).data().toArray();
-		document.getElementById("paper_id").value = rowData[0][0];
-		$('#paper_title').text(rowData[0][1]);
-		$('#paper_author').val(rowData[0][2]);
-		$('#paper_year').val(rowData[0][3]);
-		$('#paper_database').val(rowData[0][4]);
+		$('#paper_title').text(rowData[0][0]);
+		$('#paper_author').val(rowData[0][1]);
+		$('#paper_year').val(rowData[0][2]);
+		$('#paper_database').val(rowData[0][3]);
 		$('#row_quality').hide();
 		$('#row_extraction').hide();
 		$('#paper_keywords').val("field programmable gate arrays;integrated circuit packaging;integrated circuit testing;" +
