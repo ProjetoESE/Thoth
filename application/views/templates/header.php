@@ -34,6 +34,8 @@
 	<!-- My CSS Files -->
 	<link rel="stylesheet" href="<?= base_url('assets/css/main.css'); ?>">
 
+	<link rel="preload" href="<?= base_url('assets/img/loading.gif'); ?>" as="image">
+
 	<!-- JQuery-->
 	<script src="<?= base_url('assets/js/jquery-3.3.1.min.js'); ?>"></script>
 
@@ -75,6 +77,7 @@
 	<script src="<?= base_url('assets/js/bib2json.js'); ?>"></script>
 
 	<!-- My JS Files -->
+	<script src="<?= base_url('assets/js/loading.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/main.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/overall.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/research_question.js'); ?>"></script>
@@ -88,3 +91,7 @@
 
 </head>
 <body>
+
+<div id="loading" class="load">
+<img src="<?= base_url('assets/img/loading.gif'); ?>">
+</div>
