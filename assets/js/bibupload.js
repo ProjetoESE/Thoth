@@ -1,4 +1,5 @@
 function readFileAsString() {
+	exibe_loading();
 	let files = document.getElementById('upload_bib').files;
 	let database = $('#database_import').val();
 	let id_project = $("#id_project").val();
@@ -199,7 +200,9 @@ function csvJSON(csv) {
 	let errors = [];
 
 	for (let i = 1; i < lines.length; i++) {
+
 		let current_line = lines[i].split(",");
+
 		if (current_line.length == 10) {
 			let entry = {};
 

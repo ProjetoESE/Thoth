@@ -81,10 +81,10 @@
 				<?php foreach ($project->get_papers() as $paper) { ?>
 					<tr>
 						<td><?=$paper->get_title();?></td>
-						<td><?=$paper->get_author();?></td>
-						<td><?=$paper->get_year();?></td>
-						<td><?=$paper->get_added_at();?></td>
-						<td><?=$paper->get_status_selection();?></td>
+						<td><?= $paper->get_author(); ?></td>
+						<td><?= $paper->get_year(); ?></td>
+						<td><?= $paper->get_added_at(); ?></td>
+						<td><?= $paper->get_status_selection(); ?></td>
 						<td>
 							<button class="btn btn-danger">
 								<span class="far fa-trash-alt"></span>

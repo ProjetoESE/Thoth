@@ -1,11 +1,12 @@
 $(document).ajaxStart(function () {
+	exibe_loading();
 }).ajaxStop(function () {
+	remove_loading();
 });
-
 
 $(document).ready(function () {
 	base_url = $("#base_url").val();
-
+	remove_loading();
 	let lang = {
 		"sZeroRecords": "No options added"
 	};
@@ -244,7 +245,4 @@ $(document).ready(function () {
 		$("a[href='" + anchor + "']").tab("show");
 	});
 });
-
-
-
 

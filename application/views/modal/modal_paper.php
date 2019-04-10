@@ -9,6 +9,9 @@
 				</button>
 			</div>
 			<div class="modal-body">
+				<div id="pdf_view">
+
+				</div>
 				<input type="hidden" id="paper_id">
 				<div class="row">
 					<div class="col-md-6">
