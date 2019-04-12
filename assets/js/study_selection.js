@@ -117,8 +117,10 @@ $(document).ready(function () {
 
 		} else if (prev_index_paper[0] <= 0) {
 			$("#prev_paper").addClass('disabled');
+			$("#next_paper").removeClass('disabled');
 		} else if (next_index_paper[0] >= size) {
 			$("#next_paper").addClass('disabled');
+			$("#prev_paper").removeClass('disabled');
 		}
 
 
