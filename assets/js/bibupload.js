@@ -6,8 +6,10 @@ function readFileAsString() {
 	let id = "table_" + database;
 
 	if (!validate_upload(files, database, id)) {
+		remove_loading();
 		return false;
 	}
+
 	let name = files[0].name;
 
 	let reader = new FileReader();
@@ -86,6 +88,7 @@ function readFileAsString() {
 	};
 
 	reader.readAsText(files[0]);
+	$("#upload_bib").val("");
 }
 
 function change_name() {

@@ -28,6 +28,11 @@ body {
 	overflow-y: auto;
 }
 
+a.disabled {
+	color: black;
+	pointer-events: none;
+}
+
 .opt {
 	margin: 0.1em;
 }

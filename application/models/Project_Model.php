@@ -3,9 +3,9 @@
 class Project_Model extends CI_Model
 {
 
-	public function created_project($title, $description, $objectives, $email)
+	private function get_id_name_user($email)
 	{
-		$created_by = null;
+		$id_user = null;
 		$name = null;
 
 		$this->db->select('id_user,name');
@@ -14,9 +14,18 @@ class Project_Model extends CI_Model
 		$query = $this->db->get();
 
 		foreach ($query->result() as $row) {
-			$created_by = $row->id_user;
+			$id_user = $row->id_user;
 			$name = $row->name;
 		}
+		return array($id_user, $name);
+	}
+
+	public function created_project($title, $description, $objectives, $email)
+	{
+		$user = $this->get_id_name_user($email);
+
+		$created_by = $user[0];
+		$name = $user[1];
 
 		$data = array(
 			'title' => $title,
@@ -376,44 +385,80 @@ class Project_Model extends CI_Model
 			}
 		}
 		if (sizeof($id_bibs) > 0) {
-			$this->db->select('papers.*');
+
+			$id_user = $this->get_id_name_user($this->session->email);
+
+
+			$this->db->select('papers.title,papers.id,papers.id_paper,papers.author,papers.year, data_base.name');
 			$this->db->from('papers');
+			$this->db->join('data_base', 'papers.data_base = data_base.id_database');
 			$this->db->where_in('id_bib', $id_bibs);
 			$query = $this->db->get();
 
 			foreach ($query->result() as $row) {
 				$p = new Paper();
+				$p->set_id($row->id);
 				$p->set_title($row->title);
 				$p->set_author($row->author);
-				//$p->set_book_title($row->book_title);
-				//$p->set_volume($row->volume);
-				//$p->set_pages($row->pages);
-				//$p->set_num_pages($row->num_pages);
-				//$p->set_abstract($row->abstract);
-				//$p->set_keywords($row->keywords);
-				//$p->set_doi($row->doi);
-				//$p->set_journal($row->journal);
-			//	$p->set_issn($row->issn);
-				//$p->set_location($row->location);
-			//	$p->set_isbn($row->isbn);
-				//$p->set_address($row->address);
-				//$p->set_type($row->type);
-				//$p->set_bib_key($row->bib_key);
-				//$p->set_url($row->url);
-				//$p->set_publisher($row->publisher);
+				$p->set_database($row->name);
 				$p->set_year($row->year);
-				$p->set_added_at($row->added_at);
-				//$p->set_updated_at($row->update_at);
-				$p->set_note($row->note);
-				$p->set_status_selection($row->status_selection);
-				$p->set_status_extraction($row->status_extraction);
-				$p->set_score($row->score);
-				$p->set_quality_score($row->score_quality);
+
+				$this->db->select('id_status');
+				$this->db->from('papers_selection');
+				$this->db->where('id_user', $id_user[0]);
+				$this->db->where('id_paper', $row->id_paper);
+				$query6 = $this->db->get();
+
+				foreach ($query6->result() as $row2) {
+					$p->set_status_selection($row2->id_status);
+				}
 				$project->set_papers($p);
+
 			}
 		}
 
 		return $project;
+	}
+
+	public function get_paper($id_paper, $id_project)
+	{
+		$project_databases = array();
+		$this->db->select('id_project_database');
+		$this->db->from('project_databases');
+		$this->db->where('id_project', $id_project);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			array_push($project_databases, $row->id_project_database);
+		}
+		$id_bibs = array();
+		if (sizeof($project_databases) > 0) {
+			$this->db->select('id_bib');
+			$this->db->from('bib_upload');
+			$this->db->where_in('id_project_database', $project_databases);
+			$query = $this->db->get();
+
+			foreach ($query->result() as $row) {
+				array_push($id_bibs, $row->id_bib);
+			}
+		}
+		$data = array();
+		if (sizeof($id_bibs) > 0) {
+			$this->db->select('papers.*');
+			$this->db->from('papers');
+			$this->db->where('id', $id_paper);
+			$this->db->where_in('id_bib', $id_bibs);
+			$query = $this->db->get();
+
+			foreach ($query->result() as $row) {
+
+				$data['abstract'] = $row->abstract;
+				$data['keywords'] = $row->keywords;
+				$data['doi'] = $row->doi;
+				$data['url'] = $row->url;
+			}
+		}
+		return $data;
 	}
 
 	public function get_databases()
@@ -482,15 +527,7 @@ class Project_Model extends CI_Model
 	public function get_users($id)
 	{
 		$users = array();
-		$id_users = array();
-		$this->db->select('id_user');
-		$this->db->from('members');
-		$this->db->where('id_project', $id);
-		$query = $this->db->get();
-
-		foreach ($query->result() as $row) {
-			array_push($id_users, $row->id_user);
-		}
+		$id_users = $this->get_members($id);
 
 		$this->db->select('user.*');
 		$this->db->from('user');
@@ -521,23 +558,47 @@ class Project_Model extends CI_Model
 		}
 
 
-		$id_user = null;
-		$this->db->select('id_user');
-		$this->db->from('user');
-		$this->db->where('email', $email);
-		$query = $this->db->get();
-
-		foreach ($query->result() as $row) {
-			$id_user = $row->id_user;
-		}
+		$id_user = $this->get_id_name_user($email);
 
 		$data = array(
-			'id_user' => $id_user,
+			'id_user' => $id_user[0],
 			'id_project' => $id_project,
 			'level' => $id_level
 		);
 
 		$this->db->insert('members', $data);
+
+		$project_databases = $this->get_ids_pro_database($id_project);
+
+		$id_bibs = array();
+		if (sizeof($project_databases) > 0) {
+			$id_bibs = $this->get_ids_bibs($project_databases);
+		}
+
+		$id_papers = array();
+		if (sizeof($id_bibs) > 0) {
+			$id_papers = $this->get_ids_papers($id_bibs);
+		}
+
+		if (sizeof($id_papers) > 0) {
+			$status_selection = array();
+			$status_extraction = array();
+			$status_quality = array();
+
+			foreach ($id_papers as $paper) {
+				$insert = array(
+					'id_paper' => $paper,
+					'id_user' =>  $id_user[0],
+					'id_status' => 3
+				);
+				array_push($status_selection, $insert);
+
+			}
+
+			$this->db->insert_batch('papers_selection', $status_selection);
+		}
+
+
 	}
 
 	public function get_levels()
@@ -625,26 +686,9 @@ class Project_Model extends CI_Model
 
 	public function bib_upload($papers, $database, $name, $id_project)
 	{
-		$id_database = null;
-		$this->db->select('id_database');
-		$this->db->from('data_base');
-		$this->db->where('name', $database);
-		$query = $this->db->get();
-
-		foreach ($query->result() as $row) {
-			$id_database = $row->id_database;
-		}
-
-		$id_project_database = null;
-		$this->db->select('id_project_database');
-		$this->db->from('project_databases');
-		$this->db->where('id_database', $id_database);
-		$this->db->where('id_project', $id_project);
-		$query = $this->db->get();
-
-		foreach ($query->result() as $row) {
-			$id_project_database = $row->id_project_database;
-		}
+		$count_papers = $this->get_count_papers($id_project);
+		$id_database = $this->get_id_database($database);
+		$id_project_database = $this->get_id_pro_database($id_database, $id_project);
 
 		$data3 = array(
 			'name' => $name,
@@ -653,167 +697,170 @@ class Project_Model extends CI_Model
 		$this->db->insert('bib_upload', $data3);
 		$id_bib = $this->db->insert_id();
 
-		$data = array();
+		$insert_papers = array();
 
 		foreach ($papers as $p) {
-			$data2['id_bib'] = $id_bib;
+			$data['id'] = $count_papers;
+			$data['id_bib'] = $id_bib;
 
 			if (!empty($p['EntryType'])) {
-				$data2['type'] = $p['EntryType'];
+				$data['type'] = str_replace("\"", "", $p['EntryType']);
 			} else {
-				$data2['type'] = "";
+				$data['type'] = "";
 			}
 
 			if (!empty($p['EntryKey'])) {
-				$data2['bib_key'] = $p['EntryKey'];
+				$data['bib_key'] = str_replace("\"", "", $p['EntryKey']);
 			} else {
-				$data2['bib_key'] = "";
+				$data['bib_key'] = "";
 			}
 
 
 			if (!empty($p['Fields']['title'])) {
-				$data2['title'] = $p['Fields']['title'];
+				$data['title'] = str_replace("\"", "", $p['Fields']['title']);
 			} else {
-				$data2['title'] = "";
+				$data['title'] = "";
 			}
 
 			if (!empty($p['Fields']['author'])) {
-				$data2['author'] = $p['Fields']['author'];
+				$data['author'] = str_replace("\"", "", $p['Fields']['author']);
 			} else {
-				$data2['author'] = "";
+				$data['author'] = "";
 			}
 
 			if (!empty($p['Fields']['booktitle'])) {
-				$data2['book_title'] = $p['Fields']['booktitle'];
+				$data['book_title'] = str_replace("\"", "", $p['Fields']['booktitle']);
 			} else {
-				$data2['book_title'] = "";
+				$data['book_title'] = "";
 			}
 
 			if (!empty($p['Fields']['volume'])) {
-				$data2['volume'] = $p['Fields']['volume'];
+				$data['volume'] = str_replace("\"", "", $p['Fields']['volume']);
 			} else {
-				$data2['volume'] = "";
+				$data['volume'] = "";
 			}
 
 			if (!empty($p['Fields']['pages'])) {
-				$data2['pages'] = $p['Fields']['pages'];
+				$data['pages'] = str_replace("\"", "", $p['Fields']['pages']);
 			} else {
-				$data2['pages'] = "";
+				$data['pages'] = "";
 			}
 
 			if (!empty($p['Fields']['numpages'])) {
-				$data2['num_pages'] = $p['Fields']['numpages'];
+				$data['num_pages'] = str_replace("\"", "", $p['Fields']['numpages']);
 			} else {
-				$data2['num_pages'] = "";
+				$data['num_pages'] = "";
 			}
 
 			if (!empty($p['Fields']['abstract'])) {
-				$data2['abstract'] = $p['Fields']['abstract'];
+				$data['abstract'] = str_replace("\"", "", $p['Fields']['abstract']);
 			} else {
-				$data2['abstract'] = "";
+				$data['abstract'] = "";
 			}
 
 			if (!empty($p['Fields']['keywords'])) {
-				$data2['keywords'] = $p['Fields']['keywords'];
+				$data['keywords'] = str_replace("\"", "", $p['Fields']['keywords']);
 			} else {
-				$data2['keywords'] = "";
+				$data['keywords'] = "";
 			}
 
 			if (!empty($p['Fields']['doi'])) {
-				$data2['doi'] = $p['Fields']['doi'];
+				$data['doi'] = str_replace("\"", "", $p['Fields']['doi']);
 			} else {
-				$data2['doi'] = "";
+				$data['doi'] = "";
 			}
 
 			if (!empty($p['Fields']['journal'])) {
-				$data2['journal'] = $p['Fields']['journal'];
+				$data['journal'] = str_replace("\"", "", $p['Fields']['journal']);
 			} else {
-				$data2['journal'] = "";
+				$data['journal'] = "";
 			}
 
 			if (!empty($p['Fields']['issn'])) {
-				$data2['issn'] = $p['Fields']['issn'];
+				$data['issn'] = str_replace("\"", "", $p['Fields']['issn']);
 			} else {
-				$data2['issn'] = "";
+				$data['issn'] = "";
 			}
 
 			if (!empty($p['Fields']['location'])) {
-				$data2['location'] = $p['Fields']['location'];
+				$data['location'] = str_replace("\"", "", $p['Fields']['location']);
 			} else {
-				$data2['location'] = "";
+				$data['location'] = "";
 			}
 
 			if (!empty($p['Fields']['isbn'])) {
-				$data2['isbn'] = $p['Fields']['isbn'];
+				$data['isbn'] = str_replace("\"", "", $p['Fields']['isbn']);
 			} else {
-				$data2['isbn'] = "";
+				$data['isbn'] = "";
 			}
 
 			if (!empty($p['Fields']['address'])) {
-				$data2['address'] = $p['Fields']['address'];
+				$data['address'] = str_replace("\"", "", $p['Fields']['address']);
 			} else {
-				$data2['address'] = "";
+				$data['address'] = "";
 			}
 
 			if (!empty($p['Fields']['url'])) {
-				$data2['url'] = $p['Fields']['url'];
+				$data['url'] = str_replace("\"", "", $p['Fields']['url']);
 			} else {
-				$data2['url'] = "";
+				$data['url'] = "";
 			}
 
 			if (!empty($p['Fields']['series'])) {
-				$data2['publisher'] = $p['Fields']['series'];
+				$data['publisher'] = str_replace("\"", "", $p['Fields']['series']);
 			} else {
-				$data2['publisher'] = "";
+				$data['publisher'] = "";
 			}
 
 			if (!empty($p['Fields']['year'])) {
-				$data2['year'] = $p['Fields']['year'];
+				$data['year'] = str_replace("\"", "", $p['Fields']['year']);
 			} else {
-				$data2['year'] = "";
+				$data['year'] = "";
 			}
 
-			array_push($data, $data2);
+			$data['data_base'] = $id_database;
+
+			array_push($insert_papers, $data);
+			$count_papers++;
 		}
 
-		$this->db->insert_batch('papers', $data);
+		$this->db->insert_batch('papers', $insert_papers);
+
+		$members = $this->get_researchs($id_project);
+		$id_papers = $this->get_ids_papers($id_bib);
+
+		$status_selection = array();
+		$status_extraction = array();
+		$status_quality = array();
+
+		foreach ($members as $mem) {
+			foreach ($id_papers as $paper) {
+				$insert = array(
+					'id_paper' => $paper,
+					'id_user' => $mem,
+					'id_status' => 3
+				);
+				array_push($status_selection, $insert);
+			}
+		}
+
+		$this->db->insert_batch('papers_selection', $status_selection);
+
+
+		$dat = array(
+			'c_papers' => $count_papers
+		);
+		$this->db->where('id_project', $id_project);
+		$this->db->update('project', $dat);
 
 
 	}
 
 	public function delete_bib($database, $name, $id_project)
 	{
-		$id_database = null;
-		$this->db->select('id_database');
-		$this->db->from('data_base');
-		$this->db->where('name', $database);
-		$query = $this->db->get();
-
-		foreach ($query->result() as $row) {
-			$id_database = $row->id_database;
-		}
-
-		$id_project_database = null;
-		$this->db->select('id_project_database');
-		$this->db->from('project_databases');
-		$this->db->where('id_database', $id_database);
-		$this->db->where('id_project', $id_project);
-		$query = $this->db->get();
-
-		foreach ($query->result() as $row) {
-			$id_project_database = $row->id_project_database;
-		}
-
-		$id_bib = null;
-		$this->db->select('id_bib');
-		$this->db->from('bib_upload');
-		$this->db->where('id_project_database', $id_project_database);
-		$this->db->where('name', $name);
-		$query = $this->db->get();
-
-		foreach ($query->result() as $row) {
-			$id_bib = $row->id_bib;
-		}
+		$id_database = $this->get_id_database($database);
+		$id_project_database = $this->get_id_pro_database($id_database, $id_project);
+		$id_bib = $this->get_id_bib($id_project_database, $name);
 
 		$this->db->where('id_bib', $id_bib);
 		$this->db->from('papers');
@@ -827,26 +874,8 @@ class Project_Model extends CI_Model
 
 	public function get_num_bib($database, $id_project)
 	{
-		$id_database = null;
-		$this->db->select('id_database');
-		$this->db->from('data_base');
-		$this->db->where('name', $database);
-		$query = $this->db->get();
-
-		foreach ($query->result() as $row) {
-			$id_database = $row->id_database;
-		}
-
-		$id_project_database = null;
-		$this->db->select('id_project_database');
-		$this->db->from('project_databases');
-		$this->db->where('id_database', $id_database);
-		$this->db->where('id_project', $id_project);
-		$query = $this->db->get();
-
-		foreach ($query->result() as $row) {
-			$id_project_database = $row->id_project_database;
-		}
+		$id_database = $this->get_id_database($database);
+		$id_project_database = $this->get_id_pro_database($id_database, $id_project);
 
 		$this->db->where('id_project_database', $id_project_database);
 		$this->db->from('bib_upload');
@@ -857,26 +886,8 @@ class Project_Model extends CI_Model
 	{
 		$data2 = array();
 		foreach ($project->get_databases() as $database) {
-			$id_database = null;
-			$this->db->select('id_database');
-			$this->db->from('data_base');
-			$this->db->where('name', $database->get_name());
-			$query = $this->db->get();
-
-			foreach ($query->result() as $row) {
-				$id_database = $row->id_database;
-			}
-
-			$id_project_database = null;
-			$this->db->select('id_project_database');
-			$this->db->from('project_databases');
-			$this->db->where('id_database', $id_database);
-			$this->db->where('id_project', $project->get_id());
-			$query = $this->db->get();
-
-			foreach ($query->result() as $row) {
-				$id_project_database = $row->id_project_database;
-			}
+			$id_database = $this->get_id_database($database->get_name());
+			$id_project_database = $this->get_id_pro_database($id_database, $project->get_id());
 
 			$this->db->select('name');
 			$this->db->from('bib_upload');
@@ -896,36 +907,9 @@ class Project_Model extends CI_Model
 	{
 		$data2 = array();
 		foreach ($project->get_databases() as $database) {
-			$id_database = null;
-			$this->db->select('id_database');
-			$this->db->from('data_base');
-			$this->db->where('name', $database->get_name());
-			$query = $this->db->get();
-
-			foreach ($query->result() as $row) {
-				$id_database = $row->id_database;
-			}
-
-			$id_project_database = null;
-			$this->db->select('id_project_database');
-			$this->db->from('project_databases');
-			$this->db->where('id_database', $id_database);
-			$this->db->where('id_project', $project->get_id());
-			$query = $this->db->get();
-
-			foreach ($query->result() as $row) {
-				$id_project_database = $row->id_project_database;
-			}
-
-			$id_bib = array();
-			$this->db->select('id_bib');
-			$this->db->from('bib_upload');
-			$this->db->where('id_project_database', $id_project_database);
-			$query = $this->db->get();
-
-			foreach ($query->result() as $row) {
-				array_push($id_bib, $row->id_bib);
-			}
+			$id_database = $this->get_id_database($database->get_name());
+			$id_project_database = $this->get_id_pro_database($id_database, $project->get_id());
+			$id_bib = $this->get_ids_bibs($id_project_database);
 
 			if (sizeof($id_bib) > 0) {
 				$this->db->where_in('id_bib', $id_bib);
@@ -937,4 +921,228 @@ class Project_Model extends CI_Model
 		}
 		return $data2;
 	}
+
+	public function count_papers($id)
+	{
+		$user = $this->get_id_name_user($this->session->email);
+
+		$project_databases = $this->get_ids_pro_database($id);
+
+		$id_bibs = array();
+		if (sizeof($project_databases) > 0) {
+			$id_bibs = $this->get_ids_bibs($project_databases);
+		}
+		$total = 0;
+		$cont[1] = 0;
+		$cont[2] = 0;
+		$cont[3] = 0;
+		$cont[4] = 0;
+		$cont[5] = 0;
+
+		$id_papers = $this->get_ids_papers($id_bibs);
+		$this->db->select('id_status, COUNT(*) as count');
+		$this->db->from('papers_selection');
+		$this->db->group_by('id_status');
+		$this->db->where('id_user', $user[0]);
+		$this->db->where_in('id_paper', $id_papers);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			$cont[$row->id_status] = $row->count;
+			$total += $row->count;
+		}
+
+		$cont[6] = $total;
+
+		return $cont;
+	}
+
+	public function edit_status_selection($id, $status, $id_project)
+	{
+		$project_databases = $this->get_ids_pro_database($id_project);
+
+		$id_bibs = array();
+		if (sizeof($project_databases) > 0) {
+			$id_bibs = $this->get_ids_bibs($project_databases);
+		}
+
+		$id_paper = $this->get_id_paper($id, $id_bibs);
+		$user = $this->get_id_name_user($this->session->email);
+		$id_sel = $this->get_id_paper_sel($id_paper, $user[0]);
+
+		$data = array(
+			'id_status' => $status
+		);
+
+		$this->db->where('id_paper_sel', $id_sel);
+		$this->db->update('papers_selection', $data);
+
+	}
+
+	private function get_id_database($database)
+	{
+		$id_database = null;
+		$this->db->select('id_database');
+		$this->db->from('data_base');
+		$this->db->where('name', $database);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			$id_database = $row->id_database;
+		}
+		return $id_database;
+	}
+
+	private function get_count_papers($id_project)
+	{
+		$c_papers = 1;
+		$this->db->select('c_papers');
+		$this->db->from('project');
+		$this->db->where('id_project', $id_project);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			$c_papers = $row->c_papers;
+		}
+
+		return $c_papers;
+	}
+
+	private function get_id_pro_database($id_database, $id_project)
+	{
+		$id_project_database = null;
+		$this->db->select('id_project_database');
+		$this->db->from('project_databases');
+		$this->db->where('id_database', $id_database);
+		$this->db->where('id_project', $id_project);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			$id_project_database = $row->id_project_database;
+		}
+
+		return $id_project_database;
+	}
+
+	private function get_ids_pro_database($id_project)
+	{
+		$id_project_database = array();
+		$this->db->select('id_project_database');
+		$this->db->from('project_databases');
+		$this->db->where('id_project', $id_project);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			array_push($id_project_database, $row->id_project_database);
+		}
+
+		return $id_project_database;
+	}
+
+	private function get_researchs($id_project)
+	{
+		$id_users = array();
+		$this->db->select('id_user');
+		$this->db->from('members');
+		$this->db->where('id_project', $id_project);
+		$this->db->where_in('level', array(1, 3));
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			array_push($id_users, $row->id_user);
+		}
+
+		return $id_users;
+	}
+
+	private function get_members($id_project)
+	{
+		$id_users = array();
+		$this->db->select('id_user');
+		$this->db->from('members');
+		$this->db->where('id_project', $id_project);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			array_push($id_users, $row->id_user);
+		}
+
+		return $id_users;
+	}
+
+	private function get_id_bib($id_project_database, $name)
+	{
+		$id_bib = null;
+		$this->db->select('id_bib');
+		$this->db->from('bib_upload');
+		$this->db->where('id_project_database', $id_project_database);
+		$this->db->where('name', $name);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			$id_bib = $row->id_bib;
+		}
+
+		return $id_bib;
+	}
+
+	private function get_ids_bibs($id_project_database)
+	{
+		$id_bib = array();
+		$this->db->select('id_bib');
+		$this->db->from('bib_upload');
+		$this->db->where_in('id_project_database', $id_project_database);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			array_push($id_bib, $row->id_bib);
+		}
+		return $id_bib;
+	}
+
+	private function get_ids_papers($id_bib)
+	{
+		$id_papers = array();
+		$this->db->select('id_paper');
+		$this->db->from('papers');
+		$this->db->where_in('id_bib', $id_bib);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			array_push($id_papers, $row->id_paper);
+		}
+		return $id_papers;
+	}
+
+	private function get_id_paper($id_paper, $id_bibs)
+	{
+		$id = null;
+		$this->db->select('id_paper');
+		$this->db->from('papers');
+		$this->db->where('id', $id_paper);
+		$this->db->where_in('id_bib', $id_bibs);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			$id = $row->id_paper;
+		}
+		return $id;
+	}
+
+	private function get_id_paper_sel($id_paper, $id_user)
+	{
+		$id = null;
+		$this->db->select('id_paper_sel');
+		$this->db->from('papers_selection');
+		$this->db->where('id_paper', $id_paper);
+		$this->db->where('id_user', $id_user);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			$id = $row->id_paper_sel;
+		}
+		return $id;
+
+	}
 }
+

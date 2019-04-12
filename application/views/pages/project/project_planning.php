@@ -974,7 +974,6 @@ $this->load->view('modal/modal_term');
 $this->load->view('modal/modal_research');
 $this->load->view('modal/modal_keyword');
 $this->load->view('modal/modal_domain');
-$this->load->view('modal/modal_paper');
 $this->load->view('modal/modal_question_quality');
 $this->load->view('modal/modal_score_quality');
 $this->load->view('modal/modal_question_extraction');

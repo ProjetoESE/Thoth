@@ -51,7 +51,6 @@ function add_criteria() {
 			}
 			id = $("#id_criteria")[0].value = "";
 			description = $("#description_criteria")[0].value = "";
-
 		}
 	});
 }
