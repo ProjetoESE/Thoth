@@ -1,6 +1,6 @@
-CREATE TABLE `thoth`.`question_quality` ( `id_qa` INT NOT NULL AUTO_INCREMENT , `id` VARCHAR(255) NOT NULL , `description` INT NOT NULL , `weight` FLOAT NOT NULL , `min_to_app` INT NOT NULL , `id_project` INT NOT NULL , PRIMARY KEY (`id_qa`)) ENGINE = InnoDB;
+CREATE TABLE `u648750589_thoth`.`question_quality` ( `id_qa` INT NOT NULL AUTO_INCREMENT , `id` VARCHAR(255) NOT NULL , `description` INT NOT NULL , `weight` FLOAT NOT NULL , `min_to_app` INT NOT NULL , `id_project` INT NOT NULL , PRIMARY KEY (`id_qa`)) ENGINE = InnoDB;
 
-CREATE TABLE `thoth`.`score_quality` ( `id_score` INT NOT NULL AUTO_INCREMENT , `score_rule` VARCHAR(255) NOT NULL , `description` VARCHAR(255) NOT NULL , `score` INT NOT NULL , `id_qa` INT NOT NULL , PRIMARY KEY (`id_score`)) ENGINE = InnoDB;
+CREATE TABLE `u648750589_thoth`.`score_quality` ( `id_score` INT NOT NULL AUTO_INCREMENT , `score_rule` VARCHAR(255) NOT NULL , `description` VARCHAR(255) NOT NULL , `score` INT NOT NULL , `id_qa` INT NOT NULL , PRIMARY KEY (`id_score`)) ENGINE = InnoDB;
 
 ALTER TABLE `score_quality` ADD FOREIGN KEY (`id_qa`) REFERENCES `question_quality`(`id_qa`) ON DELETE CASCADE ON UPDATE CASCADE;
 
