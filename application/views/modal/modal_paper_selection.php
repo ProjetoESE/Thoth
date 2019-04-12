@@ -19,7 +19,7 @@
 					</div>
 					<div class="col-md-6">
 						<h6>URL</h6>
-						<a target="_blank" id="paper_url"></a>
+						<a target="_blank" id="paper_url"><i class="fas fa-external-link-alt"></i></a>
 					</div>
 					<div class="col-md-6">
 						<h6>Author</h6>

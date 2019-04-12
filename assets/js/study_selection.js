@@ -399,10 +399,8 @@ $(document).ready(function () {
 				}
 				let url = $('#paper_url');
 				if (data['url'] != "") {
-					url.text(data['url']);
 					url.attr("href", data['url']);
 				} else {
-					url.text("This article does not have URL");
 					url.attr("href", "");
 					url.addClass("disabled");
 				}
