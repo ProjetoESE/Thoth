@@ -37,69 +37,129 @@
 		<br>
 		<?php
 		if (strval($progress_planning['progress']) == strval(100) && strval($progress_import_studies['progress']) == strval(100)) {
+
 			?>
 			<div class="form-inline">
-				<div class="input-group col-md-3">
-					<label class="text-success">
-						<span class="fas fa-check fa-lg"></span>
-						Accepted: 1
-					</label>
-				</div>
-				<div class="input-group col-md-3 ">
-					<label class="text-danger">
-						<span class="fas fa-times fa-lg"></span>
-						Rejected: 1
-					</label>
-				</div>
-				<div class="input-group col-md-3">
-					<label class="text-dark">
-						<span class="fas fa-question fa-lg"></span>
-						Unclassified: 1
-					</label>
-				</div>
-				<div class="input-group col-md-3">
-					<label class="text-info">
-						<span class="fas fa-bars fa-lg"></span>
-						Total: 3
-					</label>
-				</div>
+				<?php
+				foreach ($count_papers as $key => $value) {
+					switch ($key) {
+						case 1:
+							?>
+							<div class="input-group col-md-2">
+								<label class="text-success">
+									<span class="fas fa-check fa-lg"></span>
+									Accepted: <span id="count_acc"><?= $value ?></span>
+								</label>
+							</div>
+							<?php
+							break;
+						case 2:
+							?>
+							<div class="input-group col-md-2">
+								<label class="text-danger">
+									<span class="fas fa-times fa-lg"></span>
+									Rejected: <span id="count_rej"><?= $value ?></span>
+								</label>
+							</div>
+							<?php
+							break;
+						case 3:
+							?>
+							<div class="input-group col-md-2">
+								<label class="text-dark">
+									<span class="fas fa-question fa-lg"></span>
+									Unclassified: <span id="count_unc"><?= $value ?></span>
+								</label>
+							</div>
+							<?php
+							break;
+						case 4:
+							?>
+							<div class="input-group col-md-2">
+								<label class="text-warning">
+									<span class="fas fa-copy fa-lg"></span>
+									Duplicate: <span id="count_dup"><?= $value ?></span>
+								</label>
+							</div>
+							<?php
+							break;
+						case 5:
+							?>
+							<div class="input-group col-md-2">
+								<label class="text-info">
+									<span class="fas fa-trash-alt fa-lg"></span>
+									Removed: <span id="count_rem"><?= $value ?></span>
+								</label>
+							</div>
+							<?php
+							break;
+						case 6:
+							?>
+							<div class="input-group col-md-2">
+								<label class="text-secondary">
+									<span class="fas fa-bars fa-lg"></span>
+									Total: <?= $value ?>
+								</label>
+							</div>
+							<?php
+							break;
+					}
+				}
+				?>
 			</div>
 			<br>
-			<table class="table table-responsive" id="table_papers">
+			<table class="table table-responsive-sm" id="table_papers">
 				<caption>List of Papers Imported</caption>
 				<thead>
 				<tr>
+					<th>ID</th>
 					<th>Title</th>
 					<th>Author</th>
 					<th>Year</th>
 					<th>Database</th>
 					<th>Status</th>
-					<th>Delete</th>
 				</tr>
 				</thead>
 				<tbody>
 				<?php foreach ($project->get_papers() as $paper) { ?>
 					<tr>
-						<td><?=$paper->get_title();?></td>
+						<td><?= $paper->get_id(); ?></td>
+						<td><?= $paper->get_title(); ?></td>
 						<td><?= $paper->get_author(); ?></td>
 						<td><?= $paper->get_year(); ?></td>
-						<td><?= $paper->get_added_at(); ?></td>
-						<td><?= $paper->get_status_selection(); ?></td>
-						<td>
-							<button class="btn btn-danger">
-								<span class="far fa-trash-alt"></span>
-							</button>
-						</td>
+						<td><?= $paper->get_database(); ?></td>
+						<?php
+						$class = "text-dark";
+						$status = "Unclassified";
+						switch ($paper->get_status_selection()) {
+							case 1:
+								$class = "text-success";
+								$status = "Accepted";
+								break;
+							case 2:
+								$class = "text-danger";
+								$status = "Rejected";
+								break;
+							case 4:
+								$class = "text-warning";
+								$status = "Duplicate";
+								break;
+							case 5:
+								$class = "text-info";
+								$status = "Removed";
+								break;
+						} ?>
+						<td id="<?= $paper->get_id(); ?>" class="font-weight-bold <?= $class ?>"><?= $status ?></td>
 					</tr>
 				<?php } ?>
 				<tfoot>
 				<tr>
+					<th>ID</th>
 					<th>Title</th>
 					<th>Author</th>
 					<th>Year</th>
 					<th>Database</th>
 					<th>Status</th>
-					<th>Delete</th>
 				</tr>
 				</tfoot>
 			</table>
@@ -140,5 +200,5 @@
 	</div>
 </div>
 <?php
-$this->load->view('modal/modal_paper');
+$this->load->view('modal/modal_paper_selection');
 ?>

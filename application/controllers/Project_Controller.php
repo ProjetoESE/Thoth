@@ -126,6 +126,7 @@ class Project_Controller extends CI_Controller
 			$data['progress_study_selection'] = $this->progress_study_selection($data['project']);
 			$data['progress_quality_assessement'] = $this->progress_quality_assessement($data['project']);
 			$data['progress_data_extraction'] = $this->progress_data_extraction($data['project']);
+			$data['count_papers'] = $this->Project_Model->count_papers($id);
 
 			$this->load_views($id, 'pages/project/project_study_selection', $data);
 
@@ -249,6 +250,22 @@ class Project_Controller extends CI_Controller
 			$activity = "Edited project";
 			$this->insert_log($activity, 1, $id_project);
 
+		} catch (Exception $e) {
+			$this->session->set_flashdata('error', $e->getMessage());
+			redirect(base_url());
+		}
+	}
+
+	public function get_paper()
+	{
+		try {
+			$this->logged_in();
+			$id = $this->input->post('id');
+			$id_project = $this->input->post('id_project');
+			$this->load->model("Project_Model");
+
+			$data = $this->Project_Model->get_paper($id, $id_project);
+			echo json_encode($data);
 		} catch (Exception $e) {
 			$this->session->set_flashdata('error', $e->getMessage());
 			redirect(base_url());
@@ -851,6 +868,25 @@ class Project_Controller extends CI_Controller
 			redirect(base_url());
 		}
 
+	}
+
+	public function edit_status_selection()
+	{
+		try {
+			$this->logged_in();
+			$id_paper= $this->input->post('id_paper');
+			$id_project = $this->input->post('id_project');
+			$status = $this->input->post('status');
+			$this->load->model("Project_Model");
+
+			$this->validate_level($id_project, array(1, 3));
+			$this->Project_Model->edit_status_selection($id_paper, $status, $id_project);
+
+			$activity = "Edited status selection to paper".$id_paper;
+			$this->insert_log($activity, 3, $id_project);
+		} catch (Exception $e) {
+			$this->session->set_flashdata('error', $e->getMessage());
+		}
 	}
 
 }
