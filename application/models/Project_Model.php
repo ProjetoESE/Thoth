@@ -588,7 +588,7 @@ class Project_Model extends CI_Model
 			foreach ($id_papers as $paper) {
 				$insert = array(
 					'id_paper' => $paper,
-					'id_user' =>  $id_user[0],
+					'id_user' => $id_user[0],
 					'id_status' => 3
 				);
 				array_push($status_selection, $insert);
@@ -938,20 +938,20 @@ class Project_Model extends CI_Model
 		$cont[3] = 0;
 		$cont[4] = 0;
 		$cont[5] = 0;
+		if (sizeof($id_bibs) > 0) {
+			$id_papers = $this->get_ids_papers($id_bibs);
+			$this->db->select('id_status, COUNT(*) as count');
+			$this->db->from('papers_selection');
+			$this->db->group_by('id_status');
+			$this->db->where('id_user', $user[0]);
+			$this->db->where_in('id_paper', $id_papers);
+			$query = $this->db->get();
 
-		$id_papers = $this->get_ids_papers($id_bibs);
-		$this->db->select('id_status, COUNT(*) as count');
-		$this->db->from('papers_selection');
-		$this->db->group_by('id_status');
-		$this->db->where('id_user', $user[0]);
-		$this->db->where_in('id_paper', $id_papers);
-		$query = $this->db->get();
-
-		foreach ($query->result() as $row) {
-			$cont[$row->id_status] = $row->count;
-			$total += $row->count;
+			foreach ($query->result() as $row) {
+				$cont[$row->id_status] = $row->count;
+				$total += $row->count;
+			}
 		}
-
 		$cont[6] = $total;
 
 		return $cont;
