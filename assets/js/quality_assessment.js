@@ -17,6 +17,13 @@ function add_general_quality_score() {
 			general_score_desc: general_score_desc,
 			id_project: id_project
 		},
+		error: function(){
+			Swal({
+				type: 'error',
+				title: 'Error',
+				html: '<label class="font-weight-bold text-danger">Error</label>'
+			});
+		},
 		success: function () {
 			table_general_score.row.add([
 				start_interval,
@@ -63,6 +70,13 @@ function delete_general_quality_score(value) {
 				data: {
 					id_project: id_project,
 					description: row.data()[2]
+				},
+				error: function(){
+					Swal({
+						type: 'error',
+						title: 'Error',
+						html: '<label class="font-weight-bold text-danger">Error</label>'
+					});
 				},
 				success: function () {
 					let x = document.getElementById("min_score_to_app");
@@ -210,6 +224,13 @@ function edit_general_score() {
 			desc: desc,
 			end: end
 		},
+		error: function(){
+			Swal({
+				type: 'error',
+				title: 'Error',
+				html: '<label class="font-weight-bold text-danger">Error</label>'
+			});
+		},
 		success: function () {
 			row.remove();
 			let x = document.getElementById("min_score_to_app");
@@ -259,6 +280,13 @@ function edit_min_score() {
 			id_project: id_project,
 			score: score
 		},
+		error: function(){
+			Swal({
+				type: 'error',
+				title: 'Error',
+				html: '<label class="font-weight-bold text-danger">Error</label>'
+			});
+		},
 		success: function () {
 			Swal({
 				title: 'Success',
@@ -295,6 +323,13 @@ function add_qa() {
 			id: id,
 			qa: qa,
 			weight: weight
+		},
+		error: function(){
+			Swal({
+				type: 'error',
+				title: 'Error',
+				html: '<label class="font-weight-bold text-danger">Error</label>'
+			});
 		},
 		success: function () {
 			table_qa.row.add([
@@ -364,6 +399,13 @@ function delete_qa(value) {
 				data: {
 					id_project: id_project,
 					id: row.data()[0]
+				},
+				error: function(){
+					Swal({
+						type: 'error',
+						title: 'Error',
+						html: '<label class="font-weight-bold text-danger">Error</label>'
+					});
 				},
 				success: function () {
 					let x = document.getElementById("list_qa");
@@ -473,6 +515,13 @@ function edit_qa() {
 			weight: weight,
 			old_id: old_id
 		},
+		error: function(){
+			Swal({
+				type: 'error',
+				title: 'Error',
+				html: '<label class="font-weight-bold text-danger">Error</label>'
+			});
+		},
 		success: function () {
 			row.remove();
 			let x = document.getElementById("list_qa");
@@ -537,6 +586,13 @@ function add_score_quality() {
 			score: score,
 			description: description,
 			id_qa: id_qa
+		},
+		error: function(){
+			Swal({
+				type: 'error',
+				title: 'Error',
+				html: '<label class="font-weight-bold text-danger">Error</label>'
+			});
 		},
 		success: function () {
 			let table_score = document.getElementById(id);
@@ -611,6 +667,13 @@ function delete_score_quality(value) {
 					id_project: id_project,
 					id_qa: id_qa,
 					score: score
+				},
+				error: function(){
+					Swal({
+						type: 'error',
+						title: 'Error',
+						html: '<label class="font-weight-bold text-danger">Error</label>'
+					});
 				},
 				success: function () {
 					row.parentNode.removeChild(row);
@@ -727,6 +790,13 @@ function edit_score_quality() {
 			score: score,
 			id_qa: id_qa
 		},
+		error: function(){
+			Swal({
+				type: 'error',
+				title: 'Error',
+				html: '<label class="font-weight-bold text-danger">Error</label>'
+			});
+		},
 		success: function () {
 			let table_score = document.getElementById(id_table);
 			let select_score = document.getElementById(id_min);
@@ -780,6 +850,13 @@ function edit_min_score_qa(element) {
 			id_project: id_project,
 			min: score,
 			qa: qa
+		},
+		error: function(){
+			Swal({
+				type: 'error',
+				title: 'Error',
+				html: '<label class="font-weight-bold text-danger">Error</label>'
+			});
 		},
 		success: function () {
 			Swal({

@@ -14,6 +14,13 @@ function add_research_question() {
 			id_rq: id_rq,
 			description: description
 		},
+		error: function(){
+			Swal({
+				type: 'error',
+				title: 'Error',
+				html: '<label class="font-weight-bold text-danger">Error</label>'
+			});
+		},
 		success: function () {
 			table_research_question.row.add([id_rq,
 				description,
@@ -59,6 +66,13 @@ function edit_research() {
 			now_id: now_id,
 			now_question: now_question,
 			old_id: old_id,
+		},
+		error: function(){
+			Swal({
+				type: 'error',
+				title: 'Error',
+				html: '<label class="font-weight-bold text-danger">Error</label>'
+			});
 		},
 		success: function () {
 			row.remove();
@@ -158,6 +172,13 @@ function delete_research_question(value) {
 				data: {
 					id_project: id_project,
 					id_rq: row.data()[0]
+				},
+				error: function(){
+					Swal({
+						type: 'error',
+						title: 'Error',
+						html: '<label class="font-weight-bold text-danger">Error</label>'
+					});
 				},
 				success: function () {
 					row.remove();

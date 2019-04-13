@@ -53,8 +53,10 @@
 					</div>
 				</div>
 				<hr>
-				<div class="form-inline">
+				<div class="row" id="criteria_analiese">
 					<div class="col-md-6">
+						<h6>Inclusion Criteria Rule</h6>
+						<p><?= $project->get_inclusion_rule() ?></p>
 						<h6>Inclusion Criteria</h6>
 						<table class="table table-responsive" id="table_inclusion_criteria">
 							<caption>List of Inclusion Criteria</caption>
@@ -66,25 +68,19 @@
 							</tr>
 							</thead>
 							<tbody>
-							<tr>
-								<td></td>
-								<td>IC01</td>
-								<td>Descrição ssdas das das asd asdas dasd asd</td>
-							</tr>
-							<tr>
-								<td></td>
-								<td>IC02</td>
-								<td>Descrição ssdas das das asd asdas dasd asd</td>
-							</tr>
-							<tr>
-								<td></td>
-								<td>IC03</td>
-								<td>Descrição ssdas das das asd asdas dasd asd</td>
-							</tr>
+							<?php foreach ($project->get_inclusion_criteria() as $ic) { ?>
+								<tr>
+									<td></td>
+									<td><?= $ic->get_id() ?></td>
+									<td><?= $ic->get_description() ?></td>
+								</tr>
+							<?php } ?>
 							</tbody>
 						</table>
 					</div>
 					<div class="col-md-6">
+						<h6>Exclusion Criteria Rule</h6>
+						<p><?= $project->get_exclusion_rule() ?></p>
 						<h6>Exclusion Criteria</h6>
 						<table class="table table-responsive" id="table_exclusion_criteria">
 							<caption>List of Exclusion Criteria</caption>
@@ -96,30 +92,16 @@
 							</tr>
 							</thead>
 							<tbody>
-							<tr>
-								<td></td>
-								<td>EC01</td>
-								<td>Descrição ssdas das das asd asdas dasd asd</td>
-							</tr>
-							<tr>
-								<td></td>
-								<td>EC02</td>
-								<td>Descrição ssdas das das asd asdas dasd asd</td>
-							</tr>
-							<tr>
-								<td></td>
-								<td>EC03</td>
-								<td>Descrição ssdas das das asd asdas dasd asd</td>
-							</tr>
+							<?php foreach ($project->get_exclusion_criteria() as $ec) { ?>
+								<tr>
+									<td></td>
+									<td><?= $ec->get_id() ?></td>
+									<td><?= $ec->get_description() ?></td>
+								</tr>
+							<?php } ?>
 							</tbody>
 						</table>
 					</div>
-				</div>
-			</div>
-			<div class="modal-footer">
-				<div class="form-inline container justify-content-between">
-					<button type="button" id="prev_paper" class="btn btn-secondary"><span class="fas fa-backward"></span> Previous</button>
-					<button type="button" id="next_paper" class="btn btn-secondary">Next <span class="fas fa-forward"></span></button>
 				</div>
 			</div>
 		</div>

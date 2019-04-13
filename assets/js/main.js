@@ -94,7 +94,7 @@ $(document).ready(function () {
 		]
 	});
 
-	$('#table_inclusion_criteria').DataTable({
+	table_inclusion_criteria= $('#table_inclusion_criteria').DataTable({
 		columnDefs: [{
 			orderable: false,
 			className: 'select-checkbox',
@@ -109,7 +109,7 @@ $(document).ready(function () {
 		searching: false
 	});
 
-	$('#table_exclusion_criteria').DataTable({
+	table_exclusion_criteria = $('#table_exclusion_criteria').DataTable({
 		columnDefs: [{
 			orderable: false,
 			className: 'select-checkbox',

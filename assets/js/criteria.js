@@ -17,6 +17,13 @@ function add_criteria() {
 			description: description,
 			type: type
 		},
+		error: function(){
+			Swal({
+				type: 'error',
+				title: 'Error',
+				html: '<label class="font-weight-bold text-danger">Error</label>'
+			});
+		},
 		success: function () {
 			if (type == 'Inclusion') {
 				table_criteria_inclusion.row.add([
@@ -69,6 +76,13 @@ function select_criteria_inclusion(value, msg = null) {
 			id: row.data()[1],
 			pre_selected: pre_selected
 		},
+		error: function(){
+			Swal({
+				type: 'error',
+				title: 'Error',
+				html: '<label class="font-weight-bold text-danger">Error</label>'
+			});
+		},
 		success: function () {
 			if (msg == null) {
 				if (pre_selected) {
@@ -107,6 +121,13 @@ function select_criteria_exclusion(value, msg = null) {
 			id_project: id_project,
 			id: row.data()[1],
 			pre_selected: pre_selected
+		},
+		error: function(){
+			Swal({
+				type: 'error',
+				title: 'Error',
+				html: '<label class="font-weight-bold text-danger">Error</label>'
+			});
 		},
 		success: function () {
 			if (msg == null) {
@@ -229,6 +250,13 @@ function delete_criteria_inclusion(value) {
 					id_project: id_project,
 					id: row.data()[1]
 				},
+				error: function(){
+					Swal({
+						type: 'error',
+						title: 'Error',
+						html: '<label class="font-weight-bold text-danger">Error</label>'
+					});
+				},
 				success: function () {
 					row.remove();
 					table_criteria_inclusion.draw();
@@ -264,6 +292,13 @@ function delete_criteria_exclusion(value) {
 				data: {
 					id_project: id_project,
 					id: row.data()[1]
+				},
+				error: function(){
+					Swal({
+						type: 'error',
+						title: 'Error',
+						html: '<label class="font-weight-bold text-danger">Error</label>'
+					});
 				},
 				success: function () {
 					row.remove();
@@ -324,6 +359,13 @@ function edit_criteria_inclusion() {
 			description: description,
 			new_type: type,
 			pre_selected: pre_selected
+		},
+		error: function(){
+			Swal({
+				type: 'error',
+				title: 'Error',
+				html: '<label class="font-weight-bold text-danger">Error</label>'
+			});
 		},
 		success: function () {
 			row.remove().draw();
@@ -401,6 +443,13 @@ function edit_criteria_exclusion() {
 			new_type: type,
 			pre_selected: pre_selected
 		},
+		error: function(){
+			Swal({
+				type: 'error',
+				title: 'Error',
+				html: '<label class="font-weight-bold text-danger">Error</label>'
+			});
+		},
 		success: function () {
 			row.remove().draw();
 			if (type == 'Inclusion') {
@@ -462,6 +511,13 @@ function edit_inclusion_rule() {
 			id_project: id_project,
 			rule: rule
 		},
+		error: function(){
+			Swal({
+				type: 'error',
+				title: 'Error',
+				html: '<label class="font-weight-bold text-danger">Error</label>'
+			});
+		},
 		success: function () {
 			switch (rule) {
 				case "All":
@@ -514,6 +570,13 @@ function edit_exclusion_rule() {
 		data: {
 			id_project: id_project,
 			rule: rule
+		},
+		error: function(){
+			Swal({
+				type: 'error',
+				title: 'Error',
+				html: '<label class="font-weight-bold text-danger">Error</label>'
+			});
 		},
 		success: function () {
 			switch (rule) {

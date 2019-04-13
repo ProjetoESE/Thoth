@@ -17,6 +17,13 @@ function add_question_extraction() {
 			desc: desc,
 			type: type
 		},
+		error: function(){
+			Swal({
+				type: 'error',
+				title: 'Error',
+				html: '<label class="font-weight-bold text-danger">Error</label>'
+			});
+		},
 		success: function () {
 			if (type == "Text") {
 				table_data_extraction.row.add([
@@ -143,6 +150,13 @@ function delete_extraction(value) {
 					id_project: id_project,
 					id: row.data()[0]
 				},
+				error: function(){
+					Swal({
+						type: 'error',
+						title: 'Error',
+						html: '<label class="font-weight-bold text-danger">Error</label>'
+					});
+				},
 				success: function () {
 					row.remove();
 					table_data_extraction.draw();
@@ -186,6 +200,13 @@ function add_option() {
 			id_project: id_project,
 			id_qe: id_qe,
 			desc: desc
+		},
+		error: function(){
+			Swal({
+				type: 'error',
+				title: 'Error',
+				html: '<label class="font-weight-bold text-danger">Error</label>'
+			});
 		},
 		success: function () {
 			let table_op = document.getElementById(id);
@@ -269,6 +290,13 @@ function delete_option(value) {
 					desc: desc,
 					id_qe: id_qe
 				},
+				error: function(){
+					Swal({
+						type: 'error',
+						title: 'Error',
+						html: '<label class="font-weight-bold text-danger">Error</label>'
+					});
+				},
 				success: function () {
 					row.parentNode.removeChild(row);
 				}
@@ -327,6 +355,13 @@ function edit_de() {
 			desc: desc,
 			type: type,
 			old_type: row.data()[2]
+		},
+		error: function(){
+			Swal({
+				type: 'error',
+				title: 'Error',
+				html: '<label class="font-weight-bold text-danger">Error</label>'
+			});
 		},
 		success: function () {
 			row.remove();
@@ -400,6 +435,13 @@ function edit_option() {
 			qe: qe,
 			old: old,
 			now: now
+		},
+		error: function(){
+			Swal({
+				type: 'error',
+				title: 'Error',
+				html: '<label class="font-weight-bold text-danger">Error</label>'
+			});
 		},
 		success: function () {
 			let table_op = document.getElementById(id);
