@@ -456,10 +456,11 @@ class Project_Model extends CI_Model
 				$data['keywords'] = $row->keywords;
 				$data['doi'] = $row->doi;
 				$data['url'] = $row->url;
-				$data['note'] = $row->note;
 			}
 		}
 		$criteria = $this->get_evaluation_criteria($id_paper, $id_project);
+
+		$data['note'] = $this->get_note($id_paper, $id_project);
 
 		$data['inclusion'] = array();
 		$data['exclusion'] = array();
@@ -854,7 +855,8 @@ class Project_Model extends CI_Model
 				$insert = array(
 					'id_paper' => $paper,
 					'id_user' => $mem,
-					'id_status' => 3
+					'id_status' => 3,
+					'note' => ""
 				);
 				array_push($status_selection, $insert);
 			}
@@ -1386,6 +1388,69 @@ class Project_Model extends CI_Model
 			$rule = $row->description;
 		}
 		return $rule;
+	}
+
+	public function update_note($num_paper, $note, $id_project)
+	{
+
+		$id_user = $this->get_id_name_user($this->session->email);
+		$project_databases = $this->get_ids_pro_database($id_project);
+
+		$id_bibs = array();
+		if (sizeof($project_databases) > 0) {
+			$id_bibs = $this->get_ids_bibs($project_databases);
+		}
+
+		$id_paper = null;
+		if (sizeof($id_bibs) > 0) {
+			$id_paper = $this->get_id_paper($num_paper, $id_bibs);
+		}
+
+		$paper_sel = null;
+		if (!is_null($id_paper)) {
+			$paper_sel = $this->get_id_paper_sel($id_paper, $id_user[0]);
+		}
+
+		$data = array(
+			'note' => $note
+		);
+
+		$this->db->where('id_paper_sel', $paper_sel);
+		$this->db->update('papers_selection', $data);
+	}
+
+	public function get_note($num_paper, $id_project)
+	{
+		$id_user = $this->get_id_name_user($this->session->email);
+		$project_databases = $this->get_ids_pro_database($id_project);
+
+		$id_bibs = array();
+		if (sizeof($project_databases) > 0) {
+			$id_bibs = $this->get_ids_bibs($project_databases);
+		}
+
+		$id_paper = null;
+		if (sizeof($id_bibs) > 0) {
+			$id_paper = $this->get_id_paper($num_paper, $id_bibs);
+		}
+
+		$paper_sel = null;
+		if (!is_null($id_paper)) {
+			$paper_sel = $this->get_id_paper_sel($id_paper, $id_user[0]);
+		}
+
+		$note = "";
+		if (!is_null($paper_sel)) {
+			$this->db->select('note');
+			$this->db->from('papers_selection');
+			$this->db->where('id_paper_sel', $paper_sel);
+			$query = $this->db->get();
+
+			foreach ($query->result() as $row) {
+				$note = $row->note;
+			}
+		}
+		return $note;
 	}
 }
 

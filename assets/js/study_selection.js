@@ -183,10 +183,25 @@ $(document).ready(function () {
 	});
 
 	$('#paper_note').on('change', function () {
-		Swal({
-			type: 'success',
-			title: 'Added Note',
-			html: 'Added <label class="font-weight-bold text-success">Note</label> as paper!'
+		let id_project = $('#id_project').val();
+		let id_paper = $('#id_paper').val();
+		let note = $('#paper_note').val();
+		$.ajax({
+			type: "POST",
+			url: base_url + 'Project_Controller/update_note/',
+			data: {
+				id_project: id_project,
+				id_paper: id_paper,
+				note: note
+			},
+			success: function () {
+				Swal({
+					type: 'success',
+					title: 'Added Note',
+					html: 'Added <label class="font-weight-bold text-dark">Note</label> as paper!'
+				});
+			}
+
 		});
 	});
 
@@ -208,6 +223,7 @@ $(document).ready(function () {
 				$(row).removeClass('import');
 			}
 		});
+
 	table_exclusion_criteria.on('select', function (e, dt, type, indexes) {
 		let row = table_exclusion_criteria.row(indexes).node();
 		let selected = true;
@@ -231,27 +247,27 @@ $(document).ready(function () {
 function change_old_status(old_status) {
 	let old_count = 0;
 	switch (old_status) {
-		case "1":
+		case "1", "Accepted":
 			old_count = parseInt($('#count_acc').text());
 			old_count--;
 			$('#count_acc').text(old_count);
 			break;
-		case "2":
+		case "2", "Rejected":
 			old_count = parseInt($('#count_rej').text());
 			old_count--;
 			$('#count_rej').text(old_count);
 			break;
-		case "3":
+		case "3", "Unclassified":
 			old_count = parseInt($('#count_unc').text());
 			old_count--;
 			$('#count_unc').text(old_count);
 			break;
-		case "4":
+		case "4", "Duplicate":
 			old_count = parseInt($('#count_dup').text());
 			old_count--;
 			$('#count_dup').text(old_count);
 			break;
-		case "5":
+		case "5", "Removed":
 			old_count = parseInt($('#count_rem').text());
 			old_count--;
 			$('#count_rem').text(old_count);

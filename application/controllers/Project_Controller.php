@@ -128,8 +128,8 @@ class Project_Controller extends CI_Controller
 			$data['progress_data_extraction'] = $this->progress_data_extraction($data['project']);
 			$data['count_papers'] = $this->Project_Model->count_papers($id);
 
-			foreach ($data['project']->get_papers() as $paper){
-				$this->check_status($id,$paper->get_id(),$paper->get_status_selection());
+			foreach ($data['project']->get_papers() as $paper) {
+				$this->check_status($id, $paper->get_id(), $paper->get_status_selection());
 			}
 			$data['project'] = $this->Project_Model->get_project($id);
 
@@ -1017,6 +1017,26 @@ class Project_Controller extends CI_Controller
 		$data['change'] = $change;
 
 		return $data;
+	}
+
+	public function update_note()
+	{
+		try {
+			$this->logged_in();
+			$id_paper = $this->input->post('id_paper');
+			$id_project = $this->input->post('id_project');
+			$note = $this->input->post('note');
+			$this->load->model("Project_Model");
+
+
+			$this->Project_Model->update_note($id_paper, $note, $id_project);
+			$activity = "Update note to paper " . $id_paper;
+			$this->insert_log($activity, 3, $id_project);
+
+
+		} catch (Exception $e) {
+			$this->session->set_flashdata('error', $e->getMessage());
+		}
 	}
 
 }
