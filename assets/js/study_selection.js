@@ -247,27 +247,32 @@ $(document).ready(function () {
 function change_old_status(old_status) {
 	let old_count = 0;
 	switch (old_status) {
-		case "1", "Accepted":
+		case "Accepted":
+		case "1":
 			old_count = parseInt($('#count_acc').text());
 			old_count--;
 			$('#count_acc').text(old_count);
 			break;
-		case "2", "Rejected":
+		case "Rejected":
+		case "2":
 			old_count = parseInt($('#count_rej').text());
 			old_count--;
 			$('#count_rej').text(old_count);
 			break;
-		case "3", "Unclassified":
+		case "Unclassified":
+		case "3":
 			old_count = parseInt($('#count_unc').text());
 			old_count--;
 			$('#count_unc').text(old_count);
 			break;
-		case "4", "Duplicate":
+		case "Duplicate":
+		case "4":
 			old_count = parseInt($('#count_dup').text());
 			old_count--;
 			$('#count_dup').text(old_count);
 			break;
-		case "5", "Removed":
+		case "Removed":
+		case "5":
 			old_count = parseInt($('#count_rem').text());
 			old_count--;
 			$('#count_rem').text(old_count);
@@ -315,12 +320,65 @@ function status_paper(status) {
 	}
 }
 
+function update_progress() {
+	let pro_acc = $('#prog_acc');
+	let pro_rej = $('#prog_rej');
+	let pro_unc = $('#prog_unc');
+	let pro_dup = $('#prog_dup');
+	let pro_rem = $('#prog_rem');
+	let total = parseInt($('#count_total').text());
+	let acc = parseInt($('#count_acc').text());
+	let rej = parseInt($('#count_rej').text());
+	let unc = parseInt($('#count_unc').text());
+	let dup = parseInt($('#count_dup').text());
+	let rem = parseInt($('#count_rem').text());
+	let pro = 0;
+
+	for (let i = 1; i < 6; i++) {
+
+		switch (i) {
+			case 1:
+				pro = (acc * 100) / total;
+				pro_acc.attr('aria-valuenow', pro);
+				pro_acc.css('width', pro + "%");
+				pro_acc.text(pro + "%");
+				break;
+			case 2:
+				pro = (rej * 100) / total;
+				pro_rej.attr('aria-valuenow', pro);
+				pro_rej.css('width', pro + "%");
+				pro_rej.text(pro + "%");
+				break;
+			case 3:
+				pro = (unc * 100) / total;
+				pro_unc.attr('aria-valuenow', pro);
+				pro_unc.css('width', pro + "%");
+				pro_unc.text(pro + "%");
+				break;
+			case 4:
+				pro = (dup * 100) / total;
+				pro_dup.attr('aria-valuenow', pro);
+				pro_dup.css('width', pro + "%");
+				pro_dup.text(pro + "%");
+				break;
+			case 5:
+				pro = (rem * 100) / total;
+				pro_rem.attr('aria-valuenow', pro);
+				pro_rem.css('width', pro + "%");
+				pro_rem.text(pro + "%");
+				break;
+		}
+	}
+
+}
+
 function change_new_status(id_paper, status, index) {
 	let criteria_a = $('#criteria_analiese');
 	let new_count = 0;
 	let paper = $('#' + id_paper);
 	let edit = $('#edit_status_selection');
 	let text = $('#text_selection');
+
 	switch (status) {
 		case "1":
 			text.val(1);
@@ -339,6 +397,7 @@ function change_new_status(id_paper, status, index) {
 			new_count++;
 			$('#count_acc').text(new_count);
 			criteria_a.show();
+			update_progress();
 			break;
 		case "2":
 			text.removeClass("text-success");
@@ -357,6 +416,7 @@ function change_new_status(id_paper, status, index) {
 			new_count++;
 			$('#count_rej').text(new_count);
 			criteria_a.show();
+			update_progress();
 			break;
 		case "3":
 			text.val(3);
@@ -373,6 +433,7 @@ function change_new_status(id_paper, status, index) {
 			new_count++;
 			$('#count_unc').text(new_count);
 			criteria_a.show();
+			update_progress();
 			break;
 		case "4":
 			text.val(4);
@@ -389,6 +450,7 @@ function change_new_status(id_paper, status, index) {
 			new_count++;
 			$('#count_dup').text(new_count);
 			criteria_a.hide();
+			update_progress();
 			break;
 		case "5":
 			text.val(5);
@@ -405,6 +467,7 @@ function change_new_status(id_paper, status, index) {
 			new_count++;
 			$('#count_rem').text(new_count);
 			criteria_a.hide();
+			update_progress();
 			break;
 	}
 }
@@ -437,10 +500,10 @@ function evaluation_criteria(indexes, selected, inclusion) {
 		success: function (data) {
 			data = JSON.parse(data);
 
-			console.log(data.status.toString());
+			console.log(old_status);
 
 			if (data.change) {
-				change_old_status(old_status);
+				change_old_status(old_status.toString());
 				change_new_status(id_paper, data.status.toString(), index);
 				status_paper(data.status.toString());
 			}

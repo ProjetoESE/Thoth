@@ -14,7 +14,8 @@
 				<input type="hidden" id="index_paper">
 				<div class="form-inline">
 					<div class="col-md-6">
-						<h6>Doi</h6>
+						<h6>Doi</h6><a class="float-right opt"><i
+								class="fas fa-question-circle "></i></a>
 						<p id="paper_doi"></p>
 					</div>
 					<div class="col-md-6">

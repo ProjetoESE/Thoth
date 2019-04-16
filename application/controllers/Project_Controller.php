@@ -995,23 +995,25 @@ class Project_Controller extends CI_Controller
 
 		$change = false;
 		$data['status'] = $old_status;
-		if ($inclusion && !$exclusion) {
-			if ($old_status != 1) {
-				$this->Project_Model->edit_status_selection($id_paper, 1, $id_project);
-				$change = true;
-				$data['status'] = 1;
-			}
-		} elseif (!$inclusion && $exclusion) {
-			if ($old_status != 2) {
-				$this->Project_Model->edit_status_selection($id_paper, 2, $id_project);
-				$change = true;
-				$data['status'] = 2;
-			}
-		} else {
-			if ($old_status != 3) {
-				$this->Project_Model->edit_status_selection($id_paper, 3, $id_project);
-				$change = true;
-				$data['status'] = 3;
+		if ($old_status != 4 && $old_status != 5) {
+			if ($inclusion && !$exclusion) {
+				if ($old_status != 1) {
+					$this->Project_Model->edit_status_selection($id_paper, 1, $id_project);
+					$change = true;
+					$data['status'] = 1;
+				}
+			} elseif (!$inclusion && $exclusion) {
+				if ($old_status != 2) {
+					$this->Project_Model->edit_status_selection($id_paper, 2, $id_project);
+					$change = true;
+					$data['status'] = 2;
+				}
+			} else {
+				if ($old_status != 3) {
+					$this->Project_Model->edit_status_selection($id_paper, 3, $id_project);
+					$change = true;
+					$data['status'] = 3;
+				}
 			}
 		}
 		$data['change'] = $change;

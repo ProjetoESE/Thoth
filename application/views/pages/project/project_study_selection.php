@@ -33,12 +33,50 @@
 			</li>
 		</ul>
 		<br>
-		<label for="id_qa"><strong>Study Selection</strong></label>
+		<div class="form-inline">
+			<label for="id_qa"><strong>Study Selection</strong></label>
+			<a class="float-right opt"><i
+					class="fas fa-question-circle "></i></a>
+		</div>
 		<br>
 		<?php
 		if (strval($progress_planning['progress']) == strval(100) && strval($progress_import_studies['progress']) == strval(100)) {
 
 			?>
+			<h6>Progress Study Selection</h6>
+			<div class="progress">
+				<div id="prog_acc" class="progress-bar bg-success" role="progressbar"
+					 style="width: <?= ($count_papers[1] * 100) / $count_papers[6] ?>%"
+					 aria-valuenow="<?= ($count_papers[1] * 100) / $count_papers[6] ?>"
+					 aria-valuemin="0"
+					 aria-valuemax="100"><?= ($count_papers[1] * 100) / $count_papers[6] ?>%
+				</div>
+				<div id="prog_rej" class="progress-bar bg-danger" role="progressbar"
+					 style="width: <?= ($count_papers[2] * 100) / $count_papers[6] ?>%"
+					 aria-valuenow="<?= ($count_papers[2] * 100) / $count_papers[6] ?>"
+					 aria-valuemin="0"
+					 aria-valuemax="100"><?= ($count_papers[2] * 100) / $count_papers[6] ?>%
+				</div>
+				<div id="prog_unc" class="progress-bar bg-dark" role="progressbar"
+					 style="width: <?= ($count_papers[3] * 100) / $count_papers[6] ?>%"
+					 aria-valuenow="<?= ($count_papers[3] * 100) / $count_papers[6] ?>"
+					 aria-valuemin="0"
+					 aria-valuemax="100"><?= ($count_papers[3] * 100) / $count_papers[6] ?>%
+				</div>
+				<div id="prog_dup" class="progress-bar bg-warning" role="progressbar"
+					 style="width: <?= ($count_papers[4] * 100) / $count_papers[6] ?>%"
+					 aria-valuenow="<?= ($count_papers[4] * 100) / $count_papers[6] ?>"
+					 aria-valuemin="0"
+					 aria-valuemax="100"><?= ($count_papers[4] * 100) / $count_papers[6] ?>%
+				</div>
+				<div id="prog_rem" class="progress-bar bg-info" role="progressbar"
+					 style="width: <?= ($count_papers[5] * 100) / $count_papers[6] ?>%"
+					 aria-valuenow="<?= ($count_papers[5] * 100) / $count_papers[6] ?>"
+					 aria-valuemin="0"
+					 aria-valuemax="100"><?= ($count_papers[5] * 100) / $count_papers[6] ?>%
+				</div>
+			</div>
+			<br>
 			<div class="form-inline">
 				<?php
 				foreach ($count_papers as $key => $value) {
@@ -98,7 +136,7 @@
 							<div class="input-group col-md-2">
 								<label class="text-secondary">
 									<span class="fas fa-bars fa-lg"></span>
-									Total: <?= $value ?>
+									Total: <span id="count_total"><?= $value ?></span>
 								</label>
 							</div>
 							<?php
