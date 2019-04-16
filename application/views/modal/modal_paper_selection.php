@@ -56,7 +56,7 @@
 				<div class="row" id="criteria_analiese">
 					<div class="col-md-6">
 						<h6>Inclusion Criteria Rule</h6>
-						<p><?= $project->get_inclusion_rule() ?></p>
+						<p id="paper_inclusion_rule"><?= $project->get_inclusion_rule() ?></p>
 						<h6>Inclusion Criteria</h6>
 						<table class="table table-responsive" id="table_inclusion_criteria">
 							<caption>List of Inclusion Criteria</caption>
@@ -71,7 +71,9 @@
 							<?php foreach ($project->get_inclusion_criteria() as $ic) { ?>
 								<tr>
 									<td></td>
-									<td><?= $ic->get_id() ?></td>
+									<td class="<?= $ic->get_pre_selected() ? "font-weight-bold" : "" ?>">
+										<?= $ic->get_id() ?>
+									</td>
 									<td><?= $ic->get_description() ?></td>
 								</tr>
 							<?php } ?>
@@ -80,7 +82,7 @@
 					</div>
 					<div class="col-md-6">
 						<h6>Exclusion Criteria Rule</h6>
-						<p><?= $project->get_exclusion_rule() ?></p>
+						<p id="paper_exclusion_rule"> <?= $project->get_exclusion_rule() ?></p>
 						<h6>Exclusion Criteria</h6>
 						<table class="table table-responsive" id="table_exclusion_criteria">
 							<caption>List of Exclusion Criteria</caption>
@@ -95,13 +97,19 @@
 							<?php foreach ($project->get_exclusion_criteria() as $ec) { ?>
 								<tr>
 									<td></td>
-									<td><?= $ec->get_id() ?></td>
+									<td class="<?= $ec->get_pre_selected() ? "font-weight-bold" : "" ?>">
+										<?= $ec->get_id() ?>
+									</td>
 									<td><?= $ec->get_description() ?></td>
 								</tr>
 							<?php } ?>
 							</tbody>
 						</table>
 					</div>
+				</div>
+				<div class="col-md-12">
+					<h6>Note</h6>
+					<textarea id="paper_note" class="form-control"></textarea>
 				</div>
 			</div>
 		</div>

@@ -1,0 +1,3 @@
+CREATE TABLE `u648750589_thoth`.`evaluation criteria` ( `id_evaluation_criteria` INT NOT NULL AUTO_INCREMENT , `id_paper` INT NOT NULL , `id_criteria` INT NOT NULL , `id_user` INT NOT NULL , PRIMARY KEY (`id_evaluation_criteria`)) ENGINE = InnoDB;
+ALTER TABLE `evaluation criteria` ADD FOREIGN KEY (`id_criteria`) REFERENCES `criteria`(`id_criteria`) ON DELETE CASCADE ON UPDATE CASCADE; ALTER TABLE `evaluation criteria` ADD FOREIGN KEY (`id_paper`) REFERENCES `papers`(`id_paper`) ON DELETE CASCADE ON UPDATE CASCADE; ALTER TABLE `evaluation criteria` ADD FOREIGN KEY (`id_user`) REFERENCES `user`(`id_user`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `papers` ADD `note` TEXT NULL DEFAULT NULL AFTER `id`;
