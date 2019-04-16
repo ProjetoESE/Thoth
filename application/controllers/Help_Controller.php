@@ -21,10 +21,9 @@ class Help_Controller extends CI_Controller
 		}
 	}
 
-	private function validate_level($project_id, $levels)
+	private function validate_level($levels)
 	{
-		$this->load->model("Project_Model");
-		$res_level = $this->Project_Model->get_level($this->session->email, $project_id);
+		$res_level = $this->session->level;
 
 		foreach ($levels as $l) {
 			if ($l == $res_level) {

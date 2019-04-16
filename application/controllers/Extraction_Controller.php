@@ -22,7 +22,7 @@ class Extraction_Controller extends CI_Controller
 			$desc = $this->input->post('desc');
 			$type = $this->input->post('type');
 			$id_project = $this->input->post('id_project');
-			$this->validate_level($id_project, array(1, 3));
+			$this->validate_level(array(1, 3, 4));
 			$this->load->model("Extraction_Model");
 
 			$this->Extraction_Model->add_question_extraction($id, $desc, $type, $id_project);
@@ -48,7 +48,7 @@ class Extraction_Controller extends CI_Controller
 			$id_qe = $this->input->post('id_qe');
 			$desc = $this->input->post('desc');
 			$id_project = $this->input->post('id_project');
-			$this->validate_level($id_project, array(1, 3));
+			$this->validate_level(array(1, 3, 4));
 			$this->load->model("Extraction_Model");
 
 			$this->Extraction_Model->add_option($id_qe, $desc, $id_project);
@@ -73,7 +73,7 @@ class Extraction_Controller extends CI_Controller
 			$this->logged_in();
 			$id = $this->input->post('id');
 			$id_project = $this->input->post('id_project');
-			$this->validate_level($id_project, array(1, 3));
+			$this->validate_level(array(1, 3, 4));
 			$this->load->model("Extraction_Model");
 
 			$this->Extraction_Model->delete_extraction($id, $id_project);
@@ -99,7 +99,7 @@ class Extraction_Controller extends CI_Controller
 			$id_qe = $this->input->post('id_qe');
 			$desc = $this->input->post('desc');
 			$id_project = $this->input->post('id_project');
-			$this->validate_level($id_project, array(1, 3));
+			$this->validate_level(array(1, 3, 4));
 			$this->load->model("Extraction_Model");
 
 			$this->Extraction_Model->delete_option($id_qe, $desc, $id_project);
@@ -128,7 +128,7 @@ class Extraction_Controller extends CI_Controller
 			$old_id = $this->input->post('old_id');
 			$old_type = $this->input->post('old_type');
 			$id_project = $this->input->post('id_project');
-			$this->validate_level($id_project, array(1, 3));
+			$this->validate_level(array(1, 3, 4));
 			$this->load->model("Extraction_Model");
 
 			$this->Extraction_Model->edit_de($id, $desc, $type, $old_id, $old_type, $id_project);
@@ -155,7 +155,7 @@ class Extraction_Controller extends CI_Controller
 			$op = $this->input->post('now');
 			$old_op = $this->input->post('old');
 			$id_project = $this->input->post('id_project');
-			$this->validate_level($id_project, array(1, 3));
+			$this->validate_level(array(1, 3, 4));
 			$this->load->model("Extraction_Model");
 
 			$this->Extraction_Model->edit_option($id_qe, $op, $old_op, $id_project);
@@ -180,10 +180,9 @@ class Extraction_Controller extends CI_Controller
 		}
 	}
 
-	private function validate_level($project_id, $levels)
+	private function validate_level($levels)
 	{
-		$this->load->model("Project_Model");
-		$res_level = $this->Project_Model->get_level($this->session->email, $project_id);
+		$res_level = $this->session->level;
 
 		foreach ($levels as $l) {
 			if ($l == $res_level) {

@@ -6,22 +6,36 @@
 		   class="btn form-inline btn-outline-primary opt">Review</a>
 		<a href="<?= base_url('planning/' . $project->get_id()) ?>"
 		   class="btn form-inline btn-outline-primary opt">Planning</a>
-		<a href="<?= base_url('conducting/' . $project->get_id()) ?>"
-		   class="btn form-inline btn-outline-primary opt">Conducting</a>
+		<?php if ($this->session->level == "4") { ?>
+			<a href="<?= base_url('study_selection_adm/' . $project->get_id()) ?>"
+			   class="btn form-inline btn-outline-primary opt">Conducting</a>
+		<?php } else {?>
+			<a href="<?= base_url('conducting/' . $project->get_id()) ?>"
+			   class="btn form-inline btn-outline-primary opt">Conducting</a>
+		<?php }?>
 		<a href="<?= base_url('reporting/' . $project->get_id()) ?>"
 		   class="btn form-inline btn-outline-primary opt">Reporting</a>
 	</div>
 	<div class="card-body">
 		<h4>Conducting</h4>
 		<ul class="nav nav-pills nav-justified">
-			<li class="nav-item">
-				<a class="nav-link "
-				   href="<?= base_url('conducting/' . $project->get_id()) ?>">Import Studies</a>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link" href="<?= base_url('study_selection/' . $project->get_id()) ?>">Study
-					Selection</a>
-			</li>
+			<?php if ($this->session->level != "4") { ?>
+				<li class="nav-item">
+					<a class="nav-link "
+					   href="<?= base_url('conducting/' . $project->get_id()) ?>">Import Studies</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="<?= base_url('study_selection/' . $project->get_id()) ?>">Study
+						Selection</a>
+				</li>
+			<?php } ?>
+			<?php if ($this->session->level == "1" || $this->session->level == "4") { ?>
+				<li class="nav-item">
+					<a class="nav-link" href="<?= base_url('study_selection_adm/' . $project->get_id()) ?>">Review
+						Study
+						Selection</a>
+				</li>
+			<?php } ?>
 			<li class="nav-item">
 				<a class="nav-link"
 				   href="<?= base_url('quality_assessement/' . $project->get_id()) ?>">Quality

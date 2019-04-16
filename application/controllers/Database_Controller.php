@@ -14,7 +14,7 @@ class Database_Controller extends CI_Controller
 			$this->logged_in();
 			$database = $this->input->post('database');
 			$id_project = $this->input->post('id_project');
-			$this->validate_level($id_project, array(1, 3));
+			$this->validate_level(array(1, 3, 4));
 			$this->load->model("Database_Model");
 
 			$link = $this->Database_Model->add_database($database, $id_project);
@@ -41,7 +41,7 @@ class Database_Controller extends CI_Controller
 			$this->logged_in();
 			$database = $this->input->post('database');
 			$id_project = $this->input->post('id_project');
-			$this->validate_level($id_project, array(1, 3));
+			$this->validate_level(array(1, 3, 4));
 			$this->load->model("Database_Model");
 
 			$this->Database_Model->delete_database($database, $id_project);
@@ -68,7 +68,7 @@ class Database_Controller extends CI_Controller
 			$database = $this->input->post('database');
 			$link = $this->input->post('link');
 			$id_project = $this->input->post('id_project');
-			$this->validate_level($id_project, array(1, 3));
+			$this->validate_level(array(1, 3, 4));
 			$this->load->model("Database_Model");
 
 			$this->Database_Model->new_database($database, $link, $id_project);
@@ -100,10 +100,9 @@ class Database_Controller extends CI_Controller
 		}
 	}
 
-	private function validate_level($project_id, $levels)
+	private function validate_level($levels)
 	{
-		$this->load->model("Project_Model");
-		$res_level = $this->Project_Model->get_level($this->session->email, $project_id);
+		$res_level = $this->session->level;
 
 		foreach ($levels as $l) {
 			if ($l == $res_level) {

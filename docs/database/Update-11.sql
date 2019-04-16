@@ -1,0 +1,1 @@
+INSERT INTO `levels` (`id_level`, `level`) VALUES (NULL, 'Revisor')
