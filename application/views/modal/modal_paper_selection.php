@@ -59,7 +59,7 @@
 						<h6>Inclusion Criteria Rule</h6>
 						<p id="paper_inclusion_rule"><?= $project->get_inclusion_rule() ?></p>
 						<h6>Inclusion Criteria</h6>
-						<table class="table table-responsive" id="table_inclusion_criteria">
+						<table class="table table-responsive-sm" id="table_inclusion_criteria">
 							<caption>List of Inclusion Criteria</caption>
 							<thead>
 							<tr>
@@ -85,7 +85,7 @@
 						<h6>Exclusion Criteria Rule</h6>
 						<p id="paper_exclusion_rule"> <?= $project->get_exclusion_rule() ?></p>
 						<h6>Exclusion Criteria</h6>
-						<table class="table table-responsive" id="table_exclusion_criteria">
+						<table class="table table-responsive-sm" id="table_exclusion_criteria">
 							<caption>List of Exclusion Criteria</caption>
 							<thead>
 							<tr>
