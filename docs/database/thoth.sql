@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 28-Mar-2019 às 23:26
+-- Generation Time: 17-Abr-2019 às 19:10
 -- Versão do servidor: 10.1.34-MariaDB
 -- PHP Version: 7.2.7
 
@@ -32,7 +32,21 @@ CREATE TABLE `activity_log` (
   `id_log` int(11) NOT NULL,
   `id_user` int(11) NOT NULL,
   `id_module` int(11) NOT NULL,
-  `activity` varchar(255) COLLATE utf8_unicode_ci NOT NULL
+  `activity` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `id_project` int(11) DEFAULT NULL,
+  `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `bib_upload`
+--
+
+CREATE TABLE `bib_upload` (
+  `id_bib` int(11) NOT NULL,
+  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `id_project_database` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -49,16 +63,6 @@ CREATE TABLE `criteria` (
   `id_project` int(11) NOT NULL,
   `type` varchar(255) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Extraindo dados da tabela `criteria`
---
-
-INSERT INTO `criteria` (`id_criteria`, `id`, `description`, `pre_selected`, `id_project`, `type`) VALUES
-(2, 'EC 01', 'Description 02', 1, 1, 'Exclusion'),
-(4, 'EC 02', 'Description 04', 0, 1, 'Exclusion'),
-(5, 'IC', 'Description', 1, 1, 'Inclusion'),
-(6, 'IC01', 'Descriptio05', 0, 1, 'Inclusion');
 
 -- --------------------------------------------------------
 
@@ -98,13 +102,18 @@ CREATE TABLE `domain` (
   `id_project` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+-- --------------------------------------------------------
+
 --
--- Extraindo dados da tabela `domain`
+-- Estrutura da tabela `evaluation_criteria`
 --
 
-INSERT INTO `domain` (`id_domain`, `description`, `id_project`) VALUES
-(9, 'Domain 04', 1),
-(10, 'Domain 09', 1);
+CREATE TABLE `evaluation_criteria` (
+  `id_evaluation_criteria` int(11) NOT NULL,
+  `id_paper` int(11) NOT NULL,
+  `id_criteria` int(11) NOT NULL,
+  `id_user` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -117,16 +126,6 @@ CREATE TABLE `exclusion_rule` (
   `id_rule` int(11) NOT NULL,
   `id_project` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Extraindo dados da tabela `exclusion_rule`
---
-
-INSERT INTO `exclusion_rule` (`id_exclusion_rule`, `id_rule`, `id_project`) VALUES
-(1, 3, 1),
-(2, 1, 2),
-(3, 1, 3),
-(4, 1, 4);
 
 -- --------------------------------------------------------
 
@@ -142,14 +141,6 @@ CREATE TABLE `general_score` (
   `id_project` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- Extraindo dados da tabela `general_score`
---
-
-INSERT INTO `general_score` (`id_general_score`, `start`, `end`, `description`, `id_project`) VALUES
-(1, 0, 1, 'Baixo', 1),
-(2, 1.1, 2, 'Medio', 1);
-
 -- --------------------------------------------------------
 
 --
@@ -162,16 +153,6 @@ CREATE TABLE `inclusion_rule` (
   `id_project` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- Extraindo dados da tabela `inclusion_rule`
---
-
-INSERT INTO `inclusion_rule` (`id_inclusion_rule`, `id_rule`, `id_project`) VALUES
-(1, 3, 1),
-(2, 1, 2),
-(3, 1, 3),
-(4, 1, 3);
-
 -- --------------------------------------------------------
 
 --
@@ -183,14 +164,6 @@ CREATE TABLE `keyword` (
   `description` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `id_project` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Extraindo dados da tabela `keyword`
---
-
-INSERT INTO `keyword` (`id_keyword`, `description`, `id_project`) VALUES
-(7, 'Keyword 04', 1),
-(8, 'Keyword 06', 1);
 
 -- --------------------------------------------------------
 
@@ -232,7 +205,8 @@ CREATE TABLE `levels` (
 INSERT INTO `levels` (`id_level`, `level`) VALUES
 (1, 'Administrator'),
 (2, 'Viewer'),
-(3, 'Researcher');
+(3, 'Researcher'),
+(4, 'Revisor');
 
 -- --------------------------------------------------------
 
@@ -247,13 +221,6 @@ CREATE TABLE `members` (
   `level` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- Extraindo dados da tabela `members`
---
-
-INSERT INTO `members` (`id_members`, `id_user`, `id_project`, `level`) VALUES
-(1, 1, 1, 1);
-
 -- --------------------------------------------------------
 
 --
@@ -265,13 +232,6 @@ CREATE TABLE `min_to_app` (
   `id_project` int(11) NOT NULL,
   `id_general_score` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Extraindo dados da tabela `min_to_app`
---
-
-INSERT INTO `min_to_app` (`id_min_to_app`, `id_project`, `id_general_score`) VALUES
-(1, 1, 2);
 
 -- --------------------------------------------------------
 
@@ -290,7 +250,70 @@ CREATE TABLE `module` (
 
 INSERT INTO `module` (`id_module`, `description`) VALUES
 (1, 'Planning'),
-(2, 'User Management');
+(2, 'User Management'),
+(3, 'Conducting');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `options_extraction`
+--
+
+CREATE TABLE `options_extraction` (
+  `id_option` int(11) NOT NULL,
+  `description` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `id_de` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `papers`
+--
+
+CREATE TABLE `papers` (
+  `id_paper` int(11) NOT NULL,
+  `id_bib` int(11) NOT NULL,
+  `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `author` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `book_title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `volume` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `pages` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `num_pages` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `abstract` text COLLATE utf8_unicode_ci NOT NULL,
+  `keywords` text COLLATE utf8_unicode_ci NOT NULL,
+  `doi` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `journal` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `issn` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `location` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `isbn` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `address` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `type` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `bib_key` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `url` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `publisher` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `year` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `added_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `update_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `data_base` int(11) NOT NULL,
+  `id` int(11) NOT NULL,
+  `status_selection` int(11) NOT NULL DEFAULT '3',
+  `check_status_selection` tinyint(1) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `papers_selection`
+--
+
+CREATE TABLE `papers_selection` (
+  `id_paper_sel` int(11) NOT NULL,
+  `id_user` int(11) NOT NULL,
+  `id_paper` int(11) NOT NULL,
+  `id_status` int(11) NOT NULL,
+  `note` text COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -305,18 +328,9 @@ CREATE TABLE `project` (
   `objectives` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `created_by` int(11) NOT NULL,
   `start_date` date NOT NULL,
-  `end_date` date NOT NULL
+  `end_date` date NOT NULL,
+  `c_papers` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Extraindo dados da tabela `project`
---
-
-INSERT INTO `project` (`id_project`, `title`, `description`, `objectives`, `created_by`, `start_date`, `end_date`) VALUES
-(1, 'Project 1', 'Project Test 1', 'Objectives 1', 1, '2019-02-17', '2019-03-01'),
-(2, 'Project 02', 'Project Test 02', 'Objectives 02', 1, '0000-00-00', '0000-00-00'),
-(3, 'Project 03', 'Project Test 03', 'Objectives 03', 1, '0000-00-00', '0000-00-00'),
-(4, 'Project 04', 'Project Test 04', 'Objectives 04', 2, '0000-00-00', '0000-00-00');
 
 -- --------------------------------------------------------
 
@@ -330,19 +344,6 @@ CREATE TABLE `project_databases` (
   `id_database` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- Extraindo dados da tabela `project_databases`
---
-
-INSERT INTO `project_databases` (`id_project_database`, `id_project`, `id_database`) VALUES
-(10, 1, 1),
-(11, 1, 2),
-(12, 1, 3),
-(15, 1, 8),
-(16, 1, 5),
-(17, 1, 4),
-(20, 1, 10);
-
 -- --------------------------------------------------------
 
 --
@@ -354,14 +355,6 @@ CREATE TABLE `project_languages` (
   `id_project` int(11) NOT NULL,
   `id_language` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Extraindo dados da tabela `project_languages`
---
-
-INSERT INTO `project_languages` (`id_project_lang`, `id_project`, `id_language`) VALUES
-(8, 1, 2),
-(9, 1, 3);
 
 -- --------------------------------------------------------
 
@@ -375,15 +368,34 @@ CREATE TABLE `project_study_types` (
   `id_study_type` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+-- --------------------------------------------------------
+
 --
--- Extraindo dados da tabela `project_study_types`
+-- Estrutura da tabela `question_extraction`
 --
 
-INSERT INTO `project_study_types` (`id_project_study_types`, `id_project`, `id_study_type`) VALUES
-(2, 1, 2),
-(4, 1, 4),
-(5, 1, 6),
-(6, 1, 1);
+CREATE TABLE `question_extraction` (
+  `id_de` int(11) NOT NULL,
+  `id` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `description` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `type` int(11) NOT NULL,
+  `id_project` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `question_quality`
+--
+
+CREATE TABLE `question_quality` (
+  `id_qa` int(11) NOT NULL,
+  `id` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `description` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `weight` float NOT NULL,
+  `min_to_app` int(11) DEFAULT NULL,
+  `id_project` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -397,15 +409,6 @@ CREATE TABLE `research_question` (
   `description` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `id_project` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Extraindo dados da tabela `research_question`
---
-
-INSERT INTO `research_question` (`id_research_question`, `id`, `description`, `id_project`) VALUES
-(7, 'RQ 01', 'Description 05', 1),
-(8, 'RQ 04', 'Description 02', 1),
-(9, 'RQ 03', 'Description 03', 1);
 
 -- --------------------------------------------------------
 
@@ -430,6 +433,20 @@ INSERT INTO `rule` (`id_rule`, `description`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Estrutura da tabela `score_quality`
+--
+
+CREATE TABLE `score_quality` (
+  `id_score` int(11) NOT NULL,
+  `score_rule` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `description` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `score` int(11) NOT NULL,
+  `id_qa` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Estrutura da tabela `search_strategy`
 --
 
@@ -438,16 +455,6 @@ CREATE TABLE `search_strategy` (
   `description` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `id_project` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Extraindo dados da tabela `search_strategy`
---
-
-INSERT INTO `search_strategy` (`id_search_strategy`, `description`, `id_project`) VALUES
-(1, 'ASDASDD', 1),
-(2, ' ', 2),
-(3, ' ', 3),
-(4, ' ', 4);
 
 -- --------------------------------------------------------
 
@@ -462,19 +469,6 @@ CREATE TABLE `search_string` (
   `update_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- Extraindo dados da tabela `search_string`
---
-
-INSERT INTO `search_string` (`id_search_string`, `description`, `id_project_database`, `update_at`) VALUES
-(11, '(\"Term 02\" OR \"Synonym 01\")', 10, '2019-03-25 19:31:47'),
-(12, '(\"Term 02\" OR \"Synonym 01\")', 11, '2019-03-25 19:31:48'),
-(13, 'TITLE-ABS-KEY (\"Term 02\" OR \"Synonym 01\")', 12, '2019-03-25 19:31:49'),
-(16, '(\"Term 02\" OR \"Synonym 01\")', 15, '2019-03-25 19:31:50'),
-(17, '(\"Term 02\" \"Synonym 01\")', 16, '2019-03-25 19:31:51'),
-(18, '(\"Term 02\" OR \"Synonym 01\")', 17, '2019-03-25 19:31:52'),
-(21, '(\"Term 02\" OR \"Synonym 01\")', 20, '2019-03-26 23:55:56');
-
 -- --------------------------------------------------------
 
 --
@@ -487,15 +481,38 @@ CREATE TABLE `search_string_generics` (
   `id_project` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+-- --------------------------------------------------------
+
 --
--- Extraindo dados da tabela `search_string_generics`
+-- Estrutura da tabela `status_extraction`
 --
 
-INSERT INTO `search_string_generics` (`id_search_string_generics`, `description`, `id_project`) VALUES
-(4, '(\"Term 02\" OR \"Synonym 01\")', 1),
-(5, ' ', 2),
-(6, ' ', 3),
-(7, ' ', 4);
+CREATE TABLE `status_extraction` (
+  `id_status` int(11) NOT NULL,
+  `description` varchar(255) COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `status_selection`
+--
+
+CREATE TABLE `status_selection` (
+  `id_status` int(11) NOT NULL,
+  `description` varchar(255) COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Extraindo dados da tabela `status_selection`
+--
+
+INSERT INTO `status_selection` (`id_status`, `description`) VALUES
+(1, 'Accepted'),
+(2, 'Rejected'),
+(3, 'Unclassified'),
+(4, 'Duplicate'),
+(5, 'Removed');
 
 -- --------------------------------------------------------
 
@@ -532,13 +549,6 @@ CREATE TABLE `synonym` (
   `id_term` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- Extraindo dados da tabela `synonym`
---
-
-INSERT INTO `synonym` (`id_synonym`, `description`, `id_term`) VALUES
-(25, 'Synonym 01', 8);
-
 -- --------------------------------------------------------
 
 --
@@ -551,38 +561,25 @@ CREATE TABLE `term` (
   `id_project` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- Extraindo dados da tabela `term`
---
-
-INSERT INTO `term` (`id_term`, `description`, `id_project`) VALUES
-(8, 'Term 02', 1);
-
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `user`
+-- Estrutura da tabela `types_question`
 --
 
-CREATE TABLE `user` (
-  `id_user` int(11) NOT NULL,
-  `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `password` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `institution` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `lattes_link` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `created_at` datetime DEFAULT NULL,
-  `updated_at` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP
+CREATE TABLE `types_question` (
+  `id_type` int(11) NOT NULL,
+  `type` varchar(255) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Extraindo dados da tabela `user`
+-- Extraindo dados da tabela `types_question`
 --
 
-INSERT INTO `user` (`id_user`, `email`, `password`, `name`, `institution`, `lattes_link`, `created_at`, `updated_at`) VALUES
-(1, 'guilhermebolfe11@gmail.com', 'f781ca982eb8b25bbb7fcd2cdc0798ca', 'Guilherme Bolfe', NULL, NULL, '2019-01-28 17:44:40', '2019-01-28 22:53:54'),
-(2, 'silviobolfe19@gmail.com', '9641fe65a41b6d722443bc12e796d52a', 'Silvio Bolfe', NULL, NULL, '2019-01-28 17:52:54', '2019-01-28 22:54:03'),
-(4, 'bolfeguilherme@gmail.com', 'f781ca982eb8b25bbb7fcd2cdc0798ca', 'Gustavo Bolfe', NULL, NULL, '2019-03-14 11:00:00', '2019-03-14 11:00:00');
+INSERT INTO `types_question` (`id_type`, `type`) VALUES
+(1, 'Text'),
+(2, 'Multiple Choice List'),
+(3, 'Pick One List');
 
 --
 -- Indexes for dumped tables
@@ -594,7 +591,15 @@ INSERT INTO `user` (`id_user`, `email`, `password`, `name`, `institution`, `latt
 ALTER TABLE `activity_log`
   ADD PRIMARY KEY (`id_log`),
   ADD KEY `id_user` (`id_user`),
-  ADD KEY `id_module` (`id_module`);
+  ADD KEY `id_module` (`id_module`),
+  ADD KEY `id_project` (`id_project`);
+
+--
+-- Indexes for table `bib_upload`
+--
+ALTER TABLE `bib_upload`
+  ADD PRIMARY KEY (`id_bib`),
+  ADD KEY `id_project_database` (`id_project_database`);
 
 --
 -- Indexes for table `criteria`
@@ -615,6 +620,15 @@ ALTER TABLE `data_base`
 ALTER TABLE `domain`
   ADD PRIMARY KEY (`id_domain`),
   ADD KEY `id_project` (`id_project`);
+
+--
+-- Indexes for table `evaluation_criteria`
+--
+ALTER TABLE `evaluation_criteria`
+  ADD PRIMARY KEY (`id_evaluation_criteria`),
+  ADD KEY `id_criteria` (`id_criteria`),
+  ADD KEY `id_paper` (`id_paper`),
+  ADD KEY `id_user` (`id_user`);
 
 --
 -- Indexes for table `exclusion_rule`
@@ -682,6 +696,31 @@ ALTER TABLE `module`
   ADD PRIMARY KEY (`id_module`);
 
 --
+-- Indexes for table `options_extraction`
+--
+ALTER TABLE `options_extraction`
+  ADD PRIMARY KEY (`id_option`),
+  ADD KEY `id_de` (`id_de`);
+
+--
+-- Indexes for table `papers`
+--
+ALTER TABLE `papers`
+  ADD PRIMARY KEY (`id_paper`),
+  ADD KEY `id_bib` (`id_bib`),
+  ADD KEY `data_base` (`data_base`),
+  ADD KEY `status_selection` (`status_selection`);
+
+--
+-- Indexes for table `papers_selection`
+--
+ALTER TABLE `papers_selection`
+  ADD PRIMARY KEY (`id_paper_sel`),
+  ADD KEY `id_user` (`id_user`),
+  ADD KEY `id_status` (`id_status`),
+  ADD KEY `id_paper` (`id_paper`);
+
+--
 -- Indexes for table `project`
 --
 ALTER TABLE `project`
@@ -713,6 +752,22 @@ ALTER TABLE `project_study_types`
   ADD KEY `id_study_type` (`id_study_type`);
 
 --
+-- Indexes for table `question_extraction`
+--
+ALTER TABLE `question_extraction`
+  ADD PRIMARY KEY (`id_de`),
+  ADD KEY `id_project` (`id_project`),
+  ADD KEY `type` (`type`);
+
+--
+-- Indexes for table `question_quality`
+--
+ALTER TABLE `question_quality`
+  ADD PRIMARY KEY (`id_qa`),
+  ADD KEY `id_project` (`id_project`),
+  ADD KEY `question_quality_ibfk_2` (`min_to_app`);
+
+--
 -- Indexes for table `research_question`
 --
 ALTER TABLE `research_question`
@@ -724,6 +779,13 @@ ALTER TABLE `research_question`
 --
 ALTER TABLE `rule`
   ADD PRIMARY KEY (`id_rule`);
+
+--
+-- Indexes for table `score_quality`
+--
+ALTER TABLE `score_quality`
+  ADD PRIMARY KEY (`id_score`),
+  ADD KEY `id_qa` (`id_qa`);
 
 --
 -- Indexes for table `search_strategy`
@@ -747,6 +809,18 @@ ALTER TABLE `search_string_generics`
   ADD KEY `id_project` (`id_project`);
 
 --
+-- Indexes for table `status_extraction`
+--
+ALTER TABLE `status_extraction`
+  ADD PRIMARY KEY (`id_status`);
+
+--
+-- Indexes for table `status_selection`
+--
+ALTER TABLE `status_selection`
+  ADD PRIMARY KEY (`id_status`);
+
+--
 -- Indexes for table `study_type`
 --
 ALTER TABLE `study_type`
@@ -767,11 +841,10 @@ ALTER TABLE `term`
   ADD KEY `id_project` (`id_project`);
 
 --
--- Indexes for table `user`
+-- Indexes for table `types_question`
 --
-ALTER TABLE `user`
-  ADD PRIMARY KEY (`id_user`),
-  ADD UNIQUE KEY `email` (`email`);
+ALTER TABLE `types_question`
+  ADD PRIMARY KEY (`id_type`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -784,10 +857,16 @@ ALTER TABLE `activity_log`
   MODIFY `id_log` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `bib_upload`
+--
+ALTER TABLE `bib_upload`
+  MODIFY `id_bib` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `criteria`
 --
 ALTER TABLE `criteria`
-  MODIFY `id_criteria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_criteria` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `data_base`
@@ -799,31 +878,37 @@ ALTER TABLE `data_base`
 -- AUTO_INCREMENT for table `domain`
 --
 ALTER TABLE `domain`
-  MODIFY `id_domain` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id_domain` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `evaluation_criteria`
+--
+ALTER TABLE `evaluation_criteria`
+  MODIFY `id_evaluation_criteria` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `exclusion_rule`
 --
 ALTER TABLE `exclusion_rule`
-  MODIFY `id_exclusion_rule` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_exclusion_rule` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `general_score`
 --
 ALTER TABLE `general_score`
-  MODIFY `id_general_score` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_general_score` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `inclusion_rule`
 --
 ALTER TABLE `inclusion_rule`
-  MODIFY `id_inclusion_rule` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_inclusion_rule` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `keyword`
 --
 ALTER TABLE `keyword`
-  MODIFY `id_keyword` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id_keyword` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `language`
@@ -835,55 +920,85 @@ ALTER TABLE `language`
 -- AUTO_INCREMENT for table `levels`
 --
 ALTER TABLE `levels`
-  MODIFY `id_level` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_level` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `members`
 --
 ALTER TABLE `members`
-  MODIFY `id_members` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_members` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `min_to_app`
 --
 ALTER TABLE `min_to_app`
-  MODIFY `id_min_to_app` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_min_to_app` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `module`
 --
 ALTER TABLE `module`
-  MODIFY `id_module` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_module` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `options_extraction`
+--
+ALTER TABLE `options_extraction`
+  MODIFY `id_option` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `papers`
+--
+ALTER TABLE `papers`
+  MODIFY `id_paper` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `papers_selection`
+--
+ALTER TABLE `papers_selection`
+  MODIFY `id_paper_sel` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `project`
 --
 ALTER TABLE `project`
-  MODIFY `id_project` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_project` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `project_databases`
 --
 ALTER TABLE `project_databases`
-  MODIFY `id_project_database` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id_project_database` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `project_languages`
 --
 ALTER TABLE `project_languages`
-  MODIFY `id_project_lang` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id_project_lang` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `project_study_types`
 --
 ALTER TABLE `project_study_types`
-  MODIFY `id_project_study_types` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_project_study_types` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `question_extraction`
+--
+ALTER TABLE `question_extraction`
+  MODIFY `id_de` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `question_quality`
+--
+ALTER TABLE `question_quality`
+  MODIFY `id_qa` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `research_question`
 --
 ALTER TABLE `research_question`
-  MODIFY `id_research_question` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id_research_question` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `rule`
@@ -892,22 +1007,40 @@ ALTER TABLE `rule`
   MODIFY `id_rule` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
+-- AUTO_INCREMENT for table `score_quality`
+--
+ALTER TABLE `score_quality`
+  MODIFY `id_score` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `search_strategy`
 --
 ALTER TABLE `search_strategy`
-  MODIFY `id_search_strategy` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_search_strategy` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `search_string`
 --
 ALTER TABLE `search_string`
-  MODIFY `id_search_string` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id_search_string` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `search_string_generics`
 --
 ALTER TABLE `search_string_generics`
-  MODIFY `id_search_string_generics` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_search_string_generics` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `status_extraction`
+--
+ALTER TABLE `status_extraction`
+  MODIFY `id_status` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `status_selection`
+--
+ALTER TABLE `status_selection`
+  MODIFY `id_status` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `study_type`
@@ -919,19 +1052,19 @@ ALTER TABLE `study_type`
 -- AUTO_INCREMENT for table `synonym`
 --
 ALTER TABLE `synonym`
-  MODIFY `id_synonym` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id_synonym` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `term`
 --
 ALTER TABLE `term`
-  MODIFY `id_term` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id_term` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `user`
+-- AUTO_INCREMENT for table `types_question`
 --
-ALTER TABLE `user`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+ALTER TABLE `types_question`
+  MODIFY `id_type` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Constraints for dumped tables
@@ -942,7 +1075,14 @@ ALTER TABLE `user`
 --
 ALTER TABLE `activity_log`
   ADD CONSTRAINT `activity_log_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `activity_log_ibfk_2` FOREIGN KEY (`id_module`) REFERENCES `module` (`id_module`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `activity_log_ibfk_2` FOREIGN KEY (`id_module`) REFERENCES `module` (`id_module`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `activity_log_ibfk_3` FOREIGN KEY (`id_project`) REFERENCES `project` (`id_project`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Limitadores para a tabela `bib_upload`
+--
+ALTER TABLE `bib_upload`
+  ADD CONSTRAINT `bib_upload_ibfk_1` FOREIGN KEY (`id_project_database`) REFERENCES `project_databases` (`id_project_database`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Limitadores para a tabela `criteria`
@@ -955,6 +1095,14 @@ ALTER TABLE `criteria`
 --
 ALTER TABLE `domain`
   ADD CONSTRAINT `domain_ibfk_1` FOREIGN KEY (`id_project`) REFERENCES `project` (`id_project`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Limitadores para a tabela `evaluation_criteria`
+--
+ALTER TABLE `evaluation_criteria`
+  ADD CONSTRAINT `evaluation_criteria_ibfk_1` FOREIGN KEY (`id_criteria`) REFERENCES `criteria` (`id_criteria`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `evaluation_criteria_ibfk_2` FOREIGN KEY (`id_paper`) REFERENCES `papers` (`id_paper`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `evaluation_criteria_ibfk_3` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Limitadores para a tabela `exclusion_rule`
@@ -998,6 +1146,28 @@ ALTER TABLE `min_to_app`
   ADD CONSTRAINT `min_to_app_ibfk_2` FOREIGN KEY (`id_general_score`) REFERENCES `general_score` (`id_general_score`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
+-- Limitadores para a tabela `options_extraction`
+--
+ALTER TABLE `options_extraction`
+  ADD CONSTRAINT `options_extraction_ibfk_1` FOREIGN KEY (`id_de`) REFERENCES `question_extraction` (`id_de`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Limitadores para a tabela `papers`
+--
+ALTER TABLE `papers`
+  ADD CONSTRAINT `papers_ibfk_1` FOREIGN KEY (`id_bib`) REFERENCES `bib_upload` (`id_bib`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `papers_ibfk_3` FOREIGN KEY (`data_base`) REFERENCES `data_base` (`id_database`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `papers_ibfk_4` FOREIGN KEY (`status_selection`) REFERENCES `status_selection` (`id_status`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Limitadores para a tabela `papers_selection`
+--
+ALTER TABLE `papers_selection`
+  ADD CONSTRAINT `papers_selection_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `papers_selection_ibfk_2` FOREIGN KEY (`id_status`) REFERENCES `status_selection` (`id_status`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `papers_selection_ibfk_3` FOREIGN KEY (`id_paper`) REFERENCES `papers` (`id_paper`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
 -- Limitadores para a tabela `project`
 --
 ALTER TABLE `project`
@@ -1025,10 +1195,30 @@ ALTER TABLE `project_study_types`
   ADD CONSTRAINT `project_study_types_ibfk_2` FOREIGN KEY (`id_study_type`) REFERENCES `study_type` (`id_study_type`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
+-- Limitadores para a tabela `question_extraction`
+--
+ALTER TABLE `question_extraction`
+  ADD CONSTRAINT `question_extraction_ibfk_1` FOREIGN KEY (`id_project`) REFERENCES `project` (`id_project`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `question_extraction_ibfk_2` FOREIGN KEY (`type`) REFERENCES `types_question` (`id_type`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Limitadores para a tabela `question_quality`
+--
+ALTER TABLE `question_quality`
+  ADD CONSTRAINT `question_quality_ibfk_1` FOREIGN KEY (`id_project`) REFERENCES `project` (`id_project`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `question_quality_ibfk_2` FOREIGN KEY (`min_to_app`) REFERENCES `score_quality` (`id_score`) ON DELETE SET NULL ON UPDATE SET NULL;
+
+--
 -- Limitadores para a tabela `research_question`
 --
 ALTER TABLE `research_question`
   ADD CONSTRAINT `research_question_ibfk_1` FOREIGN KEY (`id_project`) REFERENCES `project` (`id_project`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Limitadores para a tabela `score_quality`
+--
+ALTER TABLE `score_quality`
+  ADD CONSTRAINT `score_quality_ibfk_1` FOREIGN KEY (`id_qa`) REFERENCES `question_quality` (`id_qa`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Limitadores para a tabela `search_strategy`

@@ -393,7 +393,9 @@ $(document).ready(function () {
 				status: status
 			},
 			success: function () {
+				table_conf_paper_selection.row(index).remove().draw();
 				new_status_paper(old_status, status)
+
 			}
 		});
 	});
@@ -402,6 +404,7 @@ $(document).ready(function () {
 });
 
 function new_status_paper(old_status, new_status) {
+	$('#old_status_conf').val(new_status);
 	let old_count = 0;
 	let new_count = 0;
 	switch (old_status) {
