@@ -1123,10 +1123,10 @@ class Project_Model extends CI_Model
 		return $id_users;
 	}
 
-	private function get_researches_name($id_project)
+	private function get_researches_id_name($id_project)
 	{
 		$names = array();
-		$this->db->select('user.name');
+		$this->db->select('user.name,user.id_user');
 		$this->db->from('members');
 		$this->db->join('user', 'user.id_user = members.id_user');
 		$this->db->where('id_project', $id_project);
@@ -1134,7 +1134,7 @@ class Project_Model extends CI_Model
 		$query = $this->db->get();
 
 		foreach ($query->result() as $row) {
-			array_push($names, $row->name);
+			array_push($names, array($row->id_user, $row->name));
 		}
 
 		return $names;
@@ -1195,21 +1195,6 @@ class Project_Model extends CI_Model
 
 		foreach ($query->result() as $row) {
 			array_push($id_papers, $row->id_paper);
-		}
-		return $id_papers;
-	}
-
-	private function get_ids_status_selection_papers($id_paper, $id_user)
-	{
-		$id_papers = array();
-		$this->db->select('id_paper,id_status');
-		$this->db->from('papers_selection');
-		$this->db->where('id_user', $id_user);
-		$this->db->where_in('id_paper', $id_paper);
-		$query = $this->db->get();
-
-		foreach ($query->result() as $row) {
-			array_push($id_papers, array($row->id_paper, $row->id_status));
 		}
 		return $id_papers;
 	}
@@ -1537,8 +1522,58 @@ class Project_Model extends CI_Model
 
 	public function get_conflicts($id_project)
 	{
-		$data['head'] = $this->get_researches_name($id_project);
+		$data['head'] = $this->get_researches_id_name($id_project);
+		$data['papers'] = $this->get_papers_conflicts($id_project);
 		return $data;
+	}
+
+	private function get_papers_conflicts($id_project)
+	{
+		$project_databases = $this->get_ids_pro_database($id_project);
+
+		$id_bibs = array();
+		if (sizeof($project_databases) > 0) {
+			$id_bibs = $this->get_ids_bibs($project_databases);
+		}
+
+		$id_papers = array();
+		if (sizeof($id_bibs) > 0) {
+			$id_papers = $this->get_ids_papers($id_bibs);
+		}
+
+		$data = array();
+		foreach ($id_papers as $id_paper) {
+			$this->db->select('id_user,id_status,id');
+			$this->db->from('papers_selection');
+			$this->db->join('papers', 'papers.id_paper = papers_selection.id_paper');
+			$this->db->where('papers_selection.id_paper', $id_paper);
+			$query = $this->db->get();
+			$paper = array();
+			foreach ($query->result() as $row) {
+				$paper['id'] = $row->id;
+				$paper[$row->id_user] = $row->id_status;
+			}
+			$data[$id_paper] = $paper;
+		}
+
+		$aux = array();
+		foreach ($data as $key => $value) {
+			foreach ($value as $key2 => $value2) {
+				if ($key2 != 'id') {
+					foreach ($value as $key3 => $value3) {
+						if ($key3 != 'id') {
+							if ($value2 != $value3) {
+								$aux[$key] = $value;
+							}
+						}
+					}
+
+				}
+			}
+		}
+
+
+		return $aux;
 	}
 
 }

@@ -184,15 +184,43 @@
 				<?php
 				$size = sizeof($conflicts['head']);
 				foreach ($conflicts['head'] as $mem) { ?>
-					<th><?= $mem ?></th>
+					<th><?= $mem[1] ?></th>
 				<?php } ?>
 				</thead>
 				<tbody>
+				<?php foreach ($conflicts['papers'] as $key => $paper) { ?>
+					<tr>
+						<td><?= $paper['id'] ?></td>
+						<?php foreach ($conflicts['head'] as $mem) {
+								$class = "text-dark";
+								$status = "Unclassified";
+								switch ($paper[$mem[0]]) {
+									case 1:
+										$class = "text-success";
+										$status = "Accepted";
+										break;
+									case 2:
+										$class = "text-danger";
+										$status = "Rejected";
+										break;
+									case 4:
+										$class = "text-warning";
+										$status = "Duplicate";
+										break;
+									case 5:
+										$class = "text-info";
+										$status = "Removed";
+										break;
+								} ?>
+							<td id="<?= $paper['id']; ?>" class="font-weight-bold <?= $class ?>"><?= $status ?></td>
+						<?php } ?>
+					</tr>
+				<?php } ?>
 				</tbody>
 				<tfoot>
 				<th>ID</th>
 				<?php foreach ($conflicts['head'] as $mem) { ?>
-					<th><?= $mem ?></th>
+					<th><?= $mem[1] ?></th>
 				<?php } ?>
 				</tfoot>
 			</table>
