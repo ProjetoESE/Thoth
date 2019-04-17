@@ -51,6 +51,7 @@ class Project_Controller extends CI_Controller
 			$data['project'] = $this->Project_Model->get_project($id);
 			$data['users'] = $this->Project_Model->get_users($id);
 			$data['levels'] = $this->Project_Model->get_levels();
+			$data['members'] = $this->Project_Model->get_all_members($id);
 			load_templates('pages/project/project_add_research', $data);
 		} catch (Exception $e) {
 			$this->session->set_flashdata('error', $e->getMessage());
@@ -791,10 +792,12 @@ class Project_Controller extends CI_Controller
 	private function progress_study_selection($count_project)
 	{
 		$errors = array();
-
-		$unc = ($count_project[3] * 100) / $count_project[6];
-		$progress = 100 - $unc;
-
+		$progress = 0;
+		$unc = 100;
+		if ($count_project[6] > 0) {
+			$unc = ($count_project[3] * 100) / $count_project[6];
+			$progress = 100 - $unc;
+		}
 		if ($progress != 100) {
 			array_push($errors, "There are still " . $unc . "% of the works to be evaluated");
 		}

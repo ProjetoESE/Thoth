@@ -21,6 +21,7 @@ $(document).ready(function () {
 		ordering: false
 	};
 
+	table_members = $('#table_members').DataTable(configDataTables);
 
 	table_conf_paper_selection = $('#table_conf_paper_selection').DataTable({
 		language: lang,

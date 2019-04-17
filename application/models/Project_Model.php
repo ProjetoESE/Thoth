@@ -599,7 +599,6 @@ class Project_Model extends CI_Model
 
 	public function add_member($email, $level, $id_project)
 	{
-
 		$id_level = null;
 		$this->db->select('id_level');
 		$this->db->from('levels');
@@ -609,7 +608,6 @@ class Project_Model extends CI_Model
 		foreach ($query->result() as $row) {
 			$id_level = $row->id_level;
 		}
-
 
 		$id_user = $this->get_id_name_user($email);
 
@@ -621,7 +619,6 @@ class Project_Model extends CI_Model
 
 		$this->db->insert('members', $data);
 		if ($id_level == 1 || $id_level == 3) {
-
 
 			$project_databases = $this->get_ids_pro_database($id_project);
 
@@ -637,14 +634,12 @@ class Project_Model extends CI_Model
 
 			if (sizeof($id_papers) > 0) {
 				$status_selection = array();
-				$status_extraction = array();
-				$status_quality = array();
-
 				foreach ($id_papers as $paper) {
 					$insert = array(
 						'id_paper' => $paper,
 						'id_user' => $id_user[0],
-						'id_status' => 3
+						'id_status' => 3,
+						'note' => ""
 					);
 					array_push($status_selection, $insert);
 
@@ -653,8 +648,6 @@ class Project_Model extends CI_Model
 				$this->db->insert_batch('papers_selection', $status_selection);
 			}
 		}
-
-
 	}
 
 	public function get_levels()
@@ -1291,6 +1284,27 @@ class Project_Model extends CI_Model
 		}
 
 		return $id_users;
+	}
+
+	public function get_all_members($id_project)
+	{
+		$users = array();
+		$this->db->select('*,levels.level as nivel');
+		$this->db->from('members');
+		$this->db->join('user', 'user.id_user = members.id_user');
+		$this->db->join('levels', 'levels.id_level = members.level');
+		$this->db->where('id_project', $id_project);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			$user = new User();
+			$user->set_name($row->name);
+			$user->set_email($row->email);
+			$user->set_level($row->nivel);
+			array_push($users, $user);
+		}
+
+		return $users;
 	}
 
 	private function get_id_bib($id_project_database, $name)
