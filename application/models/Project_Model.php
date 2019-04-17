@@ -296,7 +296,7 @@ class Project_Model extends CI_Model
 			$project->set_score_min($score);
 		}
 
-		$this->db->select('name,email');
+		$this->db->select('name,email,level');
 		$this->db->from('members');
 		$this->db->join('user', 'user.id_user = members.id_user');
 		$this->db->where('id_project', $id);
@@ -305,6 +305,7 @@ class Project_Model extends CI_Model
 		foreach ($query->result() as $row) {
 			$user = new User();
 			$user->set_email($row->email);
+			$user->set_level($row->level);
 			$user->set_name($row->name);
 			$project->set_members($user);
 		}
@@ -458,6 +459,58 @@ class Project_Model extends CI_Model
 				$data['url'] = $row->url;
 			}
 		}
+		$criteria = $this->get_evaluation_criteria($id_paper, $id_project);
+
+		$data['note'] = $this->get_note($id_paper, $id_project);
+
+		$data['inclusion'] = array();
+		$data['exclusion'] = array();
+
+		foreach ($criteria['inclusion'] as $ic) {
+			array_push($data['inclusion'], $ic->get_id());
+		}
+
+		foreach ($criteria['exclusion'] as $ec) {
+			array_push($data['exclusion'], $ec->get_id());
+		}
+
+
+		return $data;
+	}
+
+	public function get_paper_conflict($id_paper, $id_project)
+	{
+		$project_databases = $this->get_ids_pro_database($id_project);
+
+		$id_bibs = array();
+		if (sizeof($project_databases) > 0) {
+			$id_bibs = $this->get_ids_bibs($project_databases);
+		}
+		$data = array();
+		if (sizeof($id_bibs) > 0) {
+			$this->db->select('papers.*, data_base.name');
+			$this->db->from('papers');
+			$this->db->join('data_base', 'papers.data_base = data_base.id_database');
+			$this->db->where('id', $id_paper);
+			$this->db->where_in('id_bib', $id_bibs);
+			$query = $this->db->get();
+
+			foreach ($query->result() as $row) {
+				$data['title'] = $row->title;
+				$data['author'] = $row->author;
+				$data['year'] = $row->year;
+				$data['abstract'] = $row->abstract;
+				$data['keywords'] = $row->keywords;
+				$data['doi'] = $row->doi;
+				$data['url'] = $row->url;
+				$data['database'] = $row->name;
+				$data['status'] = $row->status_selection;
+				$data['notes'] = $this->get_info($row->id_paper);
+			}
+
+
+		}
+
 		return $data;
 	}
 
@@ -546,7 +599,6 @@ class Project_Model extends CI_Model
 
 	public function add_member($email, $level, $id_project)
 	{
-
 		$id_level = null;
 		$this->db->select('id_level');
 		$this->db->from('levels');
@@ -557,7 +609,6 @@ class Project_Model extends CI_Model
 			$id_level = $row->id_level;
 		}
 
-
 		$id_user = $this->get_id_name_user($email);
 
 		$data = array(
@@ -567,38 +618,36 @@ class Project_Model extends CI_Model
 		);
 
 		$this->db->insert('members', $data);
+		if ($id_level == 1 || $id_level == 3) {
 
-		$project_databases = $this->get_ids_pro_database($id_project);
+			$project_databases = $this->get_ids_pro_database($id_project);
 
-		$id_bibs = array();
-		if (sizeof($project_databases) > 0) {
-			$id_bibs = $this->get_ids_bibs($project_databases);
-		}
-
-		$id_papers = array();
-		if (sizeof($id_bibs) > 0) {
-			$id_papers = $this->get_ids_papers($id_bibs);
-		}
-
-		if (sizeof($id_papers) > 0) {
-			$status_selection = array();
-			$status_extraction = array();
-			$status_quality = array();
-
-			foreach ($id_papers as $paper) {
-				$insert = array(
-					'id_paper' => $paper,
-					'id_user' => $id_user[0],
-					'id_status' => 3
-				);
-				array_push($status_selection, $insert);
-
+			$id_bibs = array();
+			if (sizeof($project_databases) > 0) {
+				$id_bibs = $this->get_ids_bibs($project_databases);
 			}
 
-			$this->db->insert_batch('papers_selection', $status_selection);
+			$id_papers = array();
+			if (sizeof($id_bibs) > 0) {
+				$id_papers = $this->get_ids_papers($id_bibs);
+			}
+
+			if (sizeof($id_papers) > 0) {
+				$status_selection = array();
+				foreach ($id_papers as $paper) {
+					$insert = array(
+						'id_paper' => $paper,
+						'id_user' => $id_user[0],
+						'id_status' => 3,
+						'note' => ""
+					);
+					array_push($status_selection, $insert);
+
+				}
+
+				$this->db->insert_batch('papers_selection', $status_selection);
+			}
 		}
-
-
 	}
 
 	public function get_levels()
@@ -610,6 +659,19 @@ class Project_Model extends CI_Model
 
 		foreach ($query->result() as $row) {
 			array_push($levels, $row->level);
+		}
+		return $levels;
+	}
+
+	public function get_status()
+	{
+		$levels = array();
+		$this->db->select('*');
+		$this->db->from('status_selection');
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			array_push($levels, array($row->id_status, $row->description));
 		}
 		return $levels;
 	}
@@ -632,6 +694,7 @@ class Project_Model extends CI_Model
 		$this->db->from('activity_log');
 		$this->db->join('user', 'user.id_user = activity_log.id_user');
 		$this->db->where('activity_log.id_project', $id_project);
+		$this->db->order_by('activity_log.time DESC');
 		$query = $this->db->get();
 
 		foreach ($query->result() as $row) {
@@ -643,7 +706,7 @@ class Project_Model extends CI_Model
 			array_push($data, $data2);
 		}
 
-		return array_reverse($data);
+		return $data;
 	}
 
 	public function get_types()
@@ -826,7 +889,7 @@ class Project_Model extends CI_Model
 
 		$this->db->insert_batch('papers', $insert_papers);
 
-		$members = $this->get_researchs($id_project);
+		$members = $this->get_researches($id_project);
 		$id_papers = $this->get_ids_papers($id_bib);
 
 		$status_selection = array();
@@ -838,7 +901,8 @@ class Project_Model extends CI_Model
 				$insert = array(
 					'id_paper' => $paper,
 					'id_user' => $mem,
-					'id_status' => 3
+					'id_status' => 3,
+					'note' => ""
 				);
 				array_push($status_selection, $insert);
 			}
@@ -957,6 +1021,85 @@ class Project_Model extends CI_Model
 		return $cont;
 	}
 
+	public function count_papers_reviewer($project)
+	{
+		$project_databases = $this->get_ids_pro_database($project->get_id());
+
+		$id_bibs = array();
+		if (sizeof($project_databases) > 0) {
+			$id_bibs = $this->get_ids_bibs($project_databases);
+		}
+
+		$id_papers = array();
+		if (sizeof($id_bibs) > 0) {
+			$id_papers = $this->get_ids_papers($id_bibs);
+		}
+		$data = array();
+		if (sizeof($id_papers) > 0) {
+			foreach ($project->get_members() as $mem) {
+				$level = $this->get_level($mem->get_email(), $project->get_id());
+				if ($level == 1 || $level == 3) {
+					$id_user = $this->get_id_name_user($mem->get_email());
+					$total = 0;
+					$cont[1] = 0;
+					$cont[2] = 0;
+					$cont[3] = 0;
+					$cont[4] = 0;
+					$cont[5] = 0;
+					$this->db->select('id_status, COUNT(*) as count');
+					$this->db->from('papers_selection');
+					$this->db->group_by('id_status');
+					$this->db->where('id_user', $id_user[0]);
+					$this->db->where_in('id_paper', $id_papers);
+					$query = $this->db->get();
+
+					foreach ($query->result() as $row) {
+						$cont[$row->id_status] = $row->count;
+						$total += $row->count;
+					}
+					$cont[6] = $total;
+					$data[$mem->get_email()] = $cont;
+				}
+			}
+		}
+
+
+		return $data;
+	}
+
+	public function count_papers_project($id)
+	{
+
+		$project_databases = $this->get_ids_pro_database($id);
+
+		$id_bibs = array();
+		if (sizeof($project_databases) > 0) {
+			$id_bibs = $this->get_ids_bibs($project_databases);
+		}
+		$total = 0;
+		$cont[1] = 0;
+		$cont[2] = 0;
+		$cont[3] = 0;
+		$cont[4] = 0;
+		$cont[5] = 0;
+		if (sizeof($id_bibs) > 0) {
+			$id_papers = $this->get_ids_papers($id_bibs);
+			$this->db->select('status_selection, COUNT(*) as count');
+			$this->db->from('papers');
+			$this->db->group_by('status_selection');
+			$this->db->where_in('id_paper', $id_papers);
+			$query = $this->db->get();
+
+			foreach ($query->result() as $row) {
+				$cont[$row->status_selection] = $row->count;
+				$total += $row->count;
+			}
+		}
+		$cont[6] = $total;
+
+		return $cont;
+	}
+
 	public function edit_status_selection($id, $status, $id_project)
 	{
 		$project_databases = $this->get_ids_pro_database($id_project);
@@ -976,6 +1119,62 @@ class Project_Model extends CI_Model
 
 		$this->db->where('id_paper_sel', $id_sel);
 		$this->db->update('papers_selection', $data);
+
+		$this->db->select('id_status');
+		$this->db->from('papers_selection');
+		$this->db->where('id_paper', $id_paper);
+		$query = $this->db->get();
+		$paper = array();
+		foreach ($query->result() as $row) {
+			array_push($paper, $row->id_status);
+		}
+
+		$correct = true;
+		for ($i = 0; $i < (sizeof($paper) - 1); $i++) {
+			if ($paper[$i] != $paper[$i + 1]) {
+				$correct = false;
+			}
+		}
+
+		if ($correct) {
+			$data = array(
+				'status_selection' => $status
+			);
+
+			$this->db->where('id_paper', $id_paper);
+			$this->db->update('papers', $data);
+		} else {
+			$data = array(
+				'status_selection' => 3,
+				'check_status_selection' => false,
+			);
+
+			$this->db->where('id_paper', $id_paper);
+			$this->db->update('papers', $data);
+		}
+
+	}
+
+	public function edit_status_paper($id, $status, $id_project)
+	{
+		$project_databases = $this->get_ids_pro_database($id_project);
+
+		$id_bibs = array();
+		if (sizeof($project_databases) > 0) {
+			$id_bibs = $this->get_ids_bibs($project_databases);
+		}
+
+		$id_paper = $this->get_id_paper($id, $id_bibs);
+
+
+		$data = array(
+			'status_selection' => $status,
+			'check_status_selection' => true,
+		);
+
+		$this->db->where('id_paper', $id_paper);
+		$this->db->update('papers', $data);
+
 
 	}
 
@@ -1039,7 +1238,7 @@ class Project_Model extends CI_Model
 		return $id_project_database;
 	}
 
-	private function get_researchs($id_project)
+	private function get_researches($id_project)
 	{
 		$id_users = array();
 		$this->db->select('id_user');
@@ -1055,6 +1254,23 @@ class Project_Model extends CI_Model
 		return $id_users;
 	}
 
+	private function get_researches_id_name($id_project)
+	{
+		$names = array();
+		$this->db->select('user.name,user.id_user');
+		$this->db->from('members');
+		$this->db->join('user', 'user.id_user = members.id_user');
+		$this->db->where('id_project', $id_project);
+		$this->db->where_in('level', array(1, 3));
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			array_push($names, array($row->id_user, $row->name));
+		}
+
+		return $names;
+	}
+
 	private function get_members($id_project)
 	{
 		$id_users = array();
@@ -1068,6 +1284,27 @@ class Project_Model extends CI_Model
 		}
 
 		return $id_users;
+	}
+
+	public function get_all_members($id_project)
+	{
+		$users = array();
+		$this->db->select('*,levels.level as nivel');
+		$this->db->from('members');
+		$this->db->join('user', 'user.id_user = members.id_user');
+		$this->db->join('levels', 'levels.id_level = members.level');
+		$this->db->where('id_project', $id_project);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			$user = new User();
+			$user->set_name($row->name);
+			$user->set_email($row->email);
+			$user->set_level($row->nivel);
+			array_push($users, $user);
+		}
+
+		return $users;
 	}
 
 	private function get_id_bib($id_project_database, $name)
@@ -1144,5 +1381,369 @@ class Project_Model extends CI_Model
 		return $id;
 
 	}
+
+	public function selected_criteria($num_paper, $id, $id_project)
+	{
+		$id_user = $this->get_id_name_user($this->session->email);
+		$id_criteria = $this->get_id_criteria($id, $id_project);
+		$project_databases = $this->get_ids_pro_database($id_project);
+
+		$id_bibs = array();
+		if (sizeof($project_databases) > 0) {
+			$id_bibs = $this->get_ids_bibs($project_databases);
+		}
+
+		$id_paper = null;
+		if (sizeof($id_bibs) > 0) {
+			$id_paper = $this->get_id_paper($num_paper, $id_bibs);
+		}
+
+		$data = array(
+			'id_paper' => $id_paper,
+			'id_criteria' => $id_criteria,
+			'id_user' => $id_user[0]
+		);
+
+		$this->db->insert('evaluation_criteria', $data);
+
+	}
+
+	public function deselected_criteria($num_paper, $id, $id_project)
+	{
+		$id_user = $this->get_id_name_user($this->session->email);
+		$id_criteria = $this->get_id_criteria($id, $id_project);
+		$project_databases = $this->get_ids_pro_database($id_project);
+
+		$id_bibs = array();
+		if (sizeof($project_databases) > 0) {
+			$id_bibs = $this->get_ids_bibs($project_databases);
+		}
+
+		$id_paper = null;
+		if (sizeof($id_bibs) > 0) {
+			$id_paper = $this->get_id_paper($num_paper, $id_bibs);
+		}
+
+		$id_ev = $this->get_id_evaluation_criteria($id_paper, $id_criteria, $id_user[0]);
+
+
+		$this->db->where('id_evaluation_criteria', $id_ev);
+		$this->db->delete('evaluation_criteria');
+	}
+
+	private function get_id_criteria($id, $id_project)
+	{
+		$id_criteria = null;
+		$this->db->select('id_criteria');
+		$this->db->from('criteria');
+		$this->db->where('id_project', $id_project);
+		$this->db->where('id', $id);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			$id_criteria = $row->id_criteria;
+		}
+
+		return $id_criteria;
+	}
+
+	private function get_id_evaluation_criteria($id_paper, $id_criteria, $id_user)
+	{
+		$id_ev = null;
+		$this->db->select('id_evaluation_criteria');
+		$this->db->from('evaluation_criteria');
+		$this->db->where('id_paper', $id_paper);
+		$this->db->where('id_criteria', $id_criteria);
+		$this->db->where('id_user', $id_user);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			$id_ev = $row->id_evaluation_criteria;
+		}
+
+		return $id_ev;
+	}
+
+	public function get_criteria($id_project)
+	{
+		$inclusion = array();
+		$exclusion = array();
+		$this->db->select('*');
+		$this->db->from('criteria');
+		$this->db->where('id_project', $id_project);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			if ($row->type == "Inclusion") {
+				$ic = new Inclusion_Criteria();
+				$ic->set_description($row->description);
+				$ic->set_id($row->id);
+				if ($row->pre_selected == 0) {
+					$ic->set_pre_selected(false);
+				} else {
+					$ic->set_pre_selected(true);
+				}
+				array_push($inclusion, $ic);
+			} else {
+				$ec = new Exclusion_Criteria();
+				$ec->set_description($row->description);
+				$ec->set_id($row->id);
+				if ($row->pre_selected == 0) {
+					$ec->set_pre_selected(false);
+				} else {
+					$ec->set_pre_selected(true);
+				}
+				array_push($exclusion, $ec);
+			}
+		}
+
+		$data['inclusion'] = $inclusion;
+		$data['exclusion'] = $exclusion;
+
+		return $data;
+	}
+
+	public function get_evaluation_criteria($num_paper, $id_project)
+	{
+
+		$id_user = $this->get_id_name_user($this->session->email);
+		$project_databases = $this->get_ids_pro_database($id_project);
+
+		$id_bibs = array();
+		if (sizeof($project_databases) > 0) {
+			$id_bibs = $this->get_ids_bibs($project_databases);
+		}
+
+		$id_paper = null;
+		if (sizeof($id_bibs) > 0) {
+			$id_paper = $this->get_id_paper($num_paper, $id_bibs);
+		}
+
+		$ids_criteria = array();
+		if (!is_null($id_paper)) {
+			$ids_criteria = $this->get_ids_criteria_evaluation($id_paper, $id_user[0]);
+		}
+
+		$inclusion = array();
+		$exclusion = array();
+		if (sizeof($ids_criteria) > 0) {
+			$this->db->select('*');
+			$this->db->from('criteria');
+			$this->db->where_in('id_criteria', $ids_criteria);
+			$query = $this->db->get();
+
+			foreach ($query->result() as $row) {
+				if ($row->type == "Inclusion") {
+					$ic = new Inclusion_Criteria();
+					$ic->set_description($row->description);
+					$ic->set_id($row->id);
+					if ($row->pre_selected == 0) {
+						$ic->set_pre_selected(false);
+					} else {
+						$ic->set_pre_selected(true);
+					}
+					array_push($inclusion, $ic);
+				} else {
+					$ec = new Exclusion_Criteria();
+					$ec->set_description($row->description);
+					$ec->set_id($row->id);
+					if ($row->pre_selected == 0) {
+						$ec->set_pre_selected(false);
+					} else {
+						$ec->set_pre_selected(true);
+					}
+					array_push($exclusion, $ec);
+				}
+			}
+		}
+
+		$data['inclusion'] = $inclusion;
+		$data['exclusion'] = $exclusion;
+
+		return $data;
+	}
+
+	private function get_ids_criteria_evaluation($id_paper, $id_user)
+	{
+		$ids_criteria = array();
+		$this->db->select('id_criteria');
+		$this->db->from('evaluation_criteria');
+		$this->db->where('id_paper', $id_paper);
+		$this->db->where('id_user', $id_user);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			array_push($ids_criteria, $row->id_criteria);
+		}
+
+		return $ids_criteria;
+	}
+
+	public function get_inclusion_rule($id_project)
+	{
+		$rule = null;
+		$this->db->select('description');
+		$this->db->from('inclusion_rule');
+		$this->db->join('rule', 'rule.id_rule = inclusion_rule.id_rule');
+		$this->db->where('id_project', $id_project);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			$rule = $row->description;
+		}
+		return $rule;
+	}
+
+	public function get_exclusion_rule($id_project)
+	{
+		$rule = null;
+		$this->db->select('description');
+		$this->db->from('exclusion_rule');
+		$this->db->join('rule', 'rule.id_rule = exclusion_rule.id_rule');
+		$this->db->where('id_project', $id_project);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			$rule = $row->description;
+		}
+		return $rule;
+	}
+
+	public function update_note($num_paper, $note, $id_project)
+	{
+
+		$id_user = $this->get_id_name_user($this->session->email);
+		$project_databases = $this->get_ids_pro_database($id_project);
+
+		$id_bibs = array();
+		if (sizeof($project_databases) > 0) {
+			$id_bibs = $this->get_ids_bibs($project_databases);
+		}
+
+		$id_paper = null;
+		if (sizeof($id_bibs) > 0) {
+			$id_paper = $this->get_id_paper($num_paper, $id_bibs);
+		}
+
+		$paper_sel = null;
+		if (!is_null($id_paper)) {
+			$paper_sel = $this->get_id_paper_sel($id_paper, $id_user[0]);
+		}
+
+		$data = array(
+			'note' => $note
+		);
+
+		$this->db->where('id_paper_sel', $paper_sel);
+		$this->db->update('papers_selection', $data);
+	}
+
+	public function get_note($num_paper, $id_project)
+	{
+		$id_user = $this->get_id_name_user($this->session->email);
+		$project_databases = $this->get_ids_pro_database($id_project);
+
+		$id_bibs = array();
+		if (sizeof($project_databases) > 0) {
+			$id_bibs = $this->get_ids_bibs($project_databases);
+		}
+
+		$id_paper = null;
+		if (sizeof($id_bibs) > 0) {
+			$id_paper = $this->get_id_paper($num_paper, $id_bibs);
+		}
+
+		$paper_sel = null;
+		if (!is_null($id_paper)) {
+			$paper_sel = $this->get_id_paper_sel($id_paper, $id_user[0]);
+		}
+
+		$note = "";
+		if (!is_null($paper_sel)) {
+			$this->db->select('note');
+			$this->db->from('papers_selection');
+			$this->db->where('id_paper_sel', $paper_sel);
+			$query = $this->db->get();
+
+			foreach ($query->result() as $row) {
+				$note = $row->note;
+			}
+		}
+		return $note;
+	}
+
+	public function get_info($id_paper)
+	{
+		$note = array();
+		$this->db->select('note,name,id_status,papers_selection.id_user');
+		$this->db->from('papers_selection');
+		$this->db->join('user', 'user.id_user = papers_selection.id_user');
+		$this->db->where('id_paper', $id_paper);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			array_push($note, array($row->note, $row->name, $row->id_status, $row->id_user));
+		}
+
+		return $note;
+	}
+
+	public function get_conflicts($id_project)
+	{
+		$data['head'] = $this->get_researches_id_name($id_project);
+		$data['papers'] = $this->get_papers_conflicts($id_project);
+		return $data;
+	}
+
+	private function get_papers_conflicts($id_project)
+	{
+		$project_databases = $this->get_ids_pro_database($id_project);
+
+		$id_bibs = array();
+		if (sizeof($project_databases) > 0) {
+			$id_bibs = $this->get_ids_bibs($project_databases);
+		}
+
+		$id_papers = array();
+		if (sizeof($id_bibs) > 0) {
+			$id_papers = $this->get_ids_papers($id_bibs);
+		}
+
+		$data = array();
+		foreach ($id_papers as $id_paper) {
+			$this->db->select('id_user,id_status,id');
+			$this->db->from('papers_selection');
+			$this->db->join('papers', 'papers.id_paper = papers_selection.id_paper');
+			$this->db->where('papers_selection.id_paper', $id_paper);
+			$this->db->where('papers.check_status_selection', 0);
+			$query = $this->db->get();
+			$paper = array();
+			foreach ($query->result() as $row) {
+				$paper['id'] = $row->id;
+				$paper[$row->id_user] = $row->id_status;
+			}
+			$data[$id_paper] = $paper;
+		}
+
+		$aux = array();
+		foreach ($data as $key => $value) {
+			foreach ($value as $key2 => $value2) {
+				if ($key2 != 'id') {
+					foreach ($value as $key3 => $value3) {
+						if ($key3 != 'id') {
+							if ($value2 != $value3) {
+								$aux[$key] = $value;
+							}
+						}
+					}
+
+				}
+			}
+		}
+
+
+		return $aux;
+	}
+
 }
 

@@ -31,6 +31,13 @@ function add_database() {
 			id_project: id_project,
 			database: databases
 		},
+		error: function(){
+			Swal({
+				type: 'error',
+				title: 'Error',
+				html: '<label class="font-weight-bold text-danger">Error</label>'
+			});
+		},
 		success: function (link) {
 			table_databases.row.add([
 				databases,
@@ -78,6 +85,13 @@ function delete_database(value) {
 				data: {
 					id_project: id_project,
 					database: row.data()[0]
+				},
+				error: function(){
+					Swal({
+						type: 'error',
+						title: 'Error',
+						html: '<label class="font-weight-bold text-danger">Error</label>'
+					});
 				},
 				success: function () {
 					let elem = document.getElementById('div_string_' + row.data()[0]);
@@ -141,6 +155,13 @@ function new_database() {
 			id_project: id_project,
 			database: database,
 			link: link
+		},
+		error: function(){
+			Swal({
+				type: 'error',
+				title: 'Error',
+				html: '<label class="font-weight-bold text-danger">Error</label>'
+			});
 		},
 		success: function () {
 			table_databases.row.add([

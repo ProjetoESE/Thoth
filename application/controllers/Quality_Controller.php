@@ -22,7 +22,7 @@ class Quality_Controller extends CI_Controller
 			$qa = $this->input->post('qa');
 			$weight = $this->input->post('weight');
 			$id_project = $this->input->post('id_project');
-			$this->validate_level($id_project, array(1, 3));
+			$this->validate_level(array(1, 3, 4));
 			$this->load->model("Quality_Model");
 
 			$this->Quality_Model->add_qa($id, $qa, $weight, $id_project);
@@ -49,7 +49,7 @@ class Quality_Controller extends CI_Controller
 			$this->logged_in();
 			$id = $this->input->post('id');
 			$id_project = $this->input->post('id_project');
-			$this->validate_level($id_project, array(1, 3));
+			$this->validate_level(array(1, 3, 4));
 			$this->load->model("Quality_Model");
 
 			$this->Quality_Model->delete_qa($id, $id_project);
@@ -77,7 +77,7 @@ class Quality_Controller extends CI_Controller
 			$score = $this->input->post('score');
 			$description = $this->input->post('description');
 			$id_project = $this->input->post('id_project');
-			$this->validate_level($id_project, array(1, 3));
+			$this->validate_level(array(1, 3, 4));
 			$id_qa = $this->input->post('id_qa');
 			$this->load->model("Quality_Model");
 
@@ -105,7 +105,7 @@ class Quality_Controller extends CI_Controller
 			$score = $this->input->post('min');
 			$id = $this->input->post('qa');
 			$id_project = $this->input->post('id_project');
-			$this->validate_level($id_project, array(1, 3));
+			$this->validate_level(array(1, 3, 4));
 			$this->load->model("Quality_Model");
 
 			$this->Quality_Model->edit_min_score_qa($score, $id, $id_project);
@@ -132,7 +132,7 @@ class Quality_Controller extends CI_Controller
 			$score = $this->input->post('score');
 			$id = $this->input->post('id_qa');
 			$id_project = $this->input->post('id_project');
-			$this->validate_level($id_project, array(1, 3));
+			$this->validate_level(array(1, 3, 4));
 			$this->load->model("Quality_Model");
 
 			$this->Quality_Model->delete_score_quality($score, $id, $id_project);
@@ -159,7 +159,7 @@ class Quality_Controller extends CI_Controller
 			$qa = $this->input->post('qa');
 			$weight = $this->input->post('weight');
 			$id_project = $this->input->post('id_project');
-			$this->validate_level($id_project, array(1, 3));
+			$this->validate_level(array(1, 3, 4));
 			$old_id = $this->input->post('old_id');
 			$this->load->model("Quality_Model");
 
@@ -189,7 +189,7 @@ class Quality_Controller extends CI_Controller
 			$score = $this->input->post('score');
 			$description = $this->input->post('description');
 			$id_project = $this->input->post('id_project');
-			$this->validate_level($id_project, array(1, 3));
+			$this->validate_level(array(1, 3, 4));
 			$id_qa = $this->input->post('id_qa');
 			$this->load->model("Quality_Model");
 
@@ -216,7 +216,7 @@ class Quality_Controller extends CI_Controller
 			$this->logged_in();
 			$start_interval = $this->input->post('start_interval');
 			$id_project = $this->input->post('id_project');
-			$this->validate_level($id_project, array(1, 3));
+			$this->validate_level(array(1, 3, 4));
 			$end_interval = $this->input->post('end_interval');
 			$general_score_desc = $this->input->post('general_score_desc');
 			$this->load->model("Quality_Model");
@@ -243,7 +243,7 @@ class Quality_Controller extends CI_Controller
 			$this->logged_in();
 			$description = $this->input->post('description');
 			$id_project = $this->input->post('id_project');
-			$this->validate_level($id_project, array(1, 3));
+			$this->validate_level(array(1, 3, 4));
 			$this->load->model("Quality_Model");
 
 			$this->Quality_Model->delete_general_quality_score($description, $id_project);
@@ -268,7 +268,7 @@ class Quality_Controller extends CI_Controller
 			$this->logged_in();
 			$description = $this->input->post('desc');
 			$id_project = $this->input->post('id_project');
-			$this->validate_level($id_project, array(1, 3));
+			$this->validate_level(array(1, 3, 4));
 			$old_desc = $this->input->post('old_desc');
 			$start = $this->input->post('start');
 			$end = $this->input->post('end');
@@ -296,7 +296,7 @@ class Quality_Controller extends CI_Controller
 			$this->logged_in();
 			$score = $this->input->post('score');
 			$id_project = $this->input->post('id_project');
-			$this->validate_level($id_project, array(1, 3));
+			$this->validate_level(array(1, 3, 4));
 			$this->load->model("Quality_Model");
 
 			$this->Quality_Model->edit_min_score($score, $id_project);
@@ -321,10 +321,9 @@ class Quality_Controller extends CI_Controller
 		}
 	}
 
-	private function validate_level($project_id, $levels)
+	private function validate_level($levels)
 	{
-		$this->load->model("Project_Model");
-		$res_level = $this->Project_Model->get_level($this->session->email, $project_id);
+		$res_level = $this->session->level;
 
 		foreach ($levels as $l) {
 			if ($l == $res_level) {

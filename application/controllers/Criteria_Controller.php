@@ -27,7 +27,7 @@ class Criteria_Controller extends CI_Controller
 			$this->logged_in();
 			$rule = $this->input->post('rule');
 			$id_project = $this->input->post('id_project');
-			$this->validate_level($id_project, array(1, 3));
+			$this->validate_level(array(1, 3, 4));
 			$this->load->model("Criteria_Model");
 
 			$this->Criteria_Model->edit_exclusion_rule($rule, $id_project);
@@ -52,7 +52,7 @@ class Criteria_Controller extends CI_Controller
 			$this->logged_in();
 			$rule = $this->input->post('rule');
 			$id_project = $this->input->post('id_project');
-			$this->validate_level($id_project, array(1, 3));
+			$this->validate_level(array(1, 3, 4));
 			$this->load->model("Criteria_Model");
 
 			$this->Criteria_Model->edit_inclusion_rule($rule, $id_project);
@@ -79,7 +79,7 @@ class Criteria_Controller extends CI_Controller
 			$type = $this->input->post('type');
 			$description = $this->input->post('description');
 			$id_project = $this->input->post('id_project');
-			$this->validate_level($id_project, array(1, 3));
+			$this->validate_level(array(1, 3, 4));
 			$this->load->model("Criteria_Model");
 
 			$this->Criteria_Model->add_criteria($id, $description, false, $id_project, $type);
@@ -105,7 +105,7 @@ class Criteria_Controller extends CI_Controller
 			$id = $this->input->post('id');
 			$pre_selected = $this->input->post('pre_selected');
 			$id_project = $this->input->post('id_project');
-			$this->validate_level($id_project, array(1, 3));
+			$this->validate_level(array(1, 3, 4));
 			$this->load->model("Criteria_Model");
 
 			$this->Criteria_Model->selected_pre_select($id, $pre_selected, $id_project);
@@ -134,7 +134,7 @@ class Criteria_Controller extends CI_Controller
 			$this->logged_in();
 			$id = $this->input->post('id');
 			$id_project = $this->input->post('id_project');
-			$this->validate_level($id_project, array(1, 3));
+			$this->validate_level(array(1, 3, 4));
 			$this->load->model("Criteria_Model");
 
 			$this->Criteria_Model->delete_criteria($id, $id_project);
@@ -161,7 +161,7 @@ class Criteria_Controller extends CI_Controller
 			$new_id = $this->input->post('new_id');
 			$description = $this->input->post('description');
 			$id_project = $this->input->post('id_project');
-			$this->validate_level($id_project, array(1, 3));
+			$this->validate_level(array(1, 3, 4));
 			$new_type = $this->input->post('new_type');
 			$pre_selected = $this->input->post('pre_selected');
 
@@ -182,10 +182,9 @@ class Criteria_Controller extends CI_Controller
 		}
 	}
 
-	private function validate_level($project_id, $levels)
+	private function validate_level($levels)
 	{
-		$this->load->model("Project_Model");
-		$res_level = $this->Project_Model->get_level($this->session->email, $project_id);
+		$res_level = $this->session->level;
 
 		foreach ($levels as $l) {
 			if ($l == $res_level) {

@@ -21,6 +21,21 @@ $(document).ready(function () {
 		ordering: false
 	};
 
+	table_members = $('#table_members').DataTable(configDataTables);
+
+	table_conf_paper_selection = $('#table_conf_paper_selection').DataTable({
+		language: lang,
+		responsive: true,
+		order: [[0, "asc"]],
+		paginate: true,
+		info: true,
+		searching: true,
+		ordering: true,
+		select: {
+			style: 'single'
+		}
+	});
+
 	table_domains = $('#table_domains').DataTable(configDataTables);
 	table_languages = $('#table_languages').DataTable(configDataTables);
 	table_study_type = $('#table_study_type').DataTable(configDataTables);
@@ -60,7 +75,7 @@ $(document).ready(function () {
 
 	});
 
-	 table_papers = $('#table_papers').DataTable({
+	table_papers = $('#table_papers').DataTable({
 		initComplete: function () {
 			for (let i = 3; i < 6; i++) {
 				this.api().columns(i).every(function () {
@@ -94,7 +109,7 @@ $(document).ready(function () {
 		]
 	});
 
-	$('#table_inclusion_criteria').DataTable({
+	table_inclusion_criteria = $('#table_inclusion_criteria').DataTable({
 		columnDefs: [{
 			orderable: false,
 			className: 'select-checkbox',
@@ -109,7 +124,7 @@ $(document).ready(function () {
 		searching: false
 	});
 
-	$('#table_exclusion_criteria').DataTable({
+	table_exclusion_criteria = $('#table_exclusion_criteria').DataTable({
 		columnDefs: [{
 			orderable: false,
 			className: 'select-checkbox',

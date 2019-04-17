@@ -13,6 +13,13 @@ function add_term() {
 			id_project: id_project,
 			term: term
 		},
+		error: function(){
+			Swal({
+				type: 'error',
+				title: 'Error',
+				html: '<label class="font-weight-bold text-danger">Error</label>'
+			});
+		},
 		success: function () {
 			table_search_string.row.add([
 				term, '' +
@@ -69,6 +76,13 @@ function edit_term() {
 			id_project: id_project,
 			now: now,
 			old: old
+		},
+		error: function(){
+			Swal({
+				type: 'error',
+				title: 'Error',
+				html: '<label class="font-weight-bold text-danger">Error</label>'
+			});
 		},
 		success: function () {
 			row.remove();
@@ -154,6 +168,13 @@ function delete_term(value) {
 					id_project: id_project,
 					term: row.data()[0]
 				},
+				error: function(){
+					Swal({
+						type: 'error',
+						title: 'Error',
+						html: '<label class="font-weight-bold text-danger">Error</label>'
+					});
+				},
 				success: function () {
 					row.remove();
 					table_search_string.draw();
@@ -189,6 +210,13 @@ function add_synonym() {
 			id_project: id_project,
 			term: term,
 			syn: syn
+		},
+		error: function(){
+			Swal({
+				type: 'error',
+				title: 'Error',
+				html: '<label class="font-weight-bold text-danger">Error</label>'
+			});
 		},
 		success: function () {
 			let table_syn = document.getElementById(id);
@@ -238,6 +266,13 @@ function edit_synonym() {
 			term: term,
 			old: old,
 			now: now
+		},
+		error: function(){
+			Swal({
+				type: 'error',
+				title: 'Error',
+				html: '<label class="font-weight-bold text-danger">Error</label>'
+			});
 		},
 		success: function () {
 			let table_syn = document.getElementById(id);
@@ -326,6 +361,13 @@ function delete_synonym(btn) {
 					term: term,
 					syn: syn
 				},
+				error: function(){
+					Swal({
+						type: 'error',
+						title: 'Error',
+						html: '<label class="font-weight-bold text-danger">Error</label>'
+					});
+				},
 				success: function () {
 					row.parentNode.removeChild(row);
 				}
@@ -349,6 +391,13 @@ function generate_string(database) {
 		data: {
 			id_project: id_project,
 			database: database
+		},
+		error: function(){
+			Swal({
+				type: 'error',
+				title: 'Error',
+				html: '<label class="font-weight-bold text-danger">Error</label>'
+			});
 		},
 		success: function (string) {
 			let id = 'string_' + database;
@@ -382,6 +431,13 @@ function edit_search_strategy() {
 		data: {
 			id_project: id_project,
 			search_strategy: search_strategy
+		},
+		error: function(){
+			Swal({
+				type: 'error',
+				title: 'Error',
+				html: '<label class="font-weight-bold text-danger">Error</label>'
+			});
 		},
 		success: function () {
 			Swal({

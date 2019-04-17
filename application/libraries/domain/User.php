@@ -11,7 +11,7 @@ class User
 	private $name;
 	private $email;
 	private $password;
-	private $status;
+	private $level;
 	private $institution;
 	private $lattes_link;
 
@@ -90,24 +90,24 @@ class User
 
 	/**
 	 * Method to retrieve the user status.
-	 * @return String status
+	 * @return String level
 	 */
-	public function get_status()
+	public function get_level()
 	{
-		return $this->status;
+		return $this->level;
 	}
 
 	/**
 	 * Method to change the user status.
-	 * @param String $status
+	 * @param String $level
 	 * @throws InvalidArgumentException
 	 */
-	public function set_status($status)
+	public function set_level($level)
 	{
-		if (is_null($status) || empty($status)) {
+		if (is_null($level) || empty($level)) {
 			throw  new  InvalidArgumentException("User Status Invalid!");
 		}
-		$this->status = $status;
+		$this->level = $level;
 	}
 
 	/**

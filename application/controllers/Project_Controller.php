@@ -14,14 +14,16 @@ class Project_Controller extends CI_Controller
 			$this->export_doc($id);
 			$this->load->model("Project_Model");
 			$data['project'] = $this->Project_Model->get_project($id);
+			$data['count_project'] = $this->Project_Model->count_papers_project($id);
 			$data['logs'] = $this->Project_Model->get_logs_project($id);
 			$data['progress_planning'] = $this->progress_planning($data['project']);
 			$data['progress_import_studies'] = $this->progress_import_studies($data['project']);
-			$data['progress_study_selection'] = $this->progress_study_selection($data['project']);
+			$data['progress_study_selection'] = $this->progress_study_selection($data['count_project']);
 			$data['progress_quality_assessement'] = $this->progress_quality_assessement($data['project']);
 			$data['progress_data_extraction'] = $this->progress_data_extraction($data['project']);
+			$this->session->set_userdata('level', $this->Project_Model->get_level($this->session->email, $id));
 
-			$this->load_views($id, 'pages/project/project', $data);
+			$this->load_views('pages/project/project', $data);
 
 		} catch (Exception $e) {
 			$this->session->set_flashdata('error', $e->getMessage());
@@ -45,11 +47,11 @@ class Project_Controller extends CI_Controller
 	{
 		try {
 			$this->logged_in();
-			$this->validate_level($id, array(1));
 			$this->load->model("Project_Model");
 			$data['project'] = $this->Project_Model->get_project($id);
 			$data['users'] = $this->Project_Model->get_users($id);
 			$data['levels'] = $this->Project_Model->get_levels();
+			$data['members'] = $this->Project_Model->get_all_members($id);
 			load_templates('pages/project/project_add_research', $data);
 		} catch (Exception $e) {
 			$this->session->set_flashdata('error', $e->getMessage());
@@ -67,9 +69,9 @@ class Project_Controller extends CI_Controller
 			$data['databases'] = $this->Project_Model->get_databases();
 			$data['rules'] = $this->Project_Model->get_rules();
 			$data['question_types'] = $this->Project_Model->get_types();
-			$data['progress_planning'] = $this->progress_planning($data['project']);
+			$this->session->set_userdata('level', $this->Project_Model->get_level($this->session->email, $id));
 
-			$this->load_views($id, 'pages/project/project_planning', $data);
+			$this->load_views('pages/project/project_planning', $data);
 		} catch (Exception $e) {
 			$this->session->set_flashdata('error', $e->getMessage());
 			redirect(base_url());
@@ -82,14 +84,11 @@ class Project_Controller extends CI_Controller
 			$this->load->model("Project_Model");
 			$data['project'] = $this->Project_Model->get_project($id);
 			$data['progress_planning'] = $this->progress_planning($data['project']);
-			$data['progress_import_studies'] = $this->progress_import_studies($data['project']);
-			$data['progress_study_selection'] = $this->progress_study_selection($data['project']);
-			$data['progress_quality_assessement'] = $this->progress_quality_assessement($data['project']);
-			$data['progress_data_extraction'] = $this->progress_data_extraction($data['project']);
 			$data['bib'] = $this->Project_Model->get_bib($data['project']);
 			$data['num_papers'] = $this->Project_Model->get_num_papers($data['project']);
+			$this->session->set_userdata('level', $this->Project_Model->get_level($this->session->email, $id));
 
-			$this->load_views($id, 'pages/project/project_conducting', $data);
+			$this->load_views('pages/project/project_conducting', $data);
 
 		} catch (Exception $e) {
 			$this->session->set_flashdata('error', $e->getMessage());
@@ -102,13 +101,15 @@ class Project_Controller extends CI_Controller
 		try {
 			$this->load->model("Project_Model");
 			$data['project'] = $this->Project_Model->get_project($id);
+			$data['count_project'] = $this->Project_Model->count_papers_project($id);
 			$data['progress_planning'] = $this->progress_planning($data['project']);
 			$data['progress_import_studies'] = $this->progress_import_studies($data['project']);
-			$data['progress_study_selection'] = $this->progress_study_selection($data['project']);
+			$data['progress_study_selection'] = $this->progress_study_selection($data['count_project']);
 			$data['progress_quality_assessement'] = $this->progress_quality_assessement($data['project']);
 			$data['progress_data_extraction'] = $this->progress_data_extraction($data['project']);
+			$this->session->set_userdata('level', $this->Project_Model->get_level($this->session->email, $id));
 
-			$this->load_views($id, 'pages/project/project_reporting', $data);
+			$this->load_views('pages/project/project_reporting', $data);
 
 		} catch (Exception $e) {
 			$this->session->set_flashdata('error', $e->getMessage());
@@ -123,12 +124,33 @@ class Project_Controller extends CI_Controller
 			$data['project'] = $this->Project_Model->get_project($id);
 			$data['progress_planning'] = $this->progress_planning($data['project']);
 			$data['progress_import_studies'] = $this->progress_import_studies($data['project']);
-			$data['progress_study_selection'] = $this->progress_study_selection($data['project']);
-			$data['progress_quality_assessement'] = $this->progress_quality_assessement($data['project']);
 			$data['progress_data_extraction'] = $this->progress_data_extraction($data['project']);
 			$data['count_papers'] = $this->Project_Model->count_papers($id);
+			$this->session->set_userdata('level', $this->Project_Model->get_level($this->session->email, $id));
 
-			$this->load_views($id, 'pages/project/project_study_selection', $data);
+			$this->load_views('pages/project/project_study_selection', $data);
+
+		} catch (Exception $e) {
+			$this->session->set_flashdata('error', $e->getMessage());
+			redirect(base_url());
+		}
+	}
+
+	public function review_study_selection($id)
+	{
+		try {
+			$this->load->model("Project_Model");
+			$data['project'] = $this->Project_Model->get_project($id);
+			$data['count_project'] = $this->Project_Model->count_papers_project($id);
+			$data['progress_planning'] = $this->progress_planning($data['project']);
+			$data['progress_import_studies'] = $this->progress_import_studies($data['project']);
+			$data['count_papers'] = $this->Project_Model->count_papers_reviewer($data['project']);
+			$this->session->set_userdata('level', $this->Project_Model->get_level($this->session->email, $id));
+			$data['conflicts'] = $this->Project_Model->get_conflicts($id);
+			$data['status'] = $this->Project_Model->get_status();
+
+
+			$this->load_views('pages/project/project_review_study_selection', $data);
 
 		} catch (Exception $e) {
 			$this->session->set_flashdata('error', $e->getMessage());
@@ -141,13 +163,13 @@ class Project_Controller extends CI_Controller
 		try {
 			$this->load->model("Project_Model");
 			$data['project'] = $this->Project_Model->get_project($id);
+			$data['count_project'] = $this->Project_Model->count_papers_project($id);
 			$data['progress_planning'] = $this->progress_planning($data['project']);
 			$data['progress_import_studies'] = $this->progress_import_studies($data['project']);
-			$data['progress_study_selection'] = $this->progress_study_selection($data['project']);
-			$data['progress_quality_assessement'] = $this->progress_quality_assessement($data['project']);
-			$data['progress_data_extraction'] = $this->progress_data_extraction($data['project']);
+			$data['progress_study_selection'] = $this->progress_study_selection($data['count_project']);
+			$this->session->set_userdata('level', $this->Project_Model->get_level($this->session->email, $id));
 
-			$this->load_views($id, 'pages/project/project_quality_assessement', $data);
+			$this->load_views('pages/project/project_quality_assessement', $data);
 
 		} catch (Exception $e) {
 			$this->session->set_flashdata('error', $e->getMessage());
@@ -160,13 +182,14 @@ class Project_Controller extends CI_Controller
 		try {
 			$this->load->model("Project_Model");
 			$data['project'] = $this->Project_Model->get_project($id);
+			$data['count_project'] = $this->Project_Model->count_papers_project($id);
 			$data['progress_planning'] = $this->progress_planning($data['project']);
 			$data['progress_import_studies'] = $this->progress_import_studies($data['project']);
-			$data['progress_study_selection'] = $this->progress_study_selection($data['project']);
+			$data['progress_study_selection'] = $this->progress_study_selection($data['count_project']);
 			$data['progress_quality_assessement'] = $this->progress_quality_assessement($data['project']);
-			$data['progress_data_extraction'] = $this->progress_data_extraction($data['project']);
+			$this->session->set_userdata('level', $this->Project_Model->get_level($this->session->email, $id));
 
-			$this->load_views($id, 'pages/project/project_data_extraction', $data);
+			$this->load_views('pages/project/project_data_extraction', $data);
 
 		} catch (Exception $e) {
 			$this->session->set_flashdata('error', $e->getMessage());
@@ -219,7 +242,6 @@ class Project_Controller extends CI_Controller
 			$this->logged_in();
 			$email = $this->input->post('email');
 			$id_project = $this->input->post('id_project');
-			$this->validate_level($id_project, array(1));
 			$level = $this->input->post('level');
 			$this->load->model("Project_Model");
 
@@ -240,7 +262,7 @@ class Project_Controller extends CI_Controller
 			$this->logged_in();
 			$title = $this->input->post('title');
 			$id_project = $this->input->post('id_project');
-			$this->validate_level($id_project, array(1));
+			$this->validate_level(array(1));
 			$description = $this->input->post('description');
 			$objectives = $this->input->post('objectives');
 			$this->load->model("Project_Model");
@@ -272,12 +294,28 @@ class Project_Controller extends CI_Controller
 		}
 	}
 
+	public function get_paper_conflict()
+	{
+		try {
+			$this->logged_in();
+			$id = $this->input->post('id');
+			$id_project = $this->input->post('id_project');
+			$this->load->model("Project_Model");
+
+			$data = $this->Project_Model->get_paper_conflict($id, $id_project);
+			echo json_encode($data);
+		} catch (Exception $e) {
+			$this->session->set_flashdata('error', $e->getMessage());
+			redirect(base_url());
+		}
+	}
+
 	public function deleted_project()
 	{
 		try {
 			$this->logged_in();
 			$id_project = $this->input->post('id_project');
-			$this->validate_level($id_project, array(1));
+			$this->validate_level(array(1));
 			$this->load->model("Project_Model");
 
 			$this->Project_Model->deleted_project($id_project);
@@ -751,10 +789,18 @@ class Project_Controller extends CI_Controller
 		return $data;
 	}
 
-	private function progress_study_selection($project)
+	private function progress_study_selection($count_project)
 	{
 		$errors = array();
 		$progress = 0;
+		$unc = 100;
+		if ($count_project[6] > 0) {
+			$unc = ($count_project[3] * 100) / $count_project[6];
+			$progress = 100 - $unc;
+		}
+		if ($progress != 100) {
+			array_push($errors, "There are still " . $unc . "% of the works to be evaluated");
+		}
 		$data['errors'] = $errors;
 		$data['progress'] = $progress;
 		return $data;
@@ -785,21 +831,19 @@ class Project_Controller extends CI_Controller
 		}
 	}
 
-	private function load_views($project_id, $view, $data)
+	private function load_views($view, $data)
 	{
-		$this->load->model("Project_Model");
-		$level = $this->Project_Model->get_level($this->session->email, $project_id);
+		$level = $this->session->level;
 		if ($this->session->logged_in) {
 			if (!is_null($level)) {
 				switch ($level) {
 					case 1:
+					case 3:
+					case 4:
 						load_templates($view, $data);
 						break;
 					case 2:
 						load_templates($view . '_visitor', $data);
-						break;
-					case 3:
-						load_templates($view, $data);
 						break;
 				}
 			} else {
@@ -810,10 +854,9 @@ class Project_Controller extends CI_Controller
 		}
 	}
 
-	private function validate_level($project_id, $levels)
+	private function validate_level($levels)
 	{
-		$this->load->model("Project_Model");
-		$res_level = $this->Project_Model->get_level($this->session->email, $project_id);
+		$res_level = $this->session->level;
 
 		foreach ($levels as $l) {
 			if ($l == $res_level) {
@@ -834,7 +877,7 @@ class Project_Controller extends CI_Controller
 			$id_project = $this->input->post('id_project');
 			$name = $this->input->post('name');
 
-			$this->validate_level($id_project, array(1, 3));
+			$this->validate_level(array(1, 3));
 			$this->load->model("Project_Model");
 
 			$this->Project_Model->bib_upload($papers, $database, $name, $id_project);
@@ -857,7 +900,7 @@ class Project_Controller extends CI_Controller
 			$name = $this->input->post('name');
 			$this->load->model("Project_Model");
 
-			$this->validate_level($id_project, array(1, 3));
+			$this->validate_level(array(1, 3));
 			$papers = $this->Project_Model->delete_bib($database, $name, $id_project);
 
 			$activity = "Delete papers at " . $database . " for file " . $name;
@@ -874,16 +917,181 @@ class Project_Controller extends CI_Controller
 	{
 		try {
 			$this->logged_in();
-			$id_paper= $this->input->post('id_paper');
+			$id_paper = $this->input->post('id_paper');
 			$id_project = $this->input->post('id_project');
 			$status = $this->input->post('status');
 			$this->load->model("Project_Model");
 
-			$this->validate_level($id_project, array(1, 3));
+			$this->validate_level(array(1, 3, 4));
 			$this->Project_Model->edit_status_selection($id_paper, $status, $id_project);
 
-			$activity = "Edited status selection to paper".$id_paper;
+			$activity = "Edited status selection to paper " . $id_paper;
 			$this->insert_log($activity, 3, $id_project);
+		} catch (Exception $e) {
+			$this->session->set_flashdata('error', $e->getMessage());
+		}
+	}
+
+	public function edit_status_paper()
+	{
+		try {
+			$this->logged_in();
+			$id_paper = $this->input->post('id_paper');
+			$id_project = $this->input->post('id_project');
+			$status = $this->input->post('status');
+			$this->load->model("Project_Model");
+
+			$this->validate_level(array(1, 3, 4));
+			$this->Project_Model->edit_status_paper($id_paper, $status, $id_project);
+
+			$activity = "Resolved conflict to paper " . $id_paper;
+			$this->insert_log($activity, 3, $id_project);
+		} catch (Exception $e) {
+			$this->session->set_flashdata('error', $e->getMessage());
+		}
+	}
+
+	public function evaluation_criteria()
+	{
+		try {
+			$this->logged_in();
+			$id_paper = $this->input->post('id_paper');
+			$id_project = $this->input->post('id_project');
+			$id_criteria = $this->input->post('id');
+			$selected = $this->input->post('selected');
+			$old_status = $this->input->post('old_status');
+			$this->load->model("Project_Model");
+
+
+			$this->validate_level(array(1, 3));
+			if ($selected === "true") {
+				$this->Project_Model->selected_criteria($id_paper, $id_criteria, $id_project);
+				$activity = "Selected criteria " . $id_criteria . " to paper " . $id_paper;
+				$this->insert_log($activity, 3, $id_project);
+			} else {
+				$this->Project_Model->deselected_criteria($id_paper, $id_criteria, $id_project);
+				$activity = "Deselected criteria " . $id_criteria . " to paper " . $id_paper;
+				$this->insert_log($activity, 3, $id_project);
+			}
+
+			$data = $this->check_status($id_project, $id_paper, $old_status);
+
+			echo json_encode($data);
+		} catch (Exception $e) {
+			$this->session->set_flashdata('error', $e->getMessage());
+		}
+	}
+
+	private function criteriaEquals($criterias, $criterias_ev)
+	{
+		$pre = 0;
+		$sel = 0;
+		foreach ($criterias as $ce) {
+			if ($ce->get_pre_selected()) {
+				$pre++;
+				foreach ($criterias_ev as $ev) {
+					if ($ce->get_id() == $ev->get_id()) {
+						$sel++;
+					}
+				}
+			}
+		}
+
+		return $pre == $sel;
+
+	}
+
+	public function check_status($id_project, $id_paper, $old_status)
+	{
+		$criterias = $this->Project_Model->get_criteria($id_project);
+		$criterias_ev = $this->Project_Model->get_evaluation_criteria($id_paper, $id_project);
+		$in_rule = $this->Project_Model->get_inclusion_rule($id_project);
+		$ex_rule = $this->Project_Model->get_exclusion_rule($id_project);
+		$inclusion = false;
+		$exclusion = false;
+
+		switch ($in_rule) {
+			case 'All':
+				if (sizeof($criterias['inclusion']) == sizeof($criterias_ev['inclusion'])) {
+					$inclusion = true;
+				}
+				break;
+			case 'At Least':
+				if ($this->criteriaEquals($criterias['inclusion'], $criterias_ev['inclusion'])) {
+					$inclusion = true;
+				}
+				break;
+			case 'Any':
+				if (sizeof($criterias_ev['inclusion']) > 0) {
+					$inclusion = true;
+				}
+				break;
+		}
+
+		switch ($ex_rule) {
+			case 'All':
+				if (sizeof($criterias['exclusion']) == sizeof($criterias_ev['exclusion'])) {
+					$exclusion = true;
+					$inclusion = false;
+				}
+				break;
+			case 'At Least':
+				if ($this->criteriaEquals($criterias['exclusion'], $criterias_ev['exclusion'])) {
+					$exclusion = true;
+					$inclusion = false;
+				}
+				break;
+			case 'Any':
+				if (sizeof($criterias_ev['exclusion'])) {
+					$exclusion = true;
+					$inclusion = false;
+				}
+				break;
+		}
+
+		$change = false;
+		$data['status'] = $old_status;
+		if ($old_status != 4 && $old_status != 5) {
+			if ($inclusion && !$exclusion) {
+				if ($old_status != 1) {
+					$this->Project_Model->edit_status_selection($id_paper, 1, $id_project);
+					$change = true;
+					$data['status'] = 1;
+				}
+			} elseif (!$inclusion && $exclusion) {
+				if ($old_status != 2) {
+					$this->Project_Model->edit_status_selection($id_paper, 2, $id_project);
+					$change = true;
+					$data['status'] = 2;
+				}
+			} else {
+				if ($old_status != 3) {
+					$this->Project_Model->edit_status_selection($id_paper, 3, $id_project);
+					$change = true;
+					$data['status'] = 3;
+				}
+			}
+		}
+		$data['change'] = $change;
+
+		return $data;
+	}
+
+	public function update_note()
+	{
+		try {
+			$this->logged_in();
+			$id_paper = $this->input->post('id_paper');
+			$id_project = $this->input->post('id_project');
+			$note = $this->input->post('note');
+			$this->load->model("Project_Model");
+
+
+			$this->Project_Model->update_note($id_paper, $note, $id_project);
+			$activity = "Update note to paper " . $id_paper;
+			$this->insert_log($activity, 3, $id_project);
+
+
 		} catch (Exception $e) {
 			$this->session->set_flashdata('error', $e->getMessage());
 		}

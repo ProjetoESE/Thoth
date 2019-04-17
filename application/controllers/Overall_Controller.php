@@ -20,7 +20,7 @@ class Overall_Controller extends CI_Controller
 			$this->logged_in();
 			$domain = $this->input->post('domain');
 			$id_project = $this->input->post('id_project');
-			$this->validate_level($id_project, array(1, 3));
+			$this->validate_level(array(1, 3, 4));
 			$this->load->model("Overall_Model");
 			$this->Overall_Model->add_domain($domain, $id_project);
 
@@ -43,7 +43,7 @@ class Overall_Controller extends CI_Controller
 			$this->logged_in();
 			$domain = $this->input->post('domain');
 			$id_project = $this->input->post('id_project');
-			$this->validate_level($id_project, array(1, 3));
+			$this->validate_level(array(1, 3, 4));
 			$this->load->model("Overall_Model");
 
 			$this->Overall_Model->delete_domain($domain, $id_project);
@@ -69,7 +69,7 @@ class Overall_Controller extends CI_Controller
 			$now = $this->input->post('now');
 			$old = $this->input->post('old');
 			$id_project = $this->input->post('id_project');
-			$this->validate_level($id_project, array(1, 3));
+			$this->validate_level(array(1, 3, 4));
 			$this->load->model("Overall_Model");
 
 			$this->Overall_Model->edit_domain($now, $old, $id_project);
@@ -94,7 +94,7 @@ class Overall_Controller extends CI_Controller
 			$this->logged_in();
 			$language = $this->input->post('language');
 			$id_project = $this->input->post('id_project');
-			$this->validate_level($id_project, array(1, 3));
+			$this->validate_level(array(1, 3, 4));
 			$this->load->model("Overall_Model");
 
 			$this->Overall_Model->add_language($language, $id_project);
@@ -119,7 +119,7 @@ class Overall_Controller extends CI_Controller
 			$this->logged_in();
 			$language = $this->input->post('language');
 			$id_project = $this->input->post('id_project');
-			$this->validate_level($id_project, array(1, 3));
+			$this->validate_level(array(1, 3, 4));
 			$this->load->model("Overall_Model");
 
 			$this->Overall_Model->delete_language($language, $id_project);
@@ -144,7 +144,7 @@ class Overall_Controller extends CI_Controller
 			$this->logged_in();
 			$study_type = $this->input->post('study_type');
 			$id_project = $this->input->post('id_project');
-			$this->validate_level($id_project, array(1, 3));
+			$this->validate_level(array(1, 3, 4));
 			$this->load->model("Overall_Model");
 
 			$this->Overall_Model->add_study_type($study_type, $id_project);
@@ -169,7 +169,7 @@ class Overall_Controller extends CI_Controller
 			$this->logged_in();
 			$study_type = $this->input->post('study_type');
 			$id_project = $this->input->post('id_project');
-			$this->validate_level($id_project, array(1, 3));
+			$this->validate_level(array(1, 3, 4));
 			$this->load->model("Overall_Model");
 
 			$this->Overall_Model->delete_study_type($study_type, $id_project);
@@ -194,7 +194,7 @@ class Overall_Controller extends CI_Controller
 			$this->logged_in();
 			$keywords = $this->input->post('keywords');
 			$id_project = $this->input->post('id_project');
-			$this->validate_level($id_project, array(1, 3));
+			$this->validate_level(array(1, 3, 4));
 			$this->load->model("Overall_Model");
 
 			$this->Overall_Model->add_keywords($keywords, $id_project);
@@ -219,7 +219,7 @@ class Overall_Controller extends CI_Controller
 			$this->logged_in();
 			$keywords = $this->input->post('keywords');
 			$id_project = $this->input->post('id_project');
-			$this->validate_level($id_project, array(1, 3));
+			$this->validate_level(array(1, 3, 4));
 			$this->load->model("Overall_Model");
 
 			$this->Overall_Model->delete_keywords($keywords, $id_project);
@@ -245,7 +245,7 @@ class Overall_Controller extends CI_Controller
 			$now = $this->input->post('now');
 			$old = $this->input->post('old');
 			$id_project = $this->input->post('id_project');
-			$this->validate_level($id_project, array(1, 3));
+			$this->validate_level(array(1, 3, 4));
 			$this->load->model("Overall_Model");
 
 			$this->Overall_Model->edit_keywords($now, $old, $id_project);
@@ -271,7 +271,7 @@ class Overall_Controller extends CI_Controller
 			$start_date = $this->input->post('start_date');
 			$end_date = $this->input->post('end_date');
 			$id_project = $this->input->post('id_project');
-			$this->validate_level($id_project, array(1, 3));
+			$this->validate_level(array(1, 3, 4));
 			$this->load->model("Overall_Model");
 
 			$this->Overall_Model->add_date($start_date, $end_date, $id_project);
@@ -296,10 +296,9 @@ class Overall_Controller extends CI_Controller
 		}
 	}
 
-	private function validate_level($project_id, $levels)
+	private function validate_level($levels)
 	{
-		$this->load->model("Project_Model");
-		$res_level = $this->Project_Model->get_level($this->session->email, $project_id);
+		$res_level = $this->session->level;
 
 		foreach ($levels as $l) {
 			if ($l == $res_level) {

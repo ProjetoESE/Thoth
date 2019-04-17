@@ -14,7 +14,8 @@
 				<input type="hidden" id="index_paper">
 				<div class="form-inline">
 					<div class="col-md-6">
-						<h6>Doi</h6>
+						<h6>Doi</h6><a class="float-right opt"><i
+								class="fas fa-question-circle "></i></a>
 						<p id="paper_doi"></p>
 					</div>
 					<div class="col-md-6">
@@ -53,8 +54,10 @@
 					</div>
 				</div>
 				<hr>
-				<div class="form-inline">
+				<div class="row" id="criteria_analiese">
 					<div class="col-md-6">
+						<h6>Inclusion Criteria Rule</h6>
+						<p id="paper_inclusion_rule"><?= $project->get_inclusion_rule() ?></p>
 						<h6>Inclusion Criteria</h6>
 						<table class="table table-responsive" id="table_inclusion_criteria">
 							<caption>List of Inclusion Criteria</caption>
@@ -66,25 +69,21 @@
 							</tr>
 							</thead>
 							<tbody>
-							<tr>
-								<td></td>
-								<td>IC01</td>
-								<td>Descrição ssdas das das asd asdas dasd asd</td>
-							</tr>
-							<tr>
-								<td></td>
-								<td>IC02</td>
-								<td>Descrição ssdas das das asd asdas dasd asd</td>
-							</tr>
-							<tr>
-								<td></td>
-								<td>IC03</td>
-								<td>Descrição ssdas das das asd asdas dasd asd</td>
-							</tr>
+							<?php foreach ($project->get_inclusion_criteria() as $ic) { ?>
+								<tr>
+									<td></td>
+									<td class="<?= $ic->get_pre_selected() ? "font-weight-bold" : "" ?>">
+										<?= $ic->get_id() ?>
+									</td>
+									<td><?= $ic->get_description() ?></td>
+								</tr>
+							<?php } ?>
 							</tbody>
 						</table>
 					</div>
 					<div class="col-md-6">
+						<h6>Exclusion Criteria Rule</h6>
+						<p id="paper_exclusion_rule"> <?= $project->get_exclusion_rule() ?></p>
 						<h6>Exclusion Criteria</h6>
 						<table class="table table-responsive" id="table_exclusion_criteria">
 							<caption>List of Exclusion Criteria</caption>
@@ -96,30 +95,22 @@
 							</tr>
 							</thead>
 							<tbody>
-							<tr>
-								<td></td>
-								<td>EC01</td>
-								<td>Descrição ssdas das das asd asdas dasd asd</td>
-							</tr>
-							<tr>
-								<td></td>
-								<td>EC02</td>
-								<td>Descrição ssdas das das asd asdas dasd asd</td>
-							</tr>
-							<tr>
-								<td></td>
-								<td>EC03</td>
-								<td>Descrição ssdas das das asd asdas dasd asd</td>
-							</tr>
+							<?php foreach ($project->get_exclusion_criteria() as $ec) { ?>
+								<tr>
+									<td></td>
+									<td class="<?= $ec->get_pre_selected() ? "font-weight-bold" : "" ?>">
+										<?= $ec->get_id() ?>
+									</td>
+									<td><?= $ec->get_description() ?></td>
+								</tr>
+							<?php } ?>
 							</tbody>
 						</table>
 					</div>
 				</div>
-			</div>
-			<div class="modal-footer">
-				<div class="form-inline container justify-content-between">
-					<button type="button" id="prev_paper" class="btn btn-secondary"><span class="fas fa-backward"></span> Previous</button>
-					<button type="button" id="next_paper" class="btn btn-secondary">Next <span class="fas fa-forward"></span></button>
+				<div class="col-md-12">
+					<h6>Note</h6>
+					<textarea id="paper_note" class="form-control"></textarea>
 				</div>
 			</div>
 		</div>

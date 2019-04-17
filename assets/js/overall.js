@@ -13,6 +13,13 @@ function add_domain() {
 			id_project: id_project,
 			domain: domain
 		},
+		error: function(){
+			Swal({
+				type: 'error',
+				title: 'Error',
+				html: '<label class="font-weight-bold text-danger">Error</label>'
+			});
+		},
 		success: function () {
 			table_domains.row.add([
 				domain,
@@ -51,6 +58,13 @@ function delete_domain(value) {
 				data: {
 					id_project: id_project,
 					domain: row.data()[0]
+				},
+				error: function(){
+					Swal({
+						type: 'error',
+						title: 'Error',
+						html: '<label class="font-weight-bold text-danger">Error</label>'
+					});
 				},
 				success: function () {
 					row.remove();
@@ -92,6 +106,13 @@ function edit_domain() {
 			id_project: id_project,
 			old: old,
 			now: now
+		},
+		error: function(){
+			Swal({
+				type: 'error',
+				title: 'Error',
+				html: '<label class="font-weight-bold text-danger">Error</label>'
+			});
 		},
 		success: function () {
 			row.remove();
@@ -162,6 +183,13 @@ function add_language() {
 			id_project: id_project,
 			language: language
 		},
+		error: function(){
+			Swal({
+				type: 'error',
+				title: 'Error',
+				html: '<label class="font-weight-bold text-danger">Error</label>'
+			});
+		},
 		success: function () {
 			table_languages.row.add([
 				language,
@@ -223,6 +251,13 @@ function delete_language(value) {
 					id_project: id_project,
 					language: row.data()[0]
 				},
+				error: function(){
+					Swal({
+						type: 'error',
+						title: 'Error',
+						html: '<label class="font-weight-bold text-danger">Error</label>'
+					});
+				},
 				success: function () {
 					row.remove();
 					table_languages.draw();
@@ -251,6 +286,13 @@ function add_study_type() {
 		data: {
 			id_project: id_project,
 			study_type: study_type
+		},
+		error: function(){
+			Swal({
+				type: 'error',
+				title: 'Error',
+				html: '<label class="font-weight-bold text-danger">Error</label>'
+			});
 		},
 		success: function () {
 			table_study_type.row.add([
@@ -314,6 +356,13 @@ function delete_study_type(value) {
 					id_project: id_project,
 					study_type: row.data()[0]
 				},
+				error: function(){
+					Swal({
+						type: 'error',
+						title: 'Error',
+						html: '<label class="font-weight-bold text-danger">Error</label>'
+					});
+				},
 				success: function () {
 					row.remove();
 					table_study_type.draw();
@@ -342,6 +391,13 @@ function add_keywords() {
 		data: {
 			id_project: id_project,
 			keywords: keywords
+		},
+		error: function(){
+			Swal({
+				type: 'error',
+				title: 'Error',
+				html: '<label class="font-weight-bold text-danger">Error</label>'
+			});
 		},
 		success: function () {
 			table_keywords.row.add([
@@ -384,6 +440,13 @@ function edit_keyword() {
 			id_project: id_project,
 			now: now,
 			old: old
+		},
+		error: function(){
+			Swal({
+				type: 'error',
+				title: 'Error',
+				html: '<label class="font-weight-bold text-danger">Error</label>'
+			});
 		},
 		success: function () {
 			row.remove();
@@ -460,6 +523,13 @@ function delete_keywords(value) {
 					id_project: id_project,
 					keywords: row.data()[0]
 				},
+				error: function(){
+					Swal({
+						type: 'error',
+						title: 'Error',
+						html: '<label class="font-weight-bold text-danger">Error</label>'
+					});
+				},
 				success: function () {
 					row.remove();
 					table_keywords.draw();
@@ -490,6 +560,13 @@ function add_date() {
 			id_project: id_project,
 			start_date: start_date,
 			end_date: end_date
+		},
+		error: function(){
+			Swal({
+				type: 'error',
+				title: 'Error',
+				html: '<label class="font-weight-bold text-danger">Error</label>'
+			});
 		},
 		success: function () {
 			Swal({

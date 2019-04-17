@@ -34,6 +34,13 @@ function readFileAsString() {
 						id_project: id_project,
 						name: name
 					},
+					error: function(){
+						Swal({
+							type: 'error',
+							title: 'Error',
+							html: '<label class="font-weight-bold text-danger">Error</label>'
+						});
+					},
 					success: function () {
 						$("#name_bib_upload")[0].innerHTML = "";
 						let table_bib = document.getElementById(id);
@@ -175,6 +182,13 @@ function delete_bib(value) {
 					database: database,
 					id_project: id_project,
 					name: bib
+				},
+				error: function(){
+					Swal({
+						type: 'error',
+						title: 'Error',
+						html: '<label class="font-weight-bold text-danger">Error</label>'
+					});
 				},
 				success: function (papers) {
 					let table_bib = document.getElementById(id);

@@ -4,10 +4,17 @@
 		<input type="hidden" id="id_project" value="<?= $project->get_id(); ?>">
 		<a href="<?= base_url('open/' . $project->get_id()) ?>"
 		   class="btn form-inline btn-outline-primary opt">Review</a>
+
 		<a href="<?= base_url('planning/' . $project->get_id()) ?>"
 		   class="btn form-inline btn-outline-primary opt">Planning</a>
-		<a href="<?= base_url('conducting/' . $project->get_id()) ?>"
-		   class="btn form-inline btn-outline-primary opt">Conducting</a>
+
+		<?php if ($this->session->level == "4") { ?>
+			<a href="<?= base_url('study_selection_adm/' . $project->get_id()) ?>"
+			   class="btn form-inline btn-outline-primary opt">Conducting</a>
+		<?php } else { ?>
+			<a href="<?= base_url('conducting/' . $project->get_id()) ?>"
+			   class="btn form-inline btn-outline-primary opt">Conducting</a>
+		<?php } ?>
 		<a href="<?= base_url('reporting/' . $project->get_id()) ?>"
 		   class="btn form-inline btn-outline-primary opt">Reporting</a>
 	</div>
@@ -66,7 +73,7 @@
 					</div>
 					<h6>Import Studies</h6>
 					<div class="form-inline">
-						<div class="col-md-10">
+						<div class="col-md-12">
 							<div class="progress">
 								<div class="progress-bar bg-info" role="progressbar"
 									 style="width: <?= $progress_import_studies['progress'] ?>%"
@@ -76,12 +83,10 @@
 								</div>
 							</div>
 						</div>
-						<a href="#"
-						   class="btn btn-info col-md-2 <?= strval($progress_import_studies['progress']) == strval(100) ? "" : "disabled" ?>">Export</a>
 					</div>
 					<h6>Study Selection</h6>
 					<div class="form-inline">
-						<div class="col-md-10">
+						<div class="col-md-12">
 							<div class="progress">
 								<div class="progress-bar bg-warning" role="progressbar"
 									 style="width: <?= $progress_study_selection['progress'] ?>%"
@@ -91,12 +96,10 @@
 								</div>
 							</div>
 						</div>
-						<a href="#"
-						   class="btn btn-warning col-md-2 <?= strval($progress_study_selection['progress']) == strval(100) ? "" : "disabled" ?>">Export</a>
 					</div>
 					<h6>Quality Assessment</h6>
 					<div class="form-inline">
-						<div class="col-md-10">
+						<div class="col-md-12">
 							<div class="progress">
 								<div class="progress-bar bg-secondary" role="progressbar"
 									 style="width: <?= $progress_quality_assessement['progress'] ?>%"
@@ -106,12 +109,10 @@
 								</div>
 							</div>
 						</div>
-						<a href="#"
-						   class="btn btn-secondary col-md-2 <?= strval($progress_quality_assessement['progress']) == strval(100) ? "" : "disabled" ?>">Export</a>
 					</div>
 					<h6>Data Extraction</h6>
 					<div class="form-inline">
-						<div class="col-sm-10">
+						<div class="col-sm-12">
 							<div class="progress">
 								<div class="progress-bar bg-danger" role="progressbar"
 									 style="width: <?= $progress_data_extraction['progress'] ?>%"
@@ -120,8 +121,6 @@
 								</div>
 							</div>
 						</div>
-						<a href="#"
-						   class="btn btn-danger col-md-2 <?= strval($progress_data_extraction['progress']) == strval(100) ? "" : "disabled" ?>">Export</a>
 					</div>
 				</div>
 				</br>

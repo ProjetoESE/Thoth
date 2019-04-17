@@ -17,6 +17,13 @@ function add_criteria() {
 			description: description,
 			type: type
 		},
+		error: function () {
+			Swal({
+				type: 'error',
+				title: 'Error',
+				html: 'Something caused an <label class="font-weight-bold text-danger">Error</label>'
+			});
+		},
 		success: function () {
 			if (type == 'Inclusion') {
 				table_criteria_inclusion.row.add([
@@ -69,20 +76,27 @@ function select_criteria_inclusion(value, msg = null) {
 			id: row.data()[1],
 			pre_selected: pre_selected
 		},
+		error: function () {
+			Swal({
+				type: 'error',
+				title: 'Error',
+				html: 'Something caused an <label class="font-weight-bold text-danger">Error</label>'
+			});
+		},
 		success: function () {
 			if (msg == null) {
 				if (pre_selected) {
 					Swal({
-						title: 'Success',
-						text: "The criteria is selected",
+						title: 'Criteria Selected',
+						html: 'Inclusion Criteria <label class="font-weight-bold text-success">selected</label>',
 						type: 'success',
 						showCancelButton: false,
 						confirmButtonText: 'Ok'
 					})
 				} else {
 					Swal({
-						title: 'Success',
-						text: "The criteria is deselected",
+						title: 'Criteria Deselected',
+						html: 'Inclusion Criteria <label class="font-weight-bold text-success">deselected</label>',
 						type: 'success',
 						showCancelButton: false,
 						confirmButtonText: 'Ok'
@@ -108,20 +122,27 @@ function select_criteria_exclusion(value, msg = null) {
 			id: row.data()[1],
 			pre_selected: pre_selected
 		},
+		error: function () {
+			Swal({
+				type: 'error',
+				title: 'Error',
+				html: 'Something caused an <label class="font-weight-bold text-danger">Error</label>'
+			});
+		},
 		success: function () {
 			if (msg == null) {
 				if (pre_selected) {
 					Swal({
-						title: 'Success',
-						text: "The criteria is selected",
+						title: 'Criteria Selected',
+						html: 'Exclusion Criteria <label class="font-weight-bold text-success">deselected</label>',
 						type: 'success',
 						showCancelButton: false,
 						confirmButtonText: 'Ok'
 					})
 				} else {
 					Swal({
-						title: 'Success',
-						text: "The criteria is deselected",
+						title: 'Criteria Deselected',
+						html: 'Exclusion Criteria <label class="font-weight-bold text-success">deselected</label>',
 						type: 'success',
 						showCancelButton: false,
 						confirmButtonText: 'Ok'
@@ -135,26 +156,32 @@ function select_criteria_exclusion(value, msg = null) {
 function validate_criteria(id, description, type, index) {
 
 	if (!id) {
-		swal({
+		Swal({
+			title: 'ID Empty',
+			html: '<label class="font-weight-bold text-warning">ID</label> field is empty',
 			type: 'warning',
-			title: 'Warning',
-			text: 'The id can not be empty!'
+			showCancelButton: false,
+			confirmButtonText: 'Ok'
 		});
 		return false;
 	}
 	if (!description) {
-		swal({
+		Swal({
+			title: 'Description Empty',
+			html: '<label class="font-weight-bold text-warning">Description</label> field is empty',
 			type: 'warning',
-			title: 'Warning',
-			text: 'The description can not be empty!'
+			showCancelButton: false,
+			confirmButtonText: 'Ok'
 		});
 		return false;
 	}
 	if (!type) {
-		swal({
+		Swal({
+			title: 'Type Empty',
+			html: '<label class="font-weight-bold text-warning">Description</label> field is empty',
 			type: 'warning',
-			title: 'Warning',
-			text: 'The type can not be empty!'
+			showCancelButton: false,
+			confirmButtonText: 'Ok'
 		});
 		return false;
 	}
@@ -165,10 +192,12 @@ function validate_criteria(id, description, type, index) {
 	for (let i = 0; i < data.length; i++) {
 		if (i != index) {
 			if (id.toLowerCase().trim() == data[i][1].toLowerCase().trim()) {
-				swal({
+				Swal({
+					title: 'ID already registered',
+					html: 'This <label class="font-weight-bold text-warning">ID</label> has already been registered',
 					type: 'warning',
-					title: 'Warning',
-					text: 'The ID has already been registered!'
+					showCancelButton: false,
+					confirmButtonText: 'Ok'
 				});
 				return false;
 			}
@@ -180,10 +209,12 @@ function validate_criteria(id, description, type, index) {
 	for (let i = 0; i < data.length; i++) {
 		if (i != index) {
 			if (id.toLowerCase().trim() == data[i][1].toLowerCase().trim()) {
-				swal({
+				Swal({
+					title: 'ID already registered',
+					html: 'This <label class="font-weight-bold text-warning">ID</label> has already been registered',
 					type: 'warning',
-					title: 'Warning',
-					text: 'The ID has already been registered!'
+					showCancelButton: false,
+					confirmButtonText: 'Ok'
 				});
 				return false;
 			}
@@ -194,10 +225,12 @@ function validate_criteria(id, description, type, index) {
 	for (let i = 0; i < data.length; i++) {
 		if (i != index) {
 			if (description.toLowerCase().trim() == data[i][2].toLowerCase().trim()) {
-				swal({
+				Swal({
+					title: 'Description already registered',
+					html: 'This <label class="font-weight-bold text-warning">Description</label> has already been registered',
 					type: 'warning',
-					title: 'Warning',
-					text: 'The description has already been registered!'
+					showCancelButton: false,
+					confirmButtonText: 'Ok'
 				});
 				return false;
 			}
@@ -213,8 +246,8 @@ function delete_criteria_inclusion(value) {
 
 	Swal.fire({
 		title: 'Are you sure?',
-		text: "You will not be able to reverse this," +
-			" this can impact other areas of your project!",
+		html: 'This action can <label class="font-weight-bold text-warning">not be reversed</label> and may affect ' +
+			'<label class="font-weight-bold text-warning">other parts</label> of the project',
 		type: 'warning',
 		showCancelButton: true,
 		confirmButtonColor: '#28a745',
@@ -229,14 +262,21 @@ function delete_criteria_inclusion(value) {
 					id_project: id_project,
 					id: row.data()[1]
 				},
+				error: function () {
+					Swal({
+						type: 'error',
+						title: 'Error',
+						html: 'Something caused an <label class="font-weight-bold text-danger">Error</label>'
+					});
+				},
 				success: function () {
 					row.remove();
 					table_criteria_inclusion.draw();
 				}
 			});
 			Swal.fire(
-				'Deleted!',
-				'Your criteria has been deleted.',
+				'Deleted criteria',
+				'The chosen <label class="font-weight-bold text-success">criterion</label> has been deleted',
 				'success'
 			)
 		}
@@ -264,6 +304,13 @@ function delete_criteria_exclusion(value) {
 				data: {
 					id_project: id_project,
 					id: row.data()[1]
+				},
+				error: function () {
+					Swal({
+						type: 'error',
+						title: 'Error',
+						html: '<label class="font-weight-bold text-danger">Error</label>'
+					});
 				},
 				success: function () {
 					row.remove();
@@ -324,6 +371,13 @@ function edit_criteria_inclusion() {
 			description: description,
 			new_type: type,
 			pre_selected: pre_selected
+		},
+		error: function () {
+			Swal({
+				type: 'error',
+				title: 'Error',
+				html: '<label class="font-weight-bold text-danger">Error</label>'
+			});
 		},
 		success: function () {
 			row.remove().draw();
@@ -401,6 +455,13 @@ function edit_criteria_exclusion() {
 			new_type: type,
 			pre_selected: pre_selected
 		},
+		error: function () {
+			Swal({
+				type: 'error',
+				title: 'Error',
+				html: '<label class="font-weight-bold text-danger">Error</label>'
+			});
+		},
 		success: function () {
 			row.remove().draw();
 			if (type == 'Inclusion') {
@@ -462,6 +523,13 @@ function edit_inclusion_rule() {
 			id_project: id_project,
 			rule: rule
 		},
+		error: function () {
+			Swal({
+				type: 'error',
+				title: 'Error',
+				html: '<label class="font-weight-bold text-danger">Error</label>'
+			});
+		},
 		success: function () {
 			switch (rule) {
 				case "All":
@@ -514,6 +582,13 @@ function edit_exclusion_rule() {
 		data: {
 			id_project: id_project,
 			rule: rule
+		},
+		error: function () {
+			Swal({
+				type: 'error',
+				title: 'Error',
+				html: '<label class="font-weight-bold text-danger">Error</label>'
+			});
 		},
 		success: function () {
 			switch (rule) {
