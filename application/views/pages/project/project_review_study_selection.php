@@ -70,31 +70,31 @@
 					?>
 					<h5 class="text-center"><?= $member->get_name(); ?></h5>
 					<div class="progress">
-						<div id="prog_acc" class="progress-bar bg-success" role="progressbar"
+						<div class="progress-bar bg-success" role="progressbar"
 							 style="width: <?= $acc ?>%"
 							 aria-valuenow="<?= $acc ?>"
 							 aria-valuemin="0"
 							 aria-valuemax="100"><?= $acc ?>%
 						</div>
-						<div id="prog_rej" class="progress-bar bg-danger" role="progressbar"
+						<div class="progress-bar bg-danger" role="progressbar"
 							 style="width: <?= $rej ?>%"
 							 aria-valuenow="<?= $rej ?>"
 							 aria-valuemin="0"
 							 aria-valuemax="100"><?= $rej ?>%
 						</div>
-						<div id="prog_unc" class="progress-bar bg-dark" role="progressbar"
+						<div class="progress-bar bg-dark" role="progressbar"
 							 style="width: <?= $unc ?>%"
 							 aria-valuenow="<?= $unc ?>"
 							 aria-valuemin="0"
 							 aria-valuemax="100"><?= $unc ?>%
 						</div>
-						<div id="prog_dup" class="progress-bar bg-warning" role="progressbar"
+						<div class="progress-bar bg-warning" role="progressbar"
 							 style="width: <?= $dup ?>%"
 							 aria-valuenow="<?= $dup ?>"
 							 aria-valuemin="0"
 							 aria-valuemax="100"><?= $dup ?>%
 						</div>
-						<div id="prog_rem" class="progress-bar bg-info" role="progressbar"
+						<div class="progress-bar bg-info" role="progressbar"
 							 style="width: <?= $rem ?>%"
 							 aria-valuenow="<?= $rem ?>"
 							 aria-valuemin="0"
@@ -111,7 +111,7 @@
 									<div class="input-group col-md-2">
 										<label class="text-success">
 											<span class="fas fa-check fa-lg"></span>
-											Accepted: <span id="count_acc"><?= $value ?></span>
+											Accepted: <span><?= $value ?></span>
 										</label>
 									</div>
 									<?php
@@ -121,7 +121,7 @@
 									<div class="input-group col-md-2">
 										<label class="text-danger">
 											<span class="fas fa-times fa-lg"></span>
-											Rejected: <span id="count_rej"><?= $value ?></span>
+											Rejected: <span><?= $value ?></span>
 										</label>
 									</div>
 									<?php
@@ -131,7 +131,7 @@
 									<div class="input-group col-md-2">
 										<label class="text-dark">
 											<span class="fas fa-question fa-lg"></span>
-											Unclassified: <span id="count_unc"><?= $value ?></span>
+											Unclassified: <span><?= $value ?></span>
 										</label>
 									</div>
 									<?php
@@ -141,7 +141,7 @@
 									<div class="input-group col-md-2">
 										<label class="text-warning">
 											<span class="fas fa-copy fa-lg"></span>
-											Duplicate: <span id="count_dup"><?= $value ?></span>
+											Duplicate: <span><?= $value ?></span>
 										</label>
 									</div>
 									<?php
@@ -151,7 +151,7 @@
 									<div class="input-group col-md-2">
 										<label class="text-info">
 											<span class="fas fa-trash-alt fa-lg"></span>
-											Removed: <span id="count_rem"><?= $value ?></span>
+											Removed: <span><?= $value ?></span>
 										</label>
 									</div>
 									<?php
@@ -161,7 +161,7 @@
 									<div class="input-group col-md-2">
 										<label class="text-secondary">
 											<span class="fas fa-bars fa-lg"></span>
-											Total: <span id="count_total"><?= $value ?></span>
+											Total: <span><?= $value ?></span>
 										</label>
 									</div>
 									<?php
@@ -178,7 +178,9 @@
 				<label><strong>Conflicts</strong></label><a class="float-right opt"><i
 						class="fas fa-question-circle "></i></a>
 			</div>
+			<br>
 			<table id="table_conf_paper_selection" class="table table-responsive-sm">
+				<caption>List of Papers Conflicts</caption>
 				<thead>
 				<th>ID</th>
 				<?php
@@ -192,26 +194,26 @@
 					<tr>
 						<td><?= $paper['id'] ?></td>
 						<?php foreach ($conflicts['head'] as $mem) {
-								$class = "text-dark";
-								$status = "Unclassified";
-								switch ($paper[$mem[0]]) {
-									case 1:
-										$class = "text-success";
-										$status = "Accepted";
-										break;
-									case 2:
-										$class = "text-danger";
-										$status = "Rejected";
-										break;
-									case 4:
-										$class = "text-warning";
-										$status = "Duplicate";
-										break;
-									case 5:
-										$class = "text-info";
-										$status = "Removed";
-										break;
-								} ?>
+							$class = "text-dark";
+							$status = "Unclassified";
+							switch ($paper[$mem[0]]) {
+								case 1:
+									$class = "text-success";
+									$status = "Accepted";
+									break;
+								case 2:
+									$class = "text-danger";
+									$status = "Rejected";
+									break;
+								case 4:
+									$class = "text-warning";
+									$status = "Duplicate";
+									break;
+								case 5:
+									$class = "text-info";
+									$status = "Removed";
+									break;
+							} ?>
 							<td id="<?= $paper['id']; ?>" class="font-weight-bold <?= $class ?>"><?= $status ?></td>
 						<?php } ?>
 					</tr>
@@ -224,6 +226,121 @@
 				<?php } ?>
 				</tfoot>
 			</table>
+			<br>
+			<div class="form-inline">
+				<label><strong>Papers Project</strong></label><a class="float-right opt"><i
+						class="fas fa-question-circle "></i></a>
+			</div>
+			<?php
+			$acc = ($count_project[1] * 100) / $count_project[6];
+			$rej = ($count_project[2] * 100) / $count_project[6];
+			$unc = ($count_project[3] * 100) / $count_project[6];
+			$dup = ($count_project[4] * 100) / $count_project[6];
+			$rem = ($count_project[5] * 100) / $count_project[6];
+			?>
+			<h5 class="text-center"><?= $project->get_title(); ?></h5>
+			<div class="progress">
+				<div id="prog_acc" class="progress-bar bg-success" role="progressbar"
+					 style="width: <?= $acc ?>%"
+					 aria-valuenow="<?= $acc ?>"
+					 aria-valuemin="0"
+					 aria-valuemax="100"><?= $acc ?>%
+				</div>
+				<div id="prog_rej" class="progress-bar bg-danger" role="progressbar"
+					 style="width: <?= $rej ?>%"
+					 aria-valuenow="<?= $rej ?>"
+					 aria-valuemin="0"
+					 aria-valuemax="100"><?= $rej ?>%
+				</div>
+				<div id="prog_unc" class="progress-bar bg-dark" role="progressbar"
+					 style="width: <?= $unc ?>%"
+					 aria-valuenow="<?= $unc ?>"
+					 aria-valuemin="0"
+					 aria-valuemax="100"><?= $unc ?>%
+				</div>
+				<div id="prog_dup" class="progress-bar bg-warning" role="progressbar"
+					 style="width: <?= $dup ?>%"
+					 aria-valuenow="<?= $dup ?>"
+					 aria-valuemin="0"
+					 aria-valuemax="100"><?= $dup ?>%
+				</div>
+				<div id="prog_rem" class="progress-bar bg-info" role="progressbar"
+					 style="width: <?= $rem ?>%"
+					 aria-valuenow="<?= $rem ?>"
+					 aria-valuemin="0"
+					 aria-valuemax="100"><?= $rem ?>%
+				</div>
+			</div>
+			<br>
+			<div class="form-inline">
+				<?php
+				foreach ($count_project as $key => $value) {
+					switch ($key) {
+						case 1:
+							?>
+							<div class="input-group col-md-2">
+								<label class="text-success">
+									<span class="fas fa-check fa-lg"></span>
+									Accepted: <span id="count_acc"><?= $value ?></span>
+								</label>
+							</div>
+							<?php
+							break;
+						case 2:
+							?>
+							<div class="input-group col-md-2">
+								<label class="text-danger">
+									<span class="fas fa-times fa-lg"></span>
+									Rejected: <span id="count_rej"><?= $value ?></span>
+								</label>
+							</div>
+							<?php
+							break;
+						case 3:
+							?>
+							<div class="input-group col-md-2">
+								<label class="text-dark">
+									<span class="fas fa-question fa-lg"></span>
+									Unclassified: <span id="count_unc"><?= $value ?></span>
+								</label>
+							</div>
+							<?php
+							break;
+						case 4:
+							?>
+							<div class="input-group col-md-2">
+								<label class="text-warning">
+									<span class="fas fa-copy fa-lg"></span>
+									Duplicate: <span id="count_dup"><?= $value ?></span>
+								</label>
+							</div>
+							<?php
+							break;
+						case 5:
+							?>
+							<div class="input-group col-md-2">
+								<label class="text-info">
+									<span class="fas fa-trash-alt fa-lg"></span>
+									Removed: <span id="count_rem"><?= $value ?></span>
+								</label>
+							</div>
+							<?php
+							break;
+						case 6:
+							?>
+							<div class="input-group col-md-2">
+								<label class="text-secondary">
+									<span class="fas fa-bars fa-lg"></span>
+									Total: <span id="count_total"><?= $value ?></span>
+								</label>
+							</div>
+							<?php
+							break;
+					}
+				}
+				?>
+			</div>
+			<br>
 			<?php
 		} else {
 			if (sizeof($progress_planning['errors']) > 0) {
@@ -261,5 +378,5 @@
 	</div>
 </div>
 <?php
-$this->load->view('modal/modal_paper_selection');
+$this->load->view('modal/modal_paper_conflict');
 ?>

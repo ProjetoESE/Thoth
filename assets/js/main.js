@@ -22,7 +22,18 @@ $(document).ready(function () {
 	};
 
 
-	table_conf_paper_selection = $('#table_conf_paper_selection').DataTable(configDataTables);
+	table_conf_paper_selection = $('#table_conf_paper_selection').DataTable({
+		language: lang,
+		responsive: true,
+		order: [[0, "asc"]],
+		paginate: true,
+		info: true,
+		searching: true,
+		ordering: true,
+		select: {
+			style: 'single'
+		}
+	});
 
 	table_domains = $('#table_domains').DataTable(configDataTables);
 	table_languages = $('#table_languages').DataTable(configDataTables);

@@ -478,6 +478,42 @@ class Project_Model extends CI_Model
 		return $data;
 	}
 
+	public function get_paper_conflict($id_paper, $id_project)
+	{
+		$project_databases = $this->get_ids_pro_database($id_project);
+
+		$id_bibs = array();
+		if (sizeof($project_databases) > 0) {
+			$id_bibs = $this->get_ids_bibs($project_databases);
+		}
+		$data = array();
+		if (sizeof($id_bibs) > 0) {
+			$this->db->select('papers.*, data_base.name');
+			$this->db->from('papers');
+			$this->db->join('data_base', 'papers.data_base = data_base.id_database');
+			$this->db->where('id', $id_paper);
+			$this->db->where_in('id_bib', $id_bibs);
+			$query = $this->db->get();
+
+			foreach ($query->result() as $row) {
+				$data['title'] = $row->title;
+				$data['author'] = $row->author;
+				$data['year'] = $row->year;
+				$data['abstract'] = $row->abstract;
+				$data['keywords'] = $row->keywords;
+				$data['doi'] = $row->doi;
+				$data['url'] = $row->url;
+				$data['database'] = $row->name;
+				$data['status'] = $row->status_selection;
+				$data['notes'] = $this->get_info($row->id_paper);
+			}
+
+
+		}
+
+		return $data;
+	}
+
 	public function get_databases()
 	{
 		$databases = array();
@@ -630,6 +666,19 @@ class Project_Model extends CI_Model
 
 		foreach ($query->result() as $row) {
 			array_push($levels, $row->level);
+		}
+		return $levels;
+	}
+
+	public function get_status()
+	{
+		$levels = array();
+		$this->db->select('*');
+		$this->db->from('status_selection');
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			array_push($levels, array($row->id_status, $row->description));
 		}
 		return $levels;
 	}
@@ -1025,6 +1074,39 @@ class Project_Model extends CI_Model
 		return $data;
 	}
 
+	public function count_papers_project($id)
+	{
+
+		$project_databases = $this->get_ids_pro_database($id);
+
+		$id_bibs = array();
+		if (sizeof($project_databases) > 0) {
+			$id_bibs = $this->get_ids_bibs($project_databases);
+		}
+		$total = 0;
+		$cont[1] = 0;
+		$cont[2] = 0;
+		$cont[3] = 0;
+		$cont[4] = 0;
+		$cont[5] = 0;
+		if (sizeof($id_bibs) > 0) {
+			$id_papers = $this->get_ids_papers($id_bibs);
+			$this->db->select('status_selection, COUNT(*) as count');
+			$this->db->from('papers');
+			$this->db->group_by('status_selection');
+			$this->db->where_in('id_paper', $id_papers);
+			$query = $this->db->get();
+
+			foreach ($query->result() as $row) {
+				$cont[$row->status_selection] = $row->count;
+				$total += $row->count;
+			}
+		}
+		$cont[6] = $total;
+
+		return $cont;
+	}
+
 	public function edit_status_selection($id, $status, $id_project)
 	{
 		$project_databases = $this->get_ids_pro_database($id_project);
@@ -1044,6 +1126,62 @@ class Project_Model extends CI_Model
 
 		$this->db->where('id_paper_sel', $id_sel);
 		$this->db->update('papers_selection', $data);
+
+		$this->db->select('id_status');
+		$this->db->from('papers_selection');
+		$this->db->where('id_paper', $id_paper);
+		$query = $this->db->get();
+		$paper = array();
+		foreach ($query->result() as $row) {
+			array_push($paper, $row->id_status);
+		}
+
+		$correct = true;
+		for ($i = 0; $i < (sizeof($paper) - 1); $i++) {
+			if ($paper[$i] != $paper[$i + 1]) {
+				$correct = false;
+			}
+		}
+
+		if ($correct) {
+			$data = array(
+				'status_selection' => $status
+			);
+
+			$this->db->where('id_paper', $id_paper);
+			$this->db->update('papers', $data);
+		} else {
+			$data = array(
+				'status_selection' => 3,
+				'check_status_selection' => false,
+			);
+
+			$this->db->where('id_paper', $id_paper);
+			$this->db->update('papers', $data);
+		}
+
+	}
+
+	public function edit_status_paper($id, $status, $id_project)
+	{
+		$project_databases = $this->get_ids_pro_database($id_project);
+
+		$id_bibs = array();
+		if (sizeof($project_databases) > 0) {
+			$id_bibs = $this->get_ids_bibs($project_databases);
+		}
+
+		$id_paper = $this->get_id_paper($id, $id_bibs);
+
+
+		$data = array(
+			'status_selection' => $status,
+			'check_status_selection' => true,
+		);
+
+		$this->db->where('id_paper', $id_paper);
+		$this->db->update('papers', $data);
+
 
 	}
 
@@ -1520,6 +1658,22 @@ class Project_Model extends CI_Model
 		return $note;
 	}
 
+	public function get_info($id_paper)
+	{
+		$note = array();
+		$this->db->select('note,name,id_status,papers_selection.id_user');
+		$this->db->from('papers_selection');
+		$this->db->join('user', 'user.id_user = papers_selection.id_user');
+		$this->db->where('id_paper', $id_paper);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			array_push($note, array($row->note, $row->name, $row->id_status, $row->id_user));
+		}
+
+		return $note;
+	}
+
 	public function get_conflicts($id_project)
 	{
 		$data['head'] = $this->get_researches_id_name($id_project);
@@ -1547,6 +1701,7 @@ class Project_Model extends CI_Model
 			$this->db->from('papers_selection');
 			$this->db->join('papers', 'papers.id_paper = papers_selection.id_paper');
 			$this->db->where('papers_selection.id_paper', $id_paper);
+			$this->db->where('papers.check_status_selection', 0);
 			$query = $this->db->get();
 			$paper = array();
 			foreach ($query->result() as $row) {

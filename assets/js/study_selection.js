@@ -242,7 +242,237 @@ $(document).ready(function () {
 				$(row).removeClass('import');
 			}
 		});
+
+
+	table_conf_paper_selection.on('select', function (e, dt, type, indexes) {
+		let rowData = table_conf_paper_selection.rows(indexes).data().toArray();
+		let id_project = $("#id_project").val();
+
+		$.ajax({
+			type: "POST",
+			url: base_url + 'Project_Controller/get_paper_conflict/',
+			data: {
+				id_project: id_project,
+				id: rowData[0][0]
+			},
+			error: function () {
+				Swal({
+					type: 'error',
+					title: 'Error',
+					html: '<label class="font-weight-bold text-danger">Error</label>'
+				});
+			},
+			success: function (data) {
+				data = JSON.parse(data);
+				$('#index_paper_conf').val(indexes);
+				$('#paper_id_conf').text(rowData[0][0]);
+				$('#id_paper_conf').val(rowData[0][0]);
+				$('#paper_title_conf').text(data['title']);
+				$('#paper_author_conf').text(data['author']);
+				$('#paper_year_conf').text(data['year']);
+				$('#paper_database_conf').text(data['database']);
+
+				$('#status_conflict').val(data['status']);
+				$('#old_status_conf').val(data['status']);
+
+				if (data['keywords'] != "") {
+					$('#paper_keywords_conf').text(data['keywords']);
+				} else {
+					$('#paper_keywords_conf').text("This article does not have Keywords");
+				}
+
+				if (data['abstract'] != "") {
+					$('#paper_abstract_conf').text(data['abstract']);
+				} else {
+					$('#paper_abstract_conf').text("This article does not have Abstract");
+				}
+
+				if (data['doi'] != "") {
+					$('#paper_doi_conf').text(data['doi']);
+				} else {
+					$('#paper_doi_conf').text("This article does not have Doi");
+				}
+				let url = $('#paper_url_conf');
+				if (data['url'] != "") {
+					url.removeClass("disabled");
+					url.attr("href", data['url']);
+				} else {
+					url.attr("href", "");
+					url.addClass("disabled");
+				}
+
+				let notes = $('#notes');
+				for (let i = 0; i < data['notes'].length; i++) {
+
+					if (document.getElementById("name_" + data['notes'][i][3])) {
+						let name = document.getElementById("name_" + data['notes'][i][3]);
+						name.innerText = data['notes'][i][1];
+						name.id = "name_" + data['notes'][i][3];
+					} else {
+						let name = document.createElement('h6');
+						name.innerText = data['notes'][i][1];
+						name.id = "name_" + data['notes'][i][3];
+						notes.append(name);
+					}
+
+					let status = null;
+					if (document.getElementById("status_" + data['notes'][i][3])) {
+						status = document.getElementById("status_" + data['notes'][i][3]);
+						status.id = "status_" + data['notes'][i][3];
+					} else {
+						status = document.createElement('p');
+						status.id = "status_" + data['notes'][i][3];
+						notes.append(status);
+					}
+
+					switch (data['notes'][i][2]) {
+						case "1":
+							status.className = 'text-success';
+							status.innerText = "Accepted";
+							break;
+						case "2":
+							status.className = 'text-danger';
+							status.innerText = "Rejected";
+							break;
+						case "3":
+							status.className = 'text-dark';
+							status.innerText = "Unclassified";
+							break;
+						case "4":
+							status.className = 'text-warning';
+							status.innerText = "Duplicate";
+							break;
+						case "5":
+							status.className = 'text-info';
+							status.innerText = "Removed";
+							break;
+					}
+
+					if (document.getElementById("txt_" + data['notes'][i][3])) {
+						let txt = document.getElementById("txt_" + data['notes'][i][3]);
+						txt.id = "txt_" + data['notes'][i][3];
+						txt.value = data['notes'][i][0];
+						txt.className = 'form-control';
+					} else {
+						let txt = document.createElement('textarea');
+						txt.id = "txt_" + data['notes'][i][3];
+						txt.value = data['notes'][i][0];
+						txt.className = 'form-control';
+						notes.append(txt);
+					}
+
+					if (document.getElementById("br_" + data['notes'][i][3])) {
+						let br = document.getElementById("br_" + data['notes'][i][3]);
+						br.id = "br_" + data['notes'][i][3];
+					} else {
+						let br = document.createElement('br');
+						br.id = "br_" + data['notes'][i][3];
+						notes.append(br);
+
+					}
+				}
+				$('#modal_paper_conflict').modal('show');
+			}
+		});
+	});
+
+	$("#status_conflict").on('change', function () {
+		let status = this.value;
+		let id_paper = $('#id_paper_conf').val();
+		let id_project = $('#id_project').val();
+		let index = $('#index_paper_conf').val();
+		let old_status = $('#old_status_conf').val();
+		$.ajax({
+			type: "POST",
+			url: base_url + 'Project_Controller/edit_status_paper/',
+			data: {
+				id_project: id_project,
+				id_paper: id_paper,
+				status: status
+			},
+			success: function () {
+				new_status_paper(old_status, status)
+			}
+		});
+	});
+
+
 });
+
+function new_status_paper(old_status, new_status) {
+	let old_count = 0;
+	let new_count = 0;
+	switch (old_status) {
+		case "Accepted":
+		case "1":
+			old_count = parseInt($('#count_acc').text());
+			old_count--;
+			$('#count_acc').text(old_count);
+			break;
+		case "Rejected":
+		case "2":
+			old_count = parseInt($('#count_rej').text());
+			old_count--;
+			$('#count_rej').text(old_count);
+			break;
+		case "Unclassified":
+		case "3":
+			old_count = parseInt($('#count_unc').text());
+			old_count--;
+			$('#count_unc').text(old_count);
+			break;
+		case "Duplicate":
+		case "4":
+			old_count = parseInt($('#count_dup').text());
+			old_count--;
+			$('#count_dup').text(old_count);
+			break;
+		case "Removed":
+		case "5":
+			old_count = parseInt($('#count_rem').text());
+			old_count--;
+			$('#count_rem').text(old_count);
+			break;
+	}
+
+	switch (new_status) {
+		case "Accepted":
+		case "1":
+			new_count = parseInt($('#count_acc').text());
+			new_count++;
+			$('#count_acc').text(new_count);
+			update_progress();
+			break;
+		case "Rejected":
+		case "2":
+			new_count = parseInt($('#count_rej').text());
+			new_count++;
+			$('#count_rej').text(new_count);
+			update_progress();
+			break;
+		case "Unclassified":
+		case "3":
+			new_count = parseInt($('#count_unc').text());
+			new_count++;
+			$('#count_unc').text(new_count);
+			update_progress();
+			break;
+		case "Duplicate":
+		case "4":
+			new_count = parseInt($('#count_dup').text());
+			new_count++;
+			$('#count_dup').text(new_count);
+			update_progress();
+			break;
+		case "Removed":
+		case "5":
+			new_count = parseInt($('#count_rem').text());
+			new_count++;
+			$('#count_rem').text(new_count);
+			update_progress();
+			break;
+	}
+}
 
 function change_old_status(old_status) {
 	let old_count = 0;

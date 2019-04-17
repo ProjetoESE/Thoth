@@ -159,6 +159,10 @@ class Project_Controller extends CI_Controller
 			$data['count_papers'] = $this->Project_Model->count_papers_reviewer($data['project']);
 			$this->session->set_userdata('level', $this->Project_Model->get_level($this->session->email, $id));
 			$data['conflicts'] = $this->Project_Model->get_conflicts($id);
+			$data['status'] = $this->Project_Model->get_status();
+			$data['count_project'] = $this->Project_Model->count_papers_project($id);
+
+
 
 			foreach ($data['project']->get_papers() as $paper) {
 				$this->check_status($id, $paper->get_id(), $paper->get_status_selection());
@@ -304,6 +308,22 @@ class Project_Controller extends CI_Controller
 			$this->load->model("Project_Model");
 
 			$data = $this->Project_Model->get_paper($id, $id_project);
+			echo json_encode($data);
+		} catch (Exception $e) {
+			$this->session->set_flashdata('error', $e->getMessage());
+			redirect(base_url());
+		}
+	}
+
+	public function get_paper_conflict()
+	{
+		try {
+			$this->logged_in();
+			$id = $this->input->post('id');
+			$id_project = $this->input->post('id_project');
+			$this->load->model("Project_Model");
+
+			$data = $this->Project_Model->get_paper_conflict($id, $id_project);
 			echo json_encode($data);
 		} catch (Exception $e) {
 			$this->session->set_flashdata('error', $e->getMessage());
@@ -919,6 +939,25 @@ class Project_Controller extends CI_Controller
 			$this->Project_Model->edit_status_selection($id_paper, $status, $id_project);
 
 			$activity = "Edited status selection to paper " . $id_paper;
+			$this->insert_log($activity, 3, $id_project);
+		} catch (Exception $e) {
+			$this->session->set_flashdata('error', $e->getMessage());
+		}
+	}
+
+	public function edit_status_paper()
+	{
+		try {
+			$this->logged_in();
+			$id_paper = $this->input->post('id_paper');
+			$id_project = $this->input->post('id_project');
+			$status = $this->input->post('status');
+			$this->load->model("Project_Model");
+
+			$this->validate_level(array(1, 3, 4));
+			$this->Project_Model->edit_status_paper($id_paper, $status, $id_project);
+
+			$activity = "Resolved conflict to paper " . $id_paper;
 			$this->insert_log($activity, 3, $id_project);
 		} catch (Exception $e) {
 			$this->session->set_flashdata('error', $e->getMessage());
