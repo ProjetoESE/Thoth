@@ -9,64 +9,79 @@
 		<?php if ($this->session->level == "4") { ?>
 			<a href="<?= base_url('study_selection_adm/' . $project->get_id()) ?>"
 			   class="btn form-inline btn-outline-primary opt">Conducting</a>
-		<?php } else {?>
+		<?php } else { ?>
 			<a href="<?= base_url('conducting/' . $project->get_id()) ?>"
 			   class="btn form-inline btn-outline-primary opt">Conducting</a>
-		<?php }?>
+		<?php } ?>
 		<a href="<?= base_url('reporting/' . $project->get_id()) ?>"
 		   class="btn form-inline btn-outline-primary opt">Reporting</a>
 	</div>
 	<div class="card-body">
 		<h4>Reporting</h4>
 		<?php
-		if (strval($progress_planning['progress']) == strval(100) && strval($progress_import_studies['progress']) == strval(100)) {
+		if (strval($progress_planning['progress']) == strval(100) && strval($progress_import_studies['progress']) == strval(100) && strval($progress_study_selection['progress']) == strval(100)) {
 			?>
 			<script src="<?= base_url('assets/js/chars.js'); ?>"></script>
-			<br>
+		<br>
 			<div id="chart_line"></div>
-			<br>
+		<br>
 			<div id="basic_bar"></div>
-			<br>
+		<br>
 			<div id="stacked_bar"></div>
-			<br>
+		<br>
 			<div id="pier_chart"></div>
-			<br>
+		<br>
 			<div id="bubble_chart"></div>
-			<br>
+		<br>
 			<div id="boxplot_chart"></div>
-			<br>
+		<br>
 			<div id="funnel_chart"></div><?php
 		} else {
-			if (sizeof($progress_planning['errors']) > 0) {
-				?>
-				<div class="alert alert-warning container alert-dismissible fade show" role="alert">
-					<h5>Complete Planning</h5>
-					<ul>
-						<?php
-						foreach ($progress_planning['errors'] as $error) {
-							?>
-							<li><?= $error ?></li>
-							<?php
-						}
+		if (sizeof($progress_planning['errors']) > 0) {
+		?>
+			<div class="alert alert-warning container alert-dismissible fade show" role="alert">
+				<h5>Complete Planning</h5>
+				<ul>
+					<?php
+					foreach ($progress_planning['errors'] as $error) {
 						?>
-					</ul>
-				</div>
-			<?php }
-			if (sizeof($progress_import_studies['errors']) > 0) { ?>
-				<div class="alert alert-warning container alert-dismissible fade show" role="alert">
-					<h5>Complete Import Studies</h5>
-					<ul>
+						<li><?= $error ?></li>
 						<?php
-						foreach ($progress_import_studies['errors'] as $error) {
-							?>
-							<li><?= $error ?></li>
-							<?php
-						}
+					}
+					?>
+				</ul>
+			</div>
+		<?php }
+		if (sizeof($progress_import_studies['errors']) > 0) { ?>
+			<div class="alert alert-warning container alert-dismissible fade show" role="alert">
+				<h5>Complete Import Studies</h5>
+				<ul>
+					<?php
+					foreach ($progress_import_studies['errors'] as $error) {
 						?>
-					</ul>
-				</div>
-				<?php
-			}
+						<li><?= $error ?></li>
+						<?php
+					}
+					?>
+				</ul>
+			</div>
+			<?php
+		}
+		if (sizeof($progress_study_selection['errors']) > 0) { ?>
+			<div class="alert alert-warning container alert-dismissible fade show" role="alert">
+				<h5>Complete Study Selection</h5>
+				<ul>
+					<?php
+					foreach ($progress_study_selection['errors'] as $error) {
+						?>
+						<li><?= $error ?></li>
+						<?php
+					}
+					?>
+				</ul>
+			</div>
+			<?php
+		}
 		}
 		?>
 	</div>

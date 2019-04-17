@@ -70,6 +70,7 @@ $(document).ready(function () {
 						txt_sel.text(rowData[0][5]);
 						txt_sel.val(2);
 						txt_sel.show();
+						criteria_a.show();
 						break;
 					case "Accepted":
 						edit.hide();
@@ -79,6 +80,7 @@ $(document).ready(function () {
 						txt_sel.text(rowData[0][5]);
 						txt_sel.val(1);
 						txt_sel.show();
+						criteria_a.show();
 						break;
 					case "Duplicate":
 						txt_sel.text("");

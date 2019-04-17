@@ -9,10 +9,10 @@
 		<?php if ($this->session->level == "4") { ?>
 			<a href="<?= base_url('study_selection_adm/' . $project->get_id()) ?>"
 			   class="btn form-inline btn-outline-primary opt">Conducting</a>
-		<?php } else {?>
+		<?php } else { ?>
 			<a href="<?= base_url('conducting/' . $project->get_id()) ?>"
 			   class="btn form-inline btn-outline-primary opt">Conducting</a>
-		<?php }?>
+		<?php } ?>
 		<a href="<?= base_url('reporting/' . $project->get_id()) ?>"
 		   class="btn form-inline btn-outline-primary opt">Reporting</a>
 	</div>
@@ -50,7 +50,7 @@
 		<label><strong>Data Extraction</strong></label>
 		<br>
 		<?php
-		if (strval($progress_planning['progress']) == strval(100) && strval($progress_import_studies['progress']) == strval(100)) {
+		if (strval($progress_planning['progress']) == strval(100) && strval($progress_import_studies['progress']) == strval(100) && strval($progress_study_selection['progress']) == strval(100)) {
 			?>
 			<div class="form-inline">
 				<div class="input-group col-md-3">
@@ -137,6 +137,21 @@
 					<ul>
 						<?php
 						foreach ($progress_import_studies['errors'] as $error) {
+							?>
+							<li><?= $error ?></li>
+							<?php
+						}
+						?>
+					</ul>
+				</div>
+				<?php
+			}
+			if (sizeof($progress_study_selection['errors']) > 0) { ?>
+				<div class="alert alert-warning container alert-dismissible fade show" role="alert">
+					<h5>Complete Study Selection</h5>
+					<ul>
+						<?php
+						foreach ($progress_study_selection['errors'] as $error) {
 							?>
 							<li><?= $error ?></li>
 							<?php

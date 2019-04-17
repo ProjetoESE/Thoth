@@ -14,10 +14,11 @@ class Project_Controller extends CI_Controller
 			$this->export_doc($id);
 			$this->load->model("Project_Model");
 			$data['project'] = $this->Project_Model->get_project($id);
+			$data['count_project'] = $this->Project_Model->count_papers_project($id);
 			$data['logs'] = $this->Project_Model->get_logs_project($id);
 			$data['progress_planning'] = $this->progress_planning($data['project']);
 			$data['progress_import_studies'] = $this->progress_import_studies($data['project']);
-			$data['progress_study_selection'] = $this->progress_study_selection($data['project']);
+			$data['progress_study_selection'] = $this->progress_study_selection($data['count_project']);
 			$data['progress_quality_assessement'] = $this->progress_quality_assessement($data['project']);
 			$data['progress_data_extraction'] = $this->progress_data_extraction($data['project']);
 			$this->session->set_userdata('level', $this->Project_Model->get_level($this->session->email, $id));
@@ -67,7 +68,6 @@ class Project_Controller extends CI_Controller
 			$data['databases'] = $this->Project_Model->get_databases();
 			$data['rules'] = $this->Project_Model->get_rules();
 			$data['question_types'] = $this->Project_Model->get_types();
-			$data['progress_planning'] = $this->progress_planning($data['project']);
 			$this->session->set_userdata('level', $this->Project_Model->get_level($this->session->email, $id));
 
 			$this->load_views('pages/project/project_planning', $data);
@@ -83,10 +83,6 @@ class Project_Controller extends CI_Controller
 			$this->load->model("Project_Model");
 			$data['project'] = $this->Project_Model->get_project($id);
 			$data['progress_planning'] = $this->progress_planning($data['project']);
-			$data['progress_import_studies'] = $this->progress_import_studies($data['project']);
-			$data['progress_study_selection'] = $this->progress_study_selection($data['project']);
-			$data['progress_quality_assessement'] = $this->progress_quality_assessement($data['project']);
-			$data['progress_data_extraction'] = $this->progress_data_extraction($data['project']);
 			$data['bib'] = $this->Project_Model->get_bib($data['project']);
 			$data['num_papers'] = $this->Project_Model->get_num_papers($data['project']);
 			$this->session->set_userdata('level', $this->Project_Model->get_level($this->session->email, $id));
@@ -104,9 +100,10 @@ class Project_Controller extends CI_Controller
 		try {
 			$this->load->model("Project_Model");
 			$data['project'] = $this->Project_Model->get_project($id);
+			$data['count_project'] = $this->Project_Model->count_papers_project($id);
 			$data['progress_planning'] = $this->progress_planning($data['project']);
 			$data['progress_import_studies'] = $this->progress_import_studies($data['project']);
-			$data['progress_study_selection'] = $this->progress_study_selection($data['project']);
+			$data['progress_study_selection'] = $this->progress_study_selection($data['count_project']);
 			$data['progress_quality_assessement'] = $this->progress_quality_assessement($data['project']);
 			$data['progress_data_extraction'] = $this->progress_data_extraction($data['project']);
 			$this->session->set_userdata('level', $this->Project_Model->get_level($this->session->email, $id));
@@ -126,17 +123,9 @@ class Project_Controller extends CI_Controller
 			$data['project'] = $this->Project_Model->get_project($id);
 			$data['progress_planning'] = $this->progress_planning($data['project']);
 			$data['progress_import_studies'] = $this->progress_import_studies($data['project']);
-			$data['progress_study_selection'] = $this->progress_study_selection($data['project']);
-			$data['progress_quality_assessement'] = $this->progress_quality_assessement($data['project']);
 			$data['progress_data_extraction'] = $this->progress_data_extraction($data['project']);
 			$data['count_papers'] = $this->Project_Model->count_papers($id);
 			$this->session->set_userdata('level', $this->Project_Model->get_level($this->session->email, $id));
-
-			foreach ($data['project']->get_papers() as $paper) {
-				$this->check_status($id, $paper->get_id(), $paper->get_status_selection());
-			}
-			$data['project'] = $this->Project_Model->get_project($id);
-
 
 			$this->load_views('pages/project/project_study_selection', $data);
 
@@ -151,23 +140,13 @@ class Project_Controller extends CI_Controller
 		try {
 			$this->load->model("Project_Model");
 			$data['project'] = $this->Project_Model->get_project($id);
+			$data['count_project'] = $this->Project_Model->count_papers_project($id);
 			$data['progress_planning'] = $this->progress_planning($data['project']);
 			$data['progress_import_studies'] = $this->progress_import_studies($data['project']);
-			$data['progress_study_selection'] = $this->progress_study_selection($data['project']);
-			$data['progress_quality_assessement'] = $this->progress_quality_assessement($data['project']);
-			$data['progress_data_extraction'] = $this->progress_data_extraction($data['project']);
 			$data['count_papers'] = $this->Project_Model->count_papers_reviewer($data['project']);
 			$this->session->set_userdata('level', $this->Project_Model->get_level($this->session->email, $id));
 			$data['conflicts'] = $this->Project_Model->get_conflicts($id);
 			$data['status'] = $this->Project_Model->get_status();
-			$data['count_project'] = $this->Project_Model->count_papers_project($id);
-
-
-
-			foreach ($data['project']->get_papers() as $paper) {
-				$this->check_status($id, $paper->get_id(), $paper->get_status_selection());
-			}
-			$data['project'] = $this->Project_Model->get_project($id);
 
 
 			$this->load_views('pages/project/project_review_study_selection', $data);
@@ -183,11 +162,10 @@ class Project_Controller extends CI_Controller
 		try {
 			$this->load->model("Project_Model");
 			$data['project'] = $this->Project_Model->get_project($id);
+			$data['count_project'] = $this->Project_Model->count_papers_project($id);
 			$data['progress_planning'] = $this->progress_planning($data['project']);
 			$data['progress_import_studies'] = $this->progress_import_studies($data['project']);
-			$data['progress_study_selection'] = $this->progress_study_selection($data['project']);
-			$data['progress_quality_assessement'] = $this->progress_quality_assessement($data['project']);
-			$data['progress_data_extraction'] = $this->progress_data_extraction($data['project']);
+			$data['progress_study_selection'] = $this->progress_study_selection($data['count_project']);
 			$this->session->set_userdata('level', $this->Project_Model->get_level($this->session->email, $id));
 
 			$this->load_views('pages/project/project_quality_assessement', $data);
@@ -203,11 +181,11 @@ class Project_Controller extends CI_Controller
 		try {
 			$this->load->model("Project_Model");
 			$data['project'] = $this->Project_Model->get_project($id);
+			$data['count_project'] = $this->Project_Model->count_papers_project($id);
 			$data['progress_planning'] = $this->progress_planning($data['project']);
 			$data['progress_import_studies'] = $this->progress_import_studies($data['project']);
-			$data['progress_study_selection'] = $this->progress_study_selection($data['project']);
+			$data['progress_study_selection'] = $this->progress_study_selection($data['count_project']);
 			$data['progress_quality_assessement'] = $this->progress_quality_assessement($data['project']);
-			$data['progress_data_extraction'] = $this->progress_data_extraction($data['project']);
 			$this->session->set_userdata('level', $this->Project_Model->get_level($this->session->email, $id));
 
 			$this->load_views('pages/project/project_data_extraction', $data);
@@ -810,10 +788,16 @@ class Project_Controller extends CI_Controller
 		return $data;
 	}
 
-	private function progress_study_selection($project)
+	private function progress_study_selection($count_project)
 	{
 		$errors = array();
-		$progress = 0;
+
+		$unc = ($count_project[3] * 100) / $count_project[6];
+		$progress = 100 - $unc;
+
+		if ($progress != 100) {
+			array_push($errors, "There are still " . $unc . "% of the works to be evaluated");
+		}
 		$data['errors'] = $errors;
 		$data['progress'] = $progress;
 		return $data;
