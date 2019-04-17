@@ -1,3 +1,0 @@
-CREATE TABLE `u648750589_thoth`.`papers_selection` ( `id_paper_sel` INT NOT NULL AUTO_INCREMENT , `id_user` INT NOT NULL , `id_paper` INT NOT NULL , `id_status` INT NOT NULL , PRIMARY KEY (`id_paper_sel`)) ENGINE = InnoDB;
-ALTER TABLE `papers_selection` ADD FOREIGN KEY (`id_paper`) REFERENCES `papers`(`id_paper`) ON DELETE CASCADE ON UPDATE CASCADE; ALTER TABLE `papers_selection` ADD FOREIGN KEY (`id_user`) REFERENCES `user`(`id_user`) ON DELETE CASCADE ON UPDATE CASCADE; ALTER TABLE `papers_selection` ADD FOREIGN KEY (`id_status`) REFERENCES `status_selection`(`id_status`) ON DELETE CASCADE ON UPDATE CASCADE;
-INSERT INTO `status_selection` (`id_status`, `description`) VALUES (NULL, 'Duplicate'), (NULL, 'Removed')
