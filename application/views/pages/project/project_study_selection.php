@@ -56,11 +56,11 @@
 		<?php
 		if (strval($progress_planning['progress']) == strval(100) && strval($progress_import_studies['progress']) == strval(100)) {
 
-			$acc = number_format(($count_papers[1] * 100) / $count_papers[6]);
-			$rej = number_format(($count_papers[2] * 100) / $count_papers[6]);
-			$unc = number_format(($count_papers[3] * 100) / $count_papers[6]);
-			$dup = number_format(($count_papers[4] * 100) / $count_papers[6]);
-			$rem = number_format(($count_papers[5] * 100) / $count_papers[6])
+			$acc = number_format((float)($count_papers[1] * 100) / $count_papers[6], 2);
+			$rej = number_format((float)($count_papers[2] * 100) / $count_papers[6], 2);
+			$unc = number_format((float)($count_papers[3] * 100) / $count_papers[6], 2);
+			$dup = number_format((float)($count_papers[4] * 100) / $count_papers[6], 2);
+			$rem = number_format((float)($count_papers[5] * 100) / $count_papers[6], 2)
 
 			?>
 			<h6>Progress Study Selection</h6>

@@ -785,7 +785,7 @@ class Project_Controller extends CI_Controller
 		}
 
 		$data['errors'] = $errors;
-		$data['progress'] = number_format($progress);
+		$data['progress'] = number_format((float)$progress, 2);
 		return $data;
 	}
 
@@ -802,7 +802,7 @@ class Project_Controller extends CI_Controller
 			array_push($errors, "There are still " . number_format($unc) . "% of the works to be evaluated");
 		}
 		$data['errors'] = $errors;
-		$data['progress'] = number_format($progress);
+		$data['progress'] = number_format((float)$progress, 2);
 		return $data;
 	}
 

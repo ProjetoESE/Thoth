@@ -573,31 +573,31 @@ function update_progress() {
 
 		switch (i) {
 			case 1:
-				pro = (acc * 100) / total;
+				pro = parseFloat(Math.round(acc * 100) / total).toFixed(2);
 				pro_acc.attr('aria-valuenow', pro);
 				pro_acc.css('width', pro + "%");
 				pro_acc.text(pro + "%");
 				break;
 			case 2:
-				pro = (rej * 100) / total;
+				pro = parseFloat(Math.round(rej * 100) / total).toFixed(2);
 				pro_rej.attr('aria-valuenow', pro);
 				pro_rej.css('width', pro + "%");
 				pro_rej.text(pro + "%");
 				break;
 			case 3:
-				pro = (unc * 100) / total;
+				pro = parseFloat(Math.round(unc * 100) / total).toFixed(2);
 				pro_unc.attr('aria-valuenow', pro);
 				pro_unc.css('width', pro + "%");
 				pro_unc.text(pro + "%");
 				break;
 			case 4:
-				pro = (dup * 100) / total;
+				pro = parseFloat(Math.round(dup * 100) / total).toFixed(2);
 				pro_dup.attr('aria-valuenow', pro);
 				pro_dup.css('width', pro + "%");
 				pro_dup.text(pro + "%");
 				break;
 			case 5:
-				pro = (rem * 100) / total;
+				pro = parseFloat(Math.round(rem * 100) / total).toFixed(2);
 				pro_rem.attr('aria-valuenow', pro);
 				pro_rem.css('width', pro + "%");
 				pro_rem.text(pro + "%");
