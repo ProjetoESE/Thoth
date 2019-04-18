@@ -60,11 +60,11 @@
 				if ($member->get_level() == 1 || $member->get_level() == 3) {
 
 
-					$acc = ($count_papers[$member->get_email()][1] * 100) / $count_papers[$member->get_email()][6];
-					$rej = ($count_papers[$member->get_email()][2] * 100) / $count_papers[$member->get_email()][6];
-					$unc = ($count_papers[$member->get_email()][3] * 100) / $count_papers[$member->get_email()][6];
-					$dup = ($count_papers[$member->get_email()][4] * 100) / $count_papers[$member->get_email()][6];
-					$rem = ($count_papers[$member->get_email()][5] * 100) / $count_papers[$member->get_email()][6];
+					$acc = number_format(($count_papers[$member->get_email()][1] * 100) / $count_papers[$member->get_email()][6]);
+					$rej = number_format(($count_papers[$member->get_email()][2] * 100) / $count_papers[$member->get_email()][6]);
+					$unc = number_format(($count_papers[$member->get_email()][3] * 100) / $count_papers[$member->get_email()][6]);
+					$dup = number_format(($count_papers[$member->get_email()][4] * 100) / $count_papers[$member->get_email()][6]);
+					$rem = number_format(($count_papers[$member->get_email()][5] * 100) / $count_papers[$member->get_email()][6]);
 
 
 					?>
@@ -232,11 +232,11 @@
 						class="fas fa-question-circle "></i></a>
 			</div>
 			<?php
-			$acc = ($count_project[1] * 100) / $count_project[6];
-			$rej = ($count_project[2] * 100) / $count_project[6];
-			$unc = ($count_project[3] * 100) / $count_project[6];
-			$dup = ($count_project[4] * 100) / $count_project[6];
-			$rem = ($count_project[5] * 100) / $count_project[6];
+			$acc = number_format(($count_project[1] * 100) / $count_project[6]);
+			$rej = number_format(($count_project[2] * 100) / $count_project[6]);
+			$unc = number_format(($count_project[3] * 100) / $count_project[6]);
+			$dup = number_format(($count_project[4] * 100) / $count_project[6]);
+			$rem = number_format(($count_project[5] * 100) / $count_project[6]);
 			?>
 			<h5 class="text-center"><?= $project->get_title(); ?></h5>
 			<div class="progress">

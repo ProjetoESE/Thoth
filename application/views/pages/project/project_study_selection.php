@@ -56,38 +56,44 @@
 		<?php
 		if (strval($progress_planning['progress']) == strval(100) && strval($progress_import_studies['progress']) == strval(100)) {
 
+			$acc = number_format(($count_papers[1] * 100) / $count_papers[6]);
+			$rej = number_format(($count_papers[2] * 100) / $count_papers[6]);
+			$unc = number_format(($count_papers[3] * 100) / $count_papers[6]);
+			$dup = number_format(($count_papers[4] * 100) / $count_papers[6]);
+			$rem = number_format(($count_papers[5] * 100) / $count_papers[6])
+
 			?>
 			<h6>Progress Study Selection</h6>
 			<div class="progress">
 				<div id="prog_acc" class="progress-bar bg-success" role="progressbar"
-					 style="width: <?= ($count_papers[1] * 100) / $count_papers[6] ?>%"
-					 aria-valuenow="<?= ($count_papers[1] * 100) / $count_papers[6] ?>"
+					 style="width: <?= $acc ?>%"
+					 aria-valuenow="<?= $acc ?>"
 					 aria-valuemin="0"
-					 aria-valuemax="100"><?= ($count_papers[1] * 100) / $count_papers[6] ?>%
+					 aria-valuemax="100"><?= $acc ?>%
 				</div>
 				<div id="prog_rej" class="progress-bar bg-danger" role="progressbar"
-					 style="width: <?= ($count_papers[2] * 100) / $count_papers[6] ?>%"
-					 aria-valuenow="<?= ($count_papers[2] * 100) / $count_papers[6] ?>"
+					 style="width: <?= $rej ?>%"
+					 aria-valuenow="<?= $rej ?>"
 					 aria-valuemin="0"
-					 aria-valuemax="100"><?= ($count_papers[2] * 100) / $count_papers[6] ?>%
+					 aria-valuemax="100"><?= $rej ?>%
 				</div>
 				<div id="prog_unc" class="progress-bar bg-dark" role="progressbar"
-					 style="width: <?= ($count_papers[3] * 100) / $count_papers[6] ?>%"
-					 aria-valuenow="<?= ($count_papers[3] * 100) / $count_papers[6] ?>"
+					 style="width: <?= $unc ?>%"
+					 aria-valuenow="<?= $unc ?>"
 					 aria-valuemin="0"
-					 aria-valuemax="100"><?= ($count_papers[3] * 100) / $count_papers[6] ?>%
+					 aria-valuemax="100"><?= $unc ?>%
 				</div>
 				<div id="prog_dup" class="progress-bar bg-warning" role="progressbar"
-					 style="width: <?= ($count_papers[4] * 100) / $count_papers[6] ?>%"
-					 aria-valuenow="<?= ($count_papers[4] * 100) / $count_papers[6] ?>"
+					 style="width: <?= $dup ?>%"
+					 aria-valuenow="<?= $dup ?>"
 					 aria-valuemin="0"
-					 aria-valuemax="100"><?= ($count_papers[4] * 100) / $count_papers[6] ?>%
+					 aria-valuemax="100"><?= $dup ?>%
 				</div>
 				<div id="prog_rem" class="progress-bar bg-info" role="progressbar"
-					 style="width: <?= ($count_papers[5] * 100) / $count_papers[6] ?>%"
-					 aria-valuenow="<?= ($count_papers[5] * 100) / $count_papers[6] ?>"
+					 style="width: <?= $rem ?>%"
+					 aria-valuenow="<?= $rem ?>"
 					 aria-valuemin="0"
-					 aria-valuemax="100"><?= ($count_papers[5] * 100) / $count_papers[6] ?>%
+					 aria-valuemax="100"><?= $rem ?>%
 				</div>
 			</div>
 			<br>
