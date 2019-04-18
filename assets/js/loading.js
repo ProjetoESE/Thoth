@@ -10,7 +10,6 @@ const exibe_loading = (remover_automatico = null) => {
 	}
 
 	if( document.getElementById("loading") ){
-		console.log( "There's already a loading div" );
 		return;
 	}
 

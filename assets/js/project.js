@@ -20,7 +20,9 @@ function add_research() {
 			Swal({
 				type: 'error',
 				title: 'Error',
-				html: '<label class="font-weight-bold text-danger">Error</label>'
+				html: 'Something caused an <label class="font-weight-bold text-danger">Error</label>',
+				showCancelButton: false,
+				confirmButtonText: 'Ok'
 			});
 		},
 		success: function () {
@@ -84,7 +86,9 @@ function edit_project() {
 			Swal({
 				type: 'error',
 				title: 'Error',
-				html: '<label class="font-weight-bold text-danger">Error</label>'
+				html: 'Something caused an <label class="font-weight-bold text-danger">Error</label>',
+				showCancelButton: false,
+				confirmButtonText: 'Ok'
 			});
 		},
 		success: function () {
@@ -151,7 +155,9 @@ function delete_project(id, value) {
 					Swal({
 						type: 'error',
 						title: 'Error',
-						html: '<label class="font-weight-bold text-danger">Error</label>'
+						html: 'Something caused an <label class="font-weight-bold text-danger">Error</label>',
+						showCancelButton: false,
+						confirmButtonText: 'Ok'
 					});
 				},
 				success: function () {

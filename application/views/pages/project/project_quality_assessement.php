@@ -146,7 +146,7 @@
 		} else {
 			if (sizeof($progress_planning['errors']) > 0) {
 				?>
-				<div class="alert alert-warning container alert-dismissible fade show" role="alert">
+				<div class="alert alert-warning container-fluid alert-dismissible fade show" role="alert">
 					<h5>Complete Planning</h5>
 					<ul>
 						<?php
@@ -160,7 +160,7 @@
 				</div>
 			<?php }
 			if (sizeof($progress_import_studies['errors']) > 0) { ?>
-				<div class="alert alert-warning container alert-dismissible fade show" role="alert">
+				<div class="alert alert-warning container-fluid alert-dismissible fade show" role="alert">
 					<h5>Complete Import Studies</h5>
 					<ul>
 						<?php
@@ -175,7 +175,7 @@
 				<?php
 			}
 			if (sizeof($progress_study_selection['errors']) > 0) { ?>
-				<div class="alert alert-warning container alert-dismissible fade show" role="alert">
+				<div class="alert alert-warning container-fluid alert-dismissible fade show" role="alert">
 					<h5>Complete Study Selection</h5>
 					<ul>
 						<?php

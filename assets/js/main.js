@@ -80,7 +80,7 @@ $(document).ready(function () {
 			for (let i = 3; i < 6; i++) {
 				this.api().columns(i).every(function () {
 					let column = this;
-					let select = $('<select><option value=""></option></select>')
+					let select = $('<select class="form-control" ><option value=""></option></select>')
 						.appendTo($(column.footer()).empty())
 						.on('change', function () {
 							let val = $.fn.dataTable.util.escapeRegex(

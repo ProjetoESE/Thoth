@@ -2,8 +2,8 @@
 	<div class="card-header">
 		<h4>Results of <?= $search; ?></h4>
 	</div>
-	<div class="card-body table-responsive">
-		<table id="tableSearch" class="table">
+	<div class="card-body">
+		<table id="tableSearch" class="table table-responsive-sm">
 			<thead>
 			<tr>
 				<th scope="col">Title</th>
@@ -22,8 +22,8 @@
 						<?php if (!is_null($project['level'])) { ?>
 							<a href="<?= base_url('open/' . $project['project']->get_id()); ?>"
 							   class="btn btn-outline-success opt"><span class="fas fa-folder-open"></span> Open</a>
-						<?php
-						}else{
+							<?php
+						} else {
 							?>
 							<a href="#"
 							   class="btn btn-outline-success opt"><span class="fas fa-eye"></span> Viewer</a>

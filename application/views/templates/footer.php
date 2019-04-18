@@ -1,7 +1,7 @@
 </div>
 <br>
 <footer class="footer">
-	<div class="container">
+	<div class="container-fluid">
 		<div class="form-inline justify-content-between">
 			<small class="text-center text-muted">&copy; 2018 by <a target="_blank"
 																	href="http://lesse.com.br">Lesse</a></small>

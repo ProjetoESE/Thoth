@@ -34,11 +34,13 @@ function readFileAsString() {
 						id_project: id_project,
 						name: name
 					},
-					error: function(){
+					error: function () {
 						Swal({
 							type: 'error',
 							title: 'Error',
-							html: '<label class="font-weight-bold text-danger">Error</label>'
+							html: 'Something caused an <label class="font-weight-bold text-danger">Error</label>',
+							showCancelButton: false,
+							confirmButtonText: 'Ok'
 						});
 					},
 					success: function () {
@@ -57,16 +59,16 @@ function readFileAsString() {
 							'</button>';
 						if (papers.errors.length > 0) {
 							Swal({
-								title: 'Success',
-								text: "The " + papers.entries.length + " was upload and " + papers.errors.length + " not upload!",
+								title: 'Imported file',
+								html: "The <strong>" + papers.entries.length + "</strong> was upload and <strong>" + papers.errors.length + "</strong> not upload!",
 								type: 'success',
 								showCancelButton: false,
 								confirmButtonText: 'Ok'
 							});
 						} else {
 							Swal({
-								title: 'Success',
-								text: "The " + papers.entries.length + " papers was upload",
+								title: 'Imported file',
+								html: "The <strong>" + papers.entries.length + "</strong> jobs was upload",
 								type: 'success',
 								showCancelButton: false,
 								confirmButtonText: 'Ok'
@@ -76,8 +78,8 @@ function readFileAsString() {
 				});
 			} else {
 				Swal({
-					title: 'Error',
-					text: "The all papers not upload!",
+					title: 'File not imported',
+					html: "<strong>No jobs</strong> were uploaded",
 					type: 'error',
 					showCancelButton: false,
 					confirmButtonText: 'Ok'
@@ -85,8 +87,8 @@ function readFileAsString() {
 			}
 		} else {
 			Swal({
-				title: 'Error',
-				text: "The file have a problem!",
+				title: 'File not imported',
+				html: "<strong>File has problem</strong>, try another file",
 				type: 'error',
 				showCancelButton: false,
 				confirmButtonText: 'Ok'
@@ -117,8 +119,10 @@ function validate_upload(files, database, id) {
 	if (!files) {
 		Swal({
 			type: 'warning',
-			title: 'Warning',
-			text: 'Select a file!'
+			title: 'File empty ',
+			html: 'File field is empty, <strong>Select a file</strong>',
+			showCancelButton: false,
+			confirmButtonText: 'Ok'
 		});
 		return false;
 	}
@@ -126,8 +130,10 @@ function validate_upload(files, database, id) {
 	if (files.length === 0) {
 		Swal({
 			type: 'warning',
-			title: 'Warning',
-			text: 'Select a file!'
+			title: 'File empty ',
+			html: 'File field is empty, <strong>Select a file</strong>',
+			showCancelButton: false,
+			confirmButtonText: 'Ok'
 		});
 		return false;
 	}
@@ -135,8 +141,10 @@ function validate_upload(files, database, id) {
 	if (!database) {
 		Swal({
 			type: 'warning',
-			title: 'Warning',
-			text: 'Select a database!'
+			title: 'Database empty ',
+			html: 'Database field is empty, <strong>Select a database</strong>',
+			showCancelButton: false,
+			confirmButtonText: 'Ok'
 		});
 		return false;
 	}
@@ -145,11 +153,12 @@ function validate_upload(files, database, id) {
 	let rows = document.getElementById(id).rows;
 	for (let i = 0; i < size; i++) {
 		if (files[0].name.toLowerCase().trim() == rows[i].cells.item(0).innerHTML.toLowerCase().trim()) {
-
 			Swal({
 				type: 'warning',
-				title: 'Warning',
-				text: 'The file name has already been registered!'
+				title: 'Repeat file',
+				html: 'This file has already been uploaded, <strong>select another file</strong>',
+				showCancelButton: false,
+				confirmButtonText: 'Ok'
 			});
 			return false;
 		}
@@ -183,7 +192,7 @@ function delete_bib(value) {
 					id_project: id_project,
 					name: bib
 				},
-				error: function(){
+				error: function () {
 					Swal({
 						type: 'error',
 						title: 'Error',
@@ -200,8 +209,8 @@ function delete_bib(value) {
 				}
 			});
 			Swal.fire(
-				'Deleted!',
-				'Your bib file has been deleted.',
+				'File Deleted!',
+				'<strong>File Deleted</strong>',
 				'success'
 			)
 		}

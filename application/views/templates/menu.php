@@ -68,7 +68,7 @@
 <?php
 if (isset($_SESSION['error'])) {
 	?>
-	<div class="alert alert-danger container alert-dismissible fade show" role="alert">
+	<div class="alert alert-danger container-fluid alert-dismissible fade show" role="alert">
 		<strong>
 			<?= $_SESSION['error']; ?>
 		</strong>
@@ -84,7 +84,7 @@ if (isset($_SESSION['error'])) {
 <?php
 if (isset($_SESSION['success'])) {
 	?>
-	<div class="alert alert-success container alert-dismissible fade show" role="alert">
+	<div class="alert alert-success container-fluid alert-dismissible fade show" role="alert">
 		<strong>
 			<?= $_SESSION['success']; ?>
 		</strong>
@@ -100,7 +100,7 @@ if (isset($_SESSION['success'])) {
 <?php
 if (isset($_SESSION['info'])) {
 	?>
-	<div class="alert alert-info container alert-dismissible fade show" role="alert">
+	<div class="alert alert-info container-fluid alert-dismissible fade show" role="alert">
 		<strong>
 			<?= $_SESSION['info']; ?>
 		</strong>
@@ -116,7 +116,7 @@ if (isset($_SESSION['info'])) {
 <?php
 if (isset($_SESSION['warning'])) {
 	?>
-	<div class="alert alert-warning container alert-dismissible fade show" role="alert">
+	<div class="alert alert-warning container-fluid alert-dismissible fade show" role="alert">
 		<strong>
 			<?= $_SESSION['warning']; ?>
 		</strong>
@@ -128,4 +128,4 @@ if (isset($_SESSION['warning'])) {
 	<?php
 }
 ?>
-<div class="container">
+<div class="container-fluid">

@@ -21,7 +21,9 @@ function add_criteria() {
 			Swal({
 				type: 'error',
 				title: 'Error',
-				html: 'Something caused an <label class="font-weight-bold text-danger">Error</label>'
+				html: 'Something caused an <label class="font-weight-bold text-danger">Error</label>',
+				showCancelButton: false,
+				confirmButtonText: 'Ok'
 			});
 		},
 		success: function () {
@@ -80,7 +82,9 @@ function select_criteria_inclusion(value, msg = null) {
 			Swal({
 				type: 'error',
 				title: 'Error',
-				html: 'Something caused an <label class="font-weight-bold text-danger">Error</label>'
+				html: 'Something caused an <label class="font-weight-bold text-danger">Error</label>',
+				showCancelButton: false,
+				confirmButtonText: 'Ok'
 			});
 		},
 		success: function () {
@@ -88,7 +92,7 @@ function select_criteria_inclusion(value, msg = null) {
 				if (pre_selected) {
 					Swal({
 						title: 'Criteria Selected',
-						html: 'Inclusion Criteria <label class="font-weight-bold text-success">selected</label>',
+						html: 'Inclusion Criteria <strong>selected</strong>',
 						type: 'success',
 						showCancelButton: false,
 						confirmButtonText: 'Ok'
@@ -96,7 +100,7 @@ function select_criteria_inclusion(value, msg = null) {
 				} else {
 					Swal({
 						title: 'Criteria Deselected',
-						html: 'Inclusion Criteria <label class="font-weight-bold text-success">deselected</label>',
+						html: 'Inclusion Criteria <strong>deselected</strong>',
 						type: 'success',
 						showCancelButton: false,
 						confirmButtonText: 'Ok'
@@ -126,7 +130,9 @@ function select_criteria_exclusion(value, msg = null) {
 			Swal({
 				type: 'error',
 				title: 'Error',
-				html: 'Something caused an <label class="font-weight-bold text-danger">Error</label>'
+				html: 'Something caused an <label class="font-weight-bold text-danger">Error</label>',
+				showCancelButton: false,
+				confirmButtonText: 'Ok'
 			});
 		},
 		success: function () {
@@ -134,7 +140,7 @@ function select_criteria_exclusion(value, msg = null) {
 				if (pre_selected) {
 					Swal({
 						title: 'Criteria Selected',
-						html: 'Exclusion Criteria <label class="font-weight-bold text-success">deselected</label>',
+						html: 'Exclusion Criteria <strong>deselected</strong>',
 						type: 'success',
 						showCancelButton: false,
 						confirmButtonText: 'Ok'
@@ -142,7 +148,7 @@ function select_criteria_exclusion(value, msg = null) {
 				} else {
 					Swal({
 						title: 'Criteria Deselected',
-						html: 'Exclusion Criteria <label class="font-weight-bold text-success">deselected</label>',
+						html: 'Exclusion Criteria <strong>deselected</strong>',
 						type: 'success',
 						showCancelButton: false,
 						confirmButtonText: 'Ok'
@@ -158,7 +164,7 @@ function validate_criteria(id, description, type, index) {
 	if (!id) {
 		Swal({
 			title: 'ID Empty',
-			html: '<label class="font-weight-bold text-warning">ID</label> field is empty',
+			html: '<strong>ID</strong> field is empty',
 			type: 'warning',
 			showCancelButton: false,
 			confirmButtonText: 'Ok'
@@ -168,7 +174,7 @@ function validate_criteria(id, description, type, index) {
 	if (!description) {
 		Swal({
 			title: 'Description Empty',
-			html: '<label class="font-weight-bold text-warning">Description</label> field is empty',
+			html: '<strong>Description</strong> field is empty',
 			type: 'warning',
 			showCancelButton: false,
 			confirmButtonText: 'Ok'
@@ -178,7 +184,7 @@ function validate_criteria(id, description, type, index) {
 	if (!type) {
 		Swal({
 			title: 'Type Empty',
-			html: '<label class="font-weight-bold text-warning">Description</label> field is empty',
+			html: '<strong>Description</strong> field is empty',
 			type: 'warning',
 			showCancelButton: false,
 			confirmButtonText: 'Ok'
@@ -193,8 +199,23 @@ function validate_criteria(id, description, type, index) {
 		if (i != index) {
 			if (id.toLowerCase().trim() == data[i][1].toLowerCase().trim()) {
 				Swal({
-					title: 'ID already registered',
-					html: 'This <label class="font-weight-bold text-warning">ID</label> has already been registered',
+					title: 'Repeat ID',
+					html: 'This <strong>ID</strong> has already been registered,<strong> select another</strong>',
+					type: 'warning',
+					showCancelButton: false,
+					confirmButtonText: 'Ok'
+				});
+				return false;
+			}
+		}
+	}
+
+	for (let i = 0; i < data.length; i++) {
+		if (i != index) {
+			if (description.toLowerCase().trim() == data[i][2].toLowerCase().trim()) {
+				Swal({
+					title: 'Repeat Description',
+					html: 'This <strong>Description</strong> has already been registered,<strong> select another</strong>',
 					type: 'warning',
 					showCancelButton: false,
 					confirmButtonText: 'Ok'
@@ -210,8 +231,8 @@ function validate_criteria(id, description, type, index) {
 		if (i != index) {
 			if (id.toLowerCase().trim() == data[i][1].toLowerCase().trim()) {
 				Swal({
-					title: 'ID already registered',
-					html: 'This <label class="font-weight-bold text-warning">ID</label> has already been registered',
+					title: 'Repeat ID',
+					html: 'This <strong>ID</strong> has already been registered,<strong> select another</strong>',
 					type: 'warning',
 					showCancelButton: false,
 					confirmButtonText: 'Ok'
@@ -226,8 +247,8 @@ function validate_criteria(id, description, type, index) {
 		if (i != index) {
 			if (description.toLowerCase().trim() == data[i][2].toLowerCase().trim()) {
 				Swal({
-					title: 'Description already registered',
-					html: 'This <label class="font-weight-bold text-warning">Description</label> has already been registered',
+					title: 'Repeat Description',
+					html: 'This <strong>Description</strong> has already been registered,<strong> select another</strong>',
 					type: 'warning',
 					showCancelButton: false,
 					confirmButtonText: 'Ok'
@@ -266,7 +287,9 @@ function delete_criteria_inclusion(value) {
 					Swal({
 						type: 'error',
 						title: 'Error',
-						html: 'Something caused an <label class="font-weight-bold text-danger">Error</label>'
+						html: 'Something caused an <label class="font-weight-bold text-danger">Error</label>',
+						showCancelButton: false,
+						confirmButtonText: 'Ok'
 					});
 				},
 				success: function () {
@@ -275,8 +298,8 @@ function delete_criteria_inclusion(value) {
 				}
 			});
 			Swal.fire(
-				'Deleted criteria',
-				'The chosen <label class="font-weight-bold text-success">criterion</label> has been deleted',
+				'Criteria Deleted!',
+				'<strong>Criteria Deleted</strong>',
 				'success'
 			)
 		}
@@ -309,7 +332,9 @@ function delete_criteria_exclusion(value) {
 					Swal({
 						type: 'error',
 						title: 'Error',
-						html: '<label class="font-weight-bold text-danger">Error</label>'
+						html: 'Something caused an <label class="font-weight-bold text-danger">Error</label>',
+						showCancelButton: false,
+						confirmButtonText: 'Ok'
 					});
 				},
 				success: function () {
@@ -318,8 +343,8 @@ function delete_criteria_exclusion(value) {
 				}
 			});
 			Swal.fire(
-				'Deleted!',
-				'Your criteria has been deleted.',
+				'Criteria Deleted!',
+				'<strong>Criteria Deleted</strong>',
 				'success'
 			)
 		}
@@ -376,7 +401,9 @@ function edit_criteria_inclusion() {
 			Swal({
 				type: 'error',
 				title: 'Error',
-				html: '<label class="font-weight-bold text-danger">Error</label>'
+				html: 'Something caused an <label class="font-weight-bold text-danger">Error</label>',
+				showCancelButton: false,
+				confirmButtonText: 'Ok'
 			});
 		},
 		success: function () {
@@ -414,8 +441,8 @@ function edit_criteria_inclusion() {
 
 			}
 			Swal({
-				title: 'Success',
-				text: "The criteria was edited",
+				title: 'Edited criteria',
+				html: "<strong>Edited criteria</strong>",
 				type: 'success',
 				showCancelButton: false,
 				confirmButtonText: 'Ok'
@@ -459,7 +486,9 @@ function edit_criteria_exclusion() {
 			Swal({
 				type: 'error',
 				title: 'Error',
-				html: '<label class="font-weight-bold text-danger">Error</label>'
+				html: 'Something caused an <label class="font-weight-bold text-danger">Error</label>',
+				showCancelButton: false,
+				confirmButtonText: 'Ok'
 			});
 		},
 		success: function () {
@@ -497,8 +526,8 @@ function edit_criteria_exclusion() {
 
 			}
 			Swal({
-				title: 'Success',
-				text: "The criteria was edited",
+				title: 'Edited criteria',
+				html: "<strong>Edited criteria</strong>",
 				type: 'success',
 				showCancelButton: false,
 				confirmButtonText: 'Ok'
@@ -527,7 +556,9 @@ function edit_inclusion_rule() {
 			Swal({
 				type: 'error',
 				title: 'Error',
-				html: '<label class="font-weight-bold text-danger">Error</label>'
+				html: 'Something caused an <label class="font-weight-bold text-danger">Error</label>',
+				showCancelButton: false,
+				confirmButtonText: 'Ok'
 			});
 		},
 		success: function () {
@@ -562,11 +593,12 @@ function edit_inclusion_rule() {
 					break;
 			}
 			Swal({
-				title: 'Success',
-				text: "The inclusion rule was edited",
+				title: 'Edited Inclusion Rule',
+				html: "<strong>Edited Inclusion Rule</strong>",
 				type: 'success',
 				showCancelButton: false,
 				confirmButtonText: 'Ok'
+
 			});
 		}
 	});
@@ -587,7 +619,9 @@ function edit_exclusion_rule() {
 			Swal({
 				type: 'error',
 				title: 'Error',
-				html: '<label class="font-weight-bold text-danger">Error</label>'
+				html: 'Something caused an <label class="font-weight-bold text-danger">Error</label>',
+				showCancelButton: false,
+				confirmButtonText: 'Ok'
 			});
 		},
 		success: function () {
@@ -622,11 +656,12 @@ function edit_exclusion_rule() {
 					break;
 			}
 			Swal({
-				title: 'Success',
-				text: "The exclusion rule was edited",
+				title: 'Edited Exclusion Rule',
+				html: "<strong>Edited Exclusion Rule</strong>",
 				type: 'success',
 				showCancelButton: false,
 				confirmButtonText: 'Ok'
+
 			});
 		}
 	});

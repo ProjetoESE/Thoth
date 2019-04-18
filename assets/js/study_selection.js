@@ -13,6 +13,14 @@ $(document).ready(function () {
 				id_project: id_project,
 				id_paper: id_paper,
 				status: status
+			}, error: function () {
+				Swal({
+					type: 'error',
+					title: 'Error',
+					html: 'Something caused an <label class="font-weight-bold text-danger">Error</label>',
+					showCancelButton: false,
+					confirmButtonText: 'Ok'
+				});
 			},
 			success: function () {
 				change_old_status(old_status);
@@ -32,12 +40,13 @@ $(document).ready(function () {
 			data: {
 				id_project: id_project,
 				id: rowData[0][0]
-			},
-			error: function () {
+			}, error: function () {
 				Swal({
 					type: 'error',
 					title: 'Error',
-					html: '<label class="font-weight-bold text-danger">Error</label>'
+					html: 'Something caused an <label class="font-weight-bold text-danger">Error</label>',
+					showCancelButton: false,
+					confirmButtonText: 'Ok'
 				});
 			},
 			success: function (data) {
@@ -195,6 +204,14 @@ $(document).ready(function () {
 				id_project: id_project,
 				id_paper: id_paper,
 				note: note
+			}, error: function () {
+				Swal({
+					type: 'error',
+					title: 'Error',
+					html: 'Something caused an <label class="font-weight-bold text-danger">Error</label>',
+					showCancelButton: false,
+					confirmButtonText: 'Ok'
+				});
 			},
 			success: function () {
 				Swal({
@@ -261,7 +278,9 @@ $(document).ready(function () {
 				Swal({
 					type: 'error',
 					title: 'Error',
-					html: '<label class="font-weight-bold text-danger">Error</label>'
+					html: 'Something caused an <label class="font-weight-bold text-danger">Error</label>',
+					showCancelButton: false,
+					confirmButtonText: 'Ok'
 				});
 			},
 			success: function (data) {
@@ -391,6 +410,15 @@ $(document).ready(function () {
 				id_project: id_project,
 				id_paper: id_paper,
 				status: status
+			},
+			error: function () {
+				Swal({
+					type: 'error',
+					title: 'Error',
+					html: 'Something caused an <label class="font-weight-bold text-danger">Error</label>',
+					showCancelButton: false,
+					confirmButtonText: 'Ok'
+				});
 			},
 			success: function () {
 				table_conf_paper_selection.row(index).remove().draw();
@@ -731,7 +759,16 @@ function evaluation_criteria(indexes, selected, inclusion) {
 			id: id,
 			selected: selected,
 			old_status: old_status
+		}, error: function () {
+			Swal({
+				type: 'error',
+				title: 'Error',
+				html: 'Something caused an <label class="font-weight-bold text-danger">Error</label>',
+				showCancelButton: false,
+				confirmButtonText: 'Ok'
+			});
 		},
+
 		success: function (data) {
 			data = JSON.parse(data);
 

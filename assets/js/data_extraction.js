@@ -17,11 +17,13 @@ function add_question_extraction() {
 			desc: desc,
 			type: type
 		},
-		error: function(){
+		error: function () {
 			Swal({
 				type: 'error',
 				title: 'Error',
-				html: '<label class="font-weight-bold text-danger">Error</label>'
+				html: 'Something caused an <label class="font-weight-bold text-danger">Error</label>',
+				showCancelButton: false,
+				confirmButtonText: 'Ok'
 			});
 		},
 		success: function () {
@@ -71,28 +73,34 @@ function add_question_extraction() {
 
 function validate_question_extraction(id, desc, type, index) {
 	if (!id) {
-		swal({
+		Swal({
+			title: 'ID Empty',
+			html: '<strong>ID</strong> field is empty',
 			type: 'warning',
-			title: 'Warning',
-			text: 'The id can not be empty!'
+			showCancelButton: false,
+			confirmButtonText: 'Ok'
 		});
 		return false;
 	}
 
 	if (!desc) {
-		swal({
+		Swal({
+			title: 'Description Empty',
+			html: '<strong>Description</strong> field is empty',
 			type: 'warning',
-			title: 'Warning',
-			text: 'The description can not be empty!'
+			showCancelButton: false,
+			confirmButtonText: 'Ok'
 		});
 		return false;
 	}
 
 	if (!type) {
-		swal({
+		Swal({
+			title: 'Type Empty',
+			html: '<strong>Type</strong> field is empty',
 			type: 'warning',
-			title: 'Warning',
-			text: 'The type can not be empty!'
+			showCancelButton: false,
+			confirmButtonText: 'Ok'
 		});
 		return false;
 	}
@@ -102,10 +110,12 @@ function validate_question_extraction(id, desc, type, index) {
 	for (let i = 0; i < data.length; i++) {
 		if (i != index) {
 			if (id.toLowerCase().trim() == data[i][0].toLowerCase().trim()) {
-				swal({
+				Swal({
+					title: 'Repeat ID',
+					html: 'This <strong>ID</strong> has already been registered,<strong> select another</strong>',
 					type: 'warning',
-					title: 'Warning',
-					text: 'The id has already been registered!',
+					showCancelButton: false,
+					confirmButtonText: 'Ok'
 				});
 				return false;
 			}
@@ -115,10 +125,12 @@ function validate_question_extraction(id, desc, type, index) {
 	for (let i = 0; i < data.length; i++) {
 		if (i != index) {
 			if (desc.toLowerCase().trim() == data[i][1].toLowerCase().trim()) {
-				swal({
+				Swal({
+					title: 'Repeat Description',
+					html: 'This <strong>Description</strong> has already been registered,<strong> select another</strong>',
 					type: 'warning',
-					title: 'Warning',
-					text: 'The description has already been registered!',
+					showCancelButton: false,
+					confirmButtonText: 'Ok'
 				});
 				return false;
 			}
@@ -150,11 +162,13 @@ function delete_extraction(value) {
 					id_project: id_project,
 					id: row.data()[0]
 				},
-				error: function(){
+				error: function () {
 					Swal({
 						type: 'error',
 						title: 'Error',
-						html: '<label class="font-weight-bold text-danger">Error</label>'
+						html: 'Something caused an <label class="font-weight-bold text-danger">Error</label>',
+						showCancelButton: false,
+						confirmButtonText: 'Ok'
 					});
 				},
 				success: function () {
@@ -166,8 +180,8 @@ function delete_extraction(value) {
 				}
 			});
 			Swal.fire(
-				'Deleted!',
-				'Your question extraction has been deleted.',
+				'Question Extraction Deleted',
+				'<strong>Question Extraction Deleted</strong>',
 				'success'
 			)
 		}
@@ -201,11 +215,13 @@ function add_option() {
 			id_qe: id_qe,
 			desc: desc
 		},
-		error: function(){
+		error: function () {
 			Swal({
 				type: 'error',
 				title: 'Error',
-				html: '<label class="font-weight-bold text-danger">Error</label>'
+				html: 'Something caused an <label class="font-weight-bold text-danger">Error</label>',
+				showCancelButton: false,
+				confirmButtonText: 'Ok'
 			});
 		},
 		success: function () {
@@ -228,10 +244,12 @@ function add_option() {
 
 function validate_option(desc, id, index) {
 	if (!desc) {
-		swal({
+		Swal({
+			title: 'Description Empty',
+			html: '<strong>Description</strong> field is empty',
 			type: 'warning',
-			title: 'Warning',
-			text: 'The option can not be empty!'
+			showCancelButton: false,
+			confirmButtonText: 'Ok'
 		});
 		return false;
 	}
@@ -241,10 +259,12 @@ function validate_option(desc, id, index) {
 	for (let i = 0; i < size; i++) {
 		if (i != index) {
 			if (desc.toLowerCase().trim() == rows[i].cells.item(0).innerHTML.toLowerCase().trim()) {
-				swal({
+				Swal({
+					title: 'Repeat Description',
+					html: 'This <strong>Description</strong> has already been registered,<strong> select another</strong>',
 					type: 'warning',
-					title: 'Warning',
-					text: 'The option has already been registered!'
+					showCancelButton: false,
+					confirmButtonText: 'Ok'
 				});
 				return false;
 			}
@@ -290,11 +310,13 @@ function delete_option(value) {
 					desc: desc,
 					id_qe: id_qe
 				},
-				error: function(){
+				error: function () {
 					Swal({
 						type: 'error',
 						title: 'Error',
-						html: '<label class="font-weight-bold text-danger">Error</label>'
+						html: 'Something caused an <label class="font-weight-bold text-danger">Error</label>',
+						showCancelButton: false,
+						confirmButtonText: 'Ok'
 					});
 				},
 				success: function () {
@@ -302,8 +324,8 @@ function delete_option(value) {
 				}
 			});
 			Swal.fire(
-				'Deleted!',
-				'Your option has been deleted.',
+				'Option Deleted',
+				'<strong>Option Deleted</strong>',
 				'success'
 			)
 		}
@@ -356,11 +378,13 @@ function edit_de() {
 			type: type,
 			old_type: row.data()[2]
 		},
-		error: function(){
+		error: function () {
 			Swal({
 				type: 'error',
 				title: 'Error',
-				html: '<label class="font-weight-bold text-danger">Error</label>'
+				html: 'Something caused an <label class="font-weight-bold text-danger">Error</label>',
+				showCancelButton: false,
+				confirmButtonText: 'Ok'
 			});
 		},
 		success: function () {
@@ -400,12 +424,14 @@ function edit_de() {
 				option.value = id;
 				x.add(option);
 			}
+
 			Swal({
-				title: 'Success',
-				text: "The question extraction was edited",
+				title: 'Edited Question Extraction',
+				html: "<strong>Edited question extraction</strong>",
 				type: 'success',
 				showCancelButton: false,
 				confirmButtonText: 'Ok'
+
 			}).then((result) => {
 				if (result.value) {
 					$('#modal_question_extraction').modal('hide');
@@ -436,11 +462,13 @@ function edit_option() {
 			old: old,
 			now: now
 		},
-		error: function(){
+		error: function () {
 			Swal({
 				type: 'error',
 				title: 'Error',
-				html: '<label class="font-weight-bold text-danger">Error</label>'
+				html: 'Something caused an <label class="font-weight-bold text-danger">Error</label>',
+				showCancelButton: false,
+				confirmButtonText: 'Ok'
 			});
 		},
 		success: function () {
@@ -457,11 +485,12 @@ function edit_option() {
 				'<span class="far fa-trash-alt"></span>' +
 				'</button>';
 			Swal({
-				title: 'Success',
-				text: "The option was edited",
+				title: 'Edited Option',
+				html: "<strong>Edited option</strong>",
 				type: 'success',
 				showCancelButton: false,
 				confirmButtonText: 'Ok'
+
 			}).then((result) => {
 				if (result.value) {
 					$('#modal_option').modal('hide');
