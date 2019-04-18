@@ -9,6 +9,7 @@
 			<div class="form-group">
 				<label for="add_user">E-mail </label>
 				<select id="add_email_user" class="form-control">
+					<option value=""></option>
 					<?php foreach ($users as $user) { ?>
 						<option value="<?= $user->get_email() ?>"><?= $user->get_email() ?></option>
 					<?php } ?>
@@ -17,6 +18,7 @@
 			<div class="form-group">
 				<label for="add_level_user">Level </label>
 				<select id="add_level_user" class="form-control">
+					<option value=""></option>
 					<?php foreach ($levels as $level) { ?>
 						<option value="<?= $level ?>"><?= $level ?></option>
 					<?php } ?>

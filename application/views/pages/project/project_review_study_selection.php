@@ -57,7 +57,7 @@
 		if (strval($progress_planning['progress']) == strval(100) && strval($progress_import_studies['progress']) == strval(100)) {
 			?>
 			<?php foreach ($project->get_members() as $member) {
-				if ($member->get_level() == 1 || $member->get_level() == 3) {
+				if ($member->get_level() == "Administrator" || $member->get_level() == "Researcher") {
 
 
 					$acc = number_format((float)($count_papers[$member->get_email()][1] * 100) / $count_papers[$member->get_email()][6], 2);
