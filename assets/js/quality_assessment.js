@@ -273,6 +273,15 @@ function edit_min_score() {
 	let score = $("#min_score_to_app").val();
 	let id_project = $("#id_project").val();
 
+	if(score){
+		Swal({
+			type: 'warning',
+			title: 'Minimum Empty',
+			html: '<label class="font-weight-bold text-warning">Minimum</label> field is empty'
+		});
+		return false
+	}
+
 	$.ajax({
 		type: "POST",
 		url: base_url + 'Quality_Controller/edit_min_score/',

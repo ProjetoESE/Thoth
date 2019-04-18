@@ -802,7 +802,7 @@ class Project_Controller extends CI_Controller
 			array_push($errors, "There are still " . $unc . "% of the works to be evaluated");
 		}
 		$data['errors'] = $errors;
-		$data['progress'] = $progress;
+		$data['progress'] = number_format($progress);
 		return $data;
 	}
 
@@ -1031,14 +1031,15 @@ class Project_Controller extends CI_Controller
 		switch ($ex_rule) {
 			case 'All':
 				if (sizeof($criterias['exclusion']) == sizeof($criterias_ev['exclusion'])) {
-					$exclusion = true;
 					$inclusion = false;
+					$exclusion = true;
 				}
 				break;
 			case 'At Least':
 				if ($this->criteriaEquals($criterias['exclusion'], $criterias_ev['exclusion'])) {
 					$exclusion = true;
 					$inclusion = false;
+
 				}
 				break;
 			case 'Any':

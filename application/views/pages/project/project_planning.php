@@ -10,10 +10,10 @@
 		<?php if ($this->session->level == "4") { ?>
 			<a href="<?= base_url('study_selection_adm/' . $project->get_id()) ?>"
 			   class="btn form-inline btn-outline-primary opt">Conducting</a>
-		<?php } else {?>
+		<?php } else { ?>
 			<a href="<?= base_url('conducting/' . $project->get_id()) ?>"
 			   class="btn form-inline btn-outline-primary opt">Conducting</a>
-		<?php }?>
+		<?php } ?>
 		<a href="<?= base_url('reporting/' . $project->get_id()) ?>"
 		   class="btn form-inline btn-outline-primary opt">Reporting</a>
 	</div>
@@ -57,7 +57,8 @@
 			<div class="row">
 				<div class="col-sm-12 col-md-6">
 					<label for="domain"><strong>Domains</strong></label>
-					<a onclick="modal_help('modal_help_domain')" class="float-right opt"><i class="fas fa-question-circle "></i></a>
+					<a onclick="modal_help('modal_help_domain')" class="float-right opt"><i
+							class="fas fa-question-circle "></i></a>
 					<div class="input-group">
 						<input type="text" class="form-control" id="domain">
 						<div class="input-group-append">
@@ -94,7 +95,8 @@
 
 				<div class="col-sm-12 col-md-6">
 					<label for="language"><strong>Select languages</strong></label>
-					<a onclick="modal_help('modal_help_languages')" class="float-right opt"><i class="fas fa-question-circle "></i></a>
+					<a onclick="modal_help('modal_help_languages')" class="float-right opt"><i
+							class="fas fa-question-circle "></i></a>
 					<div class="input-group">
 						<select class="form-control" id="language">
 							<?php
@@ -136,7 +138,8 @@
 				<br>
 				<div class="col-sm-12 col-md-6">
 					<label for="study_type"><strong>Select study type</strong></label>
-					<a onclick="modal_help('modal_help_study_type')" class="float-right opt"><i class="fas fa-question-circle "></i></a>
+					<a onclick="modal_help('modal_help_study_type')" class="float-right opt"><i
+							class="fas fa-question-circle "></i></a>
 					<div class="input-group">
 						<select class="form-control" id="study_type">
 							<?php
@@ -215,7 +218,8 @@
 				</div>
 				<div class="col-sm-12 col-md-4">
 					<label for="start_date"><strong>Start and End Date</strong></label>
-					<a onclick="modal_help('modal_help_date')" class="float-right opt"><i class="fas fa-question-circle "></i></a>
+					<a onclick="modal_help('modal_help_date')" class="float-right opt"><i
+							class="fas fa-question-circle "></i></a>
 					<div class="input-group">
 						<div class="input-group-prepend">
 							<button class="btn btn-success"><span class="far fa-calendar-check "></span></button>
@@ -458,7 +462,8 @@
 				</div>
 				<?php foreach ($project->get_search_strings() as $search_string) { ?>
 					<div class="form-group" id="div_string_<?= $search_string->get_database()->get_name() ?>">
-						<a target="_blank" href="<?= $search_string->get_database()->get_link() ?>"><?= $search_string->get_database()->get_name() ?></a>
+						<a target="_blank"
+						   href="<?= $search_string->get_database()->get_link() ?>"><?= $search_string->get_database()->get_name() ?></a>
 						<textarea class="form-control"
 								  id="string_<?= $search_string->get_database()->get_name() ?>"><?= $search_string->get_description() ?></textarea>
 						<button type="button" class="btn btn-info opt"
@@ -670,6 +675,7 @@
 			<div class="input-group col-md-4">
 				<label for="min_score_to_app" class="col-sm-12">Minimum General Score to Approve</label>
 				<select class="form-control" id="min_score_to_app" onchange="edit_min_score();">
+					<option value="null"></option>
 					<?php $mini = $project->get_score_min();
 					foreach ($project->get_quality_scores() as $scores) {
 						$selected = "";
