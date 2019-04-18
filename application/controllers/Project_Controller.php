@@ -799,7 +799,7 @@ class Project_Controller extends CI_Controller
 			$progress = 100 - $unc;
 		}
 		if ($progress != 100) {
-			array_push($errors, "There are still " . $unc . "% of the works to be evaluated");
+			array_push($errors, "There are still " . number_format($unc) . "% of the works to be evaluated");
 		}
 		$data['errors'] = $errors;
 		$data['progress'] = number_format($progress);
