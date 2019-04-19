@@ -118,7 +118,7 @@
 			<?php
 		} else {
 			?>
-			<div class="alert alert-warning container alert-dismissible fade show" role="alert">
+			<div class="alert alert-warning container-fluid alert-dismissible fade show" role="alert">
 				<h5>Complete Planning</h5>
 				<ul>
 					<?php

@@ -337,7 +337,9 @@ function add_qa() {
 			Swal({
 				type: 'error',
 				title: 'Error',
-				html: '<label class="font-weight-bold text-danger">Error</label>'
+				html: 'Something caused an <label class="font-weight-bold text-danger">Error</label>',
+				showCancelButton: false,
+				confirmButtonText: 'Ok'
 			});
 		},
 		success: function () {
@@ -413,7 +415,9 @@ function delete_qa(value) {
 					Swal({
 						type: 'error',
 						title: 'Error',
-						html: '<label class="font-weight-bold text-danger">Error</label>'
+						html: 'Something caused an <label class="font-weight-bold text-danger">Error</label>',
+						showCancelButton: false,
+						confirmButtonText: 'Ok'
 					});
 				},
 				success: function () {
@@ -528,7 +532,9 @@ function edit_qa() {
 			Swal({
 				type: 'error',
 				title: 'Error',
-				html: '<label class="font-weight-bold text-danger">Error</label>'
+				html: 'Something caused an <label class="font-weight-bold text-danger">Error</label>',
+				showCancelButton: false,
+				confirmButtonText: 'Ok'
 			});
 		},
 		success: function () {
@@ -600,7 +606,9 @@ function add_score_quality() {
 			Swal({
 				type: 'error',
 				title: 'Error',
-				html: '<label class="font-weight-bold text-danger">Error</label>'
+				html: 'Something caused an <label class="font-weight-bold text-danger">Error</label>',
+				showCancelButton: false,
+				confirmButtonText: 'Ok'
 			});
 		},
 		success: function () {
@@ -681,7 +689,9 @@ function delete_score_quality(value) {
 					Swal({
 						type: 'error',
 						title: 'Error',
-						html: '<label class="font-weight-bold text-danger">Error</label>'
+						html: 'Something caused an <label class="font-weight-bold text-danger">Error</label>',
+						showCancelButton: false,
+						confirmButtonText: 'Ok'
 					});
 				},
 				success: function () {
@@ -803,7 +813,9 @@ function edit_score_quality() {
 			Swal({
 				type: 'error',
 				title: 'Error',
-				html: '<label class="font-weight-bold text-danger">Error</label>'
+				html: 'Something caused an <label class="font-weight-bold text-danger">Error</label>',
+				showCancelButton: false,
+				confirmButtonText: 'Ok'
 			});
 		},
 		success: function () {
@@ -864,7 +876,9 @@ function edit_min_score_qa(element) {
 			Swal({
 				type: 'error',
 				title: 'Error',
-				html: '<label class="font-weight-bold text-danger">Error</label>'
+				html: 'Something caused an <label class="font-weight-bold text-danger">Error</label>',
+				showCancelButton: false,
+				confirmButtonText: 'Ok'
 			});
 		},
 		success: function () {

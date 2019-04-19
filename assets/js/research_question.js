@@ -18,7 +18,9 @@ function add_research_question() {
 			Swal({
 				type: 'error',
 				title: 'Error',
-				html: '<label class="font-weight-bold text-danger">Error</label>'
+				html: 'Something caused an <label class="font-weight-bold text-danger">Error</label>',
+				showCancelButton: false,
+				confirmButtonText: 'Ok'
 			});
 		},
 		success: function () {
@@ -71,7 +73,9 @@ function edit_research() {
 			Swal({
 				type: 'error',
 				title: 'Error',
-				html: '<label class="font-weight-bold text-danger">Error</label>'
+				html: 'Something caused an <label class="font-weight-bold text-danger">Error</label>',
+				showCancelButton: false,
+				confirmButtonText: 'Ok'
 			});
 		},
 		success: function () {
@@ -177,7 +181,9 @@ function delete_research_question(value) {
 					Swal({
 						type: 'error',
 						title: 'Error',
-						html: '<label class="font-weight-bold text-danger">Error</label>'
+						html: 'Something caused an <label class="font-weight-bold text-danger">Error</label>',
+						showCancelButton: false,
+						confirmButtonText: 'Ok'
 					});
 				},
 				success: function () {

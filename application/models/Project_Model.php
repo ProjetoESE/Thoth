@@ -296,9 +296,10 @@ class Project_Model extends CI_Model
 			$project->set_score_min($score);
 		}
 
-		$this->db->select('name,email,level');
+		$this->db->select('name,email,levels.level');
 		$this->db->from('members');
 		$this->db->join('user', 'user.id_user = members.id_user');
+		$this->db->join('levels', 'levels.id_level = members.level');
 		$this->db->where('id_project', $id);
 		$query = $this->db->get();
 

@@ -763,7 +763,7 @@ class Project_Controller extends CI_Controller
 		}
 
 		$data['errors'] = $errors;
-		$data['progress'] = $progress;
+		$data['progress'] = number_format((float)$progress, 2);
 		return $data;
 	}
 

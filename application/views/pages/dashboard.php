@@ -2,8 +2,8 @@
 	<div class="card-header">
 		<h4>My Projects</h4>
 	</div>
-	<div class="card-body table-responsive">
-		<table id="table_my_projects" class="table">
+	<div class="card-body">
+		<table id="table_my_projects" class="table table-responsive-sm">
 			<thead>
 			<a href="<?= base_url('new_project'); ?>" class="btn btn-success new-project"><span
 					class="fas fa-folder-plus"></span> Create New Project</a>
@@ -44,23 +44,3 @@
 	</div>
 </div>
 
-<div class="modal fade" id="modaldelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-	 aria-hidden="true">
-	<div class="modal-dialog" role="document">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title" id="exampleModalLabel">Delete</h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
-			</div>
-			<div class="modal-body">
-				Do you want to delete this project?
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-outline-danger" data-dismiss="modal">No</button>
-				<button type="button" class="btn btn-outline-success" data-dismiss="modal">Yes</button>
-			</div>
-		</div>
-	</div>
-</div>

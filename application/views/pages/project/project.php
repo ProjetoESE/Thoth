@@ -43,7 +43,7 @@
 				<ul>
 					<?php foreach ($project->get_members() as $member) { ?>
 						<li>
-							<?= $member->get_name(); ?>
+							<?= $member->get_name()." - ".$member->get_level(); ?>
 						</li>
 					<?php } ?>
 				</ul>

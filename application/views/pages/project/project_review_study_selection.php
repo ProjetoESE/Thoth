@@ -57,7 +57,7 @@
 		if (strval($progress_planning['progress']) == strval(100) && strval($progress_import_studies['progress']) == strval(100)) {
 			?>
 			<?php foreach ($project->get_members() as $member) {
-				if ($member->get_level() == 1 || $member->get_level() == 3) {
+				if ($member->get_level() == "Administrator" || $member->get_level() == "Researcher") {
 
 
 					$acc = number_format((float)($count_papers[$member->get_email()][1] * 100) / $count_papers[$member->get_email()][6], 2);
@@ -345,7 +345,7 @@
 		} else {
 			if (sizeof($progress_planning['errors']) > 0) {
 				?>
-				<div class="alert alert-warning container alert-dismissible fade show" role="alert">
+				<div class="alert alert-warning container-fluid alert-dismissible fade show" role="alert">
 					<h5>Complete Planning</h5>
 					<ul>
 						<?php
@@ -359,7 +359,7 @@
 				</div>
 			<?php }
 			if (sizeof($progress_import_studies['errors']) > 0) { ?>
-				<div class="alert alert-warning container alert-dismissible fade show" role="alert">
+				<div class="alert alert-warning container-fluid alert-dismissible fade show" role="alert">
 					<h5>Complete Import Studies</h5>
 					<ul>
 						<?php

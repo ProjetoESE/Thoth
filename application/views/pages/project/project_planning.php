@@ -18,11 +18,7 @@
 		   class="btn form-inline btn-outline-primary opt">Reporting</a>
 	</div>
 	<div class="card-body">
-		<div class="row justify-content-between">
-			<div class="col-sm-12 col-md-2">
-				<h4>Planning</h4>
-			</div>
-		</div>
+		<h4>Planning</h4>
 		<ul class="nav nav-pills nav-justified">
 			<li class="nav-item">
 				<a data-toggle="pill" class="nav-link active" href="#tab_overall">Overall information</a>
@@ -53,7 +49,7 @@
 	</div>
 
 	<div class="tab-content">
-		<div class="tab-pane active container" id="tab_overall">
+		<div class="tab-pane active container-fluid" id="tab_overall">
 			<div class="row">
 				<div class="col-sm-12 col-md-6">
 					<label for="domain"><strong>Domains</strong></label>
@@ -239,12 +235,12 @@
 				</div>
 			</div>
 			<br>
-			<div class="form-inline container justify-content-between">
+			<div class="form-inline container-fluid justify-content-between">
 				<a href="#" class="btn btn-secondary disabled"><span class="fas fa-backward"></span> Previous</a>
 				<a class="btn btn-secondary" href="#tab_research">Next <span class="fas fa-forward"></span></a>
 			</div>
 		</div>
-		<div class="tab-pane container" id="tab_research">
+		<div class="tab-pane container-fluid" id="tab_research">
 			<div class="form-inline">
 				<label for="id_research_question"><strong>Research Questions</strong></label>
 				<span onclick="modal_help('modal_help_rq')" class="float-right opt"><i
@@ -296,12 +292,12 @@
 				</tbody>
 			</table>
 			<br>
-			<div class="form-inline container justify-content-between">
+			<div class="form-inline container-fluid justify-content-between">
 				<a href="#tab_overall" class="btn btn-secondary"><span class="fas fa-backward"></span> Previous</a>
 				<a href="#tab_databases" class="btn btn-secondary">Next <span class="fas fa-forward"></span></a>
 			</div>
 		</div>
-		<div class="tab-pane container" id="tab_databases">
+		<div class="tab-pane container-fluid" id="tab_databases">
 			<div class="form-inline">
 				<label for="databases"><strong>Data Bases</strong></label>
 				<a onclick="modal_help('modal_help_database')" class="float-right opt"><i
@@ -360,13 +356,13 @@
 				</tbody>
 			</table>
 			<br>
-			<div class="form-inline container justify-content-between">
+			<div class="form-inline container-fluid justify-content-between">
 				<a href="#tab_research" class="btn btn-secondary"><span class="fas fa-backward"></span> Previous</a>
 				<a href="#tab_search_string" class="btn btn-secondary">Next <span
 						class="fas fa-forward"></span></a>
 			</div>
 		</div>
-		<div class="tab-pane container" id="tab_search_string">
+		<div class="tab-pane container-fluid" id="tab_search_string">
 			<div class="form-inline">
 				<label for="term"><strong>Search String</strong></label>
 				<a onclick="modal_help('modal_help_ss')" class="float-right opt"><i
@@ -474,14 +470,14 @@
 					</div>
 				<?php } ?>
 			</div>
-			<div class="form-inline container justify-content-between">
+			<div class="form-inline container-fluid justify-content-between">
 				<a href="#tab_databases" class="btn btn-secondary"><span
 						class="fas fa-backward"></span> Previous</a>
 				<a href="#tab_search_strategy" class="btn btn-secondary opt">Next <span
 						class="fas fa-forward"></span></a>
 			</div>
 		</div>
-		<div class="tab-pane container" id="tab_search_strategy">
+		<div class="tab-pane container-fluid" id="tab_search_strategy">
 			<div class="form-inline">
 				<label for="search_strategy"><strong>Search Strategy</strong></label>
 				<a onclick="modal_help('modal_help_strategy')" class="float-right opt"><i
@@ -491,14 +487,14 @@
 					  id="search_strategy"><?= $project->get_search_strategy() ?></textarea>
 			<button class="btn btn-success opt float-right" type="button" onclick="edit_search_strategy()">Save
 			</button>
-			<div class="form-inline container justify-content-between">
+			<div class="form-inline container-fluid justify-content-between">
 				<a href="#tab_search_string" class="btn btn-secondary"><span
 						class="fas fa-backward"></span> Previous</a>
 				<a href="#tab_criteria" class="btn btn-secondary opt">Next <span
 						class="fas fa-forward"></span></a>
 			</div>
 		</div>
-		<div class="tab-pane container" id="tab_criteria">
+		<div class="tab-pane container-fluid" id="tab_criteria">
 			<div class="form-inline">
 				<label for="id_criteria"><strong>Criteria</strong></label>
 				<a onclick="modal_help('modal_help_criteria')" class="float-right opt"><i
@@ -642,14 +638,14 @@
 				</select>
 			</div>
 			<br>
-			<div class="form-inline container justify-content-between">
+			<div class="form-inline container-fluid justify-content-between">
 				<a href="#tab_search_strategy" class="btn btn-secondary"><span class="fas fa-backward"></span>
 					Previous</a>
 				<a href="#tab_quality" class="btn btn-secondary opt">Next <span
 						class="fas fa-forward"></span></a>
 			</div>
 		</div>
-		<div class="tab-pane container" id="tab_quality">
+		<div class="tab-pane container-fluid" id="tab_quality">
 			<div class="form-inline">
 				<label for="start_interval"><strong>General Score</strong></label>
 				<a onclick="modal_help('modal_help_general_score')" class="float-right opt"><i
@@ -853,13 +849,13 @@
 				</tbody>
 			</table>
 			<br>
-			<div class="form-inline container justify-content-between">
+			<div class="form-inline container-fluid justify-content-between">
 				<a href="#tab_criteria" class="btn btn-secondary"><span class="fas fa-backward"></span> Previous</a>
 				<a href="#tab_data" class="btn btn-secondary opt">Next <span
 						class="fas fa-forward"></span></a>
 			</div>
 		</div>
-		<div class="tab-pane container" id="tab_data">
+		<div class="tab-pane container-fluid" id="tab_data">
 			<div class="form-inline">
 				<label for="id_data_extraction"><strong>Data Extraction</strong></label>
 				<a onclick="modal_help('modal_help_data_extraction')" class="float-right opt"><i
@@ -967,7 +963,7 @@
 				</tbody>
 			</table>
 			<br>
-			<div class="form-inline container justify-content-between">
+			<div class="form-inline container-fluid justify-content-between">
 				<a href="#tab_quality" class="btn btn-secondary"><span class="fas fa-backward"></span> Previous</a>
 				<a href="#" class="btn btn-secondary disabled">Next<span
 						class="fas fa-forward"></span></a>
