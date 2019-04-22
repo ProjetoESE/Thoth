@@ -105,7 +105,81 @@ $(document).ready(function () {
 		},
 		dom: 'Bfrtip',
 		buttons: [
-			'copy', 'csv', 'excel', 'pdf', 'print'
+			'copy', 'csv', 'excel', 'pdf', 'print', {
+				text: 'Check Duplicates',
+				action: function () {
+					let id_project = $('#id_project').val();
+					let titles = [];
+					table_papers.rows().every(function (rowIdx, tableLoop, rowLoop) {
+						let data = this.data();
+						let title = data[1].replace(/[^a-zA-Z0-9]/g, '');
+						if (titles.indexOf(title) == -1) {
+							titles.push(title);
+						} else {
+							$.ajax({
+								type: "POST",
+								url: base_url + 'Project_Controller/edit_status_selection/',
+								data: {
+									id_project: id_project,
+									id_paper: data[0],
+									status: "4"
+								},
+								error: function () {
+									Swal({
+										type: 'error',
+										title: 'Error',
+										html: 'Something caused an <label class="font-weight-bold text-danger">Error</label>',
+										showCancelButton: false,
+										confirmButtonText: 'Ok'
+									});
+								},
+								success: function () {
+									let old_count = 0;
+									switch (data[5]) {
+										case "Accepted":
+										case "1":
+											old_count = parseInt($('#count_acc').text());
+											old_count--;
+											$('#count_acc').text(old_count);
+											break;
+										case "Rejected":
+										case "2":
+											old_count = parseInt($('#count_rej').text());
+											old_count--;
+											$('#count_rej').text(old_count);
+											break;
+										case "Unclassified":
+										case "3":
+											old_count = parseInt($('#count_unc').text());
+											old_count--;
+											$('#count_unc').text(old_count);
+											break;
+										case "Duplicate":
+										case "4":
+											old_count = parseInt($('#count_dup').text());
+											old_count--;
+											$('#count_dup').text(old_count);
+											break;
+										case "Removed":
+										case "5":
+											old_count = parseInt($('#count_rem').text());
+											old_count--;
+											$('#count_rem').text(old_count);
+											break;
+									}
+									console.log(data[0]);
+									console.log(this.innerHTML);
+									table_papers.cell(rowIdx, 5).data("Duplicate").draw();
+									let new_count = parseInt($('#count_dup').text());
+									new_count++;
+									$('#count_dup').text(new_count);
+									update_progress();
+								}
+							});
+						}
+					});
+				}
+			}
 		]
 	});
 

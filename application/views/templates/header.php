@@ -93,5 +93,5 @@
 <body>
 
 <div id="loading" class="load">
-<img src="<?= base_url('assets/img/loading.gif'); ?>">
+	<img src="<?= base_url('assets/img/loading.gif'); ?>">
 </div>
