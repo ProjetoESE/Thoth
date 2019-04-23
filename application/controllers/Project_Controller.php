@@ -932,6 +932,26 @@ class Project_Controller extends CI_Controller
 		}
 	}
 
+	public function edit_status_selection_papers()
+	{
+		try {
+			$this->logged_in();
+			$ids_paper = $this->input->post('ids_paper');
+			$id_project = $this->input->post('id_project');
+			$status = $this->input->post('status');
+			$this->load->model("Project_Model");
+
+			$this->validate_level(array(1, 3, 4));
+			$this->Project_Model->edit_status_selection_papers($ids_paper, $status, $id_project);
+
+			$activity = "Edited status selection " . sizeof($ids_paper)." papers";
+			$this->insert_log($activity, 3, $id_project);
+
+		} catch (Exception $e) {
+			$this->session->set_flashdata('error', $e->getMessage());
+		}
+	}
+
 	public function edit_status_paper()
 	{
 		try {
