@@ -80,7 +80,7 @@ $(document).ready(function () {
 			for (let i = 3; i < 6; i++) {
 				this.api().columns(i).every(function () {
 					let column = this;
-					let select = $('<select class="form-control" ><option value=""></option></select>')
+					let select = $('<select id="select_status' + i + '" class="form-control" ><option value=""></option></select>')
 						.appendTo($(column.footer()).empty())
 						.on('change', function () {
 							let val = $.fn.dataTable.util.escapeRegex(
@@ -167,8 +167,12 @@ $(document).ready(function () {
 											$('#count_rem').text(old_count);
 											break;
 									}
-									console.log(data[0]);
-									console.log(this.innerHTML);
+									let paper = $(table_papers.cell(rowIdx, 5).node());
+									paper.removeClass("text-danger");
+									paper.removeClass("text-success");
+									paper.removeClass("text-dark");
+									paper.removeClass("text-info");
+									paper.addClass("text-warning");
 									table_papers.cell(rowIdx, 5).data("Duplicate").draw();
 									let new_count = parseInt($('#count_dup').text());
 									new_count++;
@@ -178,6 +182,23 @@ $(document).ready(function () {
 							});
 						}
 					});
+					let creat = true;
+					let y = document.getElementById("select_status5").options;
+					for (let i = 0; i < y.length; i++) {
+						if (y[i] == "Duplicate") {
+							creat = false;
+						}
+					}
+
+					if (creat) {
+						console.log()
+						let op = document.createElement("option");
+						op.text = "Duplicate";
+						op.value = "Duplicate";
+						let select = document.getElementById("select_status5");
+						select.add(op);
+					}
+
 				}
 			}
 		]
