@@ -1156,7 +1156,42 @@ class Project_Model extends CI_Model
 
 	}
 
-	public function edit_status_paper($id, $status, $id_project)
+	public function edit_status_selection_papers($ids, $status, $id_project)
+	{
+		$project_databases = $this->get_ids_pro_database($id_project);
+
+		$id_bibs = array();
+		if (sizeof($project_databases) > 0) {
+			$id_bibs = $this->get_ids_bibs($project_databases);
+		}
+		$ids_paper = array();
+		$ids_sel = array();
+		for ($i = 0; $i < sizeof($ids); $i++) {
+			array_push($ids_paper, $this->get_id_paper($ids[$i], $id_bibs));
+			$user = $this->get_id_name_user($this->session->email);
+			array_push($ids_sel, $this->get_id_paper_sel($ids_paper[$i], $user[0]));
+		}
+
+		$data = array(
+			'id_status' => $status
+		);
+		$this->db->where_in('id_paper_sel', $ids_sel);
+		$this->db->update('papers_selection', $data);
+
+
+		$data = array(
+			'status_selection' => 3,
+			'check_status_selection' => false,
+		);
+
+		$this->db->where_in('id_paper', $ids_paper);
+		$this->db->update('papers', $data);
+
+
+	}
+
+	public
+	function edit_status_paper($id, $status, $id_project)
 	{
 		$project_databases = $this->get_ids_pro_database($id_project);
 
@@ -1179,7 +1214,8 @@ class Project_Model extends CI_Model
 
 	}
 
-	private function get_id_database($database)
+	private
+	function get_id_database($database)
 	{
 		$id_database = null;
 		$this->db->select('id_database');
@@ -1193,7 +1229,8 @@ class Project_Model extends CI_Model
 		return $id_database;
 	}
 
-	private function get_count_papers($id_project)
+	private
+	function get_count_papers($id_project)
 	{
 		$c_papers = 1;
 		$this->db->select('c_papers');
@@ -1208,7 +1245,8 @@ class Project_Model extends CI_Model
 		return $c_papers;
 	}
 
-	private function get_id_pro_database($id_database, $id_project)
+	private
+	function get_id_pro_database($id_database, $id_project)
 	{
 		$id_project_database = null;
 		$this->db->select('id_project_database');
@@ -1224,7 +1262,8 @@ class Project_Model extends CI_Model
 		return $id_project_database;
 	}
 
-	private function get_ids_pro_database($id_project)
+	private
+	function get_ids_pro_database($id_project)
 	{
 		$id_project_database = array();
 		$this->db->select('id_project_database');
@@ -1239,7 +1278,8 @@ class Project_Model extends CI_Model
 		return $id_project_database;
 	}
 
-	private function get_researches($id_project)
+	private
+	function get_researches($id_project)
 	{
 		$id_users = array();
 		$this->db->select('id_user');
@@ -1255,7 +1295,8 @@ class Project_Model extends CI_Model
 		return $id_users;
 	}
 
-	private function get_researches_id_name($id_project)
+	private
+	function get_researches_id_name($id_project)
 	{
 		$names = array();
 		$this->db->select('user.name,user.id_user');
@@ -1272,7 +1313,8 @@ class Project_Model extends CI_Model
 		return $names;
 	}
 
-	private function get_members($id_project)
+	private
+	function get_members($id_project)
 	{
 		$id_users = array();
 		$this->db->select('id_user');
@@ -1287,7 +1329,8 @@ class Project_Model extends CI_Model
 		return $id_users;
 	}
 
-	public function get_all_members($id_project)
+	public
+	function get_all_members($id_project)
 	{
 		$users = array();
 		$this->db->select('*,levels.level as nivel');
@@ -1308,7 +1351,8 @@ class Project_Model extends CI_Model
 		return $users;
 	}
 
-	private function get_id_bib($id_project_database, $name)
+	private
+	function get_id_bib($id_project_database, $name)
 	{
 		$id_bib = null;
 		$this->db->select('id_bib');
@@ -1324,7 +1368,8 @@ class Project_Model extends CI_Model
 		return $id_bib;
 	}
 
-	private function get_ids_bibs($id_project_database)
+	private
+	function get_ids_bibs($id_project_database)
 	{
 		$id_bib = array();
 		$this->db->select('id_bib');
@@ -1338,7 +1383,8 @@ class Project_Model extends CI_Model
 		return $id_bib;
 	}
 
-	private function get_ids_papers($id_bib)
+	private
+	function get_ids_papers($id_bib)
 	{
 		$id_papers = array();
 		$this->db->select('id_paper');
@@ -1352,7 +1398,8 @@ class Project_Model extends CI_Model
 		return $id_papers;
 	}
 
-	private function get_id_paper($id_paper, $id_bibs)
+	private
+	function get_id_paper($id_paper, $id_bibs)
 	{
 		$id = null;
 		$this->db->select('id_paper');
@@ -1367,7 +1414,24 @@ class Project_Model extends CI_Model
 		return $id;
 	}
 
-	private function get_id_paper_sel($id_paper, $id_user)
+	private
+	function get_ids_paper($id_paper, $id_bibs)
+	{
+		$id = null;
+		$this->db->select('id_paper');
+		$this->db->from('papers');
+		$this->db->where_in('id', $id_paper);
+		$this->db->where_in('id_bib', $id_bibs);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			$id = $row->id_paper;
+		}
+		return $id;
+	}
+
+	private
+	function get_id_paper_sel($id_paper, $id_user)
 	{
 		$id = null;
 		$this->db->select('id_paper_sel');
@@ -1383,7 +1447,25 @@ class Project_Model extends CI_Model
 
 	}
 
-	public function selected_criteria($num_paper, $id, $id_project)
+	private
+	function get_ids_paper_sel($id_paper, $id_user)
+	{
+		$id = array();
+		$this->db->select('id_paper_sel');
+		$this->db->from('papers_selection');
+		$this->db->where_in('id_paper', $id_paper);
+		$this->db->where('id_user', $id_user);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			array_push($id, $row->id_paper_sel);
+		}
+		return $id;
+
+	}
+
+	public
+	function selected_criteria($num_paper, $id, $id_project)
 	{
 		$id_user = $this->get_id_name_user($this->session->email);
 		$id_criteria = $this->get_id_criteria($id, $id_project);
@@ -1409,7 +1491,8 @@ class Project_Model extends CI_Model
 
 	}
 
-	public function deselected_criteria($num_paper, $id, $id_project)
+	public
+	function deselected_criteria($num_paper, $id, $id_project)
 	{
 		$id_user = $this->get_id_name_user($this->session->email);
 		$id_criteria = $this->get_id_criteria($id, $id_project);
@@ -1432,7 +1515,8 @@ class Project_Model extends CI_Model
 		$this->db->delete('evaluation_criteria');
 	}
 
-	private function get_id_criteria($id, $id_project)
+	private
+	function get_id_criteria($id, $id_project)
 	{
 		$id_criteria = null;
 		$this->db->select('id_criteria');
@@ -1448,7 +1532,8 @@ class Project_Model extends CI_Model
 		return $id_criteria;
 	}
 
-	private function get_id_evaluation_criteria($id_paper, $id_criteria, $id_user)
+	private
+	function get_id_evaluation_criteria($id_paper, $id_criteria, $id_user)
 	{
 		$id_ev = null;
 		$this->db->select('id_evaluation_criteria');
@@ -1465,7 +1550,8 @@ class Project_Model extends CI_Model
 		return $id_ev;
 	}
 
-	public function get_criteria($id_project)
+	public
+	function get_criteria($id_project)
 	{
 		$inclusion = array();
 		$exclusion = array();
@@ -1504,7 +1590,8 @@ class Project_Model extends CI_Model
 		return $data;
 	}
 
-	public function get_evaluation_criteria($num_paper, $id_project)
+	public
+	function get_evaluation_criteria($num_paper, $id_project)
 	{
 
 		$id_user = $this->get_id_name_user($this->session->email);
@@ -1564,7 +1651,8 @@ class Project_Model extends CI_Model
 		return $data;
 	}
 
-	private function get_ids_criteria_evaluation($id_paper, $id_user)
+	private
+	function get_ids_criteria_evaluation($id_paper, $id_user)
 	{
 		$ids_criteria = array();
 		$this->db->select('id_criteria');
@@ -1580,7 +1668,8 @@ class Project_Model extends CI_Model
 		return $ids_criteria;
 	}
 
-	public function get_inclusion_rule($id_project)
+	public
+	function get_inclusion_rule($id_project)
 	{
 		$rule = null;
 		$this->db->select('description');
@@ -1595,7 +1684,8 @@ class Project_Model extends CI_Model
 		return $rule;
 	}
 
-	public function get_exclusion_rule($id_project)
+	public
+	function get_exclusion_rule($id_project)
 	{
 		$rule = null;
 		$this->db->select('description');
@@ -1610,7 +1700,8 @@ class Project_Model extends CI_Model
 		return $rule;
 	}
 
-	public function update_note($num_paper, $note, $id_project)
+	public
+	function update_note($num_paper, $note, $id_project)
 	{
 
 		$id_user = $this->get_id_name_user($this->session->email);
@@ -1639,7 +1730,8 @@ class Project_Model extends CI_Model
 		$this->db->update('papers_selection', $data);
 	}
 
-	public function get_note($num_paper, $id_project)
+	public
+	function get_note($num_paper, $id_project)
 	{
 		$id_user = $this->get_id_name_user($this->session->email);
 		$project_databases = $this->get_ids_pro_database($id_project);
@@ -1673,7 +1765,8 @@ class Project_Model extends CI_Model
 		return $note;
 	}
 
-	public function get_info($id_paper)
+	public
+	function get_info($id_paper)
 	{
 		$note = array();
 		$this->db->select('note,name,id_status,papers_selection.id_user');
@@ -1689,14 +1782,16 @@ class Project_Model extends CI_Model
 		return $note;
 	}
 
-	public function get_conflicts($id_project)
+	public
+	function get_conflicts($id_project)
 	{
 		$data['head'] = $this->get_researches_id_name($id_project);
 		$data['papers'] = $this->get_papers_conflicts($id_project);
 		return $data;
 	}
 
-	private function get_papers_conflicts($id_project)
+	private
+	function get_papers_conflicts($id_project)
 	{
 		$project_databases = $this->get_ids_pro_database($id_project);
 
