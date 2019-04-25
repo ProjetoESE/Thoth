@@ -269,18 +269,10 @@ function edit_general_score() {
 	});
 }
 
-function edit_min_score() {
-	let score = $("#min_score_to_app").val();
+function edit_min_score(element) {
+	let score = element.value;
 	let id_project = $("#id_project").val();
 
-	if(score){
-		Swal({
-			type: 'warning',
-			title: 'Minimum Empty',
-			html: '<label class="font-weight-bold text-warning">Minimum</label> field is empty'
-		});
-		return false
-	}
 
 	$.ajax({
 		type: "POST",
