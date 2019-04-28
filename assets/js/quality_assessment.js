@@ -17,7 +17,7 @@ function add_general_quality_score() {
 			general_score_desc: general_score_desc,
 			id_project: id_project
 		},
-		error: function(){
+		error: function () {
 			Swal({
 				type: 'error',
 				title: 'Error',
@@ -71,7 +71,7 @@ function delete_general_quality_score(value) {
 					id_project: id_project,
 					description: row.data()[2]
 				},
-				error: function(){
+				error: function () {
 					Swal({
 						type: 'error',
 						title: 'Error',
@@ -224,7 +224,7 @@ function edit_general_score() {
 			desc: desc,
 			end: end
 		},
-		error: function(){
+		error: function () {
 			Swal({
 				type: 'error',
 				title: 'Error',
@@ -273,6 +273,15 @@ function edit_min_score(element) {
 	let score = element.value;
 	let id_project = $("#id_project").val();
 
+	console.log(score);
+	if (score == "null") {
+		swal({
+			type: 'warning',
+			title: 'Score Null',
+			html: 'The <strong>score min</strong> can not be empty!'
+		});
+		return false;
+	}
 
 	$.ajax({
 		type: "POST",
@@ -281,7 +290,7 @@ function edit_min_score(element) {
 			id_project: id_project,
 			score: score
 		},
-		error: function(){
+		error: function () {
 			Swal({
 				type: 'error',
 				title: 'Error',
@@ -325,7 +334,7 @@ function add_qa() {
 			qa: qa,
 			weight: weight
 		},
-		error: function(){
+		error: function () {
 			Swal({
 				type: 'error',
 				title: 'Error',
@@ -403,7 +412,7 @@ function delete_qa(value) {
 					id_project: id_project,
 					id: row.data()[0]
 				},
-				error: function(){
+				error: function () {
 					Swal({
 						type: 'error',
 						title: 'Error',
@@ -520,7 +529,7 @@ function edit_qa() {
 			weight: weight,
 			old_id: old_id
 		},
-		error: function(){
+		error: function () {
 			Swal({
 				type: 'error',
 				title: 'Error',
@@ -594,7 +603,7 @@ function add_score_quality() {
 			description: description,
 			id_qa: id_qa
 		},
-		error: function(){
+		error: function () {
 			Swal({
 				type: 'error',
 				title: 'Error',
@@ -677,7 +686,7 @@ function delete_score_quality(value) {
 					id_qa: id_qa,
 					score: score
 				},
-				error: function(){
+				error: function () {
 					Swal({
 						type: 'error',
 						title: 'Error',
@@ -801,7 +810,7 @@ function edit_score_quality() {
 			score: score,
 			id_qa: id_qa
 		},
-		error: function(){
+		error: function () {
 			Swal({
 				type: 'error',
 				title: 'Error',
@@ -864,7 +873,7 @@ function edit_min_score_qa(element) {
 			min: score,
 			qa: qa
 		},
-		error: function(){
+		error: function () {
 			Swal({
 				type: 'error',
 				title: 'Error',

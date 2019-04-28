@@ -222,7 +222,6 @@ class Quality_Model extends CI_Model
 			'id_general_score' => $id_general_score
 		);
 
-
 		$this->db->where('id_project', $id_project);
 		$q = $this->db->get('min_to_app');
 
@@ -233,6 +232,7 @@ class Quality_Model extends CI_Model
 			$data['id_project'] = $id_project;
 			$this->db->insert('min_to_app', $data);
 		}
+
 	}
 
 }
