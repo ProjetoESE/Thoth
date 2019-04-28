@@ -1190,8 +1190,7 @@ class Project_Model extends CI_Model
 
 	}
 
-	public
-	function edit_status_paper($id, $status, $id_project)
+	public function edit_status_paper($id, $status, $id_project)
 	{
 		$project_databases = $this->get_ids_pro_database($id_project);
 

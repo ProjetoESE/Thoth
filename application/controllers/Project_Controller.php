@@ -798,8 +798,8 @@ class Project_Controller extends CI_Controller
 			$unc = ($count_project[3] * 100) / $count_project[6];
 			$progress = 100 - $unc;
 		}
-		if ($progress != 100) {
-			array_push($errors, "There are still " . number_format($unc) . "% of the works to be evaluated");
+		if ($progress == 0) {
+			array_push($errors, "Evaluate at least one job to move on to the next step");
 		}
 		$data['errors'] = $errors;
 		$data['progress'] = number_format((float)$progress, 2);

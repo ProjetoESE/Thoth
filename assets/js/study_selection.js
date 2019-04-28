@@ -24,7 +24,7 @@ $(document).ready(function () {
 			},
 			success: function () {
 				change_old_status(old_status);
-				change_new_status(id_paper, status, index)
+				change_new_status(id_paper, status,index);
 				status_paper(status)
 			}
 		});
@@ -635,7 +635,7 @@ function update_progress() {
 
 }
 
-function change_new_status(id_paper, status, index) {
+function change_new_status(id_paper, status,index) {
 	let criteria_a = $('#criteria_analiese');
 	let new_count = 0;
 	let paper = $('#' + id_paper);
@@ -652,7 +652,8 @@ function change_new_status(id_paper, status, index) {
 			paper.removeClass("text-dark");
 			paper.removeClass("text-info");
 			paper.removeClass("text-warning");
-			table_papers.cell(index, 5).data("Accepted").draw();
+			table_papers.cell(index, 5).data("Accepted");
+		//	paper.html("Accepted");
 			paper.addClass("text-success");
 			text.text("Accepted");
 			text.show();
@@ -671,7 +672,8 @@ function change_new_status(id_paper, status, index) {
 			paper.removeClass("text-dark");
 			paper.removeClass("text-info");
 			paper.removeClass("text-warning");
-			table_papers.cell(index, 5).data("Rejected").draw();
+			table_papers.cell(index, 5).data("Rejected");
+			//paper.html("Rejected");
 			text.text("Rejected");
 			paper.addClass("text-danger");
 			text.show();
@@ -688,7 +690,8 @@ function change_new_status(id_paper, status, index) {
 			paper.removeClass("text-success");
 			paper.removeClass("text-info");
 			paper.removeClass("text-warning");
-			table_papers.cell(index, 5).data("Unclassified").draw();
+			table_papers.cell(index, 5).data("Unclassified");
+			//paper.html("Unclassified");
 			paper.addClass("text-dark");
 			edit.val(3);
 			edit.show();
@@ -705,7 +708,8 @@ function change_new_status(id_paper, status, index) {
 			paper.removeClass("text-success");
 			paper.removeClass("text-dark");
 			paper.removeClass("text-info");
-			table_papers.cell(index, 5).data("Duplicate").draw();
+			table_papers.cell(index, 5).data("Duplicate");
+			//paper.html("Duplicate");
 			paper.addClass("text-warning");
 			edit.val(4);
 			edit.show();
@@ -722,7 +726,8 @@ function change_new_status(id_paper, status, index) {
 			paper.removeClass("text-success");
 			paper.removeClass("text-dark");
 			paper.removeClass("text-warning");
-			table_papers.cell(index, 5).data("Removed").draw();
+			table_papers.cell(index, 5).data("Removed");
+			//paper.html("Removed");
 			paper.addClass("text-info");
 			edit.val(5);
 			edit.show();
@@ -772,11 +777,9 @@ function evaluation_criteria(indexes, selected, inclusion) {
 		success: function (data) {
 			data = JSON.parse(data);
 
-			console.log(old_status);
-
 			if (data.change) {
 				change_old_status(old_status.toString());
-				change_new_status(id_paper, data.status.toString(), index);
+				change_new_status(id_paper, data.status.toString(),index);
 				status_paper(data.status.toString());
 			}
 		}

@@ -4,7 +4,7 @@
 		<input type="hidden" id="id_project" value="<?= $project->get_id(); ?>">
 		<br>
 		<a href="<?= base_url('open/' . $project->get_id()) ?>"
-		   class="btn form-inline btn-outline-primary opt">Review</a>
+		   class="btn form-inline btn-outline-primary opt">Overview</a>
 		<a href="<?= base_url('planning/' . $project->get_id()) ?>"
 		   class="btn form-inline btn-outline-primary opt">Planning</a>
 		<?php if ($this->session->level == "4") { ?>
@@ -671,7 +671,7 @@
 			<div class="input-group col-md-4">
 				<label for="min_score_to_app" class="col-sm-12">Minimum General Score to Approve</label>
 				<select class="form-control" id="min_score_to_app" onchange="edit_min_score(this);">
-					<option value=""></option>
+					<option value="null"></option>
 					<?php $mini = $project->get_score_min();
 					foreach ($project->get_quality_scores() as $scores) {
 						$selected = "";

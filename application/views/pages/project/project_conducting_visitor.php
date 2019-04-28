@@ -4,7 +4,7 @@
 		<h4><?= $project->get_title(); ?></h4>
 		<input type="hidden" id="id_project" value="<?= $project->get_id(); ?>">
 		<a href="<?= base_url('open/' . $project->get_id()) ?>"
-		   class="btn form-inline btn-outline-primary opt">Review</a>
+		   class="btn form-inline btn-outline-primary opt">Overview</a>
 		<a href="<?= base_url('planning/' . $project->get_id()) ?>"
 		   class="btn form-inline btn-outline-primary opt">Planning</a>
 		<a href="<?= base_url('conducting/' . $project->get_id()) ?>"
