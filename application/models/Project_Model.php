@@ -302,7 +302,7 @@ class Project_Model extends CI_Model
 	public function get_project_overview($id_project)
 	{
 		$errors = array();
-		$errors =array_merge($errors, $this->update_progress_planning($id_project));
+		$errors = array_merge($errors, $this->update_progress_planning($id_project));
 		$errors = array_merge($errors, $this->update_progress_import($id_project));
 		$errors = array_merge($errors, $this->update_progress_selection($id_project));
 		$errors = array_merge($errors, $this->update_progress_quality($id_project));
@@ -1765,39 +1765,6 @@ class Project_Model extends CI_Model
 		$this->db->update('papers_selection', $data);
 	}
 
-	public function count_papers_project($id)
-	{
-
-		$project_databases = $this->get_ids_project_database($id);
-
-		$id_bibs = array();
-		if (sizeof($project_databases) > 0) {
-			$id_bibs = $this->get_ids_bibs($project_databases);
-		}
-		$total = 0;
-		$cont[1] = 0;
-		$cont[2] = 0;
-		$cont[3] = 0;
-		$cont[4] = 0;
-		$cont[5] = 0;
-		if (sizeof($id_bibs) > 0) {
-			$id_papers = $this->get_ids_papers($id_bibs);
-			$this->db->select('status_selection, COUNT(*) as count');
-			$this->db->from('papers');
-			$this->db->group_by('status_selection');
-			$this->db->where_in('id_paper', $id_papers);
-			$query = $this->db->get();
-
-			foreach ($query->result() as $row) {
-				$cont[$row->status_selection] = $row->count;
-				$total += $row->count;
-			}
-		}
-		$cont[6] = $total;
-
-		return $cont;
-	}
-
 	public function count_papers_reviewer($id_project)
 	{
 		$project_databases = $this->get_ids_project_database($id_project);
@@ -1842,6 +1809,46 @@ class Project_Model extends CI_Model
 
 
 		return $data;
+	}
+
+	public function count_papers_sel_by_user($id_project)
+	{
+		$project_databases = $this->get_ids_project_database($id_project);
+		$total = 0;
+		$cont[1] = 0;
+		$cont[2] = 0;
+		$cont[3] = 0;
+		$cont[4] = 0;
+		$cont[5] = 0;
+		$cont[6] = 0;
+
+		$id_bibs = array();
+		if (sizeof($project_databases) > 0) {
+			$id_bibs = $this->get_ids_bibs($project_databases);
+		}
+
+		$id_papers = array();
+		if (sizeof($id_bibs) > 0) {
+			$id_papers = $this->get_ids_papers($id_bibs);
+		}
+		if (sizeof($id_papers) > 0) {
+			$id_user = $this->get_id_name_user($this->session->email);
+			$this->db->select('id_status, COUNT(*) as count');
+			$this->db->from('papers_selection');
+			$this->db->group_by('id_status');
+			$this->db->where('id_user', $id_user[0]);
+			$this->db->where_in('id_paper', $id_papers);
+			$query = $this->db->get();
+
+			foreach ($query->result() as $row) {
+				$cont[$row->id_status] = $row->count;
+				$total += $row->count;
+			}
+			$cont[6] = $total;
+		}
+
+
+		return $cont;
 	}
 
 	public function get_conflicts($id_project)

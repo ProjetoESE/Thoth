@@ -331,7 +331,7 @@ class Project_Controller extends CI_Controller
 			$this->load->model("Project_Model");
 			$this->session->set_userdata('level', $this->Project_Model->get_level($this->session->email, $id));
 			$data['project'] = $this->Project_Model->get_project_selection($id);
-			$data['count_papers'] = $this->Project_Model->count_papers_by_status_sel($id);
+			$data['count_papers'] = $this->Project_Model->count_papers_sel_by_user($id);
 
 			$this->load_views('pages/project/project_study_selection', $data);
 
@@ -816,7 +816,7 @@ class Project_Controller extends CI_Controller
 			$this->load->model("Project_Model");
 			$this->session->set_userdata('level', $this->Project_Model->get_level($this->session->email, $id));
 			$data['project'] = $this->Project_Model->get_project_reviewer_selection($id);
-			$data['count_project'] = $this->Project_Model->count_papers_project($id);
+			$data['count_project'] = $this->Project_Model->count_papers_by_status_sel($id);
 			$data['count_papers'] = $this->Project_Model->count_papers_reviewer($id);
 			$data['conflicts'] = $this->Project_Model->get_conflicts($id);
 			$data['status'] = $this->Project_Model->get_status();
