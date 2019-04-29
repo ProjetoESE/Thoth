@@ -72,7 +72,8 @@
 						</tr>
 						</thead>
 						<tbody>
-						<?php foreach ($project->get_domains() as $domain) { ?>
+						<?php
+						foreach ($project->get_domains() as $domain) { ?>
 							<tr>
 								<td><?= $domain ?></td>
 								<td>
@@ -308,7 +309,7 @@
 					<label for="databases" class="opt col-sm-12">Database </label>
 					<select class="form-control" id="databases">
 						<?php foreach ($databases as $database) { ?>
-							<option value="<?= $database->get_name() ?>"><?= $database->get_name() ?></option>
+							<option value="<?= $database ?>"><?= $database ?></option>
 						<?php } ?>
 					</select>
 					<div class="input-group-append">

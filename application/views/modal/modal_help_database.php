@@ -16,7 +16,7 @@
 					supports six software engineering databases. These are:</p>
 				<ul>
 					<?php foreach ($databases as $database) { ?>
-						<li><?= $database->get_name() ?></li>
+						<li><?= $database ?></li>
 					<?php } ?>
 				</ul>
 				<p>You can add any database of your choice, and set a search string for it.</p>

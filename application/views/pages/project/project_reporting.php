@@ -19,7 +19,7 @@
 	<div class="card-body">
 		<h4>Reporting</h4>
 		<?php
-		if (strval($progress_planning['progress']) == strval(100) && strval($progress_import_studies['progress']) == strval(100) && strval($progress_study_selection['progress']) > strval(0)) {
+		if ($project->get_planning() == 100 && $project->get_import() == 100 && $project->get_selection() > 0 && $project->get_quality() > 0 && $project->get_extraction() > 0) {
 			?>
 			<script src="<?= base_url('assets/js/chars.js'); ?>"></script>
 		<br>
@@ -37,13 +37,12 @@
 		<br>
 			<div id="funnel_chart"></div><?php
 		} else {
-		if (sizeof($progress_planning['errors']) > 0) {
 		?>
 			<div class="alert alert-warning container-fluid alert-dismissible fade show" role="alert">
-				<h5>Complete Planning</h5>
+				<h5>Complete the pieces to advance</h5>
 				<ul>
 					<?php
-					foreach ($progress_planning['errors'] as $error) {
+					foreach ($project->get_errors() as $error) {
 						?>
 						<li><?= $error ?></li>
 						<?php
@@ -51,37 +50,7 @@
 					?>
 				</ul>
 			</div>
-		<?php }
-		if (sizeof($progress_import_studies['errors']) > 0) { ?>
-			<div class="alert alert-warning container-fluid alert-dismissible fade show" role="alert">
-				<h5>Complete Import Studies</h5>
-				<ul>
-					<?php
-					foreach ($progress_import_studies['errors'] as $error) {
-						?>
-						<li><?= $error ?></li>
-						<?php
-					}
-					?>
-				</ul>
-			</div>
-			<?php
-		}
-		if (sizeof($progress_study_selection['errors']) > 0) { ?>
-			<div class="alert alert-warning container-fluid alert-dismissible fade show" role="alert">
-				<h5>Complete Study Selection</h5>
-				<ul>
-					<?php
-					foreach ($progress_study_selection['errors'] as $error) {
-						?>
-						<li><?= $error ?></li>
-						<?php
-					}
-					?>
-				</ul>
-			</div>
-			<?php
-		}
+		<?php
 		}
 		?>
 	</div>

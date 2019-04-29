@@ -36,7 +36,7 @@ $(document).ready(function () {
 
 		$.ajax({
 			type: "POST",
-			url: base_url + 'Project_Controller/get_paper/',
+			url: base_url + 'Project_Controller/get_paper_selection/',
 			data: {
 				id_project: id_project,
 				id: rowData[0][0]
@@ -199,7 +199,7 @@ $(document).ready(function () {
 		let note = $('#paper_note').val();
 		$.ajax({
 			type: "POST",
-			url: base_url + 'Project_Controller/update_note/',
+			url: base_url + 'Project_Controller/update_note_selection/',
 			data: {
 				id_project: id_project,
 				id_paper: id_paper,
