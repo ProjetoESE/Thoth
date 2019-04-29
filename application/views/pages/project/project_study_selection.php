@@ -54,7 +54,7 @@
 		</div>
 		<br>
 		<?php
-		if (strval($progress_planning['progress']) == strval(100) && strval($progress_import_studies['progress']) == strval(100)) {
+		if ($project->get_planning() == 100 && $project->get_import() == 100) {
 
 			$acc = number_format((float)($count_papers[1] * 100) / $count_papers[6], 2);
 			$rej = number_format((float)($count_papers[2] * 100) / $count_papers[6], 2);
@@ -223,37 +223,21 @@
 			</table>
 			<?php
 		} else {
-			if (sizeof($progress_planning['errors']) > 0) {
-				?>
-				<div class="alert alert-warning container-fluid alert-dismissible fade show" role="alert">
-					<h5>Complete Planning</h5>
-					<ul>
-						<?php
-						foreach ($progress_planning['errors'] as $error) {
-							?>
-							<li><?= $error ?></li>
-							<?php
-						}
+
+			?>
+			<div class="alert alert-warning container-fluid alert-dismissible fade show" role="alert">
+				<h5>Complete the pieces to advance</h5>
+				<ul>
+					<?php
+					foreach ($project->get_errors() as $error) {
 						?>
-					</ul>
-				</div>
-			<?php }
-			if (sizeof($progress_import_studies['errors']) > 0) { ?>
-				<div class="alert alert-warning container-fluid alert-dismissible fade show" role="alert">
-					<h5>Complete Import Studies</h5>
-					<ul>
+						<li><?= $error ?></li>
 						<?php
-						foreach ($progress_import_studies['errors'] as $error) {
-							?>
-							<li><?= $error ?></li>
-							<?php
-						}
-						?>
-					</ul>
-				</div>
-				<?php
-			}
-		}
+					}
+					?>
+				</ul>
+			</div>
+		<?php }
 		?>
 	</div>
 </div>

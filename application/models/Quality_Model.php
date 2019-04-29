@@ -235,4 +235,88 @@ class Quality_Model extends CI_Model
 
 	}
 
+	public function get_project($id_project){
+		$project = new Project();
+		$this->db->select('title, id_project');
+		$this->db->from('project');
+		$this->db->where('id_project', $id_project);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			$project->set_title($row->title);
+			$project->set_id($row->id_project);
+		}
+
+		$this->db->select('*');
+		$this->db->from('general_score');
+		$this->db->where('id_project', $id_project);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			$score = new Quality_Score();
+			$score->set_description($row->description);
+			$score->set_end_interval($row->end);
+			$score->set_start_interval($row->start);
+			$project->set_quality_scores($score);
+		}
+
+
+		$this->db->select('description,end,start');
+		$this->db->from('min_to_app');
+		$this->db->join('general_score', 'min_to_app.id_general_score = general_score.id_general_score');
+		$this->db->where('min_to_app.id_project', $id_project);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			$score = new Quality_Score();
+			$score->set_description($row->description);
+			$score->set_end_interval($row->end);
+			$score->set_start_interval($row->start);
+			$project->set_score_min($score);
+		}
+
+		$this->db->select('*');
+		$this->db->from('question_quality');
+		$this->db->where('id_project', $id_project);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			$qa = new Question_Quality();
+			$qa->set_description($row->description);
+			$qa->set_id($row->id);
+			$qa->set_weight($row->weight);
+
+
+			$this->db->select('*');
+			$this->db->from('score_quality');
+			$this->db->where('id_score', $row->min_to_app);
+			$query3 = $this->db->get();
+
+			foreach ($query3->result() as $row3) {
+				$sc = new Score_Quality();
+				$sc->set_score($row3->score);
+				$sc->set_description($row3->description);
+				$sc->set_score_rule($row3->score_rule);
+				$qa->set_min_to_approve($sc);
+			}
+
+			$this->db->select('*');
+			$this->db->from('score_quality');
+			$this->db->where('id_qa', $row->id_qa);
+			$query2 = $this->db->get();
+
+			foreach ($query2->result() as $row2) {
+				$sc = new Score_Quality();
+				$sc->set_score($row2->score);
+				$sc->set_description($row2->description);
+				$sc->set_score_rule($row2->score_rule);
+				$qa->set_scores($sc);
+			}
+
+			$project->set_questions_quality($qa);
+		}
+
+		return $project;
+	}
+
 }

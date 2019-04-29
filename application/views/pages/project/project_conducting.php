@@ -10,17 +10,17 @@
 		<?php if ($this->session->level == "4") { ?>
 			<a href="<?= base_url('study_selection_adm/' . $project->get_id()) ?>"
 			   class="btn form-inline btn-outline-primary opt">Conducting</a>
-		<?php } else {?>
+		<?php } else { ?>
 			<a href="<?= base_url('conducting/' . $project->get_id()) ?>"
 			   class="btn form-inline btn-outline-primary opt">Conducting</a>
-		<?php }?>
+		<?php } ?>
 		<a href="<?= base_url('reporting/' . $project->get_id()) ?>"
 		   class="btn form-inline btn-outline-primary opt">Reporting</a>
 	</div>
 	<div class="card-body">
 		<h4>Conducting</h4>
 		<?php
-		if (strval($progress_planning['progress']) == strval(100)) {
+		if ($project->get_planning() == 100) {
 			?>
 			<ul class="nav nav-pills nav-justified">
 				<?php if ($this->session->level != "4") { ?>
@@ -119,10 +119,10 @@
 		} else {
 			?>
 			<div class="alert alert-warning container-fluid alert-dismissible fade show" role="alert">
-				<h5>Complete Planning</h5>
+				<h5>Complete the pieces to advance</h5>
 				<ul>
 					<?php
-					foreach ($progress_planning['errors'] as $error) {
+					foreach ($project->get_errors() as $error) {
 						?>
 						<li><?= $error ?></li>
 						<?php

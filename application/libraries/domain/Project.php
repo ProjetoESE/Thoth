@@ -34,12 +34,127 @@ class Project
 	private $terms = array();
 	private $members = array();
 	private $quality_scores = array();
+	private $planning;
+	private $import;
+	private $selection;
+	private $quality;
+	private $extraction;
+	private $errors = array();
 
 	/**
 	 * Project constructor.
 	 */
 	public function __construct()
 	{
+	}
+
+	/**
+	 * @return array
+	 */
+	public function get_errors()
+	{
+		return $this->errors;
+	}
+
+	/**
+	 * @param array $errors
+	 * @return Project
+	 */
+	public function set_errors($errors)
+	{
+		$this->errors = $errors;
+		return $this;
+	}
+
+
+	/**
+	 * @return mixed
+	 */
+	public function get_planning()
+	{
+		return $this->planning;
+	}
+
+	/**
+	 * @param mixed $planning
+	 * @return Project
+	 */
+	public function set_planning($planning)
+	{
+		$this->planning = $planning;
+		return $this;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function get_import()
+	{
+		return $this->import;
+	}
+
+	/**
+	 * @param mixed $import
+	 * @return Project
+	 */
+	public function set_import($import)
+	{
+		$this->import = $import;
+		return $this;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function get_selection()
+	{
+		return $this->selection;
+	}
+
+	/**
+	 * @param mixed $selection
+	 * @return Project
+	 */
+	public function set_selection($selection)
+	{
+		$this->selection = $selection;
+		return $this;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function get_quality()
+	{
+		return $this->quality;
+	}
+
+	/**
+	 * @param mixed $quality
+	 * @return Project
+	 */
+	public function set_quality($quality)
+	{
+		$this->quality = $quality;
+		return $this;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function get_extraction()
+	{
+		return $this->extraction;
+	}
+
+	/**
+	 * @param mixed $extraction
+	 * @return Project
+	 */
+	public function set_extraction($extraction)
+	{
+		$this->extraction = $extraction;
+		return $this;
 	}
 
 	/**
@@ -305,7 +420,7 @@ class Project
 			throw  new  InvalidArgumentException("Project Domains Invalid!");
 		}
 
-		array_push($this->domains, $domains);
+		$this->domains = $domains;
 	}
 
 	/**
@@ -327,7 +442,7 @@ class Project
 		if (is_null($languages) || empty($languages)) {
 			throw  new  InvalidArgumentException("Project Languages Invalid!");
 		}
-		array_push($this->languages, $languages);
+		$this->languages = $languages;
 	}
 
 	/**
@@ -350,7 +465,7 @@ class Project
 			throw  new  InvalidArgumentException("Project Study Types Invalid!");
 		}
 
-		array_push($this->study_types, $study_types);
+		$this->study_types = $study_types;
 	}
 
 	/**
@@ -372,7 +487,7 @@ class Project
 		if (is_null($keywords) || empty($keywords)) {
 			throw  new  InvalidArgumentException("Project Keywords Invalid!");
 		}
-		array_push($this->keywords, $keywords);
+		$this->keywords = $keywords;
 	}
 
 	/**
@@ -394,7 +509,7 @@ class Project
 		if (is_null($research_questions)) {
 			throw  new  InvalidArgumentException("Project Keywords Invalid!");
 		}
-		array_push($this->research_questions, $research_questions);
+		$this->research_questions = $research_questions;
 	}
 
 	/**
@@ -416,7 +531,7 @@ class Project
 		if (is_null($databases) || empty($databases)) {
 			throw  new  InvalidArgumentException("Project Databases Invalid!");
 		}
-		array_push($this->databases, $databases);
+		$this->databases = $databases;
 	}
 
 	/**
@@ -438,7 +553,7 @@ class Project
 		if (is_null($search_strings) || empty($search_strings)) {
 			throw  new  InvalidArgumentException("Project Search Strings Invalid!");
 		}
-		array_push($this->search_strings, $search_strings);
+		$this->search_strings = $search_strings;
 	}
 
 	/**
@@ -482,7 +597,7 @@ class Project
 		if (is_null($inclusion_criteria) || empty($inclusion_criteria)) {
 			throw  new  InvalidArgumentException("Project Inclusion Criteria Invalid!");
 		}
-		array_push($this->inclusion_criteria, $inclusion_criteria);
+		$this->inclusion_criteria = $inclusion_criteria;
 	}
 
 	/**
@@ -504,7 +619,7 @@ class Project
 		if (is_null($exclusion_criteria) || empty($exclusion_criteria)) {
 			throw  new  InvalidArgumentException("Project Exclusion Criteria Invalid!");
 		}
-		array_push($this->exclusion_criteria, $exclusion_criteria);
+		$this->exclusion_criteria = $exclusion_criteria;
 	}
 
 	/**
@@ -526,7 +641,7 @@ class Project
 		if (is_null($questions_quality) || empty($questions_quality)) {
 			throw  new  InvalidArgumentException("Project Questions Quality Invalid!");
 		}
-		array_push($this->questions_quality, $questions_quality);
+		$this->questions_quality = $questions_quality;
 	}
 
 	/**
@@ -548,7 +663,7 @@ class Project
 		if (is_null($questions_extraction) || empty($questions_extraction)) {
 			throw  new  InvalidArgumentException("Project Questions extraction Invalid!");
 		}
-		array_push($this->questions_extraction, $questions_extraction);
+		$this->questions_extraction = $questions_extraction;
 	}
 
 	/**
@@ -570,7 +685,7 @@ class Project
 		if (is_null($papers) || empty($papers)) {
 			throw  new  InvalidArgumentException("Project Papers Invalid!");
 		}
-		array_push($this->papers, $papers);
+		$this->papers = $papers;
 	}
 
 	/**
@@ -592,7 +707,7 @@ class Project
 		if (is_null($terms) || empty($terms)) {
 			throw  new  InvalidArgumentException("Project Terms Invalid!");
 		}
-		array_push($this->terms, $terms);
+		$this->terms = $terms;
 	}
 
 	/**
@@ -615,7 +730,7 @@ class Project
 			throw  new  InvalidArgumentException("Project Members Invalid!");
 		}
 
-		array_push($this->members, $members);
+		$this->members = $members;
 	}
 
 	/**
@@ -637,7 +752,7 @@ class Project
 		if (is_null($quality_scores) || empty($quality_scores)) {
 			throw  new  InvalidArgumentException("Project Members Invalid!");
 		}
-		array_push($this->quality_scores, $quality_scores);
+		$this->quality_scores = $quality_scores;
 	}
 
 }

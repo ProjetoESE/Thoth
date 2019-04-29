@@ -50,23 +50,35 @@
 		<label><strong>Quality Assessement</strong></label>
 		<br>
 		<?php
-		if (strval($progress_planning['progress']) == strval(100) && strval($progress_import_studies['progress']) == strval(100) && strval($progress_study_selection['progress']) > strval(0)) {
+		if ($project->get_planning() == 100 && $project->get_import() == 100 && $project->get_selection() > 0) {
 			?>
 			<div class="form-inline">
-				<div class="input-group col-md-3">
+				<div class="input-group col-md-2">
 					<label class="text-success">
 						<span class="fas fa-check fa-lg"></span>
 						Accepted: 1
 					</label>
 				</div>
-				<div class="input-group col-md-3">
+				<div class="input-group col-md-2">
 					<label class="text-danger">
 						<span class="fas fa-times fa-lg"></span>
 						Rejected: 1
 					</label>
 				</div>
 				<div class="input-group col-md-3">
+					<label class="text-dark">
+						<span class="fas fa-question fa-lg"></span>
+						Unclassified: 2
+					</label>
+				</div>
+				<div class="input-group col-md-2">
 					<label class="text-info">
+						<span class="fas fa-trash-alt fa-lg"></span>
+						Removed: 2
+					</label>
+				</div>
+				<div class="input-group col-md-3">
+					<label class="text-secondary">
 						<span class="fas fa-bars fa-lg"></span>
 						Total: 2
 					</label>
@@ -144,13 +156,12 @@
 			</table>
 			<?php
 		} else {
-			if (sizeof($progress_planning['errors']) > 0) {
 				?>
 				<div class="alert alert-warning container-fluid alert-dismissible fade show" role="alert">
-					<h5>Complete Planning</h5>
+					<h5>Complete the pieces to advance</h5>
 					<ul>
 						<?php
-						foreach ($progress_planning['errors'] as $error) {
+						foreach ($project->get_errors() as $error) {
 							?>
 							<li><?= $error ?></li>
 							<?php
@@ -158,37 +169,7 @@
 						?>
 					</ul>
 				</div>
-			<?php }
-			if (sizeof($progress_import_studies['errors']) > 0) { ?>
-				<div class="alert alert-warning container-fluid alert-dismissible fade show" role="alert">
-					<h5>Complete Import Studies</h5>
-					<ul>
-						<?php
-						foreach ($progress_import_studies['errors'] as $error) {
-							?>
-							<li><?= $error ?></li>
-							<?php
-						}
-						?>
-					</ul>
-				</div>
-				<?php
-			}
-			if (sizeof($progress_study_selection['errors']) > 0) { ?>
-				<div class="alert alert-warning container-fluid alert-dismissible fade show" role="alert">
-					<h5>Complete Study Selection</h5>
-					<ul>
-						<?php
-						foreach ($progress_study_selection['errors'] as $error) {
-							?>
-							<li><?= $error ?></li>
-							<?php
-						}
-						?>
-					</ul>
-				</div>
-				<?php
-			}
+			<?php
 		}
 		?>
 	</div>
