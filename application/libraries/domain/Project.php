@@ -173,7 +173,7 @@ class Project
 	 */
 	public function set_id($id)
 	{
-		if (is_null($id) || $id) {
+		if (is_null($id)) {
 			throw  new  InvalidArgumentException("Project Id Invalid!");
 		}
 		$this->id = $id;
@@ -218,7 +218,7 @@ class Project
 	 */
 	public function set_description($description)
 	{
-		if (is_null($description) || $description) {
+		if (is_null($description)) {
 			throw  new  InvalidArgumentException("Project Description Invalid!");
 		}
 		$this->description = $description;
@@ -240,7 +240,7 @@ class Project
 	 */
 	public function set_objectives($objectives)
 	{
-		if (is_null($objectives) || $objectives) {
+		if (is_null($objectives)) {
 			throw  new  InvalidArgumentException("Project Objectives Invalid!");
 		}
 		$this->objectives = $objectives;
@@ -416,7 +416,7 @@ class Project
 	 */
 	public function set_domains($domains)
 	{
-		if (is_null($domains) || $domains) {
+		if (is_null($domains)) {
 			throw  new  InvalidArgumentException("Project Domains Invalid!");
 		}
 
@@ -439,7 +439,7 @@ class Project
 	 */
 	public function set_languages($languages)
 	{
-		if (is_null($languages) || $languages) {
+		if (is_null($languages)) {
 			throw  new  InvalidArgumentException("Project Languages Invalid!");
 		}
 		$this->languages = $languages;
@@ -484,7 +484,7 @@ class Project
 	 */
 	public function set_keywords($keywords)
 	{
-		if (is_null($keywords) || $keywords) {
+		if (is_null($keywords)) {
 			throw  new  InvalidArgumentException("Project Keywords Invalid!");
 		}
 		$this->keywords = $keywords;
@@ -528,7 +528,7 @@ class Project
 	 */
 	public function set_databases($databases)
 	{
-		if (is_null($databases) || $databases) {
+		if (is_null($databases) ) {
 			throw  new  InvalidArgumentException("Project Databases Invalid!");
 		}
 		$this->databases = $databases;
@@ -550,7 +550,7 @@ class Project
 	 */
 	public function set_search_strings($search_strings)
 	{
-		if (is_null($search_strings) || $search_strings) {
+		if (is_null($search_strings)) {
 			throw  new  InvalidArgumentException("Project Search Strings Invalid!");
 		}
 		$this->search_strings = $search_strings;
@@ -572,7 +572,7 @@ class Project
 	 */
 	public function set_search_strategy($search_strategy)
 	{
-		if (is_null($search_strategy) || $search_strategy) {
+		if (is_null($search_strategy)) {
 			throw  new  InvalidArgumentException("Project Search Strategy Invalid!");
 		}
 		$this->search_strategy = $search_strategy;
@@ -594,7 +594,7 @@ class Project
 	 */
 	public function set_inclusion_criteria($inclusion_criteria)
 	{
-		if (is_null($inclusion_criteria) || $inclusion_criteria) {
+		if (is_null($inclusion_criteria)) {
 			throw  new  InvalidArgumentException("Project Inclusion Criteria Invalid!");
 		}
 		$this->inclusion_criteria = $inclusion_criteria;
@@ -616,7 +616,7 @@ class Project
 	 */
 	public function set_exclusion_criteria($exclusion_criteria)
 	{
-		if (is_null($exclusion_criteria) || $exclusion_criteria) {
+		if (is_null($exclusion_criteria) ) {
 			throw  new  InvalidArgumentException("Project Exclusion Criteria Invalid!");
 		}
 		$this->exclusion_criteria = $exclusion_criteria;
@@ -638,7 +638,7 @@ class Project
 	 */
 	public function set_questions_quality($questions_quality)
 	{
-		if (is_null($questions_quality) || $questions_quality) {
+		if (is_null($questions_quality) ) {
 			throw  new  InvalidArgumentException("Project Questions Quality Invalid!");
 		}
 		$this->questions_quality = $questions_quality;
@@ -660,7 +660,7 @@ class Project
 	 */
 	public function set_questions_extraction($questions_extraction)
 	{
-		if (is_null($questions_extraction) || $questions_extraction) {
+		if (is_null($questions_extraction)) {
 			throw  new  InvalidArgumentException("Project Questions extraction Invalid!");
 		}
 		$this->questions_extraction = $questions_extraction;
@@ -704,7 +704,7 @@ class Project
 	 */
 	public function set_terms($terms)
 	{
-		if (is_null($terms) || $terms) {
+		if (is_null($terms)) {
 			throw  new  InvalidArgumentException("Project Terms Invalid!");
 		}
 		$this->terms = $terms;
@@ -726,7 +726,7 @@ class Project
 	 */
 	public function set_members($members)
 	{
-		if (is_null($members) || $members) {
+		if (is_null($members)) {
 			throw  new  InvalidArgumentException("Project Members Invalid!");
 		}
 
@@ -749,7 +749,7 @@ class Project
 	 */
 	public function set_quality_scores($quality_scores)
 	{
-		if (is_null($quality_scores) || $quality_scores) {
+		if (is_null($quality_scores)) {
 			throw  new  InvalidArgumentException("Project Members Invalid!");
 		}
 		$this->quality_scores = $quality_scores;
