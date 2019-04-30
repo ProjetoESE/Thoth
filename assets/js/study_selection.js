@@ -8,7 +8,7 @@ $(document).ready(function () {
 		let old_status = table_papers.cell(index, 5).data();
 		$.ajax({
 			type: "POST",
-			url: base_url + 'Project_Controller/edit_status_selection/',
+			url: base_url + 'Selection_Controller/edit_status_selection/',
 			data: {
 				id_project: id_project,
 				id_paper: id_paper,
@@ -36,7 +36,7 @@ $(document).ready(function () {
 
 		$.ajax({
 			type: "POST",
-			url: base_url + 'Project_Controller/get_paper_selection/',
+			url: base_url + 'Selection_Controller/get_paper_selection/',
 			data: {
 				id_project: id_project,
 				id: rowData[0][0]
@@ -199,7 +199,7 @@ $(document).ready(function () {
 		let note = $('#paper_note').val();
 		$.ajax({
 			type: "POST",
-			url: base_url + 'Project_Controller/update_note_selection/',
+			url: base_url + 'Selection_Controller/update_note_selection/',
 			data: {
 				id_project: id_project,
 				id_paper: id_paper,
@@ -269,7 +269,7 @@ $(document).ready(function () {
 
 		$.ajax({
 			type: "POST",
-			url: base_url + 'Project_Controller/get_paper_conflict/',
+			url: base_url + 'Selection_Controller/get_paper_conflict/',
 			data: {
 				id_project: id_project,
 				id: rowData[0][0]
@@ -405,7 +405,7 @@ $(document).ready(function () {
 		let old_status = $('#old_status_conf').val();
 		$.ajax({
 			type: "POST",
-			url: base_url + 'Project_Controller/edit_status_paper/',
+			url: base_url + 'Selection_Controller/edit_status_paper/',
 			data: {
 				id_project: id_project,
 				id_paper: id_paper,
@@ -757,7 +757,7 @@ function evaluation_criteria(indexes, selected, inclusion) {
 
 	$.ajax({
 		type: "POST",
-		url: base_url + 'Project_Controller/evaluation_criteria/',
+		url: base_url + 'Selection_Controller/evaluation_criteria/',
 		data: {
 			id_project: id_project,
 			id_paper: id_paper,

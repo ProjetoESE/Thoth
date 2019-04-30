@@ -28,5 +28,44 @@
 					class="fas fa-plus"></span>
 			</button>
 		</div>
+		<br>
+		<h6>Members</h6>
+		<table id="table_members" class="table table-responsive-sm">
+			<caption>List of members</caption>
+			<thead>
+			<th>Name</th>
+			<th>Email</th>
+			<th>Level</th>
+			<th>Delete</th>
+			</thead>
+			<tbody>
+			<?php foreach ($project->get_members() as $mem) { ?>
+				<tr>
+					<td><?= $mem->get_name(); ?></td>
+					<td><?= $mem->get_email(); ?></td>
+					<td>
+						<select class="form-control" onchange="edit_level(this)">
+							<?php
+							foreach ($levels as $level) {
+								$selected = "";
+								if ($level == $mem->get_level()) {
+									$selected = "selected";
+								}
+								?>
+								<option <?= $selected ?>
+									value="<?= $level ?>"><?= $level ?></option>
+							<?php } ?>
+						</select>
+					</td>
+					<td>
+						<button class="btn btn-danger"
+								onClick="delete_member($(this).parents('tr'))">
+							<span class="far fa-trash-alt"></span>
+						</button>
+					</td>
+				</tr>
+			<?php } ?>
+			</tbody>
+		</table>
 	</div>
 </div>

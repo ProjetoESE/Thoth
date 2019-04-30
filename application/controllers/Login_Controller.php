@@ -1,9 +1,10 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Login_Controller extends CI_Controller
-{
+require_once APPPATH . 'controllers\Pattern_Controller.php';
 
+class Login_Controller extends Pattern_Controller
+{
 	public function index()
 	{
 
@@ -120,12 +121,6 @@ class Login_Controller extends CI_Controller
 			$this->session->set_flashdata('error', $e->getMessage());
 			redirect(base_url());
 		}
-	}
-
-	private function insert_log($activity, $module, $id_project)
-	{
-		$this->load->model("User_Model");
-		$this->User_Model->insert_log($activity, $module, $id_project);
 	}
 
 }

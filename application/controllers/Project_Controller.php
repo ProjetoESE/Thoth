@@ -1,23 +1,261 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Project_Controller extends CI_Controller
+require_once APPPATH . 'controllers\Pattern_Controller.php';
+
+class Project_Controller extends Pattern_Controller
 {
-
-	public function index()
-	{
-	}
-
 	public function open($id)
 	{
 		try {
 			$this->load->model("Project_Model");
-			$this->session->set_userdata('level', $this->Project_Model->get_level($this->session->email, $id));
+			$this->validate_level($id, array(1, 2, 3, 4));
 			$this->export_doc($id);
 			$data['project'] = $this->Project_Model->get_project_overview($id);
 			$data['logs'] = $this->Project_Model->get_logs_project($id);
 
 			$this->load_views('pages/project/project', $data);
+
+		} catch (Exception $e) {
+			$this->session->set_flashdata('error', $e->getMessage());
+			redirect(base_url());
+		}
+	}
+
+	public function planning($id)
+	{
+		try {
+			$this->load->model("Project_Model");
+			$this->validate_level($id, array(1, 2, 3, 4));
+			$data['project'] = $this->Project_Model->get_project_planning($id);
+			$data['languages'] = $this->Project_Model->get_all_languages();
+			$data['study_types'] = $this->Project_Model->get_all_study_types();
+			$data['databases'] = $this->Project_Model->get_all_databases();
+			$data['rules'] = $this->Project_Model->get_all_rules();
+			$data['question_types'] = $this->Project_Model->get_all_types();
+
+			$this->load_views('pages/project/project_planning', $data);
+		} catch (Exception $e) {
+			$this->session->set_flashdata('error', $e->getMessage());
+			redirect(base_url());
+		}
+	}
+
+	public function conducting($id)
+	{
+		try {
+			$this->load->model("Project_Model");
+			$this->validate_level($id, array(1, 2, 3, 4));
+			$data['project'] = $this->Project_Model->get_project_import($id);
+			$data['bib'] = $this->Project_Model->get_name_bibs($id);
+			$data['num_papers'] = $this->Project_Model->get_num_papers($id);
+
+
+			$this->load_views('pages/project/project_conducting', $data);
+
+		} catch (Exception $e) {
+			$this->session->set_flashdata('error', $e->getMessage());
+			redirect(base_url());
+		}
+	}
+
+	public function study_selection($id)
+	{
+		try {
+			$this->load->model("Project_Model");
+			$this->validate_level($id, array(1, 2, 3, 4));
+			$data['project'] = $this->Project_Model->get_project_selection($id);
+			$data['count_papers'] = $this->Project_Model->count_papers_sel_by_user($id);
+
+			$this->load_views('pages/project/project_study_selection', $data);
+
+		} catch (Exception $e) {
+			$this->session->set_flashdata('error', $e->getMessage());
+			redirect(base_url());
+		}
+	}
+
+	public function reporting($id)
+	{
+		try {
+			$this->load->model("Project_Model");
+			$this->validate_level($id, array(1, 2, 3, 4));
+			$data['project'] = $this->Project_Model->get_project_report($id);
+
+			$this->load_views('pages/project/project_reporting', $data);
+
+		} catch (Exception $e) {
+			$this->session->set_flashdata('error', $e->getMessage());
+			redirect(base_url());
+		}
+	}
+
+	public function review_study_selection($id)
+	{
+		try {
+			$this->load->model("Project_Model");
+			$this->load->model("Selection_Model");
+			$this->validate_level($id, array(1, 2, 3, 4));
+			$data['project'] = $this->Project_Model->get_project_reviewer_selection($id);
+			$data['count_project'] = $this->Project_Model->count_papers_by_status_sel($id);
+			$data['count_papers'] = $this->Project_Model->count_papers_reviewer($id);
+			$data['conflicts'] = $this->Selection_Model->get_conflicts($id);
+			$data['status'] = $this->Project_Model->get_status();
+
+
+			$this->load_views('pages/project/project_review_study_selection', $data);
+
+		} catch (Exception $e) {
+			$this->session->set_flashdata('error', $e->getMessage());
+			redirect(base_url());
+		}
+	}
+
+	public function quality_assessement($id)
+	{
+		try {
+			$this->load->model("Project_Model");
+			$this->validate_level($id, array(1, 2, 3, 4));
+			$data['project'] = $this->Project_Model->get_project_quality($id);
+
+			$this->load_views('pages/project/project_quality_assessement', $data);
+
+		} catch (Exception $e) {
+			$this->session->set_flashdata('error', $e->getMessage());
+			redirect(base_url());
+		}
+	}
+
+	public function data_extraction($id)
+	{
+		try {
+			$this->load->model("Project_Model");
+			$this->validate_level($id, array(1, 2, 3, 4));
+			$data['project'] = $this->Project_Model->get_project_extraction($id);
+
+			$this->load_views('pages/project/project_data_extraction', $data);
+
+		} catch (Exception $e) {
+			$this->session->set_flashdata('error', $e->getMessage());
+			redirect(base_url());
+		}
+	}
+
+	public function new_project()
+	{
+		try {
+			$this->logged_in();
+			load_templates('pages/project/project_new', null);
+		} catch (Exception $e) {
+			$this->session->set_flashdata('error', $e->getMessage());
+			redirect(base_url());
+		}
+	}
+
+	public function add_research($id)
+	{
+		try {
+			$this->logged_in();
+			$this->load->model("Project_Model");
+			$data['project'] = $this->Project_Model->get_project_members($id);
+			$data['users'] = $this->Project_Model->get_users($id);
+			$data['levels'] = $this->Project_Model->get_levels();
+			load_templates('pages/project/project_add_research', $data);
+		} catch (Exception $e) {
+			$this->session->set_flashdata('error', $e->getMessage());
+			redirect(base_url());
+		}
+	}
+
+	public function edit($id)
+	{
+		try {
+			$this->load->model("Project_Model");
+			$data['project'] = $this->Project_Model->get_project_edit($id);
+			load_templates('pages/project/project_edit', $data);
+		} catch (Exception $e) {
+			$this->session->set_flashdata('error', $e->getMessage());
+			redirect(base_url());
+		}
+	}
+
+	public function created_project()
+	{
+		try {
+			$this->logged_in();
+			$this->load->model("Project_Model");
+			$title = $this->input->post('title');
+			$description = $this->input->post('description');
+			$objectives = $this->input->post('objectives');
+
+			$id_project = $this->Project_Model->created_project($title, $description, $objectives, $this->session->email);
+
+			$activity = "Created the project " . $title;
+			$this->insert_log($activity, 1, $id_project);
+
+			redirect('open/' . $id_project);
+
+		} catch (Exception $e) {
+			$this->session->set_flashdata('error', $e->getMessage());
+			redirect(base_url());
+		}
+	}
+
+	public function add_member()
+	{
+		try {
+			$this->logged_in();
+			$email = $this->input->post('email');
+			$id_project = $this->input->post('id_project');
+			$level = $this->input->post('level');
+			$this->load->model("Project_Model");
+
+			$name = $this->Project_Model->add_member($email, $level, $id_project);
+
+			$activity = "Added member " . $email;
+			$this->insert_log($activity, 1, $id_project);
+
+			echo $name;
+
+		} catch (Exception $e) {
+			$this->session->set_flashdata('error', $e->getMessage());
+			redirect(base_url());
+		}
+	}
+
+	public function edited_project()
+	{
+		try {
+			$title = $this->input->post('title');
+			$id_project = $this->input->post('id_project');
+			$this->validate_level($id_project, array(1));
+			$description = $this->input->post('description');
+			$objectives = $this->input->post('objectives');
+			$this->load->model("Project_Model");
+
+			$this->Project_Model->edit_project($title, $description, $objectives, $id_project);
+
+			$activity = "Edited project";
+			$this->insert_log($activity, 1, $id_project);
+
+		} catch (Exception $e) {
+			$this->session->set_flashdata('error', $e->getMessage());
+			redirect(base_url());
+		}
+	}
+
+	public function deleted_project()
+	{
+		try {
+			$this->logged_in();
+			$id_project = $this->input->post('id_project');
+			$this->validate_level($id_project, array(1));
+			$this->load->model("Project_Model");
+
+			$this->Project_Model->deleted_project($id_project);
+
+			$activity = "Deleted project " . $id_project;
+			$this->insert_log($activity, 1, null);
 
 		} catch (Exception $e) {
 			$this->session->set_flashdata('error', $e->getMessage());
@@ -287,576 +525,41 @@ class Project_Controller extends CI_Controller
 		}
 	}
 
-	public function planning($id)
+	public function delete_member()
 	{
 		try {
-			$this->load->model("Project_Model");
-			$this->session->set_userdata('level', $this->Project_Model->get_level($this->session->email, $id));
-			$data['project'] = $this->Project_Model->get_project_planning($id);
-			$data['languages'] = $this->Project_Model->get_all_languages();
-			$data['study_types'] = $this->Project_Model->get_all_study_types();
-			$data['databases'] = $this->Project_Model->get_all_databases();
-			$data['rules'] = $this->Project_Model->get_all_rules();
-			$data['question_types'] = $this->Project_Model->get_all_types();
-
-
-			$this->load_views('pages/project/project_planning', $data);
-		} catch (Exception $e) {
-			$this->session->set_flashdata('error', $e->getMessage());
-			redirect(base_url());
-		}
-	}
-
-	public function conducting($id)
-	{
-		try {
-			$this->load->model("Project_Model");
-			$this->session->set_userdata('level', $this->Project_Model->get_level($this->session->email, $id));
-			$data['project'] = $this->Project_Model->get_project_import($id);
-			$data['bib'] = $this->Project_Model->get_name_bibs($id);
-			$data['num_papers'] = $this->Project_Model->get_num_papers($id);
-
-
-			$this->load_views('pages/project/project_conducting', $data);
-
-		} catch (Exception $e) {
-			$this->session->set_flashdata('error', $e->getMessage());
-			redirect(base_url());
-		}
-	}
-
-	public function study_selection($id)
-	{
-		try {
-			$this->load->model("Project_Model");
-			$this->session->set_userdata('level', $this->Project_Model->get_level($this->session->email, $id));
-			$data['project'] = $this->Project_Model->get_project_selection($id);
-			$data['count_papers'] = $this->Project_Model->count_papers_sel_by_user($id);
-
-			$this->load_views('pages/project/project_study_selection', $data);
-
-		} catch (Exception $e) {
-			$this->session->set_flashdata('error', $e->getMessage());
-			redirect(base_url());
-		}
-	}
-
-	public function get_paper_selection()
-	{
-		try {
-			$this->load->model("Project_Model");
-			$this->logged_in();
-			$id = $this->input->post('id');
 			$id_project = $this->input->post('id_project');
-			$this->session->set_userdata('level', $this->Project_Model->get_level($this->session->email, $id));
-
-			$data = $this->Project_Model->get_paper_selection($id, $id_project);
-			echo json_encode($data);
-		} catch (Exception $e) {
-			$this->session->set_flashdata('error', $e->getMessage());
-			redirect(base_url());
-		}
-	}
-
-	private function logged_in()
-	{
-		if (!$this->session->logged_in) {
-			redirect(base_url());
-		}
-	}
-
-	private function load_views($view, $data)
-	{
-		$level = $this->session->level;
-		if ($this->session->logged_in) {
-			if (!is_null($level)) {
-				switch ($level) {
-					case 1:
-					case 3:
-					case 4:
-						load_templates($view, $data);
-						break;
-					case 2:
-						load_templates($view . '_visitor', $data);
-						break;
-				}
-			} else {
-				load_templates($view . '_visitor', $data);
-			}
-		} else {
-			load_templates($view . '_visitor', $data);
-		}
-	}
-
-	private function validate_level($levels)
-	{
-		$res_level = $this->session->level;
-
-		foreach ($levels as $l) {
-			if ($l == $res_level) {
-				return;
-			}
-		}
-
-		redirect(base_url());
-
-	}
-
-	public function new_project()
-	{
-		try {
-			$this->logged_in();
-			load_templates('pages/project/project_new', null);
-		} catch (Exception $e) {
-			$this->session->set_flashdata('error', $e->getMessage());
-			redirect(base_url());
-		}
-	}
-
-	public function add_research($id)
-	{
-		try {
-			$this->logged_in();
-			$this->load->model("Project_Model");
-			$data['project'] = $this->Project_Model->get_project($id);
-			$data['users'] = $this->Project_Model->get_users($id);
-			$data['levels'] = $this->Project_Model->get_levels();
-			$data['members'] = $this->Project_Model->get_all_members($id);
-			load_templates('pages/project/project_add_research', $data);
-		} catch (Exception $e) {
-			$this->session->set_flashdata('error', $e->getMessage());
-			redirect(base_url());
-		}
-	}
-
-	public function edit($id)
-	{
-		try {
-			$this->load->model("Project_Model");
-			$data['project'] = $this->Project_Model->get_project($id);
-			load_templates('pages/project/project_edit', $data);
-		} catch (Exception $e) {
-			$this->session->set_flashdata('error', $e->getMessage());
-			redirect(base_url());
-		}
-	}
-
-	private function insert_log($activity, $module, $id_project)
-	{
-		$this->load->model("User_Model");
-		$this->User_Model->insert_log($activity, $module, $id_project);
-	}
-
-	public function created_project()
-	{
-		try {
-			$this->logged_in();
-			$this->load->model("Project_Model");
-			$title = $this->input->post('title');
-			$description = $this->input->post('description');
-			$objectives = $this->input->post('objectives');
-
-			$id_project = $this->Project_Model->created_project($title, $description, $objectives, $this->session->email);
-
-			$activity = "Created the project " . $title;
-			$this->insert_log($activity, 1, $id_project);
-
-			redirect('open/' . $id_project);
-
-		} catch (Exception $e) {
-			$this->session->set_flashdata('error', $e->getMessage());
-			redirect(base_url());
-		}
-	}
-
-	public function add_member()
-	{
-		try {
-			$this->logged_in();
 			$email = $this->input->post('email');
+			$this->validate_level($id_project, array(1));
+			$this->load->model("Project_Model");
+
+			$this->Project_Model->delete_member($email, $id_project);
+
+			$activity = "Deleted member " . $email;
+			$this->insert_log($activity, 1, null);
+
+
+		} catch (Exception $e) {
+			echo $e->getMessage();
+		}
+	}
+
+	public function edit_level()
+	{
+		try {
 			$id_project = $this->input->post('id_project');
+			$email = $this->input->post('email');
 			$level = $this->input->post('level');
+			$this->validate_level($id_project, array(1));
 			$this->load->model("Project_Model");
 
-			$this->Project_Model->add_member($email, $level, $id_project);
+			$this->Project_Model->edit_level($email, $level, $id_project);
 
-			$activity = "Added member " . $email;
-			$this->insert_log($activity, 1, $id_project);
-
-		} catch (Exception $e) {
-			$this->session->set_flashdata('error', $e->getMessage());
-			redirect(base_url());
-		}
-	}
-
-	public function edited_project()
-	{
-		try {
-			$this->logged_in();
-			$title = $this->input->post('title');
-			$id_project = $this->input->post('id_project');
-			$this->validate_level(array(1));
-			$description = $this->input->post('description');
-			$objectives = $this->input->post('objectives');
-			$this->load->model("Project_Model");
-
-			$this->Project_Model->edit_project($title, $description, $objectives, $id_project);
-
-			$activity = "Edited project";
-			$this->insert_log($activity, 1, $id_project);
-
-		} catch (Exception $e) {
-			$this->session->set_flashdata('error', $e->getMessage());
-			redirect(base_url());
-		}
-	}
-
-	public function bib_upload()
-	{
-		try {
-			$this->logged_in();
-			$papers = $this->input->post('papers');
-			$database = $this->input->post('database');
-			$id_project = $this->input->post('id_project');
-			$name = $this->input->post('name');
-
-			$this->validate_level(array(1, 3));
-			$this->load->model("Project_Model");
-
-			$this->Project_Model->bib_upload($papers, $database, $name, $id_project);
-
-			$activity = "Added " . sizeof($papers) . " papers at " . $database . " for file " . $name;
-			$this->insert_log($activity, 3, $id_project);
-		} catch (Exception $e) {
-			$this->session->set_flashdata('error', $e->getMessage());
-			redirect(base_url());
-		}
-
-	}
-
-	public function delete_bib()
-	{
-		try {
-			$this->logged_in();
-			$database = $this->input->post('database');
-			$id_project = $this->input->post('id_project');
-			$name = $this->input->post('name');
-			$this->load->model("Project_Model");
-
-			$this->validate_level(array(1, 3));
-			$papers = $this->Project_Model->delete_bib($database, $name, $id_project);
-
-			$activity = "Delete papers at " . $database . " for file " . $name;
-			$this->insert_log($activity, 3, $id_project);
-			echo $papers;
-		} catch (Exception $e) {
-			$this->session->set_flashdata('error', $e->getMessage());
-			redirect(base_url());
-		}
-
-	}
-
-	public function deleted_project()
-	{
-		try {
-			$this->logged_in();
-			$id_project = $this->input->post('id_project');
-			$this->validate_level(array(1));
-			$this->load->model("Project_Model");
-
-			$this->Project_Model->deleted_project($id_project);
-
-			$activity = "Deleted project " . $id_project;
+			$activity = "Edit level " . $level . " member " . $email;
 			$this->insert_log($activity, 1, null);
 
 		} catch (Exception $e) {
-			$this->session->set_flashdata('error', $e->getMessage());
-			redirect(base_url());
-		}
-	}
-
-	public function edit_status_selection()
-	{
-		try {
-			$id_paper = $this->input->post('id_paper');
-			$id_project = $this->input->post('id_project');
-			$status = $this->input->post('status');
-			$this->load->model("Project_Model");
-			$this->session->set_userdata('level', $this->Project_Model->get_level($this->session->email, $id_project));
-			$this->validate_level(array(1, 3, 4));
-			$this->Project_Model->edit_status_selection($id_paper, $status, $id_project);
-
-			$activity = "Edited status selection to paper " . $id_paper;
-			$this->insert_log($activity, 3, $id_project);
-		} catch (Exception $e) {
-			$this->session->set_flashdata('error', $e->getMessage());
-		}
-	}
-
-	public function edit_status_selection_papers()
-	{
-		try {
-			$this->logged_in();
-			$ids_paper = $this->input->post('ids_paper');
-			$id_project = $this->input->post('id_project');
-			$status = $this->input->post('status');
-			$this->load->model("Project_Model");
-
-			$this->validate_level(array(1, 3, 4));
-			$this->Project_Model->edit_status_selection_papers($ids_paper, $status, $id_project);
-
-			$activity = "Edited status selection " . sizeof($ids_paper)." papers";
-			$this->insert_log($activity, 3, $id_project);
-
-		} catch (Exception $e) {
-			$this->session->set_flashdata('error', $e->getMessage());
-		}
-	}
-
-	public function edit_status_paper()
-	{
-		try {
-			$this->logged_in();
-			$id_paper = $this->input->post('id_paper');
-			$id_project = $this->input->post('id_project');
-			$status = $this->input->post('status');
-			$this->load->model("Project_Model");
-
-			$this->validate_level(array(1, 3, 4));
-			$this->Project_Model->edit_status_paper($id_paper, $status, $id_project);
-
-			$activity = "Resolved conflict to paper " . $id_paper;
-			$this->insert_log($activity, 3, $id_project);
-		} catch (Exception $e) {
-			$this->session->set_flashdata('error', $e->getMessage());
-		}
-	}
-
-	public function evaluation_criteria()
-	{
-		try {
-			$id_paper = $this->input->post('id_paper');
-			$id_project = $this->input->post('id_project');
-			$id_criteria = $this->input->post('id');
-			$selected = $this->input->post('selected');
-			$old_status = $this->input->post('old_status');
-			$this->load->model("Project_Model");
-			$this->session->set_userdata('level', $this->Project_Model->get_level($this->session->email, $id_project));
-			$this->validate_level(array(1, 3));
-
-			if ($selected === "true") {
-				$this->Project_Model->selected_criteria($id_paper, $id_criteria, $id_project);
-				$activity = "Selected criteria " . $id_criteria . " to paper " . $id_paper;
-				$this->insert_log($activity, 3, $id_project);
-			} else {
-				$this->Project_Model->deselected_criteria($id_paper, $id_criteria, $id_project);
-				$activity = "Deselected criteria " . $id_criteria . " to paper " . $id_paper;
-				$this->insert_log($activity, 3, $id_project);
-			}
-
-			$data = $this->check_status($id_project, $id_paper, $old_status);
-
-			echo json_encode($data);
-		} catch (Exception $e) {
-			$this->session->set_flashdata('error', $e->getMessage());
-		}
-	}
-
-	private function criteriaEquals($criterias, $criterias_ev)
-	{
-		$pre = 0;
-		$sel = 0;
-		foreach ($criterias as $ce) {
-			if ($ce->get_pre_selected()) {
-				$pre++;
-				foreach ($criterias_ev as $ev) {
-					if ($ce->get_id() == $ev->get_id()) {
-						$sel++;
-					}
-				}
-			}
-		}
-
-		return $pre == $sel;
-
-	}
-
-	public function check_status($id_project, $id_paper, $old_status)
-	{
-		$criterias['inclusion'] = $this->Project_Model->get_criteria($id_project,'Inclusion');
-		$criterias['exclusion'] = $this->Project_Model->get_criteria($id_project,'Exclusion');
-		$criterias_ev = $this->Project_Model->get_evaluation_criteria($id_paper, $id_project);
-		$in_rule = $this->Project_Model->get_inclusion_rule($id_project);
-		$ex_rule = $this->Project_Model->get_exclusion_rule($id_project);
-		$inclusion = false;
-		$exclusion = false;
-
-		switch ($in_rule) {
-			case 'All':
-				if (sizeof($criterias['inclusion']) == sizeof($criterias_ev['inclusion'])) {
-					$inclusion = true;
-				}
-				break;
-			case 'At Least':
-				if ($this->criteriaEquals($criterias['inclusion'], $criterias_ev['inclusion'])) {
-					$inclusion = true;
-				}
-				break;
-			case 'Any':
-				if (sizeof($criterias_ev['inclusion']) > 0) {
-					$inclusion = true;
-				}
-				break;
-		}
-
-		switch ($ex_rule) {
-			case 'All':
-				if (sizeof($criterias['exclusion']) == sizeof($criterias_ev['exclusion'])) {
-					$inclusion = false;
-					$exclusion = true;
-				}
-				break;
-			case 'At Least':
-				if ($this->criteriaEquals($criterias['exclusion'], $criterias_ev['exclusion'])) {
-					$exclusion = true;
-					$inclusion = false;
-
-				}
-				break;
-			case 'Any':
-				if (sizeof($criterias_ev['exclusion'])) {
-					$exclusion = true;
-					$inclusion = false;
-				}
-				break;
-		}
-
-		$change = false;
-		$data['status'] = $old_status;
-		if ($old_status != 4 && $old_status != 5) {
-			if ($inclusion && !$exclusion) {
-				if ($old_status != 1) {
-					$this->Project_Model->edit_status_selection($id_paper, 1, $id_project);
-					$change = true;
-					$data['status'] = 1;
-				}
-			} elseif (!$inclusion && $exclusion) {
-				if ($old_status != 2) {
-					$this->Project_Model->edit_status_selection($id_paper, 2, $id_project);
-					$change = true;
-					$data['status'] = 2;
-				}
-			} else {
-				if ($old_status != 3) {
-					$this->Project_Model->edit_status_selection($id_paper, 3, $id_project);
-					$change = true;
-					$data['status'] = 3;
-				}
-			}
-		}
-		$data['change'] = $change;
-
-		return $data;
-	}
-
-	public function update_note_selection()
-	{
-		try {
-			$this->logged_in();
-			$id_paper = $this->input->post('id_paper');
-			$id_project = $this->input->post('id_project');
-			$note = $this->input->post('note');
-			$this->load->model("Project_Model");
-
-
-			$this->Project_Model->update_note_selection($id_paper, $note, $id_project);
-			$activity = "Update note to paper " . $id_paper;
-			$this->insert_log($activity, 3, $id_project);
-
-
-		} catch (Exception $e) {
-			$this->session->set_flashdata('error', $e->getMessage());
-		}
-	}
-
-	public function get_paper_conflict()
-	{
-		try {
-			$this->logged_in();
-			$id = $this->input->post('id');
-			$id_project = $this->input->post('id_project');
-			$this->load->model("Project_Model");
-
-			$data = $this->Project_Model->get_paper_conflict($id, $id_project);
-			echo json_encode($data);
-		} catch (Exception $e) {
-			$this->session->set_flashdata('error', $e->getMessage());
-			redirect(base_url());
-		}
-	}
-
-	public function reporting($id)
-	{
-		try {
-			$this->load->model("Project_Model");
-			$data['project'] = $this->Project_Model->get_project_report($id);
-			$this->session->set_userdata('level', $this->Project_Model->get_level($this->session->email, $id));
-
-			$this->load_views('pages/project/project_reporting', $data);
-
-		} catch (Exception $e) {
-			$this->session->set_flashdata('error', $e->getMessage());
-			redirect(base_url());
-		}
-	}
-
-	public function review_study_selection($id)
-	{
-		try {
-			$this->load->model("Project_Model");
-			$this->session->set_userdata('level', $this->Project_Model->get_level($this->session->email, $id));
-			$data['project'] = $this->Project_Model->get_project_reviewer_selection($id);
-			$data['count_project'] = $this->Project_Model->count_papers_by_status_sel($id);
-			$data['count_papers'] = $this->Project_Model->count_papers_reviewer($id);
-			$data['conflicts'] = $this->Project_Model->get_conflicts($id);
-			$data['status'] = $this->Project_Model->get_status();
-
-
-			$this->load_views('pages/project/project_review_study_selection', $data);
-
-		} catch (Exception $e) {
-			$this->session->set_flashdata('error', $e->getMessage());
-			redirect(base_url());
-		}
-	}
-
-	public function quality_assessement($id)
-	{
-		try {
-			$this->load->model("Project_Model");
-			$data['project'] = $this->Project_Model->get_project_quality($id);
-			$this->session->set_userdata('level', $this->Project_Model->get_level($this->session->email, $id));
-
-			$this->load_views('pages/project/project_quality_assessement', $data);
-
-		} catch (Exception $e) {
-			$this->session->set_flashdata('error', $e->getMessage());
-			redirect(base_url());
-		}
-	}
-
-	public function data_extraction($id)
-	{
-		try {
-			$this->load->model("Project_Model");
-			$data['project'] = $this->Project_Model->get_project_extraction($id);
-			$this->session->set_userdata('level', $this->Project_Model->get_level($this->session->email, $id));
-
-			$this->load_views('pages/project/project_data_extraction', $data);
-
-		} catch (Exception $e) {
-			$this->session->set_flashdata('error', $e->getMessage());
-			redirect(base_url());
+			echo $e->getMessage();
 		}
 	}
 

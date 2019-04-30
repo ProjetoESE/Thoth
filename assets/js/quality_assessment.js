@@ -273,7 +273,6 @@ function edit_min_score(element) {
 	let score = element.value;
 	let id_project = $("#id_project").val();
 
-	console.log(score);
 	if (score == "null") {
 		swal({
 			type: 'warning',

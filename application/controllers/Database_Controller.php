@@ -1,12 +1,10 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Database_Controller extends CI_Controller
-{
-	public function index()
-	{
-	}
+require_once APPPATH . 'controllers\Pattern_Controller.php';
 
+class Database_Controller extends Pattern_Controller
+{
 	public function add_database()
 	{
 		$id_project = null;
@@ -85,32 +83,5 @@ class Database_Controller extends CI_Controller
 				redirect(base_url('planning/' . $id_project));
 			}
 		}
-	}
-
-	private function insert_log($activity, $module, $id_project)
-	{
-		$this->load->model("User_Model");
-		$this->User_Model->insert_log($activity, $module, $id_project);
-	}
-
-	private function logged_in()
-	{
-		if (!$this->session->logged_in) {
-			redirect(base_url());
-		}
-	}
-
-	private function validate_level($levels)
-	{
-		$res_level = $this->session->level;
-
-		foreach ($levels as $l) {
-			if ($l == $res_level) {
-				return;
-			}
-		}
-
-		redirect(base_url());
-
 	}
 }

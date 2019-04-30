@@ -682,7 +682,7 @@ class Project
 	 */
 	public function set_papers($papers)
 	{
-		if (is_null($papers) || empty($papers)) {
+		if (is_null($papers)) {
 			throw  new  InvalidArgumentException("Project Papers Invalid!");
 		}
 		$this->papers = $papers;
