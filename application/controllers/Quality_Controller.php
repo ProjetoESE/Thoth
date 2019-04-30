@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-require_once APPPATH . 'controllers\Pattern_Controller.php';
+require_once APPPATH . 'controllers/Pattern_Controller.php';
 
 class Quality_Controller extends Pattern_Controller
 {

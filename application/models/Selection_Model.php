@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-require_once APPPATH . 'models\Pattern_Model.php';
+require_once APPPATH . 'models/Pattern_Model.php';
 
 class Selection_Model extends Pattern_Model
 {
