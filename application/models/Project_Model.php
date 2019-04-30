@@ -1344,7 +1344,7 @@ class Project_Model extends Pattern_Model
 		$id_member = $this->get_id_member($user[0], $id_project);
 
 		$this->db->where('id_project', $id_project);
-		$this->db->where('id_member', $id_member);
+		$this->db->where('id_members', $id_member);
 		$this->db->delete('members');
 
 		$project_databases = $this->get_ids_project_database($id_project);
