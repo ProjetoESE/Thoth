@@ -1,6 +1,6 @@
 <?php
 
-require_once APPPATH . 'controllers\Pattern_Controller.php';
+require_once APPPATH . 'controllers/Pattern_Controller.php';
 
 class Import_Controller extends Pattern_Controller
 {
