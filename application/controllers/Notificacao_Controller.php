@@ -2,7 +2,9 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Notificacao_Controller extends CI_Controller
+require_once APPPATH . 'controllers\Pattern_Controller.php';
+
+class Notificacao_Controller extends Pattern_Controller
 {
 
 	/*

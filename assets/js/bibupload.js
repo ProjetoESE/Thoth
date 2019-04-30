@@ -27,7 +27,7 @@ function readFileAsString() {
 			if (papers.entries.length > 0) {
 				$.ajax({
 					type: "POST",
-					url: base_url + 'Project_Controller/bib_upload/',
+					url: base_url + 'Import_Controller/bib_upload/',
 					data: {
 						papers: papers.entries,
 						database: database,
@@ -186,7 +186,7 @@ function delete_bib(value) {
 		if (result.value) {
 			$.ajax({
 				type: "POST",
-				url: base_url + 'Project_Controller/delete_bib/',
+				url: base_url + 'Import_Controller/delete_bib/',
 				data: {
 					database: database,
 					id_project: id_project,

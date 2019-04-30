@@ -25,9 +25,46 @@ function add_research() {
 				confirmButtonText: 'Ok'
 			});
 		},
-		success: function () {
+		success: function (name) {
 			let x = document.getElementById("add_email_user");
 			x.remove(index);
+
+			let adm = "";
+			let viw = "";
+			let res = "";
+			let rev = "";
+
+			switch (level) {
+				case "Administrator":
+					adm = "selected";
+					break;
+				case "Viewer":
+					viw = "selected";
+					break;
+				case "Researcher":
+					res = "selected";
+					break;
+				case "Reviser":
+					rev = "selected";
+					break;
+			}
+
+
+			table_members.row.add([
+				name,
+				email,
+				'<select class="form-control" onchange="edit_level(this)">' +
+				'<option value="Administrator" ' + adm + '>Administrator</option>' +
+				'<option value="Viewer"  ' + viw + '>Viewer</option>' +
+				'<option value="Researcher" ' + res + '>Researcher</option>' +
+				'<option value="Reviser" ' + rev + '>Reviser</option>' +
+				'</select>',
+				'<button class="btn btn-danger"' +
+				'onClick="delete_member($(this).parents(\'tr\'))">' +
+				'<span class="far fa-trash-alt"></span>' +
+				'</button>'
+			]).draw();
+
 			Swal({
 				title: 'Add member',
 				html: "The <strong>member</strong> was added",
@@ -173,3 +210,112 @@ function delete_project(id, value) {
 		}
 	});
 }
+
+function edit_level(element) {
+	let level = element.value;
+	let id_project = $("#id_project").val();
+	let row = table_members.row($(element).parents('tr'));
+
+	$.ajax({
+		type: "POST",
+		url: base_url + 'Project_Controller/edit_level/',
+		data: {
+			id_project: id_project,
+			level: level,
+			email: row.data()[1]
+		},
+		error: function (msg) {
+			Swal({
+				type: 'error',
+				title: 'Error',
+				html: msg
+			});
+		},
+		success: function (msg) {
+			if (msg) {
+				Swal({
+					title: 'Warning',
+					text: msg,
+					type: 'warning',
+					showCancelButton: false,
+					confirmButtonText: 'Ok'
+				});
+			} else {
+				Swal({
+					title: 'Success',
+					text: 'The level was edited',
+					type: 'success',
+					showCancelButton: false,
+					confirmButtonText: 'Ok'
+				});
+			}
+
+
+		}
+	});
+}
+
+function delete_member(value) {
+	let row = table_members.row(value);
+	let id_project = $("#id_project").val();
+
+	if (table_members.rows().data().length == 1) {
+		Swal({
+			type: 'warning',
+			title: 'A Member',
+			html: 'There must be at least <strong>one member!</strong>'
+		});
+		return false;
+	}
+
+	Swal.fire({
+		title: 'Are you sure?',
+		text: "You will not be able to reverse this," +
+			" this can impact other areas of your project!",
+		type: 'warning',
+		showCancelButton: true,
+		confirmButtonColor: '#28a745',
+		cancelButtonColor: '#d33',
+		confirmButtonText: 'Yes, delete it!'
+	}).then((result) => {
+		if (result.value) {
+			$.ajax({
+				type: "POST",
+				url: base_url + 'Project_Controller/delete_member/',
+				data: {
+					id_project: id_project,
+					email: row.data()[1]
+				},
+				error: function (msg) {
+					Swal({
+						type: 'error',
+						title: 'Error',
+						html: msg
+					});
+				},
+				success: function (msg) {
+					if (msg) {
+						Swal({
+							title: 'Warning',
+							text: msg,
+							type: 'warning',
+							showCancelButton: false,
+							confirmButtonText: 'Ok'
+						});
+					} else {
+						row.remove();
+						table_members.draw();
+						Swal({
+							title: 'Success',
+							text: 'The member was deleted',
+							type: 'success',
+							showCancelButton: false,
+							confirmButtonText: 'Ok'
+						});
+					}
+				}
+			});
+		}
+	});
+}
+

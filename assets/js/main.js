@@ -192,7 +192,7 @@ $(document).ready(function () {
 					if (papers.length > 0) {
 						$.ajax({
 							type: "POST",
-							url: base_url + 'Project_Controller/edit_status_selection_papers/',
+							url: base_url + 'Selection_Controller/edit_status_selection_papers/',
 							data: {
 								id_project: id_project,
 								ids_paper: papers,

@@ -1,18 +1,10 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Research_Controller extends CI_Controller
+require_once APPPATH . 'controllers\Pattern_Controller.php';
+
+class Research_Controller extends Pattern_Controller
 {
-	public function index()
-	{
-	}
-
-	private function insert_log($activity, $module, $id_project)
-	{
-		$this->load->model("User_Model");
-		$this->User_Model->insert_log($activity, $module, $id_project);
-	}
-
 	public function add_research_question()
 	{
 		$id_project = null;
@@ -94,24 +86,4 @@ class Research_Controller extends CI_Controller
 		}
 	}
 
-	private function logged_in()
-	{
-		if (!$this->session->logged_in) {
-			redirect(base_url());
-		}
-	}
-
-	private function validate_level($levels)
-	{
-		$res_level = $this->session->level;
-
-		foreach ($levels as $l) {
-			if ($l == $res_level) {
-				return;
-			}
-		}
-
-		redirect(base_url());
-
-	}
 }

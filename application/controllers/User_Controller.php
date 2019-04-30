@@ -1,6 +1,9 @@
 <?php
+defined('BASEPATH') OR exit('No direct script access allowed');
 
-class User_Controller extends CI_Controller
+require_once APPPATH . 'controllers\Pattern_Controller.php';
+
+class User_Controller extends Pattern_Controller
 {
 	public function index()
 	{
@@ -22,33 +25,6 @@ class User_Controller extends CI_Controller
 	{
 		$this->logged_in();
 		load_templates('pages/user/profile', null);
-	}
-
-	private function insert_log($activity, $module, $id_project)
-	{
-		$this->load->model("User_Model");
-		$this->User_Model->insert_log($activity, $module, $id_project);
-	}
-
-	private function logged_in()
-	{
-		if (!$this->session->logged_in) {
-			redirect(base_url());
-		}
-	}
-
-	private function validate_level($project_id, $levels)
-	{
-		$this->load->model("Project_Model");
-
-		foreach ($levels as $l) {
-			if ($l == $this->session->level) {
-				return;
-			}
-		}
-
-		redirect(base_url());
-
 	}
 
 }
