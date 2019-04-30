@@ -1340,10 +1340,11 @@ class Project_Model extends Pattern_Model
 	public function delete_member($email, $id_project)
 	{
 		$this->validate_adm($email, $id_project);
-		$user = $this->get_id_name_user($email);
+		$user = $this->get_id_name_user($this->session->email);
+		$id_member = $this->get_id_member($user[0], $id_project);
 
 		$this->db->where('id_project', $id_project);
-		$this->db->where('id_user', $user[0]);
+		$this->db->where('id_member', $id_member);
 		$this->db->delete('members');
 
 		$project_databases = $this->get_ids_project_database($id_project);
@@ -1423,13 +1424,14 @@ class Project_Model extends Pattern_Model
 			$id_level = $row->id_level;
 		}
 
-		$id_user = $this->get_id_name_user($email);
+		$user = $this->get_id_name_user($this->session->email);
+		$id_member = $this->get_id_member($user[0], $id_project);
 
 		$old_level = null;
 		$this->db->select('id_level');
 		$this->db->from('levels');
 		$this->db->join('members', 'members.level = levels.id_level');
-		$this->db->where('id_user', $id_user[0]);
+		$this->db->where('id_member', $id_member);
 		$this->db->where('id_project', $id_project);
 		$query = $this->db->get();
 
@@ -1439,18 +1441,6 @@ class Project_Model extends Pattern_Model
 
 		if ($id_level == $old_level) {
 			return true;
-		}
-
-		$id_member = null;
-		$this->db->select('id_members');
-		$this->db->from('members');
-		$this->db->where('id_user', $id_user[0]);
-		$this->db->where('id_project', $id_project);
-		$this->db->where('level', $old_level);
-		$query = $this->db->get();
-
-		foreach ($query->result() as $row) {
-			$id_member = $row->id_members;
 		}
 
 		$data = array(
@@ -1463,7 +1453,7 @@ class Project_Model extends Pattern_Model
 
 		if ($id_level == 1 || $id_level == 3) {
 
-			if ($old_level != 2 && $old_level != 3) {
+			if ($old_level != 1 && $old_level != 3) {
 				$project_databases = $this->get_ids_project_database($id_project);
 
 				$id_bibs = array();
@@ -1481,7 +1471,7 @@ class Project_Model extends Pattern_Model
 					foreach ($id_papers as $paper) {
 						$insert = array(
 							'id_paper' => $paper,
-							'id_user' => $id_user[0],
+							'id_member' => $id_member,
 							'id_status' => 3,
 							'note' => ""
 						);
@@ -1499,6 +1489,10 @@ class Project_Model extends Pattern_Model
 					$this->db->update('papers', $data);
 				}
 			}
+		} else {
+			$this->db->where('id_members', $id_member);
+			$this->db->delete('papers_selection');
+
 		}
 	}
 
