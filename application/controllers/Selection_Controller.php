@@ -6,6 +6,9 @@ require_once APPPATH . 'controllers/Pattern_Controller.php';
 
 class Selection_Controller extends Pattern_Controller
 {
+	/**
+	 *
+	 */
 	public function edit_status_selection()
 	{
 		try {
@@ -25,10 +28,12 @@ class Selection_Controller extends Pattern_Controller
 		}
 	}
 
+	/**
+	 *
+	 */
 	public function edit_status_selection_papers()
 	{
 		try {
-			$this->logged_in();
 			$ids_paper = $this->input->post('ids_paper');
 			$id_project = $this->input->post('id_project');
 			$status = $this->input->post('status');
@@ -46,13 +51,16 @@ class Selection_Controller extends Pattern_Controller
 		}
 	}
 
+	/**
+	 *
+	 */
 	public function edit_status_paper()
 	{
 		try {
-			$this->logged_in();
 			$id_paper = $this->input->post('id_paper');
 			$id_project = $this->input->post('id_project');
 			$status = $this->input->post('status');
+
 			$this->validate_level($id_project, array(1, 3, 4));
 
 			$this->load->model("Selection_Model");
@@ -65,6 +73,9 @@ class Selection_Controller extends Pattern_Controller
 		}
 	}
 
+	/**
+	 *
+	 */
 	public function evaluation_criteria()
 	{
 		try {
@@ -74,8 +85,9 @@ class Selection_Controller extends Pattern_Controller
 			$selected = $this->input->post('selected');
 			$old_status = $this->input->post('old_status');
 
-			$this->load->model("Selection_Model");
 			$this->validate_level($id_project, array(1, 3));
+
+			$this->load->model("Selection_Model");
 
 			if ($selected === "true") {
 				$this->Selection_Model->selected_criteria($id_paper, $id_criteria, $id_project);
@@ -95,6 +107,11 @@ class Selection_Controller extends Pattern_Controller
 		}
 	}
 
+	/**
+	 * @param $criterias
+	 * @param $criterias_ev
+	 * @return bool
+	 */
 	private function criteriaEquals($criterias, $criterias_ev)
 	{
 		$pre = 0;
@@ -114,7 +131,13 @@ class Selection_Controller extends Pattern_Controller
 
 	}
 
-	public function check_status($id_project, $id_paper, $old_status)
+	/**
+	 * @param $id_project
+	 * @param $id_paper
+	 * @param $old_status
+	 * @return mixed
+	 */
+	private function check_status($id_project, $id_paper, $old_status)
 	{
 		$criterias['inclusion'] = $this->Selection_Model->get_criteria($id_project, 'Inclusion');
 		$criterias['exclusion'] = $this->Selection_Model->get_criteria($id_project, 'Exclusion');
@@ -192,6 +215,9 @@ class Selection_Controller extends Pattern_Controller
 		return $data;
 	}
 
+	/**
+	 *
+	 */
 	public function update_note_selection()
 	{
 		try {
@@ -213,6 +239,9 @@ class Selection_Controller extends Pattern_Controller
 		}
 	}
 
+	/**
+	 *
+	 */
 	public function get_paper_conflict()
 	{
 		try {
@@ -231,10 +260,12 @@ class Selection_Controller extends Pattern_Controller
 		}
 	}
 
+	/**
+	 *
+	 */
 	public function get_paper_selection()
 	{
 		try {
-
 			$id = $this->input->post('id');
 			$id_project = $this->input->post('id_project');
 

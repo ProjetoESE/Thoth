@@ -196,7 +196,7 @@ class Project
 	 */
 	public function set_title($title)
 	{
-		if (is_null($title) || $title) {
+		if (is_null($title)) {
 			throw  new  InvalidArgumentException("Project Title Invalid!");
 		}
 		$this->title = $title;
@@ -394,9 +394,7 @@ class Project
 	 */
 	public function set_score_min($score_min)
 	{
-		if (is_null($score_min)) {
-			throw  new  InvalidArgumentException("Project Score Minimum Invalid!");
-		}
+
 		$this->score_min = $score_min;
 	}
 
@@ -528,7 +526,7 @@ class Project
 	 */
 	public function set_databases($databases)
 	{
-		if (is_null($databases) ) {
+		if (is_null($databases)) {
 			throw  new  InvalidArgumentException("Project Databases Invalid!");
 		}
 		$this->databases = $databases;
@@ -616,7 +614,7 @@ class Project
 	 */
 	public function set_exclusion_criteria($exclusion_criteria)
 	{
-		if (is_null($exclusion_criteria) ) {
+		if (is_null($exclusion_criteria)) {
 			throw  new  InvalidArgumentException("Project Exclusion Criteria Invalid!");
 		}
 		$this->exclusion_criteria = $exclusion_criteria;
@@ -638,7 +636,7 @@ class Project
 	 */
 	public function set_questions_quality($questions_quality)
 	{
-		if (is_null($questions_quality) ) {
+		if (is_null($questions_quality)) {
 			throw  new  InvalidArgumentException("Project Questions Quality Invalid!");
 		}
 		$this->questions_quality = $questions_quality;

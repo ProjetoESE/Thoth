@@ -4,22 +4,36 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Pattern_Controller extends CI_Controller
 {
+	/**
+	 * Pattern_Controller constructor.
+	 */
 	public function __construct()
 	{
 		parent::__construct();
 	}
 
+	/**
+	 *
+	 */
 	public function index()
 	{
 
 	}
 
+	/**
+	 * @param $activity
+	 * @param $module
+	 * @param $id_project
+	 */
 	public function insert_log($activity, $module, $id_project)
 	{
 		$this->load->model("User_Model");
 		$this->User_Model->insert_log($activity, $module, $id_project);
 	}
 
+	/**
+	 *
+	 */
 	public function logged_in()
 	{
 		if (!$this->session->logged_in) {
@@ -27,6 +41,10 @@ class Pattern_Controller extends CI_Controller
 		}
 	}
 
+	/**
+	 * @param $view
+	 * @param $data
+	 */
 	public function load_views($view, $data)
 	{
 		$level = $this->session->level;
@@ -50,6 +68,10 @@ class Pattern_Controller extends CI_Controller
 		}
 	}
 
+	/**
+	 * @param $id_project
+	 * @param $levels
+	 */
 	public function validate_level($id_project, $levels)
 	{
 		$this->logged_in();

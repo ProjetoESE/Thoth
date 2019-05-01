@@ -5,14 +5,18 @@ require_once APPPATH . 'controllers/Pattern_Controller.php';
 
 class User_Controller extends Pattern_Controller
 {
+	/**
+	 *
+	 */
 	public function index()
 	{
 		$data = null;
 		try {
 			$this->logged_in();
-			$this->load->model("User_Model");
 
+			$this->load->model("User_Model");
 			$data['projects'] = $this->User_Model->get_projects($this->session->email);
+
 			load_templates('pages/dashboard', $data);
 		} catch (Exception $e) {
 			$this->session->set_flashdata('error', $e->getMessage());
@@ -21,6 +25,9 @@ class User_Controller extends Pattern_Controller
 
 	}
 
+	/**
+	 *
+	 */
 	public function profile()
 	{
 		$this->logged_in();
