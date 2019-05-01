@@ -279,46 +279,58 @@ $(document).ready(function () {
 		searching: false
 	});
 
-	let table_papers_quality = $('#table_papers_quality').DataTable({
+	table_papers_quality = $('#table_papers_quality').DataTable({
+		initComplete: function () {
+			let size = this.api().columns().data().length;
+			for (let i = 2; i < (size - 1); i++) {
+				this.api().columns(i).every(function () {
+					let column = this;
+					let select = $('<select id="select_status' + i + '" class="form-control" ><option value=""></option></select>')
+						.appendTo($(column.footer()).empty())
+						.on('change', function () {
+							let val = $.fn.dataTable.util.escapeRegex(
+								$(this).val()
+							);
+
+							column
+								.search(val ? '^' + val + '$' : '', true, false)
+								.draw();
+						});
+
+					column.data().unique().sort().each(function (d, j) {
+						select.append('<option value="' + d + '">' + d + '</option>')
+					});
+				});
+			}
+			this.api().columns(size - 1).every(function () {
+				let column = this;
+				let select = $('<select id="select_status5" class="form-control" ><option value=""></option></select>')
+					.appendTo($(column.footer()).empty())
+					.on('change', function () {
+						let val = $.fn.dataTable.util.escapeRegex(
+							$(this).val()
+						);
+
+						column.search(val ? '^' + val + '$' : '', true, false).draw();
+					});
+
+				select.append('<option value="Accepted">Accepted</option>');
+				select.append('<option value="Rejected">Rejected</option>');
+				select.append('<option value="Unclassified">Unclassified</option>');
+				select.append('<option value="Removed">Removed</option>');
+
+			});
+		},
 		responsive: true,
 		order: [[0, "asc"]],
 		select: {
-			style: 'single',
-			selector: 'td:first-child'
+			style: 'single'
 		},
 		dom: 'Bfrtip',
 		buttons: [
-			'copy', 'csv', 'excel', 'pdf', 'print'
-		]
+			'copy', 'csv', 'excel', 'pdf', 'print',]
 	});
 
-	table_papers_quality.on('select', function (e, dt, type, indexes) {
-		let rowData = table_papers_quality.rows(indexes).data().toArray();
-		document.getElementById("paper_id").value = rowData[0][0];
-		$('#paper_title').text(rowData[0][1]);
-		$('#paper_author').val("F. Kiamilev and R. Rozier and J. Rieve");
-		$('#paper_year').val(rowData[0][2]);
-		$('#paper_database').val("IEEE");
-		$('#paper_keywords').val("field programmable gate arrays;integrated circuit packaging;integrated circuit testing" +
-			";integrated optoelectronics;monitoring;smart pixels;test equipment;PGA chip carrier;compact low-cost high-performance" +
-			" test fixture;electrical test;high-speed electrical signal monitoring;smart pixel IC packaging;smart pixel integrated " +
-			"circuit control;smart pixel integrated circuit testing;Circuit testing;Clocks;EPROM;Electronics packaging;Field " +
-			"programmable gate arrays;Fixtures;Hardware design languages;Integrated circuit testing;Smart pixels;Sockets");
-		$('#paper_abtract').val("The Internet Engineering Task Force (IETF) has introduced IPv6 with a mission to meet the " +
-			"growing demands of the future Internet. IPv6 is more and more emphasized and moving from the pilot phase to the " +
-			"practical application. In the process of deploying IPv6, performance is one of the key issues to be considered. " +
-			"Test is an effective method to understand IPv6 network performance. We need scalable and available tools to measure " +
-			"IPv6 network performance, but the few existing network performance test software support IPv6. So through the" +
-			" introduction of multi-agent technology, a distributed IPv6 network performance test model integrated with " +
-			"centralized control is proposed. We describe architecture and workflow of the model thoroughly, and a IPv6 " +
-			"network performance test system is designed and implemented based on the model. Finally, using our system, " +
-			"we measure IPv6 performance metrics on CERNET2 which is the largest pure IPv6 network in the world presently. " +
-			"The final experiments show that it is necessary to implement a IPv6 network performance test system and that" +
-			" our system is scalable and available for IPv6 network performance tes");
-		$('#row_criteria').hide();
-		$('#row_extraction').hide();
-		$('#modalPaper').modal('show');
-	});
 
 	let table_papers_extraction = $('#table_papers_extraction').DataTable({
 		columnDefs: [{

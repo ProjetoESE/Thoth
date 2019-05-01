@@ -34,7 +34,7 @@ class Paper
 	private $status_selection;
 	private $status_extraction;
 	private $score;
-	private $quality_score;
+	private $status_quality;
 
 	/**
 	 * Paper constructor.
@@ -532,18 +532,18 @@ class Paper
 	/**
 	 * @return mixed
 	 */
-	public function get_quality_score()
+	public function get_status_quality()
 	{
-		return $this->quality_score;
+		return $this->status_quality;
 	}
 
 	/**
-	 * @param mixed $quality_score
+	 * @param mixed $status_quality
 	 * @return Paper
 	 */
-	public function set_quality_score($quality_score)
+	public function set_status_quality($status_quality)
 	{
-		$this->quality_score = $quality_score;
+		$this->status_quality = $status_quality;
 		return $this;
 	}
 

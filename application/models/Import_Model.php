@@ -151,9 +151,7 @@ class Import_Model extends Pattern_Model
 		$members = $this->get_ids_members($id_project);
 		$id_papers = $this->get_ids_papers($id_bib);
 
-		$status_selection = array();
-		$status_extraction = array();
-		$status_quality = array();
+		$status = array();
 
 		foreach ($members as $mem) {
 			foreach ($id_papers as $paper) {
@@ -163,12 +161,12 @@ class Import_Model extends Pattern_Model
 					'id_status' => 3,
 					'note' => ""
 				);
-				array_push($status_selection, $insert);
+				array_push($status, $insert);
 			}
 		}
 
-		$this->db->insert_batch('papers_selection', $status_selection);
-
+		$this->db->insert_batch('papers_selection', $status);
+		$this->db->insert_batch('papers_qa', $status);
 
 		$dat = array(
 			'c_papers' => $count_papers

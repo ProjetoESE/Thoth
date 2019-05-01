@@ -237,23 +237,11 @@ class Selection_Model extends Pattern_Model
 			foreach ($query->result() as $row) {
 				if ($row->type == "Inclusion") {
 					$ic = new Inclusion_Criteria();
-					$ic->set_description($row->description);
 					$ic->set_id($row->id);
-					if ($row->pre_selected == 0) {
-						$ic->set_pre_selected(false);
-					} else {
-						$ic->set_pre_selected(true);
-					}
 					array_push($inclusion, $ic);
 				} else {
 					$ec = new Exclusion_Criteria();
-					$ec->set_description($row->description);
 					$ec->set_id($row->id);
-					if ($row->pre_selected == 0) {
-						$ec->set_pre_selected(false);
-					} else {
-						$ec->set_pre_selected(true);
-					}
 					array_push($exclusion, $ec);
 				}
 			}

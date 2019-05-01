@@ -25,7 +25,7 @@
 					   href="<?= base_url('conducting/' . $project->get_id()) ?>">Import Studies</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link active" href="<?= base_url('study_selection/' . $project->get_id()) ?>">Study
+					<a class="nav-link" href="<?= base_url('study_selection/' . $project->get_id()) ?>">Study
 						Selection</a>
 				</li>
 			<?php } ?>
@@ -37,33 +37,31 @@
 				</li>
 			<?php } ?>
 			<li class="nav-item">
-				<a class="nav-link"
+				<a class="nav-link active"
 				   href="<?= base_url('quality_assessment/' . $project->get_id()) ?>">Quality
 					Assessment</a>
 			</li>
-			<li class="nav-item">
+			<li class="nav-item ">
 				<a class=" nav-link" href="<?= base_url('data_extraction/' . $project->get_id()) ?>">Data
 					Extraction</a>
 			</li>
 		</ul>
 		<br>
 		<div class="form-inline">
-			<label for="id_qa"><strong>Study Selection</strong></label>
+			<label><strong>Quality Assessment</strong></label>
 			<a class="float-right opt"><i
 					class="fas fa-question-circle "></i></a>
 		</div>
 		<br>
 		<?php
-		if ($project->get_planning() == 100 && $project->get_import() == 100) {
+		if ($project->get_planning() == 100 && $project->get_import() == 100 && $project->get_selection() > 0) {
 
-			$acc = number_format((float)($count_papers[1] * 100) / $count_papers[6], 2);
-			$rej = number_format((float)($count_papers[2] * 100) / $count_papers[6], 2);
-			$unc = number_format((float)($count_papers[3] * 100) / $count_papers[6], 2);
-			$dup = number_format((float)($count_papers[4] * 100) / $count_papers[6], 2);
-			$rem = number_format((float)($count_papers[5] * 100) / $count_papers[6], 2)
-
+			$acc = number_format((float)($count_papers[1] * 100) / $count_papers[5], 2);
+			$rej = number_format((float)($count_papers[2] * 100) / $count_papers[5], 2);
+			$unc = number_format((float)($count_papers[3] * 100) / $count_papers[5], 2);
+			$rem = number_format((float)($count_papers[4] * 100) / $count_papers[5], 2);
 			?>
-			<h6>Progress Study Selection</h6>
+			<h6>Progress Quality Assessment</h6>
 			<div class="progress">
 				<div id="prog_acc" class="progress-bar bg-success" role="progressbar"
 					 style="width: <?= $acc ?>%"
@@ -82,12 +80,6 @@
 					 aria-valuenow="<?= $unc ?>"
 					 aria-valuemin="0"
 					 aria-valuemax="100"><?= $unc ?>%
-				</div>
-				<div id="prog_dup" class="progress-bar bg-warning" role="progressbar"
-					 style="width: <?= $dup ?>%"
-					 aria-valuenow="<?= $dup ?>"
-					 aria-valuemin="0"
-					 aria-valuemax="100"><?= $dup ?>%
 				</div>
 				<div id="prog_rem" class="progress-bar bg-info" role="progressbar"
 					 style="width: <?= $rem ?>%"
@@ -134,16 +126,6 @@
 						case 4:
 							?>
 							<div class="input-group col-md-2">
-								<label class="text-warning">
-									<span class="fas fa-copy fa-lg"></span>
-									Duplicate: <span id="count_dup"><?= $value ?></span>
-								</label>
-							</div>
-							<?php
-							break;
-						case 5:
-							?>
-							<div class="input-group col-md-2">
 								<label class="text-info">
 									<span class="fas fa-trash-alt fa-lg"></span>
 									Removed: <span id="count_rem"><?= $value ?></span>
@@ -151,7 +133,7 @@
 							</div>
 							<?php
 							break;
-						case 6:
+						case 5:
 							?>
 							<div class="input-group col-md-2">
 								<label class="text-secondary">
@@ -166,26 +148,28 @@
 				?>
 			</div>
 			<br>
-			<table class="table table-responsive-sm" id="table_papers">
-				<caption>List of Papers Imported</caption>
+			<table class="table" id="table_papers_quality">
+				<caption>List of Papers for Quality Assessment</caption>
 				<thead>
 				<tr>
 					<th>ID</th>
 					<th>Title</th>
-					<th>Author</th>
-					<th>Year</th>
-					<th>Database</th>
+					<?php foreach ($project->get_questions_quality() as $qa) { ?>
+						<th><?= $qa->get_id() ?></th>
+					<?php } ?>
+					<th>Score</th>
 					<th>Status</th>
 				</tr>
 				</thead>
 				<tbody>
 				<?php foreach ($project->get_papers() as $paper) { ?>
 					<tr>
-						<td><?= $paper->get_id(); ?></td>
-						<td><?= $paper->get_title(); ?></td>
-						<td><?= $paper->get_author(); ?></td>
-						<td><?= $paper->get_year(); ?></td>
-						<td><?= $paper->get_database(); ?></td>
+						<td><?= $paper->get_id() ?></td>
+						<td><?= $paper->get_title() ?></td>
+						<?php foreach ($project->get_questions_quality() as $qa) { ?>
+							<td><?= $qa->get_id() ?></td>
+						<?php } ?>
+						<td><?= $paper->get_score() ?></td>
 						<?php
 						$class = "text-dark";
 						$status = "Unclassified";
@@ -199,10 +183,6 @@
 								$status = "Rejected";
 								break;
 							case 4:
-								$class = "text-warning";
-								$status = "Duplicate";
-								break;
-							case 5:
 								$class = "text-info";
 								$status = "Removed";
 								break;
@@ -210,20 +190,21 @@
 						<td id="<?= $paper->get_id(); ?>" class="font-weight-bold <?= $class ?>"><?= $status ?></td>
 					</tr>
 				<?php } ?>
+				</tbody>
 				<tfoot>
 				<tr>
 					<th>ID</th>
 					<th>Title</th>
-					<th>Author</th>
-					<th>Year</th>
-					<th>Database</th>
+					<?php foreach ($project->get_questions_quality() as $qa) { ?>
+						<th><?= $qa->get_id() ?></th>
+					<?php } ?>
+					<th>Score</th>
 					<th>Status</th>
 				</tr>
 				</tfoot>
 			</table>
 			<?php
 		} else {
-
 			?>
 			<div class="alert alert-warning container-fluid alert-dismissible fade show" role="alert">
 				<h5>Complete the pieces to advance</h5>
@@ -237,10 +218,8 @@
 					?>
 				</ul>
 			</div>
-		<?php }
+			<?php
+		}
 		?>
 	</div>
 </div>
-<?php
-$this->load->view('modal/modal_paper_selection');
-?>

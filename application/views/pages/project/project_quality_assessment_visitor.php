@@ -24,7 +24,7 @@
 				</li>
 				<li class="nav-item">
 					<a class="nav-link active"
-					   href="<?= base_url('quality_assessement/' . $project->get_id()) ?>">Quality
+					   href="<?= base_url('quality_assessment/' . $project->get_id()) ?>">Quality
 						Assessment</a>
 				</li>
 				<li class="nav-item ">
