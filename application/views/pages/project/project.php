@@ -68,7 +68,7 @@
 								</div>
 							</div>
 						</div>
-						<a href="<?= base_url('export/P' . $project->get_id() . '.docx') ?>"
+						<a target="_blank" href="<?= base_url('export/P' . $project->get_id() . '.docx') ?>"
 						   class="btn btn-success col-md-2 <?= $project->get_planning() == 100 ? "" : "disabled" ?>">Export</a>
 					</div>
 					<h6>Import Studies</h6>
