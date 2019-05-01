@@ -5,11 +5,17 @@ require_once APPPATH . 'controllers/Pattern_Controller.php';
 
 class Login_Controller extends Pattern_Controller
 {
+	/**
+	 *
+	 */
 	public function index()
 	{
 
 	}
 
+	/**
+	 *
+	 */
 	public function log_into()
 	{
 		if ($this->form_validation->run() == FALSE)
@@ -47,6 +53,9 @@ class Login_Controller extends Pattern_Controller
 		}
 	}
 
+	/**
+	 *
+	 */
 	public function log_up()
 	{
 		try {
@@ -83,6 +92,9 @@ class Login_Controller extends Pattern_Controller
 		}
 	}
 
+	/**
+	 *
+	 */
 	public function sign_in()
 	{
 		try {
@@ -96,6 +108,9 @@ class Login_Controller extends Pattern_Controller
 		}
 	}
 
+	/**
+	 *
+	 */
 	public function sign_out()
 	{
 		try {
@@ -110,6 +125,9 @@ class Login_Controller extends Pattern_Controller
 		}
 	}
 
+	/**
+	 *
+	 */
 	public function sign_up()
 	{
 		try {

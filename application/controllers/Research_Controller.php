@@ -5,18 +5,20 @@ require_once APPPATH . 'controllers/Pattern_Controller.php';
 
 class Research_Controller extends Pattern_Controller
 {
+	/**
+	 *
+	 */
 	public function add_research_question()
 	{
 		$id_project = null;
 		try {
-			$this->logged_in();
 			$id_rq = $this->input->post('id_rq');
 			$description = $this->input->post('description');
 			$id_project = $this->input->post('id_project');
-			$this->validate_level(array(1, 3, 4));
+
+			$this->validate_level($id_project, array(1, 3, 4));
 
 			$this->load->model("Research_Model");
-
 			$this->Research_Model->add_research_question($id_rq, $description, $id_project);
 
 			$activity = "Added the research question " . $id_rq;
@@ -33,16 +35,19 @@ class Research_Controller extends Pattern_Controller
 		}
 	}
 
+	/**
+	 *
+	 */
 	public function delete_research_question()
 	{
 		$id_project = null;
 		try {
-			$this->logged_in();
 			$id_rq = $this->input->post('id_rq');
 			$id_project = $this->input->post('id_project');
-			$this->validate_level(array(1, 3, 4));
-			$this->load->model("Research_Model");
 
+			$this->validate_level($id_project, array(1, 3, 4));
+
+			$this->load->model("Research_Model");
 			$this->Research_Model->delete_research_question($id_rq, $id_project);
 
 			$activity = "Deleted the research question " . $id_rq;
@@ -59,18 +64,21 @@ class Research_Controller extends Pattern_Controller
 		}
 	}
 
+	/**
+	 *
+	 */
 	public function edit_research_question()
 	{
 		$id_project = null;
 		try {
-			$this->logged_in();
 			$now_id = $this->input->post('now_id');
 			$now_question = $this->input->post('now_question');
 			$old_id = $this->input->post('old_id');
 			$id_project = $this->input->post('id_project');
-			$this->validate_level(array(1, 3, 4));
-			$this->load->model("Research_Model");
 
+			$this->validate_level($id_project, array(1, 3, 4));
+
+			$this->load->model("Research_Model");
 			$this->Research_Model->edit_research_question($now_id, $now_question, $old_id, $id_project);
 
 			$activity = $this->session->name . "Edited the research_question " . $now_id;

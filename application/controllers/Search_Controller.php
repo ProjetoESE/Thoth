@@ -5,6 +5,9 @@ require_once APPPATH . 'controllers/Pattern_Controller.php';
 
 class Search_Controller extends Pattern_Controller
 {
+	/**
+	 *
+	 */
 	public function index()
 	{
 		$data['search'] = $this->input->get('search');
