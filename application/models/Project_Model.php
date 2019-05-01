@@ -795,6 +795,8 @@ class Project_Model extends Pattern_Model
 		foreach ($query->result() as $row) {
 			$project->set_title($row->title);
 			$project->set_id($row->id_project);
+			$project->set_description($row->description);
+			$project->set_objectives($row->objectives);
 			$project->set_planning($row->planning);
 			$project->set_import($row->import);
 			$project->set_selection($row->selection);
