@@ -80,7 +80,7 @@ class Pattern_Model extends CI_Model
 		return $ids_members;
 	}
 
-	public function get_id_member($id_user,$id_project)
+	public function get_id_member($id_user, $id_project)
 	{
 		$this->db->select('id_members');
 		$this->db->from('members');
@@ -120,6 +120,20 @@ class Pattern_Model extends CI_Model
 
 		foreach ($query->result() as $row) {
 			array_push($id_papers, $row->id_paper);
+		}
+		return $id_papers;
+	}
+
+	public function get_ID_papers($id_bib)
+	{
+		$id_papers = array();
+		$this->db->select('id');
+		$this->db->from('papers');
+		$this->db->where_in('id_bib', $id_bib);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			array_push($id_papers, $row->id);
 		}
 		return $id_papers;
 	}

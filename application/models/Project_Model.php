@@ -851,52 +851,6 @@ class Project_Model extends Pattern_Model
 		return null;
 	}
 
-	private function get_qas($id_project)
-	{
-		$qas = array();
-		$this->db->select('*');
-		$this->db->from('question_quality');
-		$this->db->where('id_project', $id_project);
-		$query = $this->db->get();
-
-		foreach ($query->result() as $row) {
-			$qa = new Question_Quality();
-			$qa->set_description($row->description);
-			$qa->set_id($row->id);
-			$qa->set_weight($row->weight);
-
-
-			$this->db->select('*');
-			$this->db->from('score_quality');
-			$this->db->where('id_score', $row->min_to_app);
-			$query3 = $this->db->get();
-
-			foreach ($query3->result() as $row3) {
-				$sc = new Score_Quality();
-				$sc->set_score($row3->score);
-				$sc->set_description($row3->description);
-				$sc->set_score_rule($row3->score_rule);
-				$qa->set_min_to_approve($sc);
-			}
-
-			$this->db->select('*');
-			$this->db->from('score_quality');
-			$this->db->where('id_qa', $row->id_qa);
-			$query2 = $this->db->get();
-
-			foreach ($query2->result() as $row2) {
-				$sc = new Score_Quality();
-				$sc->set_score($row2->score);
-				$sc->set_description($row2->description);
-				$sc->set_score_rule($row2->score_rule);
-				$qa->set_scores($sc);
-			}
-
-			array_push($qas, $qa);
-		}
-		return $qas;
-	}
-
 	private function get_qes($id_project)
 	{
 		$qes = array();
@@ -1524,6 +1478,109 @@ class Project_Model extends Pattern_Model
 				}
 			}
 		}
+	}
+
+	private function get_score_evaluation($id_paper, $id_qa, $id_member)
+	{
+		$this->db->select('score_rule');
+		$this->db->from('evaluation_qa');
+		$this->db->join('score_quality','score_quality.id_score = evaluation_qa.score');
+		$this->db->where('id_paper', $id_paper);
+		$this->db->where('evaluation_qa.id_qa', $id_qa);
+		$this->db->where('id_member', $id_member);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			return $row->score_rule;
+		}
+
+		return null;
+	}
+
+	private function get_qas($id_project)
+	{
+		$qas = array();
+		$this->db->select('*');
+		$this->db->from('question_quality');
+		$this->db->where('id_project', $id_project);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			$qa = new Question_Quality();
+			$qa->set_description($row->description);
+			$qa->set_id($row->id);
+			$qa->set_weight($row->weight);
+
+
+			$this->db->select('*');
+			$this->db->from('score_quality');
+			$this->db->where('id_score', $row->min_to_app);
+			$query3 = $this->db->get();
+
+			foreach ($query3->result() as $row3) {
+				$sc = new Score_Quality();
+				$sc->set_score($row3->score);
+				$sc->set_description($row3->description);
+				$sc->set_score_rule($row3->score_rule);
+				$qa->set_min_to_approve($sc);
+			}
+
+			$this->db->select('*');
+			$this->db->from('score_quality');
+			$this->db->where('id_qa', $row->id_qa);
+			$query2 = $this->db->get();
+
+			foreach ($query2->result() as $row2) {
+				$sc = new Score_Quality();
+				$sc->set_score($row2->score);
+				$sc->set_description($row2->description);
+				$sc->set_score_rule($row2->score_rule);
+				$qa->set_scores($sc);
+			}
+
+			array_push($qas, $qa);
+		}
+		return $qas;
+	}
+
+	public function get_evaluation_qa($id_project)
+	{
+		$papers = array();
+		$user = $this->get_id_name_user($this->session->email);
+		$id_member = $this->get_id_member($user[0], $id_project);
+		$project_databases = $this->get_ids_project_database($id_project);
+
+		$id_bibs = array();
+		if (sizeof($project_databases) > 0) {
+			$id_bibs = $this->get_ids_bibs($project_databases);
+		}
+
+		$ids_paper = null;
+		if (sizeof($id_bibs) > 0) {
+			$ids_paper = $this->get_ID_papers($id_bibs);
+		}
+
+		$ids_qas = null;
+		if (sizeof($id_bibs) > 0) {
+			$ids_qas = $this->get_qas($id_project);
+		}
+
+		if (sizeof($ids_paper) > 0) {
+
+			foreach ($ids_paper as $id_paper) {
+
+				foreach ($ids_qas as $qa) {
+					$id_qa = $qa->get_id();
+					$score = $this->get_score_evaluation($id_paper, $id_qa, $id_member);
+
+					$qas [$id_qa] = $score;
+
+					$papers[$id_paper] = $qas;
+				}
+			}
+		}
+
+		return $papers;
 	}
 
 	/**

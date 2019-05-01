@@ -166,8 +166,10 @@
 					<tr>
 						<td><?= $paper->get_id() ?></td>
 						<td><?= $paper->get_title() ?></td>
-						<?php foreach ($project->get_questions_quality() as $qa) { ?>
-							<td><?= $qa->get_id() ?></td>
+						<?php
+						$qas = $qas_score[$paper->get_id()];
+						foreach ($project->get_questions_quality() as $qa) { ?>
+							<td><?= $qas[$qa->get_id()] ?></td>
 						<?php } ?>
 						<td><?= $paper->get_score() ?></td>
 						<?php
@@ -223,3 +225,6 @@
 		?>
 	</div>
 </div>
+<?php
+$this->load->view('modal/modal_paper_qa');
+?>

@@ -333,4 +333,24 @@ class Quality_Controller extends Pattern_Controller
 			}
 		}
 	}
+
+	/**
+	 *
+	 */
+	public function get_paper_qa(){
+		try {
+			$id = $this->input->post('id');
+			$id_project = $this->input->post('id_project');
+
+			$this->validate_level($id_project, array(1, 2, 3, 4));
+
+			$this->load->model("Quality_Model");
+			$data = $this->Quality_Model->get_paper_qa($id, $id_project);
+
+			echo json_encode($data);
+		} catch (Exception $e) {
+			$this->session->set_flashdata('error', $e->getMessage());
+			redirect(base_url());
+		}
+	}
 }

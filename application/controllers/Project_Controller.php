@@ -148,6 +148,7 @@ class Project_Controller extends Pattern_Controller
 			$this->load->model("Project_Model");
 			$data['project'] = $this->Project_Model->get_project_quality($id);
 			$data['count_papers'] = $this->Project_Model->count_papers_qa_by_user($id);
+			$data['qas_score'] = $this->Project_Model->get_evaluation_qa($id);
 
 			$this->load_views('pages/project/project_quality_assessment', $data);
 

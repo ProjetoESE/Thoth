@@ -892,3 +892,110 @@ function edit_min_score_qa(element) {
 		}
 	});
 }
+
+$(document).ready(function () {
+	table_papers_quality.on('select', function (e, dt, type, indexes) {
+		let rowData = table_papers_quality.rows(indexes).data().toArray();
+		let id_project = $("#id_project").val();
+		let size = table_papers_quality.columns().data().length;
+
+		$.ajax({
+			type: "POST",
+			url: base_url + 'Quality_Controller/get_paper_qa/',
+			data: {
+				id_project: id_project,
+				id: rowData[0][0]
+			}, error: function () {
+				Swal({
+					type: 'error',
+					title: 'Error',
+					html: 'Something caused an <label class="font-weight-bold text-danger">Error</label>',
+					showCancelButton: false,
+					confirmButtonText: 'Ok'
+				});
+			},
+			success: function (data) {
+
+				data = JSON.parse(data);
+				let txt_sel = $('#text_qa');
+				let edit = $('#edit_status_qa');
+				let criteria_a = $('#qa_analiese');
+
+				$('#index_paper_qa').val(indexes);
+				$('#paper_id_qa').text(rowData[0][0]);
+				$('#id_paper_qa').val(rowData[0][0]);
+				$('#paper_title_qa').text(rowData[0][1]);
+				$('#paper_author_qa').text(data['author']);
+				$('#paper_year_qa').text(data['year']);
+				$('#paper_database_qa').text(data['database']);
+
+				switch (rowData[0][size-1]) {
+					case "Unclassified":
+						txt_sel.text("");
+						txt_sel.val(3);
+						txt_sel.hide();
+						edit.val(3);
+						edit.show();
+						criteria_a.show();
+						break;
+					case "Rejected":
+						edit.hide();
+						txt_sel.removeClass("text-success");
+						txt_sel.addClass("text-danger");
+						txt_sel.text(rowData[0][size]);
+						txt_sel.val(2);
+						txt_sel.show();
+						criteria_a.show();
+						break;
+					case "Accepted":
+						edit.hide();
+						criteria_a.show();
+						txt_sel.removeClass("text-danger");
+						txt_sel.addClass("text-success");
+						txt_sel.text(rowData[0][size]);
+						txt_sel.val(1);
+						txt_sel.show();
+						criteria_a.show();
+						break;
+					case "Removed":
+						txt_sel.text("");
+						txt_sel.val(4);
+						txt_sel.hide();
+						edit.val(4);
+						edit.show();
+						criteria_a.hide();
+						break;
+				}
+
+				if (data['keywords'] != "") {
+					$('#paper_keywords_qa').text(data['keywords']);
+				} else {
+					$('#paper_keywords_qa').text("This article does not have Keywords");
+				}
+
+				if (data['abstract'] != "") {
+					$('#paper_abstract_qa').text(data['abstract']);
+				} else {
+					$('#paper_abstract_qa').text("This article does not have Abstract");
+				}
+
+				if (data['doi'] != "") {
+					$('#paper_doi_qa').text(data['doi']);
+				} else {
+					$('#paper_doi_qa').text("This article does not have Doi");
+				}
+				let url = $('#paper_url_qa');
+				if (data['url'] != "") {
+					url.removeClass("disabled");
+					url.attr("href", data['url']);
+				} else {
+					url.attr("href", "");
+					url.addClass("disabled");
+				}
+
+				$('#modal_paper_qa').modal('show');
+			}
+		});
+
+	});
+});
