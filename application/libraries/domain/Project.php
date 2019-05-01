@@ -459,7 +459,7 @@ class Project
 	 */
 	public function set_study_types($study_types)
 	{
-		if (is_null($study_types) || $study_types) {
+		if (is_null($study_types)) {
 			throw  new  InvalidArgumentException("Project Study Types Invalid!");
 		}
 
