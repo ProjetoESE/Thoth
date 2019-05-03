@@ -35,12 +35,31 @@ class Paper
 	private $status_extraction;
 	private $score;
 	private $status_quality;
+	private $rule_quality;
 
 	/**
 	 * Paper constructor.
 	 */
 	public function __construct()
 	{
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function get_rule_quality()
+	{
+		return $this->rule_quality;
+	}
+
+	/**
+	 * @param mixed $rule_quality
+	 * @return Paper
+	 */
+	public function set_rule_quality($rule_quality)
+	{
+		$this->rule_quality = $rule_quality;
+		return $this;
 	}
 
 	/**

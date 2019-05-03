@@ -920,26 +920,43 @@ $(document).ready(function () {
 				let txt_sel = $('#text_qa');
 				let edit = $('#edit_status_qa');
 				let criteria_a = $('#qa_analiese');
+				let score_qa = $('#score_paper_qa');
+				let gen_qa = $('#gen_score_qa');
 
 				$('#index_paper_qa').val(indexes);
 				$('#paper_id_qa').text(rowData[0][0]);
 				$('#id_paper_qa').val(rowData[0][0]);
 				$('#paper_title_qa').text(rowData[0][1]);
+				score_qa.text(rowData[0][size - 2]);
+				gen_qa.text(rowData[0][size - 3]);
+
 				$('#paper_author_qa').text(data['author']);
 				$('#paper_year_qa').text(data['year']);
 				$('#paper_database_qa').text(data['database']);
 
-				switch (rowData[0][size-1]) {
+				switch (rowData[0][size - 1]) {
 					case "Unclassified":
 						txt_sel.text("");
 						txt_sel.val(3);
 						txt_sel.hide();
 						edit.val(3);
 						edit.show();
+						score_qa.removeClass('text-success');
+						score_qa.removeClass('text-danger');
+						score_qa.addClass('text-dark');
+						gen_qa.removeClass('text-success');
+						gen_qa.removeClass('text-danger');
+						gen_qa.addClass('text-dark');
 						criteria_a.show();
 						break;
 					case "Rejected":
 						edit.hide();
+						score_qa.removeClass('text-success');
+						score_qa.removeClass('text-dark');
+						score_qa.addClass('text-danger');
+						gen_qa.removeClass('text-success');
+						gen_qa.removeClass('text-dark');
+						gen_qa.addClass('text-danger');
 						txt_sel.removeClass("text-success");
 						txt_sel.addClass("text-danger");
 						txt_sel.text(rowData[0][size]);
@@ -949,6 +966,12 @@ $(document).ready(function () {
 						break;
 					case "Accepted":
 						edit.hide();
+						score_qa.removeClass('text-dark');
+						score_qa.removeClass('text-danger');
+						score_qa.addClass('text-success');
+						gen_qa.removeClass('text-dark');
+						gen_qa.removeClass('text-danger');
+						gen_qa.addClass('text-success');
 						criteria_a.show();
 						txt_sel.removeClass("text-danger");
 						txt_sel.addClass("text-success");
@@ -998,4 +1021,6 @@ $(document).ready(function () {
 		});
 
 	});
+
+
 });

@@ -124,6 +124,21 @@ class Pattern_Model extends CI_Model
 		return $id_papers;
 	}
 
+	public function get_ids_papers_qa($id_bib)
+	{
+		$id_papers = array();
+		$this->db->select('id_paper');
+		$this->db->from('papers');
+		$this->db->where_in('id_bib', $id_bib);
+		$this->db->where_in('status_selection', 1);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			array_push($id_papers, $row->id_paper);
+		}
+		return $id_papers;
+	}
+
 	public function get_ID_papers($id_bib)
 	{
 		$id_papers = array();
@@ -280,6 +295,21 @@ class Pattern_Model extends CI_Model
 		foreach ($query->result() as $row) {
 			return $row->description;
 		}
+		return null;
+	}
+
+	public function gen_score_min($id_project)
+	{
+		$this->db->select('id_general_score');
+		$this->db->from('general_score');
+		$this->db->where('id_project', $id_project);
+		$this->db->order_by('start', 'ASC');
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			return $row->id_general_score;
+		}
+
 		return null;
 	}
 

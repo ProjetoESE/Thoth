@@ -20,6 +20,7 @@ class Import_Model extends Pattern_Model
 		$id_bib = $this->db->insert_id();
 
 		$insert_papers = array();
+		$gen_score = $this->gen_score_min($id_project);
 
 		foreach ($papers as $p) {
 			$data['id'] = $count_papers;
@@ -140,6 +141,13 @@ class Import_Model extends Pattern_Model
 				$data['year'] = "";
 			}
 
+			$data['score'] = 0;
+			$data['status_qa'] = 3;
+			$data['id_gen_score'] = $gen_score;
+			$data['check_qa'] = false;
+			$data['status_selection'] = 3;
+			$data['check_status_selection'] = false;
+
 			$data['data_base'] = $id_database;
 
 			array_push($insert_papers, $data);
@@ -152,7 +160,7 @@ class Import_Model extends Pattern_Model
 		$id_papers = $this->get_ids_papers($id_bib);
 
 		$status = array();
-
+		$status_qa = array();
 		foreach ($members as $mem) {
 			foreach ($id_papers as $paper) {
 				$insert = array(
@@ -161,19 +169,28 @@ class Import_Model extends Pattern_Model
 					'id_status' => 3,
 					'note' => ""
 				);
+
+				$insert_qa = array(
+					'id_paper' => $paper,
+					'id_member' => $mem,
+					'id_status' => 3,
+					'note' => "",
+					'score' => 0,
+					'id_gen_score' => $gen_score
+				);
 				array_push($status, $insert);
+				array_push($status_qa, $insert_qa);
 			}
 		}
 
 		$this->db->insert_batch('papers_selection', $status);
-		$this->db->insert_batch('papers_qa', $status);
+		$this->db->insert_batch('papers_qa', $status_qa);
 
 		$dat = array(
 			'c_papers' => $count_papers
 		);
 		$this->db->where('id_project', $id_project);
 		$this->db->update('project', $dat);
-
 
 	}
 

@@ -55,7 +55,13 @@
 				<hr>
 				<div class="row" id="qa_analiese">
 					<div class="col-sm-12">
-						<h6>Quality Questions</h6>
+						<h5>Quality Questions</h5>
+						<div class="form-inline">
+							<h6 >Score: </h6> <h6 class="font-weight-bold" id="score_paper_qa">0</h6>
+						</div>
+						<div class="form-inline">
+							<h6>General Score: </h6> <h6 class="font-weight-bold" id="gen_score_qa"></h6>
+						</div>
 						<table class="table table-responsive-sm" id="table_qa_eva">
 							<caption>List of Quality Questions</caption>
 							<thead>
@@ -71,13 +77,14 @@
 								<tr>
 									<td><?= $qa->get_id() ?></td>
 									<td><?= $qa->get_description() ?></td>
-									<td><?= $qa->get_min_to_approve()->get_score_rule() ?></td>
+									<td><?= is_null($qa->get_min_to_approve()) ? "" : $qa->get_min_to_approve()->get_score_rule() ?></td>
 									<td>
 										<select class="form-control" id="select_<?= $qa->get_id() ?>">
-											<option></option>
+											<option value="null"></option>
 											<?php foreach ($qa->get_scores() as $score) { ?>
 												<option
-													data-toggle="tooltip" data-placement="top" title="<?= $score->get_description() ?>"
+													data-toggle="tooltip" data-placement="top"
+													title="<?= $score->get_description() ?>"
 													value="<?= $score->get_score_rule() ?>">
 													<?= $score->get_score_rule() ?>
 												</option>

@@ -157,6 +157,7 @@
 					<?php foreach ($project->get_questions_quality() as $qa) { ?>
 						<th><?= $qa->get_id() ?></th>
 					<?php } ?>
+					<th>General Score</th>
 					<th>Score</th>
 					<th>Status</th>
 				</tr>
@@ -171,11 +172,12 @@
 						foreach ($project->get_questions_quality() as $qa) { ?>
 							<td><?= $qas[$qa->get_id()] ?></td>
 						<?php } ?>
+						<td><?= $paper->get_rule_quality() ?></td>
 						<td><?= $paper->get_score() ?></td>
 						<?php
 						$class = "text-dark";
 						$status = "Unclassified";
-						switch ($paper->get_status_selection()) {
+						switch ($paper->get_status_quality()) {
 							case 1:
 								$class = "text-success";
 								$status = "Accepted";
@@ -200,6 +202,7 @@
 					<?php foreach ($project->get_questions_quality() as $qa) { ?>
 						<th><?= $qa->get_id() ?></th>
 					<?php } ?>
+					<th>General Score</th>
 					<th>Score</th>
 					<th>Status</th>
 				</tr>

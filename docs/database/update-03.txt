@@ -1,0 +1,21 @@
+CREATE TABLE `thoth`.`evaluation_qa` ( `id_ev_qa` INT NOT NULL AUTO_INCREMENT , `id_qa` INT NOT NULL , `id_member` INT NOT NULL , `id_score_qa` INT NOT NULL , PRIMARY KEY (`id_ev_qa`)) ENGINE = InnoDB;
+
+ALTER TABLE `evaluation_qa` ADD FOREIGN KEY (`id_member`) REFERENCES `members`(`id_members`) ON DELETE CASCADE ON UPDATE CASCADE; ALTER TABLE `evaluation_qa` ADD FOREIGN KEY (`id_qa`) REFERENCES `question_quality`(`id_qa`) ON DELETE CASCADE ON UPDATE CASCADE; ALTER TABLE `evaluation_qa` ADD FOREIGN KEY (`id_score_qa`) REFERENCES `score_quality`(`id_score`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+CREATE TABLE `thoth`.`papers_qa` ( `id_paper_qa` INT NOT NULL AUTO_INCREMENT , `id_paper` INT NOT NULL , `id_member` INT NOT NULL , `id_gen_score` INT NOT NULL , `id_status` INT NOT NULL , `note` TEXT NOT NULL , `score` FLOAT NOT NULL , PRIMARY KEY (`id_paper_qa`)) ENGINE = InnoDB;
+
+ALTER TABLE `papers_qa` ADD FOREIGN KEY (`id_member`) REFERENCES `members`(`id_members`) ON DELETE CASCADE ON UPDATE CASCADE; ALTER TABLE `papers_qa` ADD FOREIGN KEY (`id_paper`) REFERENCES `papers`(`id_paper`) ON DELETE CASCADE ON UPDATE CASCADE; ALTER TABLE `papers_qa` ADD FOREIGN KEY (`id_gen_score`) REFERENCES `general_score`(`id_general_score`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+CREATE TABLE `thoth`.`status_qa` ( `id_status` INT NOT NULL AUTO_INCREMENT , `status` VARCHAR(255) NOT NULL , PRIMARY KEY (`id_status`)) ENGINE = InnoDB;
+
+INSERT INTO `status_qa` (`id_status`, `status`) VALUES (NULL, 'Accepted'), (NULL, 'Rejected'), (NULL, 'Unclassified'), (NULL, 'Removed');
+
+ALTER TABLE `papers_qa` ADD FOREIGN KEY (`id_status`) REFERENCES `status_qa`(`id_status`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+ALTER TABLE `papers_qa` ADD FOREIGN KEY (`id_status`) REFERENCES `status_qa`(`id_status`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+ALTER TABLE `papers` ADD FOREIGN KEY (`status_qa`) REFERENCES `status_qa`(`id_status`) ON DELETE CASCADE ON UPDATE CASCADE; ALTER TABLE `papers` ADD FOREIGN KEY (`id_gen_score`) REFERENCES `general_score`(`id_general_score`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+ALTER TABLE `evaluation_qa` ADD `id_paper` INT NOT NULL AFTER `id_score_qa`;
+
+ALTER TABLE `evaluation_qa` ADD FOREIGN KEY (`id_paper`) REFERENCES `papers`(`id_paper`) ON DELETE CASCADE ON UPDATE CASCADE;

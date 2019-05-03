@@ -236,10 +236,17 @@ class Quality_Model extends Pattern_Model
 
 	}
 
+	public function get_qas_ev($id_member,$id_project){
+
+	}
+
 	public function get_paper_qa($id_paper, $id_project)
 	{
 		$ids_p_d = $this->get_ids_project_database($id_project);
 		$ids_bibs = $this->get_ids_bibs($ids_p_d);
+
+		$user = $this->get_id_name_user($this->session->email);
+		$id_member = $this->get_id_member($user[0], $id_project);
 
 		$this->db->select('papers.*, name');
 		$this->db->from('papers');
@@ -258,6 +265,8 @@ class Quality_Model extends Pattern_Model
 			$data['year'] = $row->year;
 			$data['database'] = $row->name;
 		}
+
+		//$data['qas'] = $this->get_qas_ev($id_member,$id_project);
 
 		return $data;
 

@@ -1057,7 +1057,7 @@ class Project_Model extends Pattern_Model
 			$id_user = $this->get_id_name_user($this->session->email);
 			$id_member = $this->get_id_member($id_user[0], $id_project);
 
-			$this->db->select('papers.title,papers.id,papers.id_paper,papers.author,papers.year, data_base.name, papers.score');
+			$this->db->select('papers.title,papers.id,papers.id_paper,papers.author,papers.year, data_base.name,papers.id_gen_score,papers.score');
 			$this->db->from('papers');
 			$this->db->join('data_base', 'papers.data_base = data_base.id_database');
 			$this->db->where_in('id_bib', $id_bibs);
@@ -1081,6 +1081,16 @@ class Project_Model extends Pattern_Model
 
 				foreach ($query6->result() as $row2) {
 					$p->set_status_quality($row2->id_status);
+				}
+
+
+				$this->db->select('description');
+				$this->db->from('general_score');
+				$this->db->where('id_general_score', $row->id_gen_score);
+				$query3 = $this->db->get();
+
+				foreach ($query3->result() as $row3) {
+					$p->set_rule_quality($row3->description);
 				}
 				array_push($papers, $p);
 
@@ -1249,7 +1259,7 @@ class Project_Model extends Pattern_Model
 
 		$id_papers = array();
 		if (sizeof($id_bibs) > 0) {
-			$id_papers = $this->get_ids_papers($id_bibs);
+			$id_papers = $this->get_ids_papers_qa($id_bibs);
 		}
 		if (sizeof($id_papers) > 0) {
 			$id_user = $this->get_id_name_user($this->session->email);
@@ -1329,9 +1339,11 @@ class Project_Model extends Pattern_Model
 				$id_papers = $this->get_ids_papers($id_bibs);
 			}
 
+			$gen_score = $this->gen_score_min($id_project);
+
 			if (sizeof($id_papers) > 0) {
 				$status_selection = array();
-				$status_quality = array();
+				$status_qa = array();
 				foreach ($id_papers as $paper) {
 					$insert = array(
 						'id_paper' => $paper,
@@ -1340,21 +1352,35 @@ class Project_Model extends Pattern_Model
 						'note' => ""
 					);
 					array_push($status_selection, $insert);
-					array_push($status_quality, $insert);
+					$insert_qa = array(
+						'id_paper' => $paper,
+						'id_member' => $id_member,
+						'id_status' => 3,
+						'note' => "",
+						'score' => 0,
+						'id_gen_score' => $gen_score
+					);
 
+
+					array_push($status_qa, $insert_qa);
 
 				}
 
 				$this->db->insert_batch('papers_selection', $status_selection);
-				$this->db->insert_batch('papers_qa', $status_quality);
+				$this->db->insert_batch('papers_qa', $status_qa);
 
 				$data = array(
 					'status_selection' => 3,
 					'check_status_selection' => false,
+					'status_qa' => 3,
+					'check_qa' => false,
+					'id_gen_score' => $gen_score,
+					'score' => 0,
 				);
 
 				$this->db->where_in('id_paper', $id_papers);
 				$this->db->update('papers', $data);
+
 			}
 		}
 		return $id_user[1];
@@ -1484,10 +1510,10 @@ class Project_Model extends Pattern_Model
 	{
 		$this->db->select('score_rule');
 		$this->db->from('evaluation_qa');
-		$this->db->join('score_quality','score_quality.id_score = evaluation_qa.score');
-		$this->db->where('id_paper', $id_paper);
+		$this->db->join('score_quality', 'score_quality.id_score = evaluation_qa.id_score_qa');
+		$this->db->where('evaluation_qa.id_paper', $id_paper);
 		$this->db->where('evaluation_qa.id_qa', $id_qa);
-		$this->db->where('id_member', $id_member);
+		$this->db->where('evaluation_qa.id_member', $id_member);
 		$query = $this->db->get();
 
 		foreach ($query->result() as $row) {
