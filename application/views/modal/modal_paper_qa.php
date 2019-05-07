@@ -57,7 +57,7 @@
 					<div class="col-sm-12">
 						<h5>Quality Questions</h5>
 						<div class="form-inline">
-							<h6 >Score: </h6> <h6 class="font-weight-bold" id="score_paper_qa">0</h6>
+							<h6>Score: </h6> <h6 class="font-weight-bold" id="score_paper_qa">0</h6>
 						</div>
 						<div class="form-inline">
 							<h6>General Score: </h6> <h6 class="font-weight-bold" id="gen_score_qa"></h6>
@@ -79,8 +79,8 @@
 									<td><?= $qa->get_description() ?></td>
 									<td><?= is_null($qa->get_min_to_approve()) ? "" : $qa->get_min_to_approve()->get_score_rule() ?></td>
 									<td>
-										<select class="form-control" id="select_<?= $qa->get_id() ?>">
-											<option value="null"></option>
+										<select class="form-control" id="<?= str_replace(" ", "", $qa->get_id()); ?>">
+											<option value=""></option>
 											<?php foreach ($qa->get_scores() as $score) { ?>
 												<option
 													data-toggle="tooltip" data-placement="top"

@@ -990,6 +990,18 @@ $(document).ready(function () {
 						break;
 				}
 
+
+				for (let i = 2; i < (size - 3); i++) {
+					let id_qa = table_papers_quality.column(i).title().replace(" ", "");
+					let select = $('#' + id_qa);
+					select.val(rowData[0][i]);
+
+					select.on('change', function () {
+						console.log(this.id)
+					});
+				}
+
+
 				if (data['keywords'] != "") {
 					$('#paper_keywords_qa').text(data['keywords']);
 				} else {
