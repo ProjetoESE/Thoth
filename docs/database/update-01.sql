@@ -1,1 +1,0 @@
-ALTER TABLE `project` ADD `planning` FLOAT NOT NULL DEFAULT '0' AFTER `c_papers`, ADD `import` FLOAT NOT NULL DEFAULT '0' AFTER `planning`, ADD `selection` FLOAT NOT NULL DEFAULT '0' AFTER `import`, ADD `quality` FLOAT NOT NULL DEFAULT '0' AFTER `selection`, ADD `extraction` FLOAT NOT NULL DEFAULT '0' AFTER `quality`;
