@@ -36,11 +36,19 @@
 						Selection</a>
 				</li>
 			<?php } ?>
-			<li class="nav-item">
-				<a class="nav-link"
-				   href="<?= base_url('quality_assessement/' . $project->get_id()) ?>">Quality
-					Assessment</a>
-			</li>
+			<?php if ($this->session->level != "4") { ?>
+				<li class="nav-item">
+					<a class="nav-link"
+					   href="<?= base_url('quality_assessment/' . $project->get_id()) ?>">Quality
+						Assessment</a>
+				</li>
+			<?php } ?>
+			<?php if ($this->session->level == "1" || $this->session->level == "4") { ?>
+				<li class="nav-item">
+					<a class="nav-link" href="<?= base_url('quality_adm/' . $project->get_id()) ?>">Review
+						Quality Assessment</a>
+				</li>
+			<?php } ?>
 			<li class="nav-item">
 				<a class=" nav-link active" href="<?= base_url('data_extraction/' . $project->get_id()) ?>">Data
 					Extraction</a>

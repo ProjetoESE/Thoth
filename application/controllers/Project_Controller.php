@@ -140,15 +140,42 @@ class Project_Controller extends Pattern_Controller
 	/**
 	 * @param $id
 	 */
-	public function quality_assessement($id)
+	public function review_qa($id)
 	{
 		try {
 			$this->validate_level($id, array(1, 2, 3, 4));
 
 			$this->load->model("Project_Model");
 			$data['project'] = $this->Project_Model->get_project_quality($id);
+			$data['count_project'] = $this->Project_Model->count_papers_by_status_qa($id);
+			$data['count_papers'] = $this->Project_Model->count_papers_reviewer_qa($id);
+			$data['status'] = $this->Project_Model->get_status_qa();
 
-			$this->load_views('pages/project/project_quality_assessement', $data);
+			$this->load->model("Quality_Model");
+			$data['conflicts'] = $this->Quality_Model->get_conflicts($id);
+
+			$this->load_views('pages/project/project_review_qa', $data);
+
+		} catch (Exception $e) {
+			$this->session->set_flashdata('error', $e->getMessage());
+			redirect(base_url());
+		}
+	}
+
+	/**
+	 * @param $id
+	 */
+	public function quality_assessment($id)
+	{
+		try {
+			$this->validate_level($id, array(1, 2, 3, 4));
+
+			$this->load->model("Project_Model");
+			$data['project'] = $this->Project_Model->get_project_quality($id);
+			$data['count_papers'] = $this->Project_Model->count_papers_qa_by_user($id);
+			$data['qas_score'] = $this->Project_Model->get_evaluation_qa($id);
+
+			$this->load_views('pages/project/project_quality_assessment', $data);
 
 		} catch (Exception $e) {
 			$this->session->set_flashdata('error', $e->getMessage());

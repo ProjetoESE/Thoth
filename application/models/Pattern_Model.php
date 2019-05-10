@@ -80,7 +80,23 @@ class Pattern_Model extends CI_Model
 		return $ids_members;
 	}
 
-	public function get_id_member($id_user,$id_project)
+	public function get_ids_members_1_3($id_project)
+	{
+		$ids_members = array();
+		$this->db->select('id_members');
+		$this->db->from('members');
+		$this->db->where('id_project', $id_project);
+		$this->db->where_in('level', array(1, 3));
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			array_push($ids_members, $row->id_members);
+		}
+
+		return $ids_members;
+	}
+
+	public function get_id_member($id_user, $id_project)
 	{
 		$this->db->select('id_members');
 		$this->db->from('members');
@@ -120,6 +136,36 @@ class Pattern_Model extends CI_Model
 
 		foreach ($query->result() as $row) {
 			array_push($id_papers, $row->id_paper);
+		}
+		return $id_papers;
+	}
+
+	public function get_ids_papers_qa($id_bib)
+	{
+		$id_papers = array();
+		$this->db->select('id_paper');
+		$this->db->from('papers');
+		$this->db->where_in('id_bib', $id_bib);
+		$this->db->where_in('status_selection', 1);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			array_push($id_papers, $row->id_paper);
+		}
+		return $id_papers;
+	}
+
+	public function get_ID_papers($id_bib)
+	{
+		$id_papers = array();
+		$this->db->select('id');
+		$this->db->from('papers');
+		$this->db->where_in('id_bib', $id_bib);
+		$this->db->where_in('status_selection', 1);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			array_push($id_papers, $row->id);
 		}
 		return $id_papers;
 	}
@@ -199,6 +245,21 @@ class Pattern_Model extends CI_Model
 
 	}
 
+	public function get_id_paper_qa($id_paper, $id_member)
+	{
+		$this->db->select('id_paper_qa');
+		$this->db->from('papers_qa');
+		$this->db->where('id_paper', $id_paper);
+		$this->db->where('id_member', $id_member);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			return $row->id_paper_qa;
+		}
+		return null;
+
+	}
+
 	public function get_criteria($id_project, $type)
 	{
 		$criterias = array();
@@ -267,6 +328,98 @@ class Pattern_Model extends CI_Model
 			return $row->description;
 		}
 		return null;
+	}
+
+	public function gen_score_min($id_project)
+	{
+		$this->db->select('id_general_score');
+		$this->db->from('general_score');
+		$this->db->where('id_project', $id_project);
+		$this->db->order_by('start', 'ASC');
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			return $row->id_general_score;
+		}
+
+		return null;
+	}
+
+	public function get_qas($id_project)
+	{
+		$qas = array();
+		$this->db->select('*');
+		$this->db->from('question_quality');
+		$this->db->where('id_project', $id_project);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			$qa = new Question_Quality();
+			$qa->set_description($row->description);
+			$qa->set_id($row->id);
+			$qa->set_weight($row->weight);
+
+
+			$this->db->select('*');
+			$this->db->from('score_quality');
+			$this->db->where('id_score', $row->min_to_app);
+			$query3 = $this->db->get();
+
+			foreach ($query3->result() as $row3) {
+				$sc = new Score_Quality();
+				$sc->set_score($row3->score);
+				$sc->set_description($row3->description);
+				$sc->set_score_rule($row3->score_rule);
+				$qa->set_min_to_approve($sc);
+			}
+
+			$this->db->select('*');
+			$this->db->from('score_quality');
+			$this->db->where('id_qa', $row->id_qa);
+			$query2 = $this->db->get();
+
+			foreach ($query2->result() as $row2) {
+				$sc = new Score_Quality();
+				$sc->set_score($row2->score);
+				$sc->set_description($row2->description);
+				$sc->set_score_rule($row2->score_rule);
+				$qa->set_scores($sc);
+			}
+
+			array_push($qas, $qa);
+		}
+		return $qas;
+	}
+
+	public function get_researches_id_name($id_project)
+	{
+		$names = array();
+		$this->db->select('user.name,id_members');
+		$this->db->from('members');
+		$this->db->join('user', 'user.id_user = members.id_user');
+		$this->db->where('id_project', $id_project);
+		$this->db->where_in('level', array(1, 3));
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			array_push($names, array($row->id_members, $row->name));
+		}
+
+		return $names;
+	}
+
+	public function get_ids_qas($id_project)
+	{
+		$qas = array();
+		$this->db->select('id_qa,id');
+		$this->db->from('question_quality');
+		$this->db->where('id_project', $id_project);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			array_push($qas, array($row->id_qa, $row->id));
+		}
+		return $qas;
 	}
 
 }

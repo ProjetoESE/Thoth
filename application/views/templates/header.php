@@ -79,6 +79,7 @@
 	<!-- My JS Files -->
 	<script src="<?= base_url('assets/js/loading.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/main.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/title.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/overall.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/research_question.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/database.js'); ?>"></script>
@@ -89,6 +90,7 @@
 	<script src="<?= base_url('assets/js/data_extraction.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/help.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/study_selection.js'); ?>"></script>
+
 </head>
 <body>
 

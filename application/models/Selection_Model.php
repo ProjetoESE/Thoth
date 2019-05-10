@@ -237,23 +237,11 @@ class Selection_Model extends Pattern_Model
 			foreach ($query->result() as $row) {
 				if ($row->type == "Inclusion") {
 					$ic = new Inclusion_Criteria();
-					$ic->set_description($row->description);
 					$ic->set_id($row->id);
-					if ($row->pre_selected == 0) {
-						$ic->set_pre_selected(false);
-					} else {
-						$ic->set_pre_selected(true);
-					}
 					array_push($inclusion, $ic);
 				} else {
 					$ec = new Exclusion_Criteria();
-					$ec->set_description($row->description);
 					$ec->set_id($row->id);
-					if ($row->pre_selected == 0) {
-						$ec->set_pre_selected(false);
-					} else {
-						$ec->set_pre_selected(true);
-					}
 					array_push($exclusion, $ec);
 				}
 			}
@@ -350,7 +338,7 @@ class Selection_Model extends Pattern_Model
 	private function get_info($id_paper)
 	{
 		$note = array();
-		$this->db->select('note,name,id_status,papers_selection.id_members');
+		$this->db->select('note,id_status,papers_selection.id_member');
 		$this->db->from('papers_selection');
 		$this->db->join('members', 'members.id_members = papers_selection.id_member');
 		$this->db->where('id_paper', $id_paper);
@@ -360,15 +348,15 @@ class Selection_Model extends Pattern_Model
 
 			$this->db->select('name');
 			$this->db->from('user');
-			$this->db->join('members', 'members.id_user = users.id_user');
-			$this->db->where('id_members', $row->id_members);
+			$this->db->join('members', 'members.id_user = user.id_user');
+			$this->db->where('id_members', $row->id_member);
 			$query2 = $this->db->get();
 			$name = "";
 			foreach ($query2->result() as $row2) {
 				$name = $row2->name;
 			}
 
-			array_push($note, array($row->note, $name, $row->id_status, $row->id_members));
+			array_push($note, array($row->note, $name, $row->id_status, $row->id_member));
 		}
 
 		return $note;
@@ -500,23 +488,6 @@ class Selection_Model extends Pattern_Model
 
 
 		return $aux;
-	}
-
-	private function get_researches_id_name($id_project)
-	{
-		$names = array();
-		$this->db->select('user.name,id_members');
-		$this->db->from('members');
-		$this->db->join('user', 'user.id_user = members.id_user');
-		$this->db->where('id_project', $id_project);
-		$this->db->where_in('level', array(1, 3));
-		$query = $this->db->get();
-
-		foreach ($query->result() as $row) {
-			array_push($names, array($row->id_members, $row->name));
-		}
-
-		return $names;
 	}
 
 }
