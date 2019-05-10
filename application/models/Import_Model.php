@@ -156,7 +156,7 @@ class Import_Model extends Pattern_Model
 
 		$this->db->insert_batch('papers', $insert_papers);
 
-		$members = $this->get_ids_members($id_project);
+		$members = $this->get_ids_members_1_3($id_project);
 		$id_papers = $this->get_ids_papers($id_bib);
 
 		$status = array();

@@ -79,7 +79,8 @@
 									<td><?= $qa->get_description() ?></td>
 									<td><?= is_null($qa->get_min_to_approve()) ? "" : $qa->get_min_to_approve()->get_score_rule() ?></td>
 									<td>
-										<select class="form-control" id="<?= str_replace(" ", "", $qa->get_id()); ?>">
+										<select class="form-control" data-qa="<?= $qa->get_id() ?>"
+												id="<?= str_replace(" ", "", $qa->get_id()); ?>">
 											<option value=""></option>
 											<?php foreach ($qa->get_scores() as $score) { ?>
 												<option

@@ -64,6 +64,7 @@ class Project_Model extends Pattern_Model
 		$project->set_questions_quality($this->get_qas($id_project));
 		$project->set_papers($this->get_papers_qa($id_project));
 		$project->set_errors($errors);
+		$project->set_members($this->get_members($id_project));
 
 		return $project;
 	}
@@ -251,7 +252,6 @@ class Project_Model extends Pattern_Model
 
 		return $project;
 	}
-
 
 	public function created_project($title, $description, $objectives, $email)
 	{
@@ -511,6 +511,40 @@ class Project_Model extends Pattern_Model
 		return $cont;
 	}
 
+	public function count_papers_by_status_qa($id_project)
+	{
+		$ids_p_d = $this->get_ids_project_database($id_project);
+		$id_bibs = array();
+		$total = 0;
+		$cont[1] = 0;
+		$cont[2] = 0;
+		$cont[3] = 0;
+		$cont[4] = 0;
+		$cont[5] = 0;
+
+		if (sizeof($ids_p_d) > 0) {
+			$id_bibs = $this->get_ids_bibs($ids_p_d);
+		}
+
+		if (sizeof($id_bibs) > 0) {
+
+			$this->db->select('status_qa, COUNT(*) as count');
+			$this->db->from('papers');
+			$this->db->group_by('status_qa');
+			$this->db->where_in('id_bib', $id_bibs);
+			$this->db->where('status_selection', 1);
+			$query = $this->db->get();
+
+			foreach ($query->result() as $row) {
+				$cont[$row->status_qa] = $row->count;
+				$total += $row->count;
+			}
+		}
+		$cont[5] = $total;
+
+		return $cont;
+	}
+
 	private function update_progress_selection($id_project)
 	{
 		$errors = array();
@@ -521,6 +555,9 @@ class Project_Model extends Pattern_Model
 		if ($count_papers[6] > 0) {
 			$unc = ($count_papers[3] * 100) / $count_papers[6];
 			$progress = 100 - $unc;
+			if ($count_papers[1] == 0) {
+				$progress = 0;
+			}
 		}
 		if ($progress == 0) {
 			array_push($errors, "Evaluate at least one job to move on to the next step");
@@ -594,6 +631,20 @@ class Project_Model extends Pattern_Model
 	{
 		$errors = array();
 		$progress = 0;
+
+		$count_papers = $this->count_papers_by_status_qa($id_project);
+
+		if ($count_papers[5] > 0) {
+			$unc = ($count_papers[3] * 100) / $count_papers[5];
+			$progress = 100 - $unc;
+			if ($count_papers[1] == 0) {
+				$progress = 0;
+			}
+		}
+		if ($progress == 0) {
+			array_push($errors, "Evaluate at least one job to move on to the next step");
+		}
+
 		$this->db->where('id_project', $id_project);
 		$this->db->update('project', array('quality' => number_format((float)$progress, 2)));
 		return $errors;
@@ -1201,6 +1252,53 @@ class Project_Model extends Pattern_Model
 		return $data;
 	}
 
+	public function count_papers_reviewer_qa($id_project)
+	{
+		$project_databases = $this->get_ids_project_database($id_project);
+
+		$id_bibs = array();
+		if (sizeof($project_databases) > 0) {
+			$id_bibs = $this->get_ids_bibs($project_databases);
+		}
+
+		$id_papers = array();
+		if (sizeof($id_bibs) > 0) {
+			$id_papers = $this->get_ids_papers_qa($id_bibs);
+		}
+		$data = array();
+		if (sizeof($id_papers) > 0) {
+			foreach ($this->get_members($id_project) as $mem) {
+				$level = $this->get_level($mem->get_email(), $id_project);
+				if ($level == 1 || $level == 3) {
+					$id_user = $this->get_id_name_user($mem->get_email());
+					$id_member = $this->get_id_member($id_user[0], $id_project);
+					$total = 0;
+					$cont[1] = 0;
+					$cont[2] = 0;
+					$cont[3] = 0;
+					$cont[4] = 0;
+					$cont[5] = 0;
+					$this->db->select('id_status, COUNT(*) as count');
+					$this->db->from('papers_qa');
+					$this->db->group_by('id_status');
+					$this->db->where('id_member', $id_member);
+					$this->db->where_in('id_paper', $id_papers);
+					$query = $this->db->get();
+
+					foreach ($query->result() as $row) {
+						$cont[$row->id_status] = $row->count;
+						$total += $row->count;
+					}
+					$cont[5] = $total;
+					$data[$mem->get_email()] = $cont;
+				}
+			}
+		}
+
+
+		return $data;
+	}
+
 	public function count_papers_sel_by_user($id_project)
 	{
 		$project_databases = $this->get_ids_project_database($id_project);
@@ -1399,6 +1497,19 @@ class Project_Model extends Pattern_Model
 		return $levels;
 	}
 
+	public function get_status_qa()
+	{
+		$levels = array();
+		$this->db->select('*');
+		$this->db->from('status_qa');
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			array_push($levels, array($row->id_status, $row->status));
+		}
+		return $levels;
+	}
+
 	public function edit_project($title, $description, $objectives, $id_project)
 	{
 		$data = array(
@@ -1523,52 +1634,6 @@ class Project_Model extends Pattern_Model
 		return null;
 	}
 
-	private function get_qas($id_project)
-	{
-		$qas = array();
-		$this->db->select('*');
-		$this->db->from('question_quality');
-		$this->db->where('id_project', $id_project);
-		$query = $this->db->get();
-
-		foreach ($query->result() as $row) {
-			$qa = new Question_Quality();
-			$qa->set_description($row->description);
-			$qa->set_id($row->id);
-			$qa->set_weight($row->weight);
-
-
-			$this->db->select('*');
-			$this->db->from('score_quality');
-			$this->db->where('id_score', $row->min_to_app);
-			$query3 = $this->db->get();
-
-			foreach ($query3->result() as $row3) {
-				$sc = new Score_Quality();
-				$sc->set_score($row3->score);
-				$sc->set_description($row3->description);
-				$sc->set_score_rule($row3->score_rule);
-				$qa->set_min_to_approve($sc);
-			}
-
-			$this->db->select('*');
-			$this->db->from('score_quality');
-			$this->db->where('id_qa', $row->id_qa);
-			$query2 = $this->db->get();
-
-			foreach ($query2->result() as $row2) {
-				$sc = new Score_Quality();
-				$sc->set_score($row2->score);
-				$sc->set_description($row2->description);
-				$sc->set_score_rule($row2->score_rule);
-				$qa->set_scores($sc);
-			}
-
-			array_push($qas, $qa);
-		}
-		return $qas;
-	}
-
 	public function get_evaluation_qa($id_project)
 	{
 		$papers = array();
@@ -1588,21 +1653,20 @@ class Project_Model extends Pattern_Model
 
 		$ids_qas = null;
 		if (sizeof($id_bibs) > 0) {
-			$ids_qas = $this->get_qas($id_project);
+			$ids_qas = $this->get_ids_qas($id_project);
 		}
 
 		if (sizeof($ids_paper) > 0) {
 
 			foreach ($ids_paper as $id_paper) {
+				$id = $this->get_id_paper($id_paper, $id_bibs);
 
 				foreach ($ids_qas as $qa) {
-					$id_qa = $qa->get_id();
-					$score = $this->get_score_evaluation($id_paper, $id_qa, $id_member);
+					$score = $this->get_score_evaluation($id, $qa[0], $id_member);
 
-					$qas [$id_qa] = $score;
-
-					$papers[$id_paper] = $qas;
+					$qas [$qa[1]] = $score;
 				}
+				$papers[$id_paper] = $qas;
 			}
 		}
 

@@ -36,11 +36,19 @@
 						Selection</a>
 				</li>
 			<?php } ?>
-			<li class="nav-item">
-				<a class="nav-link active"
-				   href="<?= base_url('quality_assessment/' . $project->get_id()) ?>">Quality
-					Assessment</a>
-			</li>
+			<?php if ($this->session->level != "4") { ?>
+				<li class="nav-item">
+					<a class="nav-link active"
+					   href="<?= base_url('quality_assessment/' . $project->get_id()) ?>">Quality
+						Assessment</a>
+				</li>
+			<?php } ?>
+			<?php if ($this->session->level == "1" || $this->session->level == "4") { ?>
+				<li class="nav-item">
+					<a class="nav-link" href="<?= base_url('quality_adm/' . $project->get_id()) ?>">Review
+						Quality Assessment</a>
+				</li>
+			<?php } ?>
 			<li class="nav-item ">
 				<a class=" nav-link" href="<?= base_url('data_extraction/' . $project->get_id()) ?>">Data
 					Extraction</a>
@@ -63,25 +71,25 @@
 			?>
 			<h6>Progress Quality Assessment</h6>
 			<div class="progress">
-				<div id="prog_acc" class="progress-bar bg-success" role="progressbar"
+				<div id="prog_acc_qa" class="progress-bar bg-success" role="progressbar"
 					 style="width: <?= $acc ?>%"
 					 aria-valuenow="<?= $acc ?>"
 					 aria-valuemin="0"
 					 aria-valuemax="100"><?= $acc ?>%
 				</div>
-				<div id="prog_rej" class="progress-bar bg-danger" role="progressbar"
+				<div id="prog_rej_qa" class="progress-bar bg-danger" role="progressbar"
 					 style="width: <?= $rej ?>%"
 					 aria-valuenow="<?= $rej ?>"
 					 aria-valuemin="0"
 					 aria-valuemax="100"><?= $rej ?>%
 				</div>
-				<div id="prog_unc" class="progress-bar bg-dark" role="progressbar"
+				<div id="prog_unc_qa" class="progress-bar bg-dark" role="progressbar"
 					 style="width: <?= $unc ?>%"
 					 aria-valuenow="<?= $unc ?>"
 					 aria-valuemin="0"
 					 aria-valuemax="100"><?= $unc ?>%
 				</div>
-				<div id="prog_rem" class="progress-bar bg-info" role="progressbar"
+				<div id="prog_rem_qa" class="progress-bar bg-info" role="progressbar"
 					 style="width: <?= $rem ?>%"
 					 aria-valuenow="<?= $rem ?>"
 					 aria-valuemin="0"
@@ -98,7 +106,7 @@
 							<div class="input-group col-md-2">
 								<label class="text-success">
 									<span class="fas fa-check fa-lg"></span>
-									Accepted: <span id="count_acc"><?= $value ?></span>
+									Accepted: <span id="count_acc_qa"><?= $value ?></span>
 								</label>
 							</div>
 							<?php
@@ -108,7 +116,7 @@
 							<div class="input-group col-md-2">
 								<label class="text-danger">
 									<span class="fas fa-times fa-lg"></span>
-									Rejected: <span id="count_rej"><?= $value ?></span>
+									Rejected: <span id="count_rej_qa"><?= $value ?></span>
 								</label>
 							</div>
 							<?php
@@ -118,7 +126,7 @@
 							<div class="input-group col-md-2">
 								<label class="text-dark">
 									<span class="fas fa-question fa-lg"></span>
-									Unclassified: <span id="count_unc"><?= $value ?></span>
+									Unclassified: <span id="count_unc_qa"><?= $value ?></span>
 								</label>
 							</div>
 							<?php
@@ -128,7 +136,7 @@
 							<div class="input-group col-md-2">
 								<label class="text-info">
 									<span class="fas fa-trash-alt fa-lg"></span>
-									Removed: <span id="count_rem"><?= $value ?></span>
+									Removed: <span id="count_rem_qa"><?= $value ?></span>
 								</label>
 							</div>
 							<?php
@@ -138,7 +146,7 @@
 							<div class="input-group col-md-2">
 								<label class="text-secondary">
 									<span class="fas fa-bars fa-lg"></span>
-									Total: <span id="count_total"><?= $value ?></span>
+									Total: <span id="count_total_qa"><?= $value ?></span>
 								</label>
 							</div>
 							<?php
@@ -148,7 +156,7 @@
 				?>
 			</div>
 			<br>
-			<table class="table" id="table_papers_quality">
+			<table class="table table-responsive-sm" id="table_papers_quality">
 				<caption>List of Papers for Quality Assessment</caption>
 				<thead>
 				<tr>
@@ -168,6 +176,7 @@
 						<td><?= $paper->get_id() ?></td>
 						<td><?= $paper->get_title() ?></td>
 						<?php
+
 						$qas = $qas_score[$paper->get_id()];
 						foreach ($project->get_questions_quality() as $qa) { ?>
 							<td><?= $qas[$qa->get_id()] ?></td>

@@ -24,7 +24,7 @@ $(document).ready(function () {
 			},
 			success: function () {
 				change_old_status(old_status);
-				change_new_status(id_paper, status,index);
+				change_new_status(id_paper, status, index);
 				status_paper(status)
 			}
 		});
@@ -422,8 +422,8 @@ $(document).ready(function () {
 			},
 			success: function () {
 				table_conf_paper_selection.row(index).remove().draw();
-				new_status_paper(old_status, status)
-
+				new_status_paper(old_status, status);
+				status_paper(status);
 			}
 		});
 	});
@@ -635,7 +635,7 @@ function update_progress() {
 
 }
 
-function change_new_status(id_paper, status,index) {
+function change_new_status(id_paper, status, index) {
 	let criteria_a = $('#criteria_analiese');
 	let new_count = 0;
 	let paper = $('#' + id_paper);
@@ -653,7 +653,7 @@ function change_new_status(id_paper, status,index) {
 			paper.removeClass("text-info");
 			paper.removeClass("text-warning");
 			table_papers.cell(index, 5).data("Accepted");
-		//	paper.html("Accepted");
+			//	paper.html("Accepted");
 			paper.addClass("text-success");
 			text.text("Accepted");
 			text.show();
@@ -779,7 +779,7 @@ function evaluation_criteria(indexes, selected, inclusion) {
 
 			if (data.change) {
 				change_old_status(old_status.toString());
-				change_new_status(id_paper, data.status.toString(),index);
+				change_new_status(id_paper, data.status.toString(), index);
 				status_paper(data.status.toString());
 			}
 		}

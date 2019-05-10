@@ -36,15 +36,29 @@ $(document).ready(function () {
 		}
 	});
 
+	table_conf_paper_qa = $('#table_conf_paper_qa').DataTable({
+		language: lang,
+		responsive: true,
+		order: [[0, "asc"]],
+		paginate: true,
+		info: true,
+		searching: true,
+		ordering: true,
+		select: {
+			style: 'single'
+		}
+	});
+
 	table_qa_eva = $('#table_qa_eva').DataTable({
 		columnDefs: [{
 			orderable: false,
 			targets: 2
 		}, {
+			width: '20%',
 			orderable: false,
 			targets: 3
-		}
-		],
+		}],
+		autoWidth: false,
 		language: lang,
 		responsive: true,
 		order: [[0, "asc"]],
@@ -299,26 +313,6 @@ $(document).ready(function () {
 	table_papers_quality = $('#table_papers_quality').DataTable({
 		initComplete: function () {
 			let size = this.api().columns().data().length;
-			for (let i = 2; i < (size - 1); i++) {
-				this.api().columns(i).every(function () {
-					let column = this;
-					let select = $('<select id="select_status' + i + '" class="form-control" ><option value=""></option></select>')
-						.appendTo($(column.footer()).empty())
-						.on('change', function () {
-							let val = $.fn.dataTable.util.escapeRegex(
-								$(this).val()
-							);
-
-							column
-								.search(val ? '^' + val + '$' : '', true, false)
-								.draw();
-						});
-
-					column.data().unique().sort().each(function (d, j) {
-						select.append('<option value="' + d + '">' + d + '</option>')
-					});
-				});
-			}
 			this.api().columns(size - 1).every(function () {
 				let column = this;
 				let select = $('<select id="select_status5" class="form-control" ><option value=""></option></select>')

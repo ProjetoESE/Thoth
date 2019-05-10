@@ -69,5 +69,6 @@ $route['edit/(:num)'] = 'Project_Controller/edit/$1';
 $route['new_project'] = 'Project_Controller/new_project';
 $route['add_research/(:num)'] = 'Project_Controller/add_research/$1';
 $route['study_selection_adm/(:num)'] = 'Project_Controller/review_study_selection/$1';
+$route['quality_adm/(:num)'] = 'Project_Controller/review_qa/$1';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

@@ -337,7 +337,8 @@ class Quality_Controller extends Pattern_Controller
 	/**
 	 *
 	 */
-	public function get_paper_qa(){
+	public function get_paper_qa()
+	{
 		try {
 			$id = $this->input->post('id');
 			$id_project = $this->input->post('id_project');
@@ -353,4 +354,131 @@ class Quality_Controller extends Pattern_Controller
 			redirect(base_url());
 		}
 	}
+
+	/**
+	 *
+	 */
+	public function edit_status_qa()
+	{
+		try {
+			$id_paper = $this->input->post('id_paper');
+			$id_project = $this->input->post('id_project');
+			$status = $this->input->post('status');
+
+			$this->validate_level($id_project, array(1, 3, 4));
+
+			$this->load->model("Quality_Model");
+			$this->Quality_Model->edit_status_qa($id_paper, $status, $id_project);
+
+			$activity = "Edited status quality to paper " . $id_paper;
+			$this->insert_log($activity, 3, $id_project);
+
+
+		} catch (Exception $e) {
+			$this->session->set_flashdata('error', $e->getMessage());
+		}
+	}
+
+	/**
+	 *
+	 */
+	public function evaluation_qa()
+	{
+		try {
+			$id_paper = $this->input->post('id_paper');
+			$id_project = $this->input->post('id_project');
+			$id_qa = $this->input->post('id_qa');
+			$score = $this->input->post('score');
+
+
+
+			$this->validate_level($id_project, array(1, 3));
+
+			$this->load->model("Quality_Model");
+
+			$this->Quality_Model->selected_qa_score($id_paper, $id_qa, $score, $id_project);
+			$data = $this->Quality_Model->calculate_score_qa_mem($id_paper, $id_project);
+			$this->Quality_Model->check_status_qa($id_paper, $id_project);
+
+			$activity = "Selected score " . $score . "to quality question " . $id_qa . " to paper " . $id_paper;
+			$this->insert_log($activity, 3, $id_project);
+
+			if ($data['change']) {
+				$activity = "Edited status quality to paper " . $id_paper;
+				$this->insert_log($activity, 3, $id_project);
+			}
+
+			echo json_encode($data);
+		} catch (Exception $e) {
+			$this->session->set_flashdata('error', $e->getMessage());
+		}
+	}
+
+	/**
+	 *
+	 */
+	public function update_note_qa()
+	{
+		try {
+			$id_paper = $this->input->post('id_paper');
+			$id_project = $this->input->post('id_project');
+			$note = $this->input->post('note');
+
+			$this->validate_level($id_project, array(1, 2, 3, 4));
+
+			$this->load->model("Quality_Model");
+			$this->Quality_Model->update_note_qa($id_paper, $note, $id_project);
+
+			$activity = "Update note to paper " . $id_paper;
+			$this->insert_log($activity, 3, $id_project);
+
+
+		} catch (Exception $e) {
+			$this->session->set_flashdata('error', $e->getMessage());
+		}
+	}
+
+	/**
+	 *
+	 */
+	public function get_paper_conflict()
+	{
+		try {
+			$id = $this->input->post('id');
+			$id_project = $this->input->post('id_project');
+
+			$this->validate_level($id_project, array(1, 2, 3, 4));
+
+			$this->load->model("Quality_Model");
+			$data = $this->Quality_Model->get_paper_conflict($id, $id_project);
+
+			echo json_encode($data);
+		} catch (Exception $e) {
+			$this->session->set_flashdata('error', $e->getMessage());
+			redirect(base_url());
+		}
+	}
+
+	/**
+	 *
+	 */
+	public function edit_status_paper()
+	{
+		try {
+			$id_paper = $this->input->post('id_paper');
+			$id_project = $this->input->post('id_project');
+			$status = $this->input->post('status');
+
+			$this->validate_level($id_project, array(1, 3, 4));
+
+			$this->load->model("Quality_Model");
+			$this->Quality_Model->edit_status_paper($id_paper, $status, $id_project);
+
+			$activity = "Resolved conflict to paper " . $id_paper;
+			$this->insert_log($activity, 3, $id_project);
+		} catch (Exception $e) {
+			$this->session->set_flashdata('error', $e->getMessage());
+		}
+	}
 }
+

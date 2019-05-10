@@ -31,7 +31,7 @@
 			<?php } ?>
 			<?php if ($this->session->level == "1" || $this->session->level == "4") { ?>
 				<li class="nav-item">
-					<a class="nav-link active" href="<?= base_url('study_selection_adm/' . $project->get_id()) ?>">Review
+					<a class="nav-link" href="<?= base_url('study_selection_adm/' . $project->get_id()) ?>">Review
 						Study
 						Selection</a>
 				</li>
@@ -45,7 +45,7 @@
 			<?php } ?>
 			<?php if ($this->session->level == "1" || $this->session->level == "4") { ?>
 				<li class="nav-item">
-					<a class="nav-link" href="<?= base_url('quality_adm/' . $project->get_id()) ?>">Review
+					<a class="nav-link active" href="<?= base_url('quality_adm/' . $project->get_id()) ?>">Review
 						Quality Assessment</a>
 				</li>
 			<?php } ?>
@@ -56,23 +56,21 @@
 		</ul>
 		<br>
 		<div class="form-inline">
-			<label for="id_qa"><strong>Review Study Selection</strong></label>
+			<label for="id_qa"><strong>Review Quality Assessment</strong></label>
 			<a class="float-right opt"><i
 					class="fas fa-question-circle "></i></a>
 		</div>
 		<br>
 		<?php
-		if ($project->get_planning() == 100 && $project->get_import() == 100) {
+		if ($project->get_planning() == 100 && $project->get_import() == 100 && $project->get_selection() > 0) {
 			?>
 			<?php foreach ($project->get_members() as $member) {
 				if ($member->get_level() == "Administrator" || $member->get_level() == "Researcher") {
 
-
-					$acc = number_format((float)($count_papers[$member->get_email()][1] * 100) / $count_papers[$member->get_email()][6], 2);
-					$rej = number_format((float)($count_papers[$member->get_email()][2] * 100) / $count_papers[$member->get_email()][6], 2);
-					$unc = number_format((float)($count_papers[$member->get_email()][3] * 100) / $count_papers[$member->get_email()][6], 2);
-					$dup = number_format((float)($count_papers[$member->get_email()][4] * 100) / $count_papers[$member->get_email()][6], 2);
-					$rem = number_format((float)($count_papers[$member->get_email()][5] * 100) / $count_papers[$member->get_email()][6], 2);
+					$acc = number_format((float)($count_papers[$member->get_email()][1] * 100) / $count_papers[$member->get_email()][5], 2);
+					$rej = number_format((float)($count_papers[$member->get_email()][2] * 100) / $count_papers[$member->get_email()][5], 2);
+					$unc = number_format((float)($count_papers[$member->get_email()][3] * 100) / $count_papers[$member->get_email()][5], 2);
+					$rem = number_format((float)($count_papers[$member->get_email()][4] * 100) / $count_papers[$member->get_email()][5], 2);
 
 
 					?>
@@ -95,12 +93,6 @@
 							 aria-valuenow="<?= $unc ?>"
 							 aria-valuemin="0"
 							 aria-valuemax="100"><?= $unc ?>%
-						</div>
-						<div class="progress-bar bg-warning" role="progressbar"
-							 style="width: <?= $dup ?>%"
-							 aria-valuenow="<?= $dup ?>"
-							 aria-valuemin="0"
-							 aria-valuemax="100"><?= $dup ?>%
 						</div>
 						<div class="progress-bar bg-info" role="progressbar"
 							 style="width: <?= $rem ?>%"
@@ -147,16 +139,6 @@
 								case 4:
 									?>
 									<div class="input-group col-md-2">
-										<label class="text-warning">
-											<span class="fas fa-copy fa-lg"></span>
-											Duplicate: <span><?= $value ?></span>
-										</label>
-									</div>
-									<?php
-									break;
-								case 5:
-									?>
-									<div class="input-group col-md-2">
 										<label class="text-info">
 											<span class="fas fa-trash-alt fa-lg"></span>
 											Removed: <span><?= $value ?></span>
@@ -164,7 +146,7 @@
 									</div>
 									<?php
 									break;
-								case 6:
+								case 5:
 									?>
 									<div class="input-group col-md-2">
 										<label class="text-secondary">
@@ -187,7 +169,7 @@
 						class="fas fa-question-circle "></i></a>
 			</div>
 			<br>
-			<table id="table_conf_paper_selection" class="table table-responsive-sm">
+			<table id="table_conf_paper_qa" class="table table-responsive-sm">
 				<caption>List of Papers Conflicts</caption>
 				<thead>
 				<th>ID</th>
@@ -214,10 +196,6 @@
 									$status = "Rejected";
 									break;
 								case 4:
-									$class = "text-warning";
-									$status = "Duplicate";
-									break;
-								case 5:
 									$class = "text-info";
 									$status = "Removed";
 									break;
@@ -240,39 +218,32 @@
 						class="fas fa-question-circle "></i></a>
 			</div>
 			<?php
-			$acc = number_format((float)($count_project[1] * 100) / $count_project[6], 2);
-			$rej = number_format((float)($count_project[2] * 100) / $count_project[6], 2);
-			$unc = number_format((float)($count_project[3] * 100) / $count_project[6], 2);
-			$dup = number_format((float)($count_project[4] * 100) / $count_project[6], 2);
-			$rem = number_format((float)($count_project[5] * 100) / $count_project[6], 2);
+			$acc = number_format((float)($count_project[1] * 100) / $count_project[5], 2);
+			$rej = number_format((float)($count_project[2] * 100) / $count_project[5], 2);
+			$unc = number_format((float)($count_project[3] * 100) / $count_project[5], 2);
+			$rem = number_format((float)($count_project[4] * 100) / $count_project[5], 2);
 			?>
 			<h5 class="text-center"><?= $project->get_title(); ?></h5>
 			<div class="progress">
-				<div id="prog_acc" class="progress-bar bg-success" role="progressbar"
+				<div id="prog_acc_qa" class="progress-bar bg-success" role="progressbar"
 					 style="width: <?= $acc ?>%"
 					 aria-valuenow="<?= $acc ?>"
 					 aria-valuemin="0"
 					 aria-valuemax="100"><?= $acc ?>%
 				</div>
-				<div id="prog_rej" class="progress-bar bg-danger" role="progressbar"
+				<div id="prog_rej_qa" class="progress-bar bg-danger" role="progressbar"
 					 style="width: <?= $rej ?>%"
 					 aria-valuenow="<?= $rej ?>"
 					 aria-valuemin="0"
 					 aria-valuemax="100"><?= $rej ?>%
 				</div>
-				<div id="prog_unc" class="progress-bar bg-dark" role="progressbar"
+				<div id="prog_unc_qa" class="progress-bar bg-dark" role="progressbar"
 					 style="width: <?= $unc ?>%"
 					 aria-valuenow="<?= $unc ?>"
 					 aria-valuemin="0"
 					 aria-valuemax="100"><?= $unc ?>%
 				</div>
-				<div id="prog_dup" class="progress-bar bg-warning" role="progressbar"
-					 style="width: <?= $dup ?>%"
-					 aria-valuenow="<?= $dup ?>"
-					 aria-valuemin="0"
-					 aria-valuemax="100"><?= $dup ?>%
-				</div>
-				<div id="prog_rem" class="progress-bar bg-info" role="progressbar"
+				<div id="prog_rem_qa" class="progress-bar bg-info" role="progressbar"
 					 style="width: <?= $rem ?>%"
 					 aria-valuenow="<?= $rem ?>"
 					 aria-valuemin="0"
@@ -289,7 +260,7 @@
 							<div class="input-group col-md-2">
 								<label class="text-success">
 									<span class="fas fa-check fa-lg"></span>
-									Accepted: <span id="count_acc"><?= $value ?></span>
+									Accepted: <span id="count_acc_qa"><?= $value ?></span>
 								</label>
 							</div>
 							<?php
@@ -299,7 +270,7 @@
 							<div class="input-group col-md-2">
 								<label class="text-danger">
 									<span class="fas fa-times fa-lg"></span>
-									Rejected: <span id="count_rej"><?= $value ?></span>
+									Rejected: <span id="count_rej_qa"><?= $value ?></span>
 								</label>
 							</div>
 							<?php
@@ -309,7 +280,7 @@
 							<div class="input-group col-md-2">
 								<label class="text-dark">
 									<span class="fas fa-question fa-lg"></span>
-									Unclassified: <span id="count_unc"><?= $value ?></span>
+									Unclassified: <span id="count_unc_qa"><?= $value ?></span>
 								</label>
 							</div>
 							<?php
@@ -317,9 +288,9 @@
 						case 4:
 							?>
 							<div class="input-group col-md-2">
-								<label class="text-warning">
-									<span class="fas fa-copy fa-lg"></span>
-									Duplicate: <span id="count_dup"><?= $value ?></span>
+								<label class="text-info">
+									<span class="fas fa-trash-alt fa-lg"></span>
+									Removed: <span id="count_rem_qa"><?= $value ?></span>
 								</label>
 							</div>
 							<?php
@@ -327,19 +298,9 @@
 						case 5:
 							?>
 							<div class="input-group col-md-2">
-								<label class="text-info">
-									<span class="fas fa-trash-alt fa-lg"></span>
-									Removed: <span id="count_rem"><?= $value ?></span>
-								</label>
-							</div>
-							<?php
-							break;
-						case 6:
-							?>
-							<div class="input-group col-md-2">
 								<label class="text-secondary">
 									<span class="fas fa-bars fa-lg"></span>
-									Total: <span id="count_total"><?= $value ?></span>
+									Total: <span id="count_total_qa"><?= $value ?></span>
 								</label>
 							</div>
 							<?php
@@ -370,5 +331,5 @@
 	</div>
 </div>
 <?php
-$this->load->view('modal/modal_paper_conflict');
+$this->load->view('modal/modal_paper_conflict_qa');
 ?>
