@@ -155,6 +155,21 @@ class Pattern_Model extends CI_Model
 		return $id_papers;
 	}
 
+	public function get_ids_papers_ex($id_bib)
+	{
+		$id_papers = array();
+		$this->db->select('id_paper');
+		$this->db->from('papers');
+		$this->db->where_in('id_bib', $id_bib);
+		$this->db->where_in('status_qa', 1);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			array_push($id_papers, $row->id_paper);
+		}
+		return $id_papers;
+	}
+
 	public function get_ID_papers($id_bib)
 	{
 		$id_papers = array();

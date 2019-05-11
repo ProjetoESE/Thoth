@@ -499,3 +499,286 @@ function edit_option() {
 		}
 	});
 }
+
+$(document).ready(function () {
+	table_papers_extraction.on('select', function (e, dt, type, indexes) {
+		let rowData = table_papers_extraction.rows(indexes).data().toArray();
+		let id_project = $("#id_project").val();
+
+		$.ajax({
+			type: "POST",
+			url: base_url + 'Extraction_Controller/get_paper_ex/',
+			data: {
+				id_project: id_project,
+				id: rowData[0][0]
+			}, error: function () {
+				Swal({
+					type: 'error',
+					title: 'Error',
+					html: 'Something caused an <label class="font-weight-bold text-danger">Error</label>',
+					showCancelButton: false,
+					confirmButtonText: 'Ok'
+				});
+			},
+			success: function (data) {
+
+				let dados = JSON.parse(data);
+				let txt_ex = $('#text_ex');
+				let edit = $('#edit_status_ex');
+				let ex_a = $('#ex_analiese');
+
+				$('#index_paper_ex').val(indexes);
+				$('#paper_id_ex').text(rowData[0][0]);
+				$('#id_paper_ex').val(rowData[0][0]);
+				$('#paper_title_ex').text(rowData[0][1]);
+
+				$('#paper_author_ex').text(rowData[0][2]);
+				$('#paper_year_ex').text(rowData[0][3]);
+				$('#paper_database_ex').text(rowData[0][4]);
+				$('#paper_note_ex').text(dados['note']);
+
+				switch (rowData[0][5]) {
+					case "To Do":
+						txt_ex.text("");
+						txt_ex.removeClass("text-success");
+						txt_ex.addClass("text-dark");
+						txt_ex.val(2);
+						txt_ex.hide();
+						edit.val(2);
+						edit.show();
+						ex_a.show();
+						break;
+					case "Done":
+						edit.hide();
+						ex_a.show();
+						txt_ex.removeClass("text-dark");
+						txt_ex.addClass("text-success");
+						txt_ex.text(rowData[0][5]);
+						txt_ex.val(1);
+						txt_ex.show();
+						ex_a.show();
+						break;
+					case "Removed":
+						txt_ex.text("");
+						txt_ex.val(3);
+						txt_ex.hide();
+						edit.val(3);
+						edit.show();
+						ex_a.hide();
+						break;
+				}
+
+
+				if (dados['keywords'] != "") {
+					$('#paper_keywords_ex').text(dados['keywords']);
+				} else {
+					$('#paper_keywords_ex').text("This article does not have Keywords");
+				}
+
+				if (dados['abstract'] != "") {
+					$('#paper_abstract_ex').text(dados['abstract']);
+				} else {
+					$('#paper_abstract_ex').text("This article does not have Abstract");
+				}
+
+				if (dados['doi'] != "") {
+					$('#paper_doi_ex').text(dados['doi']);
+				} else {
+					$('#paper_doi_ex').text("This article does not have Doi");
+				}
+				let url = $('#paper_url_ex');
+				if (dados['url'] != "") {
+					url.removeClass("disabled");
+					url.attr("href", dados['url']);
+				} else {
+					url.attr("href", "");
+					url.addClass("disabled");
+				}
+
+
+			}
+		});
+		$('#modal_paper_ex').modal('show');
+	});
+
+	$('#paper_status_ex').on('change', function () {
+		let status = $('#edit_status_ex').val();
+		let old_status = $('#text_ex').val();
+		let id_paper = $('#id_paper_ex').val();
+		let id_project = $('#id_project').val();
+		let index = $('#index_paper_ex').val();
+
+		$.ajax({
+			type: "POST",
+			url: base_url + 'Extraction_Controller/edit_status_ex/',
+			data: {
+				id_project: id_project,
+				status: status,
+				id_paper: id_paper
+			}, error: function () {
+				Swal({
+					type: 'error',
+					title: 'Error',
+					html: 'Something caused an <label class="font-weight-bold text-danger">Error</label>',
+					showCancelButton: false,
+					confirmButtonText: 'Ok'
+				});
+			},
+			success: function () {
+				change_old_status_ex(old_status);
+				change_new_status_ex(id_paper, status, index);
+				status_paper_ex(status);
+			}
+		});
+	});
+});
+
+function change_old_status_ex(old_status) {
+	let old_count = 0;
+	switch (old_status) {
+		case "Done":
+		case "1":
+			old_count = parseInt($('#count_done').text());
+			old_count--;
+			$('#count_done').text(old_count);
+			break;
+		case "To Do":
+		case "2":
+			old_count = parseInt($('#count_to_do').text());
+			old_count--;
+			$('#count_to_do').text(old_count);
+			break;
+		case "Removed":
+		case "3":
+			old_count = parseInt($('#count_rem_ex').text());
+			old_count--;
+			$('#count_rem_ex').text(old_count);
+			break;
+	}
+}
+
+function status_paper_ex(status) {
+	switch (status) {
+		case"1":
+			Swal({
+				type: 'success',
+				title: 'Done',
+				html: 'This paper as <label class="font-weight-bold text-success">Done</label>'
+			});
+			break;
+		case"2":
+			Swal({
+				type: 'question',
+				title: 'To Do',
+				html: 'This paper as <label class="font-weight-bold text-dark">To Do</label>'
+			});
+			break;
+		case"3":
+			Swal({
+				type: 'info',
+				title: 'Removed',
+				html: 'This paper as <label class="font-weight-bold text-info">Removed</label>'
+			});
+			break;
+	}
+}
+
+function update_progress_ex() {
+	let pro_done = $('#prog_done');
+	let pro_to_do = $('#prog_to_do');
+	let pro_rem = $('#prog_rem_ex');
+	let total = parseInt($('#count_total_ex').text());
+	let acc = parseInt($('#count_done').text());
+	let rej = parseInt($('#count_to_do').text());
+	let rem = parseInt($('#count_rem_ex').text());
+	let pro = 0;
+
+	for (let i = 1; i < 4; i++) {
+
+		switch (i) {
+			case 1:
+				pro = parseFloat(Math.round(acc * 100) / total).toFixed(2);
+				pro_done.attr('aria-valuenow', pro);
+				pro_done.css('width', pro + "%");
+				pro_done.text(pro + "%");
+				break;
+			case 2:
+				pro = parseFloat(Math.round(rej * 100) / total).toFixed(2);
+				pro_to_do.attr('aria-valuenow', pro);
+				pro_to_do.css('width', pro + "%");
+				pro_to_do.text(pro + "%");
+				break;
+			case 3:
+				pro = parseFloat(Math.round(rem * 100) / total).toFixed(2);
+				pro_rem.attr('aria-valuenow', pro);
+				pro_rem.css('width', pro + "%");
+				pro_rem.text(pro + "%");
+				break;
+		}
+	}
+
+}
+
+function change_new_status_ex(id_paper, status, index) {
+	let ex_a = $('#ex_analiese');
+	let new_count = 0;
+	let paper = $('#' + id_paper);
+	let edit = $('#edit_status_ex');
+	let text = $('#text_ex');
+
+	switch (status) {
+		case "1":
+			text.val(1);
+			text.removeClass("text-danger");
+			text.addClass("text-success");
+			edit.hide();
+			paper.removeClass("text-danger");
+			paper.removeClass("text-dark");
+			paper.removeClass("text-info");
+			paper.removeClass("text-warning");
+			table_papers_extraction.cell(index, 5).data("Done");
+			paper.addClass("text-success");
+			text.text("Accepted");
+			text.show();
+			new_count = parseInt($('#count_done').text());
+			new_count++;
+			$('#count_done').text(new_count);
+			ex_a.show();
+			update_progress_ex();
+			break;
+		case "2":
+			text.val(2);
+			text.hide();
+			paper.removeClass("text-danger");
+			paper.removeClass("text-success");
+			paper.removeClass("text-info");
+			paper.removeClass("text-warning");
+			table_papers_extraction.cell(index, 5).data("To Do");
+			paper.addClass("text-dark");
+			edit.val(2);
+			edit.show();
+			new_count = parseInt($('#count_to_do').text());
+			new_count++;
+			$('#count_to_do').text(new_count);
+			ex_a.show();
+			update_progress_ex();
+			break;
+		case "3":
+			text.val(3);
+			text.hide();
+			paper.removeClass("text-danger");
+			paper.removeClass("text-success");
+			paper.removeClass("text-dark");
+			paper.removeClass("text-warning");
+			table_papers_extraction.cell(index, 5).data("Removed");
+			paper.addClass("text-info");
+			edit.val(3);
+			edit.show();
+			new_count = parseInt($('#count_rem_ex').text());
+			new_count++;
+			$('#count_rem_ex').text(new_count);
+			ex_a.hide();
+			update_progress_ex();
+			break;
+	}
+}

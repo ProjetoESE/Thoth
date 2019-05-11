@@ -183,4 +183,49 @@ class Extraction_Controller extends Pattern_Controller
 		}
 	}
 
+	/**
+	 *
+	 */
+	public function get_paper_ex()
+	{
+		try {
+			$id = $this->input->post('id');
+			$id_project = $this->input->post('id_project');
+
+			$this->validate_level($id_project, array(1, 2, 3, 4));
+
+			$this->load->model("Extraction_Model");
+			$data = $this->Extraction_Model->get_paper_ex($id, $id_project);
+
+			echo json_encode($data);
+		} catch (Exception $e) {
+			$this->session->set_flashdata('error', $e->getMessage());
+			redirect(base_url());
+		}
+	}
+
+	/**
+	 *
+	 */
+	public function edit_status_ex()
+	{
+		try {
+			$id_paper = $this->input->post('id_paper');
+			$id_project = $this->input->post('id_project');
+			$status = $this->input->post('status');
+
+			$this->validate_level($id_project, array(1, 3, 4));
+
+			$this->load->model("Extraction_Model");
+			$this->Extraction_Model->edit_status_ex($id_paper, $status, $id_project);
+
+			$activity = "Edited status extraction to paper " . $id_paper;
+			$this->insert_log($activity, 3, $id_project);
+
+
+		} catch (Exception $e) {
+			$this->session->set_flashdata('error', $e->getMessage());
+		}
+	}
+
 }

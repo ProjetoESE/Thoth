@@ -2,7 +2,7 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Extraction_Model extends CI_Model
+class Extraction_Model extends Pattern_Model
 {
 	public function add_question_extraction($id, $desc, $type, $id_project)
 	{
@@ -143,5 +143,49 @@ class Extraction_Model extends CI_Model
 
 		$this->db->where('id_option', $id_op);
 		$this->db->update('options_extraction', $data);
+	}
+
+	public function get_paper_ex($id_paper, $id_project)
+	{
+		$ids_p_d = $this->get_ids_project_database($id_project);
+		$ids_bibs = $this->get_ids_bibs($ids_p_d);
+
+		$this->db->select('papers.*');
+		$this->db->from('papers');
+		$this->db->where('id', $id_paper);
+		$this->db->where_in('id_bib', $ids_bibs);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+
+			$data['abstract'] = $row->abstract;
+			$data['keywords'] = $row->keywords;
+			$data['doi'] = $row->doi;
+			$data['url'] = $row->url;
+			$data['note'] = $row->note;
+		}
+
+		return $data;
+
+	}
+
+	public function edit_status_ex($id, $status, $id_project)
+	{
+		$project_databases = $this->get_ids_project_database($id_project);
+
+		$id_bibs = array();
+		if (sizeof($project_databases) > 0) {
+			$id_bibs = $this->get_ids_bibs($project_databases);
+		}
+
+		$id_paper = $this->get_id_paper($id, $id_bibs);
+
+		$data = array(
+			'status_extraction' => $status
+		);
+
+		$this->db->where('id_paper', $id_paper);
+		$this->db->update('papers', $data);
+
 	}
 }

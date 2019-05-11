@@ -97,6 +97,8 @@ class Project_Model extends Pattern_Model
 		}
 
 		$project->set_errors($errors);
+		$project->set_papers($this->get_papers_ex($id_project));
+		$project->set_questions_extraction($this->get_qes($id_project));
 
 		return $project;
 	}
@@ -1150,6 +1152,41 @@ class Project_Model extends Pattern_Model
 		return $papers;
 	}
 
+	private function get_papers_ex($id_project)
+	{
+		$papers = array();
+		$id_bibs = array();
+		$ids_project_database = $this->get_ids_project_database($id_project);
+
+		if (sizeof($ids_project_database) > 0) {
+			$id_bibs = $this->get_ids_bibs($ids_project_database);
+		}
+
+		if (sizeof($id_bibs) > 0) {
+			
+			$this->db->select('papers.title,papers.id,papers.id_paper,papers.author,papers.year, data_base.name,papers.status_extraction');
+			$this->db->from('papers');
+			$this->db->join('data_base', 'papers.data_base = data_base.id_database');
+			$this->db->where_in('id_bib', $id_bibs);
+			$this->db->where('status_qa', 1);
+			$query = $this->db->get();
+
+			foreach ($query->result() as $row) {
+				$p = new Paper();
+				$p->set_id($row->id);
+				$p->set_title($row->title);
+				$p->set_author($row->author);
+				$p->set_database($row->name);
+				$p->set_year($row->year);
+				$p->set_status_extraction($row->status_extraction);
+
+				array_push($papers, $p);
+
+			}
+		}
+		return $papers;
+	}
+
 	public function get_level($email, $id_project)
 	{
 		$this->db->select('level');
@@ -1379,6 +1416,41 @@ class Project_Model extends Pattern_Model
 		return $cont;
 	}
 
+	public function count_papers_extraction($id_project)
+	{
+		$project_databases = $this->get_ids_project_database($id_project);
+		$total = 0;
+		$cont[1] = 0;
+		$cont[2] = 0;
+		$cont[3] = 0;
+		$cont[4] = 0;
+
+		$id_bibs = array();
+		if (sizeof($project_databases) > 0) {
+			$id_bibs = $this->get_ids_bibs($project_databases);
+		}
+
+		$id_papers = array();
+		if (sizeof($id_bibs) > 0) {
+			$id_papers = $this->get_ids_papers_ex($id_bibs);
+		}
+		if (sizeof($id_papers) > 0) {
+			$this->db->select('status_extraction, COUNT(*) as count');
+			$this->db->from('papers');
+			$this->db->group_by('status_extraction');
+			$this->db->where_in('id_paper', $id_papers);
+			$query = $this->db->get();
+
+			foreach ($query->result() as $row) {
+				$cont[$row->status_extraction] = $row->count;
+				$total += $row->count;
+			}
+			$cont[4] = $total;
+		}
+
+		return $cont;
+	}
+
 	public function get_logs_project($id_project)
 	{
 		$data = array();
@@ -1554,7 +1626,7 @@ class Project_Model extends Pattern_Model
 	public function delete_member($email, $id_project)
 	{
 		$this->validate_adm($email, $id_project);
-		$user = $this->get_id_name_user($this->session->email);
+		$user = $this->get_id_name_user($email);
 		$id_member = $this->get_id_member($user[0], $id_project);
 
 		$this->db->where('id_project', $id_project);
