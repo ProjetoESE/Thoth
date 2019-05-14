@@ -55,55 +55,11 @@
 				<hr>
 				<div class="col-md-12" id="ex_analiese">
 					<h6>Extraction Questions</h6>
-					<?php foreach ($project->get_questions_extraction() as $qe) { ?>
-						<div class="form-inline">
-							<span><strong><?= $qe->get_id() ?> </strong></span>
-							<label><?= $qe->get_description() ?></label>
-							<?php
-
-							switch ($qe->get_type()) {
-								case "Text":
-									?>
-									<textarea id="<?= $qe->get_id() ?>" class="form-control col-md-12"></textarea>
-									<?php
-									break;
-								case "Multiple Choice List":
-									?>
-									<div class="form-check form-check-inline col-md-12" id="<?= $qe->get_id() ?>">
-										<?php
-										foreach ($qe->get_options() as $op) {
-											?>
-											<input class="form-check-input" type="checkbox"
-												   id="<?= $op ?>"
-												   value="<?= $op ?>">
-											<label class="form-check-label"
-												   for="<?= $op ?>"><?= $op ?></label>
-
-											<?php
-										}
-										?>
-									</div>
-									<?php
-									break;
-								case "Pick One List":
-									?>
-									<select class="form-control col-md-12" id="<?= $qe->get_id() ?>">
-										<?php
-										foreach ($qe->get_options() as $op) {
-											?>
-											<option value="<?= $op ?>"><?= $op ?></option>
-											<?php
-										}
-										?>
-									</select>
-									<?php
-									break;
-									?>
-								<?php } ?>
-						</div>
-						<br>
-					<?php } ?>
-					<button class="btn btn-success float-right">Save <span class="fas fa-save"></span></button>
+					<div class="form-inline" id="extraction_questions">
+					</div>
+					<br/>
+					<button id="save_ex" class="btn btn-success float-right">Done <span class="fas fa-save"></span>
+					</button>
 					<br>
 				</div>
 				<hr>
@@ -115,3 +71,20 @@
 		</div>
 	</div>
 </div>
+<script>
+	let questions = [];
+	let options = [];
+	let question = null;
+	<?php foreach ($project->get_questions_extraction() as $qe) { ?>
+	options = [];
+	<?php foreach ($qe->get_options() as $op) { ?>
+	options.push("<?=$op?>");
+	<?php } ?>
+	question = new Extraction_Answer("<?= $qe->get_id()?>", "<?=$qe->get_description()?>", "<?=$qe->get_type()?>", options);
+	questions.push(question);
+	<?php } ?>
+
+	for (const qe of questions) {
+		qe.show();
+	}
+</script>

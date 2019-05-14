@@ -90,6 +90,7 @@
 	<script src="<?= base_url('assets/js/data_extraction.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/help.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/study_selection.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/objects/Extraction_Answer.js'); ?>"></script>
 
 </head>
 <body>

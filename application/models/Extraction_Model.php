@@ -188,4 +188,90 @@ class Extraction_Model extends Pattern_Model
 		$this->db->update('papers', $data);
 
 	}
+
+	private function get_id_qe($id, $id_project)
+	{
+		$this->db->select('id_de');
+		$this->db->from('question_extraction');
+		$this->db->where('id_project', $id_project);
+		$this->db->where('id', $id);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			return $row->id_de;
+		}
+
+		return null;
+	}
+
+	private function get_id_op($op, $id_de)
+	{
+		$this->db->select('id_option');
+		$this->db->from('options_extraction');
+		$this->db->where('id_de', $id_de);
+		$this->db->where('description', $op);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			return $row->id_option;
+		}
+
+		return null;
+	}
+
+
+	public function evaluation_ex($num_paper, $questions, $id_project)
+	{
+		$project_databases = $this->get_ids_project_database($id_project);
+
+		$id_bibs = array();
+		if (sizeof($project_databases) > 0) {
+			$id_bibs = $this->get_ids_bibs($project_databases);
+		}
+
+		$id_paper = $this->get_id_paper($num_paper, $id_bibs);
+
+		$data = array();
+		$data2 = array();
+		foreach ($questions as $value) {
+
+			$id_qe = $this->get_id_qe($value[0], $id_project);
+
+			if ($value[2] == "Text") {
+				$data3['id_qe'] = $id_qe;
+				$data3['id_paper'] = $id_paper;
+				$data3['text'] = $value[1];
+				array_push($data, $data3);
+			} elseif ($value[2] == "Multiple Choice List") {
+				foreach ($value[1] as $op) {
+					$id_op = $this->get_id_op($op, $id_qe);
+					$data4['id_qe'] = $id_qe;
+					$data4['id_paper'] = $id_paper;
+					$data4['id_option'] = $id_op;
+					array_push($data2, $data4);
+				}
+			} else {
+				$id_op = $this->get_id_op($value[1], $id_qe);
+				$data4['id_qe'] = $id_qe;
+				$data4['id_paper'] = $id_paper;
+				$data4['id_option'] = $id_op;
+				array_push($data2, $data4);
+			}
+		}
+
+		if(sizeof($questions) == 0){
+			$this->db->where('id_paper', $id_paper);
+			$this->db->delete('evaluation_ex_txt');
+			$this->db->where('id_paper', $id_paper);
+			$this->db->delete('evaluation_ex_op');
+		}
+
+		if (sizeof($data) > 0) {
+			$this->db->insert_batch('evaluation_ex_txt', $data);
+		}
+		if (sizeof($data2) > 0) {
+			$this->db->insert_batch('evaluation_ex_op', $data2);
+		}
+
+	}
 }

@@ -228,4 +228,31 @@ class Extraction_Controller extends Pattern_Controller
 		}
 	}
 
+	/**
+	 *
+	 */
+	public function evaluation_ex()
+	{
+		try {
+			$id_paper = $this->input->post('id_paper');
+			$id_project = $this->input->post('id_project');
+			$questions = json_decode($this->input->post('questions'));
+
+			$this->validate_level($id_project, array(1, 3, 4));
+
+			$this->load->model("Extraction_Model");
+			$result = $this->Extraction_Model->evaluation_ex($id_paper, $questions, $id_project);
+
+			if ($result['change']) {
+				$activity = "Edited status extraction to paper " . $id_paper;
+				$this->insert_log($activity, 3, $id_project);
+			}
+
+			echo json_encode($result);
+
+		} catch (Exception $e) {
+			$this->session->set_flashdata('error', $e->getMessage());
+		}
+	}
+
 }

@@ -631,6 +631,62 @@ $(document).ready(function () {
 			}
 		});
 	});
+
+	$('#save_ex').on('click', function () {
+			let q = [];
+
+			for (let qe of questions) {
+				if (qe.type === "Multiple Choice List") {
+					let ops = [];
+					let size = qe.answer.childNodes.length;
+					for (let i = 0; i < size; i += 2) {
+						if (qe.answer.childNodes[i].checked) {
+							ops.push(qe.answer.childNodes[i].value);
+						}
+
+					}
+					if (ops.length > 0) {
+						q.push([qe.id, ops, qe.type]);
+					}
+
+				} else {
+					if (qe.answer.value) {
+						q.push([qe.id, qe.answer.value, qe.type]);
+					}
+				}
+			}
+
+			let old_status = $('#text_ex').val();
+			let id_paper = $('#id_paper_ex').val();
+			let id_project = $('#id_project').val();
+			let index = $('#index_paper_ex').val();
+
+			$.ajax({
+				type: "POST",
+				url: base_url + 'Extraction_Controller/evaluation_ex/',
+				data: {
+					id_project: id_project,
+					questions: JSON.stringify(q),
+					id_paper: id_paper
+				}, error: function () {
+					Swal({
+						type: 'error',
+						title: 'Error',
+						html: 'Something caused an <label class="font-weight-bold text-danger">Error</label>',
+						showCancelButton: false,
+						confirmButtonText: 'Ok'
+					});
+				},
+				success: function () {
+					if (questions.length == q.length) {
+						change_old_status_ex(old_status);
+						change_new_status_ex(id_paper, "1", index);
+						status_paper_ex("1");
+					}
+				}
+			});
+		}
+	);
 });
 
 function change_old_status_ex(old_status) {
@@ -738,7 +794,7 @@ function change_new_status_ex(id_paper, status, index) {
 			paper.removeClass("text-warning");
 			table_papers_extraction.cell(index, 5).data("Done");
 			paper.addClass("text-success");
-			text.text("Accepted");
+			text.text("Done");
 			text.show();
 			new_count = parseInt($('#count_done').text());
 			new_count++;
