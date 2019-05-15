@@ -523,6 +523,7 @@ $(document).ready(function () {
 			success: function (data) {
 
 				let dados = JSON.parse(data);
+
 				let txt_ex = $('#text_ex');
 				let edit = $('#edit_status_ex');
 				let ex_a = $('#ex_analiese');
@@ -595,6 +596,34 @@ $(document).ready(function () {
 					url.addClass("disabled");
 				}
 
+				for (let op of dados['text']) {
+					$('#' + op[0].replace(" ", "").trim()).val(op[1]);
+				}
+
+				for (let op of dados['select']) {
+					$('#' + op[0].replace(" ", "").trim()).val(op[1]);
+				}
+
+
+				for (let qe of dados['check']) {
+					let ops = $('#' + qe[0].replace(" ", "").trim()).children();
+					for (let i = 0; i < ops.length; i += 2) {
+						ops[i].checked = false;
+					}
+
+					for (let i = 0; i < ops.length; i += 2) {
+						for (let j = 0; j < qe[1].length; j++) {
+							if (ops[i].id == qe[1][j].trim().replace(" ", "")) {
+								ops[i].checked = true;
+							}
+						}
+
+					}
+
+					for (let op of qe[1]) {
+						$('#' + qe[0].replace(" ", "").trim() + " " + op.replace(" ", "").trim()).checked = true;
+					}
+				}
 
 			}
 		});
@@ -632,61 +661,6 @@ $(document).ready(function () {
 		});
 	});
 
-	$('#save_ex').on('click', function () {
-			let q = [];
-
-			for (let qe of questions) {
-				if (qe.type === "Multiple Choice List") {
-					let ops = [];
-					let size = qe.answer.childNodes.length;
-					for (let i = 0; i < size; i += 2) {
-						if (qe.answer.childNodes[i].checked) {
-							ops.push(qe.answer.childNodes[i].value);
-						}
-
-					}
-					if (ops.length > 0) {
-						q.push([qe.id, ops, qe.type]);
-					}
-
-				} else {
-					if (qe.answer.value) {
-						q.push([qe.id, qe.answer.value, qe.type]);
-					}
-				}
-			}
-
-			let old_status = $('#text_ex').val();
-			let id_paper = $('#id_paper_ex').val();
-			let id_project = $('#id_project').val();
-			let index = $('#index_paper_ex').val();
-
-			$.ajax({
-				type: "POST",
-				url: base_url + 'Extraction_Controller/evaluation_ex/',
-				data: {
-					id_project: id_project,
-					questions: JSON.stringify(q),
-					id_paper: id_paper
-				}, error: function () {
-					Swal({
-						type: 'error',
-						title: 'Error',
-						html: 'Something caused an <label class="font-weight-bold text-danger">Error</label>',
-						showCancelButton: false,
-						confirmButtonText: 'Ok'
-					});
-				},
-				success: function () {
-					if (questions.length == q.length) {
-						change_old_status_ex(old_status);
-						change_new_status_ex(id_paper, "1", index);
-						status_paper_ex("1");
-					}
-				}
-			});
-		}
-	);
 });
 
 function change_old_status_ex(old_status) {

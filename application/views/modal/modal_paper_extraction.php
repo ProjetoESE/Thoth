@@ -57,12 +57,9 @@
 					<h6>Extraction Questions</h6>
 					<div class="form-inline" id="extraction_questions">
 					</div>
-					<br/>
-					<button id="save_ex" class="btn btn-success float-right">Done <span class="fas fa-save"></span>
-					</button>
 					<br>
+					<hr>
 				</div>
-				<hr>
 				<div class="col-md-12">
 					<h6>Note</h6>
 					<textarea id="paper_note_ex" class="form-control"></textarea>

@@ -656,6 +656,19 @@ class Project_Model extends Pattern_Model
 	{
 		$errors = array();
 		$progress = 0;
+
+		$count_papers = $this->count_papers_extraction($id_project);
+
+		if ($count_papers[4] > 0) {
+			$unc = ($count_papers[2] * 100) / $count_papers[4];
+			$progress = 100 - $unc;
+
+			array_push($errors, "There are still ".number_format((float)$unc, 2)." of the articles to be evaluated in the extraction.");
+		}else{
+			array_push($errors, "Evaluate at least one job to move on to the next step");
+		}
+
+
 		$this->db->where('id_project', $id_project);
 		$this->db->update('project', array('extraction' => number_format((float)$progress, 2)));
 		return $errors;
@@ -904,35 +917,6 @@ class Project_Model extends Pattern_Model
 		return null;
 	}
 
-	private function get_qes($id_project)
-	{
-		$qes = array();
-		$this->db->select('id_de,id,description,types_question.type');
-		$this->db->from('question_extraction');
-		$this->db->join('types_question', 'types_question.id_type = question_extraction.type');
-		$this->db->where('id_project', $id_project);
-		$query = $this->db->get();
-
-		foreach ($query->result() as $row) {
-			$qe = new Question_Extraction();
-			$qe->set_description($row->description);
-			$qe->set_id($row->id);
-			$qe->set_type($row->type);
-
-			$this->db->select('description');
-			$this->db->from('options_extraction');
-			$this->db->where('id_de', $row->id_de);
-			$query2 = $this->db->get();
-
-			foreach ($query2->result() as $row2) {
-				$qe->set_options($row2->description);
-			}
-
-			array_push($qes, $qe);
-		}
-		return $qes;
-	}
-
 	public function get_all_languages()
 	{
 		$languages = array();
@@ -1163,7 +1147,7 @@ class Project_Model extends Pattern_Model
 		}
 
 		if (sizeof($id_bibs) > 0) {
-			
+
 			$this->db->select('papers.title,papers.id,papers.id_paper,papers.author,papers.year, data_base.name,papers.status_extraction');
 			$this->db->from('papers');
 			$this->db->join('data_base', 'papers.data_base = data_base.id_database');

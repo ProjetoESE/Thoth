@@ -231,17 +231,77 @@ class Extraction_Controller extends Pattern_Controller
 	/**
 	 *
 	 */
-	public function evaluation_ex()
+	public function edit_txt_qe()
 	{
 		try {
 			$id_paper = $this->input->post('id_paper');
 			$id_project = $this->input->post('id_project');
-			$questions = json_decode($this->input->post('questions'));
+			$id_qe = $this->input->post('id_qe');
+			$text = $this->input->post('text');
+			$old = $this->input->post('old');
 
 			$this->validate_level($id_project, array(1, 3, 4));
 
 			$this->load->model("Extraction_Model");
-			$result = $this->Extraction_Model->evaluation_ex($id_paper, $questions, $id_project);
+			$result = $this->Extraction_Model->edit_txt_qe($id_paper, $id_qe, $text, $old, $id_project);
+
+			if ($result['change']) {
+				$activity = "Edited status extraction to paper " . $id_paper;
+				$this->insert_log($activity, 3, $id_project);
+			}
+
+			echo json_encode($result);
+
+		} catch (Exception $e) {
+			$this->session->set_flashdata('error', $e->getMessage());
+		}
+	}
+
+	/**
+	 *
+	 */
+	public function edit_op_qe()
+	{
+		try {
+			$id_paper = $this->input->post('id_paper');
+			$id_project = $this->input->post('id_project');
+			$id_qe = $this->input->post('id_qe');
+			$op = $this->input->post('option');
+			$old = $this->input->post('old');
+
+			$this->validate_level($id_project, array(1, 3, 4));
+
+			$this->load->model("Extraction_Model");
+			$result = $this->Extraction_Model->edit_op_qe($id_paper, $id_qe, $op, $old, $id_project);
+
+			if ($result['change']) {
+				$activity = "Edited status extraction to paper " . $id_paper;
+				$this->insert_log($activity, 3, $id_project);
+			}
+
+			echo json_encode($result);
+
+		} catch (Exception $e) {
+			$this->session->set_flashdata('error', $e->getMessage());
+		}
+	}
+
+	/**
+	 *
+	 */
+	public function edit_check_qe()
+	{
+		try {
+			$id_paper = $this->input->post('id_paper');
+			$id_project = $this->input->post('id_project');
+			$id_qe = $this->input->post('id_qe');
+			$op = $this->input->post('option');
+			$old = $this->input->post('old');
+
+			$this->validate_level($id_project, array(1, 3, 4));
+
+			$this->load->model("Extraction_Model");
+			$result = $this->Extraction_Model->edit_check_qe($id_paper, $id_qe, $op, $old, $id_project);
 
 			if ($result['change']) {
 				$activity = "Edited status extraction to paper " . $id_paper;
