@@ -1941,6 +1941,7 @@ class Project_Model extends Pattern_Model
 			$this->db->join('status_qa', 'papers.status_qa = status_qa.id_status');
 			$this->db->group_by('papers.status_qa');
 			$this->db->where_in('papers.id_bib', $id_bibs);
+			$this->db->where('status_selection', 1);
 			$query = $this->db->get();
 
 			foreach ($query->result() as $row) {
@@ -2036,8 +2037,94 @@ class Project_Model extends Pattern_Model
 		$all_data['data'] = $data;
 
 
+		return $all_data;
+	}
+
+	public function get_act_project($id_project)
+	{
+		$data = array();
+		$data2 = array();
+		$data4 = array();
+
+		$mems = $this->get_members_name_id($id_project);
+
+		$this->db->select('	CAST(time as date) as day , COUNT(*) as count');
+		$this->db->from('activity_log');
+		$this->db->group_by('day');
+		$this->db->where('id_project', $id_project);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			array_push($data, (int)$row->count);
+			array_push($data2, $row->day);
+		}
+
+		$data3['name'] = 'Project';
+		$data3['data'] = $data;
+
+		array_push($data4, $data3);
+
+
+		foreach ($mems as $mem) {
+			$data = array();
+			foreach ($data2 as $day) {
+				$this->db->select('COUNT(*) as count');
+				$this->db->from('activity_log');
+				$this->db->where('id_project', $id_project);
+				$this->db->where('id_user', $mem[0]);
+				$this->db->where('CAST(time as date) =', $day);
+				$query = $this->db->get();
+
+				if ($query->num_rows() > 0) {
+					foreach ($query->result() as $row) {
+						array_push($data, (int)$row->count);
+					}
+				} else {
+					array_push($data, null);
+				}
+
+			}
+			$data3['name'] = $mem[1];
+			$data3['data'] = $data;
+
+			array_push($data4, $data3);
+		}
+
+
+		$all_data['categories'] = $data2;
+		$all_data['series'] = $data4;
 
 		return $all_data;
+	}
+
+	public function get_papers_score_quality($id_project)
+	{
+		$data = array();
+
+		$ids_p_d = $this->get_ids_project_database($id_project);
+		$id_bibs = array();
+
+		if (sizeof($ids_p_d) > 0) {
+			$id_bibs = $this->get_ids_bibs($ids_p_d);
+		}
+
+		if (sizeof($id_bibs) > 0) {
+
+			$this->db->select('general_score.description as desc, COUNT(*) as count');
+			$this->db->from('papers');
+			$this->db->join('general_score', 'general_score.id_general_score = papers.id_gen_score');
+			$this->db->group_by('papers.id_gen_score');
+			$this->db->where_in('papers.id_bib', $id_bibs);
+			$this->db->where('status_selection', 1);
+			$query = $this->db->get();
+
+			foreach ($query->result() as $row) {
+				array_push($data, array('name' => $row->desc, 'y' => (int)$row->count));
+			}
+
+		}
+
+		return $data;
 	}
 
 }

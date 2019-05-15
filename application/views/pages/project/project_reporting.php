@@ -170,6 +170,65 @@
 					}
 				});
 
+				Highcharts.chart('act', {
+					chart: {
+						type: 'line'
+					},
+					title: {
+						text: 'Failure of Daily Project Activities'
+					},
+					xAxis: {
+						categories: <?=json_encode($activity['categories'])?>
+					},
+					yAxis: {
+						title: {
+							text: 'Activities'
+						}
+					},
+					plotOptions: {
+						line: {
+							dataLabels: {
+								enabled: true
+							},
+							enableMouseTracking: false
+						}
+					},
+					series:  <?=json_encode($activity['series'])?>
+				});
+
+				Highcharts.chart('papers_gen_score', {
+					chart: {
+						plotBackgroundColor: null,
+						plotBorderWidth: null,
+						plotShadow: false,
+						type: 'pie'
+					},
+					title: {
+						text: 'Papers per General Score'
+					},
+					tooltip: {
+						pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b> ({point.y})'
+					},
+					plotOptions: {
+						pie: {
+							allowPointSelect: true,
+							cursor: 'pointer',
+							dataLabels: {
+								enabled: true,
+								format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+								style: {
+									color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+								}
+							}
+						}
+					},
+					series: [{
+						name: 'Brands',
+						colorByPoint: true,
+						data: <?= json_encode($gen_score); ?>
+					}]
+				});
+
 			});
 
 		</script>
@@ -199,6 +258,12 @@
 					<div id="funnel"></div>
 				</div>
 			</div>
+			<br>
+			<div class="card">
+				<div class="card-body">
+					<div id="act"></div>
+				</div>
+			</div>
 		</div>
 		<div class="tab-pane container-fluid" id="tab_import">
 			<br>
@@ -221,6 +286,12 @@
 			<div class="card">
 				<div class="card-body">
 					<div id="papers_per_quality"></div>
+				</div>
+			</div>
+			<br>
+			<div class="card">
+				<div class="card-body">
+					<div id="papers_gen_score"></div>
 				</div>
 			</div>
 		</div>

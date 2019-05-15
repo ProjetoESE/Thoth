@@ -80,6 +80,22 @@ class Pattern_Model extends CI_Model
 		return $ids_members;
 	}
 
+	public function get_members_name_id($id_project)
+	{
+		$ids_members = array();
+		$this->db->select('name,user.id_user');
+		$this->db->from('members');
+		$this->db->join('user', 'user.id_user = members.id_user');
+		$this->db->where('id_project', $id_project);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			array_push($ids_members, array($row->id_user, $row->name));
+		}
+
+		return $ids_members;
+	}
+
 	public function get_ids_members_1_3($id_project)
 	{
 		$ids_members = array();
