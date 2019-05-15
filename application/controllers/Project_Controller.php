@@ -193,6 +193,7 @@ class Project_Controller extends Pattern_Controller
 
 			$this->load->model("Project_Model");
 			$data['project'] = $this->Project_Model->get_project_extraction($id);
+			$data['count_papers'] = $this->Project_Model->count_papers_extraction($id);
 
 			$this->load_views('pages/project/project_data_extraction', $data);
 

@@ -58,87 +58,151 @@
 		<label><strong>Data Extraction</strong></label>
 		<br>
 		<?php
-		if ($project->get_planning() == 100 && $project->get_import()== 100 && $project->get_selection() > 0 && $project->get_quality() > 0) {
+		if ($project->get_planning() == 100 && $project->get_import() == 100 && $project->get_selection() > 0 && $project->get_quality() > 0) {
+			$done = number_format((float)($count_papers[1] * 100) / $count_papers[4], 2);
+			$to_do = number_format((float)($count_papers[2] * 100) / $count_papers[4], 2);
+			$rem = number_format((float)($count_papers[3] * 100) / $count_papers[4], 2)
+
 			?>
-			<div class="form-inline">
-				<div class="input-group col-md-3">
-					<label class="text-success">
-						<span class="fas fa-check fa-lg"></span>
-						Done: 1
-					</label>
+			<h6>Progress Data Extraction</h6>
+			<div class="progress">
+				<div id="prog_done" class="progress-bar bg-success" role="progressbar"
+					 style="width: <?= $done ?>%"
+					 aria-valuenow="<?= $done ?>"
+					 aria-valuemin="0"
+					 aria-valuemax="100"><?= $done ?>%
 				</div>
-				<div class="input-group col-md-3">
-					<label class="text-warning">
-						<span class="fas fa-exclamation fa-lg"></span>
-						To do: 1
-					</label>
+				<div id="prog_to_do" class="progress-bar bg-dark" role="progressbar"
+					 style="width: <?= $to_do ?>%"
+					 aria-valuenow="<?= $to_do ?>"
+					 aria-valuemin="0"
+					 aria-valuemax="100"><?= $to_do ?>%
 				</div>
-				<div class="input-group col-md-3">
-					<label class="text-info">
-						<span class="fas fa-bars fa-lg"></span>
-						Total: 2
-					</label>
+				<div id="prog_rem_ex" class="progress-bar bg-info" role="progressbar"
+					 style="width: <?= $rem ?>%"
+					 aria-valuenow="<?= $rem ?>"
+					 aria-valuemin="0"
+					 aria-valuemax="100"><?= $rem ?>%
 				</div>
 			</div>
 			<br>
-			<table class="table" id="table_papers_extraction">
+			<div class="form-inline">
+				<?php
+				foreach ($count_papers as $key => $value) {
+					switch ($key) {
+						case 1:
+							?>
+							<div class="input-group col-md-2">
+								<label class="text-success">
+									<span class="fas fa-check fa-lg"></span>
+									Done: <span id="count_done"><?= $value ?></span>
+								</label>
+							</div>
+							<?php
+							break;
+						case 2:
+							?>
+							<div class="input-group col-md-2">
+								<label class="text-dark">
+									<span class="fas fa-times fa-lg"></span>
+									To Do: <span id="count_to_do"><?= $value ?></span>
+								</label>
+							</div>
+							<?php
+							break;
+						case 3:
+							?>
+							<div class="input-group col-md-2">
+								<label class="text-info">
+									<span class="fas fa-trash-alt fa-lg"></span>
+									Removed: <span id="count_rem_ex"><?= $value ?></span>
+								</label>
+							</div>
+							<?php
+							break;
+						case 4:
+							?>
+							<div class="input-group col-md-2">
+								<label class="text-secondary">
+									<span class="fas fa-bars fa-lg"></span>
+									Total: <span id="count_total_ex"><?= $value ?></span>
+								</label>
+							</div>
+							<?php
+							break;
+					}
+				}
+				?>
+			</div>
+			<br>
+			<table class="table table-responsive-sm" id="table_papers_extraction">
 				<caption>List of Papers for Data Extraction</caption>
 				<thead>
 				<tr>
 					<th>ID</th>
 					<th>Title</th>
+					<th>Author</th>
 					<th>Year</th>
+					<th>Database</th>
 					<th>Status</th>
-					<th>Delete</th>
 				</tr>
 				</thead>
 				<tbody>
-				<tr>
-					<td>69</td>
-					<td>A novel on-die GHz AC stress test methodology for high speed IO application</td>
-					<td>2017</td>
-					<td class="text-warning">To do</td>
-					<td>
-						<button class="btn btn-danger"><span class="far fa-trash-alt"></span></button>
-					</td>
-				</tr>
-				<tr>
-					<td>65</td>
-					<td>A IPv6 Network Performance Test System using Multi-Agent</td>
-					<td>2007</td>
-					<td class="text-success">Done</td>
-					<td>
-						<button class="btn btn-danger"><span class="far fa-trash-alt"></span></button>
-					</td>
-				</tr>
+				<?php foreach ($project->get_papers() as $paper) { ?>
+					<tr>
+						<td><?= $paper->get_id() ?></td>
+						<td><?= $paper->get_title() ?></td>
+						<td><?= $paper->get_author() ?></td>
+						<td><?= $paper->get_year() ?></td>
+						<td><?= $paper->get_database() ?></td>
+						<?php
+						$class = "text-dark";
+						$status = "To Do";
+						switch ($paper->get_status_extraction()) {
+							case 1:
+								$class = "text-success";
+								$status = "Done";
+								break;
+							case 3:
+								$class = "text-info";
+								$status = "Removed";
+								break;
+						} ?>
+						<td id="<?= $paper->get_id(); ?>" class="font-weight-bold <?= $class ?>"><?= $status ?></td>
+					</tr>
+				<?php } ?>
 				</tbody>
 				<tfoot>
 				<tr>
 					<th>ID</th>
 					<th>Title</th>
+					<th>Author</th>
 					<th>Year</th>
+					<th>Database</th>
 					<th>Status</th>
-					<th>Delete</th>
 				</tr>
 				</tfoot>
 			</table>
 			<?php
 		} else {
-				?>
-				<div class="alert alert-warning container-fluid alert-dismissible fade show" role="alert">
-					<h5>Complete the pieces to advance</h5>
-					<ul>
-						<?php
-						foreach ($project->get_errors()  as $error) {
-							?>
-							<li><?= $error ?></li>
-							<?php
-						}
+			?>
+			<div class="alert alert-warning container-fluid alert-dismissible fade show" role="alert">
+				<h5>Complete the pieces to advance</h5>
+				<ul>
+					<?php
+					foreach ($project->get_errors() as $error) {
 						?>
-					</ul>
-				</div>
+						<li><?= $error ?></li>
+						<?php
+					}
+					?>
+				</ul>
+			</div>
 			<?php
 		}
 		?>
 	</div>
 </div>
+<?php
+$this->load->view('modal/modal_paper_extraction');
+?>

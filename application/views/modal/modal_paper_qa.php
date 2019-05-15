@@ -35,7 +35,7 @@
 						<p id="paper_database_qa"></p>
 					</div>
 					<div id="paper_status_qa" class="col-md-12">
-						<h6>Status Selection</h6>
+						<h6>Status Quality</h6>
 						<p id="text_qa"></p>
 						<select class="form-control" id="edit_status_qa">
 							<option value="4">Removed</option>

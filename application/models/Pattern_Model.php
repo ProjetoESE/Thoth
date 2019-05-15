@@ -155,6 +155,21 @@ class Pattern_Model extends CI_Model
 		return $id_papers;
 	}
 
+	public function get_ids_papers_ex($id_bib)
+	{
+		$id_papers = array();
+		$this->db->select('id_paper');
+		$this->db->from('papers');
+		$this->db->where_in('id_bib', $id_bib);
+		$this->db->where_in('status_qa', 1);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			array_push($id_papers, $row->id_paper);
+		}
+		return $id_papers;
+	}
+
 	public function get_ID_papers($id_bib)
 	{
 		$id_papers = array();
@@ -421,5 +436,35 @@ class Pattern_Model extends CI_Model
 		}
 		return $qas;
 	}
+
+	public function get_qes($id_project)
+	{
+		$qes = array();
+		$this->db->select('id_de,id,description,types_question.type');
+		$this->db->from('question_extraction');
+		$this->db->join('types_question', 'types_question.id_type = question_extraction.type');
+		$this->db->where('id_project', $id_project);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			$qe = new Question_Extraction();
+			$qe->set_description($row->description);
+			$qe->set_id($row->id);
+			$qe->set_type($row->type);
+
+			$this->db->select('description');
+			$this->db->from('options_extraction');
+			$this->db->where('id_de', $row->id_de);
+			$query2 = $this->db->get();
+
+			foreach ($query2->result() as $row2) {
+				$qe->set_options($row2->description);
+			}
+
+			array_push($qes, $qe);
+		}
+		return $qes;
+	}
+
 
 }
