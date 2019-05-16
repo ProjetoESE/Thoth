@@ -103,6 +103,12 @@ class Project_Controller extends Pattern_Controller
 
 			$this->load->model("Project_Model");
 			$data['project'] = $this->Project_Model->get_project_report($id);
+			$data['databases'] = $this->Project_Model->get_papers_database($id);
+			$data['status_selection'] = $this->Project_Model->get_papers_status_selection($id);
+			$data['status_qa'] = $this->Project_Model->get_papers_status_quality($id);
+			$data['funnel'] = $this->Project_Model->get_papers_step($id);
+			$data['activity'] = $this->Project_Model->get_act_project($id);
+			$data['gen_score'] = $this->Project_Model->get_papers_score_quality($id);
 
 			$this->load_views('pages/project/project_reporting', $data);
 

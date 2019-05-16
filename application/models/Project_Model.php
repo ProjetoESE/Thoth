@@ -663,8 +663,8 @@ class Project_Model extends Pattern_Model
 			$unc = ($count_papers[2] * 100) / $count_papers[4];
 			$progress = 100 - $unc;
 
-			array_push($errors, "There are still ".number_format((float)$unc, 2)." of the articles to be evaluated in the extraction.");
-		}else{
+			array_push($errors, "There are still " . number_format((float)$unc, 2) . " of the articles to be evaluated in the extraction.");
+		} else {
 			array_push($errors, "Evaluate at least one job to move on to the next step");
 		}
 
@@ -1844,5 +1844,288 @@ class Project_Model extends Pattern_Model
 		}
 		throw new Exception('The project must contain at least one member and this is the administrator.');
 	}
+
+	public function get_papers_database($id_project)
+	{
+		$data = array();
+
+		$ids_p_d = $this->get_ids_project_database($id_project);
+		$id_bibs = array();
+
+		if (sizeof($ids_p_d) > 0) {
+			$id_bibs = $this->get_ids_bibs($ids_p_d);
+		}
+
+		if (sizeof($id_bibs) > 0) {
+
+			$this->db->select('name, COUNT(*) as count');
+			$this->db->from('papers');
+			$this->db->join('data_base', 'data_base.id_database = papers.data_base');
+			$this->db->group_by('data_base');
+			$this->db->where_in('id_bib', $id_bibs);
+			$query = $this->db->get();
+
+			foreach ($query->result() as $row) {
+				array_push($data, array('name' => $row->name, 'y' => (int)$row->count));
+			}
+
+		}
+
+
+		return $data;
+	}
+
+	public function get_papers_status_selection($id_project)
+	{
+		$data = array();
+
+		$ids_p_d = $this->get_ids_project_database($id_project);
+		$id_bibs = array();
+
+		if (sizeof($ids_p_d) > 0) {
+			$id_bibs = $this->get_ids_bibs($ids_p_d);
+		}
+
+		if (sizeof($id_bibs) > 0) {
+
+			$this->db->select('status_selection.description, COUNT(*) as count');
+			$this->db->from('papers');
+			$this->db->join('status_selection', 'papers.status_selection = status_selection.id_status');
+			$this->db->group_by('papers.status_selection');
+			$this->db->where_in('papers.id_bib', $id_bibs);
+			$query = $this->db->get();
+
+			foreach ($query->result() as $row) {
+
+				switch ($row->description) {
+					case "Accepted":
+						array_push($data, array('name' => $row->description, 'y' => (int)$row->count, 'color' => '#90ed7d'));
+						break;
+					case "Rejected":
+						array_push($data, array('name' => $row->description, 'y' => (int)$row->count, 'color' => '#f45b5b'));
+						break;
+					case "Unclassified":
+						array_push($data, array('name' => $row->description, 'y' => (int)$row->count, 'color' => '#434348'));
+						break;
+					case "Duplicate":
+						array_push($data, array('name' => $row->description, 'y' => (int)$row->count, 'color' => '#e4d354'));
+						break;
+					case "Removed":
+						array_push($data, array('name' => $row->description, 'y' => (int)$row->count, 'color' => '#7cb5ec'));
+						break;
+				}
+
+			}
+
+		}
+
+
+		return $data;
+	}
+
+	public function get_papers_status_quality($id_project)
+	{
+		$data = array();
+
+		$ids_p_d = $this->get_ids_project_database($id_project);
+		$id_bibs = array();
+
+		if (sizeof($ids_p_d) > 0) {
+			$id_bibs = $this->get_ids_bibs($ids_p_d);
+		}
+
+		if (sizeof($id_bibs) > 0) {
+
+			$this->db->select('status_qa.status, COUNT(*) as count');
+			$this->db->from('papers');
+			$this->db->join('status_qa', 'papers.status_qa = status_qa.id_status');
+			$this->db->group_by('papers.status_qa');
+			$this->db->where_in('papers.id_bib', $id_bibs);
+			$this->db->where('status_selection', 1);
+			$query = $this->db->get();
+
+			foreach ($query->result() as $row) {
+
+				switch ($row->status) {
+					case "Accepted":
+						array_push($data, array('name' => $row->status, 'y' => (int)$row->count, 'color' => '#90ed7d'));
+						break;
+					case "Rejected":
+						array_push($data, array('name' => $row->status, 'y' => (int)$row->count, 'color' => '#f45b5b'));
+						break;
+					case "Unclassified":
+						array_push($data, array('name' => $row->status, 'y' => (int)$row->count, 'color' => '#434348'));
+						break;
+					case "Removed":
+						array_push($data, array('name' => $row->status, 'y' => (int)$row->count, 'color' => '#7cb5ec'));
+						break;
+				}
+
+			}
+
+		}
+
+
+		return $data;
+	}
+
+	public function get_papers_step($id_project)
+	{
+		$data = array();
+
+		$ids_p_d = $this->get_ids_project_database($id_project);
+		$id_bibs = array();
+
+		if (sizeof($ids_p_d) > 0) {
+			$id_bibs = $this->get_ids_bibs($ids_p_d);
+		}
+
+		if (sizeof($id_bibs) > 0) {
+
+			$this->db->select('COUNT(*) as count');
+			$this->db->from('papers');
+			$this->db->where_in('id_bib', $id_bibs);
+			$query = $this->db->get();
+
+			foreach ($query->result() as $row) {
+				array_push($data, array('Imported Studies', (int)$row->count));
+			}
+
+			$this->db->select('COUNT(*) as count');
+			$this->db->from('papers');
+			$this->db->where_in('id_bib', $id_bibs);
+			$this->db->where_not_in('status_selection', 4);
+			$query = $this->db->get();
+
+			foreach ($query->result() as $row) {
+				array_push($data, array('Not Duplicate', (int)$row->count));
+			}
+
+			$this->db->select('COUNT(*) as count');
+			$this->db->from('papers');
+			$this->db->where_in('id_bib', $id_bibs);
+			$this->db->where('status_selection', 1);
+			$query = $this->db->get();
+
+			foreach ($query->result() as $row) {
+				array_push($data, array('Status Selection', (int)$row->count));
+			}
+
+			$this->db->select('COUNT(*) as count');
+			$this->db->from('papers');
+			$this->db->where_in('id_bib', $id_bibs);
+			$this->db->where('status_qa', 1);
+			$query = $this->db->get();
+
+			foreach ($query->result() as $row) {
+				array_push($data, array('Status Quality', (int)$row->count));
+			}
+
+			$this->db->select('COUNT(*) as count');
+			$this->db->from('papers');
+			$this->db->where_in('id_bib', $id_bibs);
+			$this->db->where('status_extraction', 1);
+			$query = $this->db->get();
+
+			foreach ($query->result() as $row) {
+				array_push($data, array('Status Extraction', (int)$row->count));
+			}
+
+		}
+
+		$all_data['name'] = 'Studies';
+		$all_data['data'] = $data;
+
+
+		return $all_data;
+	}
+
+	public function get_act_project($id_project)
+	{
+		$data = array();
+		$data2 = array();
+		$data4 = array();
+
+		$mems = $this->get_members_name_id($id_project);
+
+		$this->db->select('	CAST(time as date) as day , COUNT(*) as count');
+		$this->db->from('activity_log');
+		$this->db->group_by('day');
+		$this->db->where('id_project', $id_project);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			array_push($data, (int)$row->count);
+			array_push($data2, $row->day);
+		}
+
+		$data3['name'] = 'Project';
+		$data3['data'] = $data;
+
+		array_push($data4, $data3);
+
+
+		foreach ($mems as $mem) {
+			$data = array();
+			foreach ($data2 as $day) {
+				$this->db->select('COUNT(*) as count');
+				$this->db->from('activity_log');
+				$this->db->where('id_project', $id_project);
+				$this->db->where('id_user', $mem[0]);
+				$this->db->where('CAST(time as date) =', $day);
+				$query = $this->db->get();
+
+				if ($query->num_rows() > 0) {
+					foreach ($query->result() as $row) {
+						array_push($data, (int)$row->count);
+					}
+				} else {
+					array_push($data, null);
+				}
+
+			}
+			$data3['name'] = $mem[1];
+			$data3['data'] = $data;
+
+			array_push($data4, $data3);
+		}
+
+
+		$all_data['categories'] = $data2;
+		$all_data['series'] = $data4;
+
+		return $all_data;
+	}
+
+	public function get_papers_score_quality($id_project)
+	{
+		$data = array();
+
+		$ids_p_d = $this->get_ids_project_database($id_project);
+		$id_bibs = array();
+
+		if (sizeof($ids_p_d) > 0) {
+			$id_bibs = $this->get_ids_bibs($ids_p_d);
+		}
+
+		if (sizeof($id_bibs) > 0) {
+
+			$this->db->select('general_score.description as desc, COUNT(*) as count');
+			$this->db->from('papers');
+			$this->db->join('general_score', 'general_score.id_general_score = papers.id_gen_score');
+			$this->db->group_by('papers.id_gen_score');
+			$this->db->where_in('papers.id_bib', $id_bibs);
+			$this->db->where('status_selection', 1);
+			$query = $this->db->get();
+
+			foreach ($query->result() as $row) {
+				array_push($data, array('name' => $row->desc, 'y' => (int)$row->count));
+			}
+
+		}
+
+		return $data;
+	}
+
 }
 
