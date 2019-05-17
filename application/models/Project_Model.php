@@ -2127,5 +2127,44 @@ class Project_Model extends Pattern_Model
 		return $data;
 	}
 
+	private function get_id_qe($id, $id_project)
+	{
+		$this->db->select('id_de');
+		$this->db->from('question_extraction');
+		$this->db->where('id', $id);
+		$this->db->where('id_project', $id_project);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			return $row->id_de;
+		}
+		return null;
+	}
+
+	public function get_data_qes($id_project)
+	{
+		$data = array();
+		$qes = $this->get_qes($id_project);
+
+		foreach ($qes as $qe) {
+			if ($qe->get_type() == "Pick One List") {
+				$id_qe = $this->get_id_qe($qe->get_id(), $id_project);
+				$this->db->select('options_extraction.description,COUNT(*) as count');
+				$this->db->from('evaluation_ex_op');
+				$this->db->join('options_extraction', 'options_extraction.id_option = evaluation_ex_op.id_option');
+				$this->db->group_by('evaluation_ex_op.id_option');
+				$this->db->where('evaluation_ex_op.id_qe', $id_qe);
+				$query = $this->db->get();
+				$data2 = array();
+				foreach ($query->result() as $row) {
+					array_push($data2, array('name' => $row->description, 'y' => (int)$row->count));
+				}
+				array_push($data, array('id' => $qe->get_id(), 'type' => $qe->get_type(), 'data' => $data2));
+			}
+		}
+
+		return $data;
+	}
+
 }
 
