@@ -2205,17 +2205,22 @@ class Project_Model extends Pattern_Model
 					$this->db->order_by('evaluation_ex_op.id_option', 'asc');
 					$query = $this->db->get();
 
+					$cont = 0;
 					foreach ($query->result() as $row) {
 						array_push($sets, $row->description);
 						$id .= $row->id_option;
 						$data2[$row->id_option]['value'] += 1;
+						$cont++;
 					}
 
+
 					$data2[$id]['sets'] = $sets;
-					if (array_key_exists('value', $data2[$id])) {
-						$data2[$id]['value'] += 1;
-					} else {
-						$data2[$id]['value'] = 1;
+					if ($cont > 1) {
+						if (array_key_exists('value', $data2[$id])) {
+							$data2[$id]['value'] += 1;
+						} else {
+							$data2[$id]['value'] = 1;
+						}
 					}
 
 				}
