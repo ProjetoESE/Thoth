@@ -60,11 +60,12 @@
 
 	<!-- Highcharts -->
 	<script src="<?= base_url('assets/js/highcharts.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/highcharts-more.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/series-label.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/funnel.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/venn.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/exporting.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/export-data.js'); ?>"></script>
-	<script src="<?= base_url('assets/js/highcharts-more.js'); ?>"></script>
-	<script src="<?= base_url('assets/js/funnel.js'); ?>"></script>
 
 
 	<!-- SweetAlert -->
@@ -90,6 +91,7 @@
 	<script src="<?= base_url('assets/js/data_extraction.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/help.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/study_selection.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/objects/Extraction_Chars.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/objects/Extraction_Answer.js'); ?>"></script>
 
 </head>

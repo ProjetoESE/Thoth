@@ -228,6 +228,25 @@
 						data: <?= json_encode($gen_score); ?>
 					}]
 				});
+				let qe = null;
+				<?php
+				foreach ($extraction as $qe){
+				?>
+				qe = new Extraction_Chars('<?=$qe['id']?>', '<?=$qe['type']?>',<?=json_encode($qe['data'])?>);
+				qe.show();
+				<?php
+				}
+				?>
+
+				qe = null;
+				<?php
+				foreach ($multiple as $qe){
+				?>
+				qe = new Extraction_Chars('<?=$qe['id']?>', '<?=$qe['type']?>',<?=json_encode($qe['data'])?>);
+				qe.show();
+				<?php
+				}
+				?>
 
 			});
 

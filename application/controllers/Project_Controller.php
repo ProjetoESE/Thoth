@@ -109,6 +109,8 @@ class Project_Controller extends Pattern_Controller
 			$data['funnel'] = $this->Project_Model->get_papers_step($id);
 			$data['activity'] = $this->Project_Model->get_act_project($id);
 			$data['gen_score'] = $this->Project_Model->get_papers_score_quality($id);
+			$data['extraction'] = $this->Project_Model->get_data_qes_select($id);
+			$data['multiple'] = $this->Project_Model->get_data_qes_multiple($id);
 
 			$this->load_views('pages/project/project_reporting', $data);
 

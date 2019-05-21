@@ -186,6 +186,21 @@ class Pattern_Model extends CI_Model
 		return $id_papers;
 	}
 
+	public function get_ids_papers_chars($id_bib)
+	{
+		$id_papers = array();
+		$this->db->select('id_paper');
+		$this->db->from('papers');
+		$this->db->where_in('id_bib', $id_bib);
+		$this->db->where('status_extraction', 1);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			array_push($id_papers, $row->id_paper);
+		}
+		return $id_papers;
+	}
+
 	public function get_ID_papers($id_bib)
 	{
 		$id_papers = array();
@@ -240,6 +255,20 @@ class Pattern_Model extends CI_Model
 
 		foreach ($query->result() as $row) {
 			return $row->id_paper;
+		}
+		return null;
+	}
+
+	public function get_id_option($op, $id_qe)
+	{
+		$this->db->select('id_option');
+		$this->db->from('options_extraction');
+		$this->db->where('description', $op);
+		$this->db->where('id_de', $id_qe);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			return $row->id_option;
 		}
 		return null;
 	}
