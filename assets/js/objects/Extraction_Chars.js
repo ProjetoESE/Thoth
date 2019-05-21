@@ -19,15 +19,29 @@ class Extraction_Chars {
 		let div_char = document.createElement('div');
 		div_char.id = this.id;
 
+		let br = document.createElement('br');
+
 		card_body.appendChild(div_char);
 		card.appendChild(card_body);
 		parent.appendChild(card);
+		parent.appendChild(br);
 
 		switch (this.type) {
 			case "Multiple Choice List":
+				this.char = Highcharts.chart(this.id, {
+					series: [{
+						type: 'venn',
+						name: 'Answers to the question ' + this.id,
+						data: this.data
+					}],
+					title: {
+						text: 'Answers to the question ' + this.id
+					}
+				});
+
+				console.log(this.data);
 				break;
 			case "Pick One List":
-				console.log(this.data);
 				this.char = Highcharts.chart(this.id, {
 					chart: {
 						plotBackgroundColor: null,

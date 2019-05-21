@@ -2141,7 +2141,7 @@ class Project_Model extends Pattern_Model
 		return null;
 	}
 
-	public function get_data_qes($id_project)
+	public function get_data_qes_select($id_project)
 	{
 		$data = array();
 		$qes = $this->get_qes($id_project);
@@ -2163,6 +2163,70 @@ class Project_Model extends Pattern_Model
 			}
 		}
 
+		return $data;
+	}
+
+	public function get_data_qes_multiple($id_project)
+	{
+		$data = array();
+
+		$ids_p_d = $this->get_ids_project_database($id_project);
+		$ids_bib = $this->get_ids_bibs($ids_p_d);
+		$ids_papers = $this->get_ids_papers_chars($ids_bib);
+		$qes = $this->get_qes($id_project);
+
+		foreach ($qes as $qe) {
+			if ($qe->get_type() == "Multiple Choice List") {
+				$data2 = array();
+				$id_qe = $this->get_id_qe($qe->get_id(), $id_project);
+				$sets = array();
+
+				foreach ($qe->get_options() as $op) {
+					$id_option = $this->get_id_option($op, $id_qe);
+					$sets = array();
+
+					array_push($sets, $op);
+
+					$data2[$id_option]['sets'] = $sets;
+					$data2[$id_option]['value'] = 0;
+
+				}
+
+				foreach ($ids_papers as $id_paper) {
+
+					$sets = array();
+					$id = "";
+
+					$this->db->select('evaluation_ex_op.id_option,options_extraction.description');
+					$this->db->from('evaluation_ex_op');
+					$this->db->join('options_extraction', 'options_extraction.id_option = evaluation_ex_op.id_option');
+					$this->db->where('id_paper', $id_paper);
+					$this->db->where('id_qe', $id_qe);
+					$this->db->order_by('evaluation_ex_op.id_option', 'asc');
+					$query = $this->db->get();
+
+					foreach ($query->result() as $row) {
+						array_push($sets, $row->description);
+						$id .= $row->id_option;
+						$data2[$row->id_option]['value'] += 1;
+					}
+
+					$data2[$id]['sets'] = $sets;
+					if (array_key_exists('value', $data2[$id])) {
+						$data2[$id]['value'] += 1;
+					} else {
+						$data2[$id]['value'] = 1;
+					}
+
+				}
+				$data3 = array();
+				foreach ($data2 as $da) {
+					array_push($data3, $da);
+				}
+
+				array_push($data, array('id' => $qe->get_id(), 'type' => $qe->get_type(), 'data' => $data3));
+			}
+		}
 		return $data;
 	}
 
