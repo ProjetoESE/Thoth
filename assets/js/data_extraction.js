@@ -83,6 +83,15 @@ function validate_question_extraction(id, desc, type, index) {
 		return false;
 	}
 
+	if (!validate_text(id)) {
+		swal({
+			type: 'warning',
+			title: 'Warning',
+			text: 'This field can not contain special characters or space!'
+		});
+		return false;
+	}
+
 	if (!desc) {
 		Swal({
 			title: 'Description Empty',

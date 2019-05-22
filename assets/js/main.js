@@ -375,9 +375,9 @@ $(document).ready(function () {
 						column.search(val ? '^' + val + '$' : '', true, false).draw();
 					});
 
-					select.append('<option value="Done">Done</option>');
-					select.append('<option value="To Do">To Do</option>');
-					select.append('<option value="Removed">Removed</option>');
+				select.append('<option value="Done">Done</option>');
+				select.append('<option value="To Do">To Do</option>');
+				select.append('<option value="Removed">Removed</option>');
 
 			});
 		},
@@ -418,4 +418,12 @@ $(document).ready(function () {
 		$("a[href='" + anchor + "']").tab("show");
 	});
 });
+
+function validate_text(value) {
+	if (/[^a-zA-Z0-9\-\/]/.test(value)) {
+		return false;
+	}
+
+	return true;
+}
 

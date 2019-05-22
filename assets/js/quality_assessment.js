@@ -105,6 +105,16 @@ function validate_general_quality_score(start_interval, end_interval, general_sc
 		});
 		return false;
 	}
+
+	if (parseFloat(start_interval) < 0) {
+		swal({
+			type: 'warning',
+			title: 'Warning',
+			text: 'The start interval can not be less than 0!'
+		});
+		return false;
+	}
+
 	if (!end_interval) {
 		swal({
 			type: 'warning',
@@ -113,6 +123,16 @@ function validate_general_quality_score(start_interval, end_interval, general_sc
 		});
 		return false;
 	}
+
+	if (parseFloat(end_interval) < 0.1) {
+		swal({
+			type: 'warning',
+			title: 'Warning',
+			text: 'The end interval can not be less than 0.1!'
+		});
+		return false;
+	}
+
 	if (!general_score_desc) {
 		swal({
 			type: 'warning',
@@ -323,7 +343,6 @@ function add_qa() {
 		return false;
 	}
 
-	console.log(id);
 	$.ajax({
 		type: "POST",
 		url: base_url + 'Quality_Controller/add_qa/',
@@ -447,6 +466,15 @@ function validate_qa(id, qa, weight, index) {
 		return false;
 	}
 
+	if (!validate_text(id)) {
+		swal({
+			type: 'warning',
+			title: 'Warning',
+			text: 'This field can not contain special characters or space!'
+		});
+		return false;
+	}
+
 	if (!qa) {
 		swal({
 			type: 'warning',
@@ -465,6 +493,20 @@ function validate_qa(id, qa, weight, index) {
 		return false;
 	}
 
+	if (parseFloat(weight) < 1) {
+		swal({
+			type: 'warning',
+			title: 'Warning',
+			text: 'The weight can not be less than 1!'
+		});
+		return false;
+	}
+
+	let max = table_general_score.column(1)
+		.data()
+		.sort()
+		.reverse()[0];
+
 	let data = table_qa.rows().data().toArray();
 
 	for (let i = 0; i < data.length; i++) {
@@ -478,6 +520,22 @@ function validate_qa(id, qa, weight, index) {
 				return false;
 			}
 		}
+	}
+
+	let s = parseFloat(weight);
+	for (let i = 0; i < data.length; i++) {
+		if (i != index) {
+			s += parseFloat(data[i][3]);
+		}
+	}
+
+	if (s > max) {
+		swal({
+			type: 'warning',
+			title: 'Warning',
+			text: 'The weight must be less than the maximum overall score!'
+		});
+		return false;
 	}
 
 	for (let i = 0; i < data.length; i++) {

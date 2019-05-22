@@ -7,17 +7,11 @@
 		   class="btn form-inline btn-outline-primary opt">Overview</a>
 		<a href="<?= base_url('planning/' . $project->get_id()) ?>"
 		   class="btn form-inline btn-outline-primary opt">Planning</a>
-		<a href="<?= base_url('conducting/' . $project->get_id()) ?>"
-		   class="btn form-inline btn-outline-primary opt">Conducting</a>
 		<a href="<?= base_url('reporting/' . $project->get_id()) ?>"
 		   class="btn form-inline btn-outline-primary opt">Reporting</a>
 	</div>
 	<div class="card-body">
-		<div class="row justify-content-between">
-			<div class="col-sm-12 col-md-2">
-				<h4>Planning</h4>
-			</div>
-		</div>
+		<h4>Planning</h4>
 		<ul class="nav nav-pills nav-justified">
 			<li class="nav-item">
 				<a data-toggle="pill" class="nav-link active" href="#tab_overall">Overall information</a>
@@ -48,18 +42,21 @@
 	</div>
 
 	<div class="tab-content">
-		<div class="tab-pane active container" id="tab_overall">
+		<div class="tab-pane active container-fluid" id="tab_overall">
 			<div class="row">
 				<div class="col-sm-12 col-md-6">
 					<br>
-					<table id="table_domains" class="table table-responsive-sm ">
+					<table id="table_domains" class="table table-responsive-sm">
+						<caption>List of Domains</caption>
 						<thead>
 						<tr>
-							<th>Domain</th>
+							<th>Domain <a onclick="modal_help('modal_help_domain')" class="float-right opt"><i
+										class="fas fa-question-circle "></i></a></th>
 						</tr>
 						</thead>
 						<tbody>
-						<?php foreach ($project->get_domains() as $domain) { ?>
+						<?php
+						foreach ($project->get_domains() as $domain) { ?>
 							<tr>
 								<td><?= $domain ?></td>
 							</tr>
@@ -71,9 +68,11 @@
 				<div class="col-sm-12 col-md-6">
 					<br>
 					<table id="table_languages" class="table table-responsive-sm">
+						<caption>List of Languages</caption>
 						<thead>
 						<tr>
-							<th>Language</th>
+							<th>Language <a onclick="modal_help('modal_help_languages')" class="float-right opt"><i
+										class="fas fa-question-circle "></i></a></th>
 						</tr>
 						</thead>
 						<tbody>
@@ -89,9 +88,11 @@
 				<div class="col-sm-12 col-md-6">
 					<br>
 					<table id="table_study_type" class="table table-responsive-sm">
+						<caption>List of Study Type</caption>
 						<thead>
 						<tr>
-							<th>Study Type</th>
+							<th>Study Type <a onclick="modal_help('modal_help_study_type')" class="float-right opt"><i
+										class="fas fa-question-circle "></i></a></th>
 						</tr>
 						</thead>
 						<tbody>
@@ -106,9 +107,11 @@
 				<div class="col-sm-12 col-md-6">
 					<br>
 					<table id="table_keywords" class="table table-responsive-sm">
+						<caption>List of Keywords</caption>
 						<thead>
 						<tr>
-							<th>Keyword</th>
+							<th>Keyword <a onclick="modal_help('modal_help_keyword')" class="float-right opt"><i
+										class="fas fa-question-circle "></i></a></th>
 						</tr>
 						</thead>
 						<tbody>
@@ -122,29 +125,35 @@
 				</div>
 				<div class="col-sm-12 col-md-4">
 					<label for="start_date"><strong>Start and End Date</strong></label>
+					<a onclick="modal_help('modal_help_date')" class="float-right opt"><i
+							class="fas fa-question-circle "></i></a>
 					<div class="input-group">
-						<button class="btn btn-success opt"><span class="far fa-calendar-check "></span></button>
-						<?= $project->get_start_date() ?>
+						<div class="input-group-prepend">
+							<button class="btn btn-success"><span class="far fa-calendar-check "></span></button>
+						</div>
+						<span><?= $project->get_start_date() ?></span>
 					</div>
 					<div class="input-group">
-						<button class="btn btn-danger opt"><span class="far fa-calendar-check "></span></button>
-						<p><?= $project->get_end_date() ?></p>
+						<button class="btn btn-danger"><span class="far fa-calendar-check "></span></button>
+						<span><?= $project->get_end_date() ?></span>
 					</div>
 				</div>
 			</div>
 			<br>
-			<div class="form-inline container justify-content-between">
+			<div class="form-inline container-fluid justify-content-between">
 				<a href="#" class="btn btn-secondary disabled"><span class="fas fa-backward"></span> Previous</a>
 				<a class="btn btn-secondary" href="#tab_research">Next <span class="fas fa-forward"></span></a>
 			</div>
 		</div>
-		<div class="tab-pane container" id="tab_research">
+		<div class="tab-pane container-fluid" id="tab_research">
 			<br>
 			<table id="table_research_question" class="table table-responsive-sm">
+				<caption>List of Research Questions</caption>
 				<thead>
 				<tr>
 					<th>ID</th>
-					<th>Research Question</th>
+					<th>Research Question <span onclick="modal_help('modal_help_rq')" class="float-right opt"><i
+								class="fas fa-question-circle "></i></span></th>
 				</tr>
 				</thead>
 				<tbody>
@@ -157,17 +166,19 @@
 				</tbody>
 			</table>
 			<br>
-			<div class="form-inline container justify-content-between">
+			<div class="form-inline container-fluid justify-content-between">
 				<a href="#tab_overall" class="btn btn-secondary"><span class="fas fa-backward"></span> Previous</a>
 				<a href="#tab_databases" class="btn btn-secondary">Next <span class="fas fa-forward"></span></a>
 			</div>
 		</div>
-		<div class="tab-pane container" id="tab_databases">
+		<div class="tab-pane container-fluid" id="tab_databases">
 			<br>
 			<table id="table_databases" class="table table-responsive-sm">
+				<caption>List of Databases</caption>
 				<thead>
 				<tr>
-					<th>Database</th>
+					<th>Database <a onclick="modal_help('modal_help_database')" class="float-right opt"><i
+								class="fas fa-question-circle "></i></a></th>
 				</tr>
 				</thead>
 				<tbody>
@@ -181,22 +192,21 @@
 				</tbody>
 			</table>
 			<br>
-			<div class="form-inline container justify-content-between">
+			<div class="form-inline container-fluid justify-content-between">
 				<a href="#tab_research" class="btn btn-secondary"><span class="fas fa-backward"></span> Previous</a>
 				<a href="#tab_search_string" class="btn btn-secondary">Next <span
 						class="fas fa-forward"></span></a>
 			</div>
 		</div>
-		<div class="tab-pane container" id="tab_search_string">
-			<div class="form-inline">
-				<label><strong>Search String</strong></label>
-			</div>
+		<div class="tab-pane container-fluid" id="tab_search_string">
 			<br>
 			<table id="table_search_string" class="table table-responsive-sm">
+				<caption>List of Term</caption>
 				<thead>
 				<tr>
 					<th>Term</th>
-					<th>Synonyms</th>
+					<th>Synonyms <a onclick="modal_help('modal_help_ss')" class="float-right opt"><i
+								class="fas fa-question-circle "></i></a></th>
 				</tr>
 				</thead>
 				<tbody>
@@ -204,17 +214,17 @@
 					<tr>
 						<td><?= $term->get_description() ?></td>
 						<td>
-							<?php
-							$array = $term->get_synonyms();
-							foreach ($array as $key => $synonym) {
-								end($array);
-								if ($key === key($array)) { ?>
-									<?= $synonym ?>
-								<?php } else { ?>
-									<?= $synonym . " OR " ?>
-									<?php
-								}
-							} ?>
+							<table id="table_<?= $term->get_description() ?>" class="table">
+								<th>Synonym</th>
+
+								<tbody>
+								<?php foreach ($term->get_synonyms() as $synonym) { ?>
+									<tr>
+										<td><?= $synonym ?></td>
+									</tr>
+								<?php } ?>
+								</tbody>
+							</table>
 						</td>
 					</tr>
 				<?php } ?>
@@ -224,38 +234,51 @@
 			<div id="strings">
 				<div class="form-inline">
 					<label><strong>Strings</strong></label>
+					<a onclick="modal_help('modal_help_strings')" class="float-right opt"><i
+							class="fas fa-question-circle "></i></a>
 				</div>
 				<?php foreach ($project->get_search_strings() as $search_string) { ?>
-					<div class="form-group" id="div_string_<?= $search_string->get_database() ?>">
-						<label><?= $search_string->get_database() ?></label>
-						<p><?= $search_string->get_description() ?></p>
-						<hr>
+					<div class="form-group" id="div_string_<?= $search_string->get_database()->get_name() ?>">
+						<a target="_blank"
+						   href="<?= $search_string->get_database()->get_link() ?>"><?= $search_string->get_database()->get_name() ?></a>
+						<textarea class="form-control" disabled="true"
+								  id="string_<?= $search_string->get_database()->get_name() ?>"><?= $search_string->get_description() ?></textarea>
 					</div>
 				<?php } ?>
 			</div>
-			<div class="form-inline container justify-content-between">
+			<div class="form-inline container-fluid justify-content-between">
 				<a href="#tab_databases" class="btn btn-secondary"><span
 						class="fas fa-backward"></span> Previous</a>
 				<a href="#tab_search_strategy" class="btn btn-secondary opt">Next <span
 						class="fas fa-forward"></span></a>
 			</div>
 		</div>
-		<div class="tab-pane container" id="tab_search_strategy">
+		<div class="tab-pane container-fluid" id="tab_search_strategy">
 			<div class="form-inline">
-				<label><strong>Search Strategy</strong></label>
+				<label for="search_strategy"><strong>Search Strategy</strong></label>
+				<a onclick="modal_help('modal_help_strategy')" class="float-right opt"><i
+						class="fas fa-question-circle "></i></a>
 			</div>
-			<p><?= $project->get_search_strategy() ?></p>
-			<div class="form-inline container justify-content-between">
+			<textarea rows="8" class="form-control" disabled="true"
+					  id="search_strategy"><?= $project->get_search_strategy() ?></textarea>
+			</button>
+			<br>
+			<div class="form-inline container-fluid justify-content-between">
 				<a href="#tab_search_string" class="btn btn-secondary"><span
 						class="fas fa-backward"></span> Previous</a>
 				<a href="#tab_criteria" class="btn btn-secondary opt">Next <span
 						class="fas fa-forward"></span></a>
 			</div>
 		</div>
-		<div class="tab-pane container" id="tab_criteria">
+		<div class="tab-pane container-fluid" id="tab_criteria">
 			<br>
-			<label><strong>Inclusion Criteria</strong></label>
+			<div class="form-inline">
+				<label><strong>Inclusion Criteria</strong></label>
+				<a onclick="modal_help('modal_help_criteria')" class="float-right opt"><i
+						class="fas fa-question-circle "></i></a>
+			</div>
 			<table id="table_criteria_inclusion" class="table table-responsive-sm">
+				<caption>List of Inclusion Criteria</caption>
 				<thead>
 				<tr>
 					<th>Select</th>
@@ -272,21 +295,21 @@
 					}
 					?>
 					<tr>
-						<td>
-							<?= $checked ?>
-						</td>
+						<td><?= $checked ?></td>
 						<td><?= $ic->get_id() ?></td>
 						<td><?= $ic->get_description() ?></td>
 					</tr>
 				<?php } ?>
 				</tbody>
 			</table>
-			<div class="form-inline col-md-3">
-				<strong>Inclusion Rule: </strong><?= $project->get_inclusion_rule() ?>
+			<div class="form-inline">
+				<label><strong>Inclusion Rule: </strong></label>
+				<span><?= $project->get_inclusion_rule() ?></span>
 			</div>
 			<br/>
 			<label><strong>Exclusion Criteria</strong></label>
 			<table id="table_criteria_exclusion" class="table table-responsive-sm">
+				<caption>List of Exclusion Criteria</caption>
 				<thead>
 				<tr>
 					<th>Select</th>
@@ -303,43 +326,43 @@
 					}
 					?>
 					<tr>
-						<td>
-							<?= $checked ?>
-						</td>
+						<td><?= $checked ?></td>
 						<td><?= $ec->get_id() ?></td>
 						<td><?= $ec->get_description() ?></td>
 					</tr>
 				<?php } ?>
 				</tbody>
 			</table>
-			<div class="input-group col-md-3">
-				<strong>Exclusion Rule: </strong><?= $project->get_exclusion_rule() ?>
+			<div class="form-inline">
+				<label><strong>Exclusion Rule: </strong></label>
+				<span><?= $project->get_exclusion_rule() ?></span>
 			</div>
 			<br>
-			<div class="form-inline container justify-content-between">
+			<div class="form-inline container-fluid justify-content-between">
 				<a href="#tab_search_strategy" class="btn btn-secondary"><span class="fas fa-backward"></span>
 					Previous</a>
 				<a href="#tab_quality" class="btn btn-secondary opt">Next <span
 						class="fas fa-forward"></span></a>
 			</div>
 		</div>
-		<div class="tab-pane container" id="tab_quality">
+		<div class="tab-pane container-fluid" id="tab_quality">
 			<div class="form-inline">
-				<label><strong>General Score</strong></label>
-			</div>
-			<div class="input-group col-md-4">
-				<?php $mini = $project->get_score_min();
-				if (!is_null($mini)) {
-					?>
-					<strong>Minimum General Score to Approve: </strong><?= $mini->get_description(); ?>
-				<?php } else {
-					?>
-					<strong>Minimum General Score to Approve: </strong>
-				<?php }
-				?>
+				<label for="start_interval"><strong>General Score</strong></label>
+				<a onclick="modal_help('modal_help_general_score')" class="float-right opt"><i
+						class="fas fa-question-circle "></i></a>
 			</div>
 			<br>
+			<div class="form-inline">
+				<label><strong>Minimum General Score to Approve: </strong></label>
+				<?php $mini = $project->get_score_min();
+				if ($mini != null) {
+					?> <span><?= $mini->get_description() ?></span>
+					<?php
+				}
+				?>
+			</div>
 			<table id="table_general_score" class="table table-responsive-sm">
+				<caption>List of General Score</caption>
 				<thead>
 				<tr>
 					<th>Start Score Interval</th>
@@ -359,10 +382,13 @@
 			</table>
 			<br>
 			<div class="form-inline">
-				<label><strong>Question Quality</strong></label>
+				<label for="id_qa"><strong>Question Quality</strong></label>
+				<a onclick="modal_help('modal_help_qa')" class="float-right opt"><i
+						class="fas fa-question-circle "></i></a>
 			</div>
 			<br>
 			<table id="table_qa" class="table table-responsive-sm">
+				<caption>List of Question Quality</caption>
 				<thead>
 				<tr>
 					<th>ID</th>
@@ -388,7 +414,6 @@
 										<td><?= $sc->get_score_rule(); ?></td>
 										<td><?= $sc->get_score(); ?>%</td>
 										<td><?= $sc->get_description(); ?></td>
-
 									</tr>
 								<?php } ?>
 								</tbody>
@@ -396,29 +421,34 @@
 						</td>
 						<td><?= $qa->get_weight() ?></td>
 						<td>
-
-							<?php $mini = $qa->get_min_to_approve();
-							if (!is_null($mini)) { ?>
-								<?= $mini->get_score_rule(); ?>
-							<?php } ?>
+							<?php
+							$min = $qa->get_min_to_approve();
+							if (!is_null($min)) {
+								echo  $min->get_score_rule();
+							}
+							?>
 						</td>
+
 					</tr>
 				<?php } ?>
 				</tbody>
 			</table>
 			<br>
-			<div class="form-inline container justify-content-between">
+			<div class="form-inline container-fluid justify-content-between">
 				<a href="#tab_criteria" class="btn btn-secondary"><span class="fas fa-backward"></span> Previous</a>
 				<a href="#tab_data" class="btn btn-secondary opt">Next <span
 						class="fas fa-forward"></span></a>
 			</div>
 		</div>
-		<div class="tab-pane container" id="tab_data">
+		<div class="tab-pane container-fluid" id="tab_data">
 			<div class="form-inline">
-				<label><strong>Data Extraction</strong></label>
+				<label for="id_data_extraction"><strong>Data Extraction</strong></label>
+				<a onclick="modal_help('modal_help_data_extraction')" class="float-right opt"><i
+						class="fas fa-question-circle "></i></a>
 			</div>
 			<br>
 			<table id="table_data_extraction" class="table table-responsive-sm">
+				<caption>List of Data Extraction</caption>
 				<thead>
 				<tr>
 					<th>ID</th>
@@ -436,10 +466,18 @@
 						<td>
 							<?php if ($qe->get_type() == "Text") { ?>
 						</td>
-						<?php } else {
-							foreach ($qe->get_options() as $op) { ?>
-								<?= $op . "</br>" ?>
-							<?php } ?>
+						<?php } else { ?>
+							<table id="table_<?= $qe->get_id(); ?>" class="table">
+								<th>Option</th>
+								<tbody>
+								<?php foreach ($qe->get_options() as $op) { ?>
+									<tr>
+										<td><?= $op ?></td>
+
+									</tr>
+								<?php } ?>
+								</tbody>
+							</table>
 							</td>
 						<?php } ?>
 					</tr>
@@ -447,7 +485,7 @@
 				</tbody>
 			</table>
 			<br>
-			<div class="form-inline container justify-content-between">
+			<div class="form-inline container-fluid justify-content-between">
 				<a href="#tab_quality" class="btn btn-secondary"><span class="fas fa-backward"></span> Previous</a>
 				<a href="#" class="btn btn-secondary disabled">Next<span
 						class="fas fa-forward"></span></a>
@@ -456,3 +494,31 @@
 	</div>
 	<br>
 </div>
+<?php
+$this->load->view('modal/modal_inclusion_criteria');
+$this->load->view('modal/modal_exclusion_criteria');
+$this->load->view('modal/modal_synonym');
+$this->load->view('modal/modal_general_score');
+$this->load->view('modal/modal_term');
+$this->load->view('modal/modal_research');
+$this->load->view('modal/modal_keyword');
+$this->load->view('modal/modal_domain');
+$this->load->view('modal/modal_question_quality');
+$this->load->view('modal/modal_score_quality');
+$this->load->view('modal/modal_question_extraction');
+$this->load->view('modal/modal_option');
+$this->load->view('modal/modal_help_domain');
+$this->load->view('modal/modal_help_languages');
+$this->load->view('modal/modal_help_study_type');
+$this->load->view('modal/modal_help_keyword');
+$this->load->view('modal/modal_help_date');
+$this->load->view('modal/modal_help_research_question');
+$this->load->view('modal/modal_help_database');
+$this->load->view('modal/modal_help_ss');
+$this->load->view('modal/modal_help_strings');
+$this->load->view('modal/modal_help_criteria');
+$this->load->view('modal/modal_help_general_score');
+$this->load->view('modal/modal_help_qa');
+$this->load->view('modal/modal_help_data_extraction');
+$this->load->view('modal/modal_help_strategy');
+?>

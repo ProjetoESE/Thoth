@@ -734,7 +734,7 @@
 				</div>
 				<div class="input-group col-md-2">
 					<label for="qa_weight" class="col-sm-12">Weight</label>
-					<input type="number" class="form-control" id="weight_qa" step="0.5">
+					<input type="number" min="1" class="form-control" id="weight_qa" step="0.5">
 					<div class="input-group-append">
 						<button class="btn btn-success" type="button" onclick="add_qa()"><span
 								class="fas fa-plus"></span></button>
