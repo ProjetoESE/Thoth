@@ -125,6 +125,15 @@ function validate_research(id, description, index) {
 		return false;
 	}
 
+	if(!validate_text(id)){
+		swal({
+			type: 'warning',
+			title: 'Warning',
+			text: 'This field can not contain special characters or space!'
+		});
+		return false;
+	}
+
 	let data = table_research_question.rows().data().toArray();
 
 	for (let i = 0; i < data.length; i++) {

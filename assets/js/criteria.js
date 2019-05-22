@@ -192,6 +192,14 @@ function validate_criteria(id, description, type, index) {
 		return false;
 	}
 
+	if(!validate_text(id)){
+		swal({
+			type: 'warning',
+			title: 'Warning',
+			text: 'This field can not contain special characters or space!'
+		});
+		return false;
+	}
 
 	let data = table_criteria_inclusion.rows().data().toArray();
 
