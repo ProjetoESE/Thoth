@@ -4,10 +4,10 @@
 		<input type="hidden" id="id_project" value="<?= $project->get_id(); ?>">
 		<a href="<?= base_url('open/' . $project->get_id()) ?>"
 		   class="btn form-inline btn-outline-primary opt">Overview</a>
+
 		<a href="<?= base_url('planning/' . $project->get_id()) ?>"
 		   class="btn form-inline btn-outline-primary opt">Planning</a>
-		<a href="<?= base_url('conducting/' . $project->get_id()) ?>"
-		   class="btn form-inline btn-outline-primary opt">Conducting</a>
+
 		<a href="<?= base_url('reporting/' . $project->get_id()) ?>"
 		   class="btn form-inline btn-outline-primary opt">Reporting</a>
 	</div>
@@ -36,7 +36,7 @@
 				<ul>
 					<?php foreach ($project->get_members() as $member) { ?>
 						<li>
-							<?= $member->get_name(); ?>
+							<?= $member->get_name()." - ".$member->get_level(); ?>
 						</li>
 					<?php } ?>
 				</ul>
@@ -55,22 +55,22 @@
 						<div class="col-md-12">
 							<div class="progress">
 								<div class="progress-bar bg-success" role="progressbar"
-									 style="width: <?= $progress_planning['progress'] ?>%"
-									 aria-valuenow="<?= $progress_planning['progress'] ?>" aria-valuemin="0"
-									 aria-valuemax="100"><?= $progress_planning['progress'] ?>%
+									 style="width: <?= $project->get_planning() ?>%"
+									 aria-valuenow="<?= $project->get_planning() ?>" aria-valuemin="0"
+									 aria-valuemax="100"><?= $project->get_planning() ?>%
 								</div>
 							</div>
 						</div>
-					</div>
+						</div>
 					<h6>Import Studies</h6>
 					<div class="form-inline">
 						<div class="col-md-12">
 							<div class="progress">
 								<div class="progress-bar bg-info" role="progressbar"
-									 style="width: <?= $progress_import_studies['progress'] ?>%"
-									 aria-valuenow="<?= $progress_import_studies['progress'] ?>" aria-valuemin="0"
+									 style="width: <?= $project->get_import() ?>%"
+									 aria-valuenow="<?= $project->get_import() ?>" aria-valuemin="0"
 									 aria-valuemax="100">
-									<?= $progress_import_studies['progress'] ?>%
+									<?= $project->get_import() ?>%
 								</div>
 							</div>
 						</div>
@@ -80,10 +80,10 @@
 						<div class="col-md-12">
 							<div class="progress">
 								<div class="progress-bar bg-warning" role="progressbar"
-									 style="width: <?= $progress_study_selection['progress'] ?>%"
-									 aria-valuenow="<?= $progress_study_selection['progress'] ?>" aria-valuemin="0"
+									 style="width: <?= $project->get_selection() ?>%"
+									 aria-valuenow="<?=$project->get_selection() ?>" aria-valuemin="0"
 									 aria-valuemax="100">
-									<?= $progress_study_selection['progress'] ?>%
+									<?=$project->get_selection() ?>%
 								</div>
 							</div>
 						</div>
@@ -93,10 +93,10 @@
 						<div class="col-md-12">
 							<div class="progress">
 								<div class="progress-bar bg-secondary" role="progressbar"
-									 style="width: <?= $progress_quality_assessement['progress'] ?>%"
-									 aria-valuenow="<?= $progress_quality_assessement['progress'] ?>" aria-valuemin="0"
+									 style="width: <?= $project->get_quality() ?>%"
+									 aria-valuenow="<?= $project->get_quality()  ?>" aria-valuemin="0"
 									 aria-valuemax="100">
-									<?= $progress_quality_assessement['progress'] ?>%
+									<?= $project->get_quality()  ?>%
 								</div>
 							</div>
 						</div>
@@ -106,9 +106,9 @@
 						<div class="col-sm-12">
 							<div class="progress">
 								<div class="progress-bar bg-danger" role="progressbar"
-									 style="width: <?= $progress_data_extraction['progress'] ?>%"
-									 aria-valuenow="<?= $progress_data_extraction['progress'] ?>" aria-valuemin="0"
-									 aria-valuemax="100"><?= $progress_data_extraction['progress'] ?>%
+									 style="width: <?= $project->get_extraction()  ?>%"
+									 aria-valuenow="<?= $project->get_extraction() ?>" aria-valuemin="0"
+									 aria-valuemax="100"><?= $project->get_extraction() ?>%
 								</div>
 							</div>
 						</div>
@@ -141,3 +141,4 @@
 		</div>
 	</div>
 </div>
+

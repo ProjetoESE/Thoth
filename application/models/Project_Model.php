@@ -687,6 +687,8 @@ class Project_Model extends Pattern_Model
 		foreach ($query->result() as $row) {
 			$project->set_title($row->title);
 			$project->set_id($row->id_project);
+			$project->set_start_date($row->start_date);
+			$project->set_end_date($row->end_date);
 		}
 
 		$project->set_errors($errors);
