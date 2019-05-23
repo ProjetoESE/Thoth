@@ -2173,9 +2173,18 @@ class Project_Model extends Pattern_Model
 		$data = array();
 
 		$ids_p_d = $this->get_ids_project_database($id_project);
-		$ids_bib = $this->get_ids_bibs($ids_p_d);
-		$ids_papers = $this->get_ids_papers_chars($ids_bib);
-		$qes = $this->get_qes($id_project);
+		$ids_bib = array();
+		if (sizeof($ids_p_d) > 0) {
+			$ids_bib = $this->get_ids_bibs($ids_p_d);
+		}
+		$ids_papers = array();
+		if (sizeof($ids_bib) > 0) {
+			$ids_papers = $this->get_ids_papers_chars($ids_bib);
+		}
+		$qes = array();
+		if (sizeof($ids_papers) > 0) {
+			$qes = $this->get_qes($id_project);
+		}
 
 		foreach ($qes as $qe) {
 			if ($qe->get_type() == "Multiple Choice List") {
