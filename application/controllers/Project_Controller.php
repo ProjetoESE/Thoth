@@ -13,7 +13,7 @@ class Project_Controller extends Pattern_Controller
 		try {
 			$this->validate_level($id, array(1, 2, 3, 4));
 
-			$this->export_doc($id);
+			$this->export_latex($id);
 
 			$this->load->model("Project_Model");
 			$data['project'] = $this->Project_Model->get_project_overview($id);
@@ -370,13 +370,11 @@ class Project_Controller extends Pattern_Controller
 	private function export_doc($id_project)
 	{
 		try {
-			//require_once('C:\xampp\htdocs\Thoth\application\third_party\vendor\autoload.php');
 			require_once(APPPATH . 'third_party/vendor/autoload.php');
 
 			$this->load->model('Project_Model');
 
 			$project = $this->Project_Model->get_project_export($id_project);
-			//$templateProcessor = new \PhpOffice\PhpWord\TemplateProcessor('C:\xampp\htdocs\Thoth\export\template.docx');
 			$templateProcessor = new \PhpOffice\PhpWord\TemplateProcessor(base_url('export/template.docx'));
 
 			$templateProcessor->setValue('title', $project->get_title());
@@ -448,7 +446,7 @@ class Project_Controller extends Pattern_Controller
 			$templateProcessor->setValue('language', $languages);
 
 			$studies = "";
-			$array = $project->get_languages();
+			$array = $project->get_study_types();
 			foreach ($array as $key => $study) {
 				end($array);
 				if ($key === key($array)) {
@@ -627,6 +625,340 @@ class Project_Controller extends Pattern_Controller
 			$this->session->set_flashdata('error', $e->getMessage());
 			redirect(base_url());
 		}
+	}
+
+	/**
+	 * @param $id_project
+	 */
+	private function export_latex($id_project)
+	{
+		$this->load->model('Project_Model');
+		$project = $this->Project_Model->get_project_export($id_project);
+		$file = fopen(".\\export\\" . $id_project . ".txt", "w");
+
+		//Config File Latex
+		fwrite($file, "\documentclass [11pt]{article}\n");
+		fwrite($file, "\usepackage[utf8]{inputenc}\n");
+		fwrite($file, "\usepackage{graphicx}\n");
+		fwrite($file, "\usepackage{booktabs}\n");
+
+
+		//Title
+		fwrite($file, "\\title{" . $project->get_title() . "}\n");
+
+		//Author
+		$members = "";
+		$array = $project->get_members();
+		foreach ($array as $key => $member) {
+			end($array);
+			if ($key === key($array)) {
+				$members .= $member->get_name() . " (" . $member->get_email() . ")";
+			} else {
+				$members .= $member->get_name() . " (" . $member->get_email() . "),\\\ ";
+			}
+		}
+		fwrite($file, "\\author{" . $members . "}");
+		fwrite($file, "\n");
+
+		//Document
+		fwrite($file, "\begin{document}\n");
+		fwrite($file, "\maketitle\n");
+		fwrite($file, "\n");
+
+		//Abstract
+		fwrite($file, "\begin{abstract}\n");
+		fwrite($file, "\\end{abstract}\n");
+		fwrite($file, "\n");
+
+		//Planning
+		fwrite($file, "\section{Planning}\n");
+		fwrite($file, "\n");
+
+		//Description
+		fwrite($file, "\subsection{Description}\n");
+		fwrite($file, $project->get_description() . "\n");
+		fwrite($file, "\n");
+
+		//Objectives
+		fwrite($file, "\subsection{Objectives}\n");
+		fwrite($file, $project->get_objectives() . "\n");
+		fwrite($file, "\n");
+
+		//Domains
+		fwrite($file, "\subsection{Domains}\n");
+		fwrite($file, "\begin{itemize}\n");
+		foreach ($project->get_domains() as $domain) {
+			fwrite($file, "	\item " . $domain . ";\n");
+		}
+		fwrite($file, "\\end{itemize}\n");
+		fwrite($file, "\n");
+
+		//Languages
+		fwrite($file, "\subsection{Languages}\n");
+		fwrite($file, "\begin{itemize}\n");
+		foreach ($project->get_languages() as $language) {
+			fwrite($file, "	\item " . $language . ";\n");
+		}
+		fwrite($file, "\\end{itemize}\n");
+		fwrite($file, "\n");
+
+		//Study Types
+		fwrite($file, "\subsection{Studies Types}\n");
+		fwrite($file, "\begin{itemize}\n");
+		foreach ($project->get_study_types() as $study) {
+			fwrite($file, "	\item " . $study . ";\n");
+		}
+		fwrite($file, "\\end{itemize}\n");
+		fwrite($file, "\n");
+
+		//Keywords
+		fwrite($file, "\subsection{Keywords}\n");
+		$keywords = "";
+		$array = $project->get_keywords();
+		foreach ($array as $key => $keyword) {
+			end($array);
+			if ($key === key($array)) {
+				$keywords .= $keyword . ".";
+			} else {
+				$keywords .= $keyword . ", ";
+			}
+		}
+		fwrite($file, $keywords . "\n");
+		fwrite($file, "\n");
+
+		//Research Questions
+		fwrite($file, "\subsection{Research Questions}\n");
+		fwrite($file, "\begin{itemize}\n");
+		foreach ($project->get_research_questions() as $research) {
+			fwrite($file, "	\item \\textbf{" . $research->get_id() . "} " . $research->get_description() . ";\n");
+		}
+		fwrite($file, "\\end{itemize}\n");
+		fwrite($file, "\n");
+
+		//DataBases
+		//
+		//
+		fwrite($file, "\subsection{Databases}\n");
+		fwrite($file, "\begin{table}[!htb]\n");
+		fwrite($file, "\caption[Databases used at work]{Databases used at work.}\n");
+		fwrite($file, "\label{tab:databases}\n");
+		fwrite($file, "\centering\n");
+		fwrite($file, "\\resizebox{\\textwidth}{!}{%\n");
+		fwrite($file, "\begin{tabular}{@{}ll@{}}\n");
+		fwrite($file, "\\toprule\n");
+
+		fwrite($file, "\\textbf{Database} & \\textbf{Link} \\\ \midrule\n");
+
+		$array = $project->get_databases();
+		foreach ($array as $key => $database) {
+			end($array);
+			if ($key === key($array)) {
+				fwrite($file, $database->get_name() . " & " . $database->get_link() . " \\\ \bottomrule \n");
+			} else {
+				fwrite($file, $database->get_name() . " & " . $database->get_link() . " \\\ \n");
+			}
+		}
+
+		fwrite($file, "\\end{tabular}% \n");
+		fwrite($file, "} \n");
+		fwrite($file, "\\end{table}\n");
+		fwrite($file, "\n");
+
+
+		//Terms e Synonyms
+		fwrite($file, "\subsection{Terms and Synonyms}\n");
+		fwrite($file, "\begin{table}[!htb]\n");
+		fwrite($file, "\caption[Terms and Synonyms used at work]{Terms and Synonyms used at work.}\n");
+		fwrite($file, "\label{tab:terms}\n");
+		fwrite($file, "\centering\n");
+		fwrite($file, "\\resizebox{\\textwidth}{!}{%\n");
+		fwrite($file, "\begin{tabular}{@{}ll@{}}\n");
+		fwrite($file, "\\toprule\n");
+
+		fwrite($file, "\\textbf{Term} & \\textbf{Synonyms} \\\ \midrule\n");
+
+		foreach ($project->get_terms() as $term) {
+			$synonyms = "\begin{tabular}[c]{@{}l@{}}";
+			foreach ($term->get_synonyms() as $syn) {
+				$synonyms .= $syn . "\\\\";
+			}
+			$synonyms .= "\\end{tabular}";
+			fwrite($file, $term->get_description() . " & " . $synonyms . " \\\ \bottomrule \n");
+		}
+
+		fwrite($file, "\\end{tabular}% \n");
+		fwrite($file, "} \n");
+		fwrite($file, "\\end{table}\n");
+		fwrite($file, "\n");
+
+
+		//Strings
+		fwrite($file, "\subsection{Search Strings}\n");
+		fwrite($file, "\begin{table}[!htb]\n");
+		fwrite($file, "\caption[Search Strings used at work]{Search Strings used at work.}\n");
+		fwrite($file, "\label{tab:strings}\n");
+		fwrite($file, "\centering\n");
+		fwrite($file, "\\resizebox{\\textwidth}{!}{%\n");
+		fwrite($file, "\begin{tabular}{@{}ll@{}}\n");
+		fwrite($file, "\\toprule\n");
+
+		fwrite($file, "\\textbf{Database} & \\textbf{String} \\\ \midrule\n");
+
+		foreach ($project->get_search_strings() as $string) {
+			fwrite($file, $string->get_database()->get_name() . " & " . $string->get_description() . " \\\ \bottomrule \n");
+		}
+
+		fwrite($file, "\\end{tabular}% \n");
+		fwrite($file, "} \n");
+		fwrite($file, "\\end{table}\n");
+		fwrite($file, "\n");
+
+
+		//Inclusion and Exclusion Criteria
+		fwrite($file, "\subsection{Inclusion and Exclusion Criteria}\n");
+
+		fwrite($file, "Inclusion Rule: " . $project->get_inclusion_rule() . "\n");
+		fwrite($file, "\n");
+
+		fwrite($file, "\begin{table}[!htb]\n");
+		fwrite($file, "\caption[Inclusion criteria used at work]{Inclusion criteria used at work.}\n");
+		fwrite($file, "\label{tab:inclusion_criteria}\n");
+		fwrite($file, "\centering\n");
+		fwrite($file, "\\resizebox{\\textwidth}{!}{%\n");
+		fwrite($file, "\begin{tabular}{@{}ll@{}}\n");
+		fwrite($file, "\\toprule\n");
+
+		fwrite($file, "\\textbf{ID} & \\textbf{Criteria} \\\ \midrule\n");
+
+		foreach ($project->get_inclusion_criteria() as $ic) {
+			fwrite($file, $ic->get_id() . " & " . $ic->get_description() . " \\\ \bottomrule \n");
+		}
+
+		fwrite($file, "\\end{tabular}% \n");
+		fwrite($file, "} \n");
+		fwrite($file, "\\end{table}\n");
+		fwrite($file, "\n");
+
+		fwrite($file, "Exclusion Rule: " . $project->get_exclusion_rule() . "\n");
+		fwrite($file, "\n");
+
+		fwrite($file, "\begin{table}[!htb]\n");
+		fwrite($file, "\caption[Exclusion criteria used at work]{Exclusion criteria used at work.}\n");
+		fwrite($file, "\label{tab:exclusion_criteria}\n");
+		fwrite($file, "\centering\n");
+		fwrite($file, "\\resizebox{\\textwidth}{!}{%\n");
+		fwrite($file, "\begin{tabular}{@{}ll@{}}\n");
+		fwrite($file, "\\toprule\n");
+
+		fwrite($file, "\\textbf{ID} & \\textbf{Criteria} \\\ \midrule\n");
+
+		foreach ($project->get_exclusion_criteria() as $ic) {
+			fwrite($file, $ic->get_id() . " & " . $ic->get_description() . " \\\ \bottomrule \n");
+		}
+
+		fwrite($file, "\\end{tabular}% \n");
+		fwrite($file, "} \n");
+		fwrite($file, "\\end{table}\n");
+		fwrite($file, "\n");
+
+
+		//General Scores
+		fwrite($file, "\subsection{General Scores}\n");
+
+		$score_min = $project->get_score_min();
+
+		if (is_null($score_min)) {
+			fwrite($file, "Score Minimum to Approve: Not minimum.\n");
+		} else {
+			fwrite($file, "Score Minimum to Approve: " . $score_min->get_description() . ".\n");
+		}
+		fwrite($file, "\n");
+
+		fwrite($file, "\begin{table}[!htb]\n");
+		fwrite($file, "\caption[General Scores used at work]{General Score used at work.}\n");
+		fwrite($file, "\label{tab:genscores}\n");
+		fwrite($file, "\centering\n");
+		fwrite($file, "\\resizebox{\\textwidth}{!}{%\n");
+		fwrite($file, "\begin{tabular}{@{}lll@{}}\n");
+		fwrite($file, "\\toprule\n");
+
+		fwrite($file, "\\textbf{Start Interval} & \\textbf{End Interval} & \\textbf{Description} \\\ \midrule\n");
+
+		foreach ($project->get_quality_scores() as $score) {
+			fwrite($file, $score->get_start_interval() . " & " . $score->get_end_interval() . " & " . $score->get_description() . " \\\ \bottomrule \n");
+		}
+
+		fwrite($file, "\\end{tabular}% \n");
+		fwrite($file, "} \n");
+		fwrite($file, "\\end{table}\n");
+		fwrite($file, "\n");
+
+
+		//Quality Questions
+		fwrite($file, "\subsection{Quality Questions}\n");
+		fwrite($file, "\begin{table}[!htb]\n");
+		fwrite($file, "\caption[Quality Questions used at work]{Quality Questions used at work.}\n");
+		fwrite($file, "\label{tab:qa}\n");
+		fwrite($file, "\centering\n");
+		fwrite($file, "\\resizebox{\\textwidth}{!}{%\n");
+		fwrite($file, "\begin{tabular}{@{}lllll@{}}\n");
+		fwrite($file, "\\toprule\n");
+
+		fwrite($file, "\\textbf{ID} & \\textbf{Descrption} & \\textbf{Rules} & \\textbf{Weight} & \\textbf{\begin{tabular}[c]{@{}l@{}}Minimum\\ to\\ Approve\\end{tabular}} \\\ \midrule\n");
+
+		foreach ($project->get_questions_quality() as $qa) {
+			$scores = "\begin{tabular}[c]{@{}l@{}}";
+			foreach ($qa->get_scores() as $s) {
+				$scores .= $s->get_score_rule() . "\\\\";
+			}
+			$scores .= "\\end{tabular}";
+
+			$minimum = $qa->get_min_to_approve();
+			$min = "Not exist minimum";
+			if ($minimum != null) {
+				$min = $minimum->get_score_rule();
+			}
+
+			fwrite($file, $qa->get_id() . " & " . $qa->get_description() . "& " . $scores . " & " . $qa->get_weight() . " & " . $min . " \\\ \bottomrule \n");
+		}
+
+		fwrite($file, "\\end{tabular}% \n");
+		fwrite($file, "} \n");
+		fwrite($file, "\\end{table}\n");
+		fwrite($file, "\n");
+
+
+		//Extraction Questions
+		fwrite($file, "\subsection{Extraction Questions}\n");
+		fwrite($file, "\begin{table}[!htb]\n");
+		fwrite($file, "\caption[Extraction Questions used at work]{Extraction Questions used at work.}\n");
+		fwrite($file, "\label{tab:qe}\n");
+		fwrite($file, "\centering\n");
+		fwrite($file, "\\resizebox{\\textwidth}{!}{%\n");
+		fwrite($file, "\begin{tabular}{@{}llll@{}}\n");
+		fwrite($file, "\\toprule\n");
+
+		fwrite($file, "\\textbf{ID} & \\textbf{Descrption} & \\textbf{Type} & \\textbf{Options} \\\ \midrule\n");
+
+		foreach ($project->get_questions_extraction() as $qe) {
+			$ops = "\begin{tabular}[c]{@{}l@{}}";
+			foreach ($qe->get_options() as $op) {
+				$ops .= $op . "\\\\";
+			}
+			$ops .= "\\end{tabular}";
+
+			fwrite($file, $qe->get_id() . " & " . $qe->get_description() . "& " . $qe->get_type() . " & " . $ops . " \\\ \bottomrule \n");
+		}
+
+		fwrite($file, "\\end{tabular}% \n");
+		fwrite($file, "} \n");
+		fwrite($file, "\\end{table}\n");
+		fwrite($file, "\n");
+
+		//End Document
+		fwrite($file, "\\end{document}\n");
+
+		fclose($file);
 	}
 
 	/**
