@@ -133,7 +133,7 @@
 					<div class="text-center">
 						<form action="https://www.overleaf.com/docs" method="post" target="_blank">
 							<input type="hidden" name="snip_uri[]"
-								   value="<?= base_url("export/" . $project->get_id() . ".txt") ?> ?>">
+								   value="<?= base_url("export/" . $project->get_id() . ".txt") ?>">
 							<button type="submit" class="btn btn-light">New Project in Overleaf <i
 									class="far fa-plus-square"></i></button>
 							<a target="_blank" class="btn btn-light"
