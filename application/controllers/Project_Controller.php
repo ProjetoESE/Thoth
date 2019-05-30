@@ -736,8 +736,6 @@ class Project_Controller extends Pattern_Controller
 		fwrite($file, "\n");
 
 		//DataBases
-		//
-		//
 		fwrite($file, "\subsection{Databases}\n");
 		fwrite($file, "\begin{table}[!htb]\n");
 		fwrite($file, "\caption[Databases used at work]{Databases used at work.}\n");
@@ -812,6 +810,13 @@ class Project_Controller extends Pattern_Controller
 		fwrite($file, "} \n");
 		fwrite($file, "\\end{table}\n");
 		fwrite($file, "\n");
+
+
+		//Search Strategy
+		fwrite($file, "\subsection{Search Strategy}\n");
+		fwrite($file, $project->get_search_strategy() . "\n");
+		fwrite($file, "\n");
+
 
 
 		//Inclusion and Exclusion Criteria
