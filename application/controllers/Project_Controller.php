@@ -634,14 +634,14 @@ class Project_Controller extends Pattern_Controller
 	{
 		$this->load->model('Project_Model');
 		$project = $this->Project_Model->get_project_export($id_project);
-		$file = fopen(".\\export\\" . $id_project . ".txt", "w");
+		$file = fopen("./export/" . $id_project . ".txt", "w");
 
 		//Config File Latex
 		fwrite($file, "\documentclass [11pt]{article}\n");
 		fwrite($file, "\usepackage[utf8]{inputenc}\n");
 		fwrite($file, "\usepackage{graphicx}\n");
 		fwrite($file, "\usepackage{booktabs}\n");
-
+		fwrite($file, "\usepackage{float}\n");
 
 		//Title
 		fwrite($file, "\\title{" . $project->get_title() . "}\n");
@@ -765,11 +765,10 @@ class Project_Controller extends Pattern_Controller
 
 		//Terms e Synonyms
 		fwrite($file, "\subsection{Terms and Synonyms}\n");
-		fwrite($file, "\begin{table}[!htb]\n");
+		fwrite($file, "\begin{table}[H]\n");
 		fwrite($file, "\caption[Terms and Synonyms used at work]{Terms and Synonyms used at work.}\n");
 		fwrite($file, "\label{tab:terms}\n");
 		fwrite($file, "\centering\n");
-		fwrite($file, "\\resizebox{\\textwidth}{!}{%\n");
 		fwrite($file, "\begin{tabular}{@{}ll@{}}\n");
 		fwrite($file, "\\toprule\n");
 
@@ -784,31 +783,18 @@ class Project_Controller extends Pattern_Controller
 			fwrite($file, $term->get_description() . " & " . $synonyms . " \\\ \bottomrule \n");
 		}
 
-		fwrite($file, "\\end{tabular}% \n");
-		fwrite($file, "} \n");
+		fwrite($file, "\\end{tabular}\n");
 		fwrite($file, "\\end{table}\n");
 		fwrite($file, "\n");
 
 
 		//Strings
 		fwrite($file, "\subsection{Search Strings}\n");
-		fwrite($file, "\begin{table}[!htb]\n");
-		fwrite($file, "\caption[Search Strings used at work]{Search Strings used at work.}\n");
-		fwrite($file, "\label{tab:strings}\n");
-		fwrite($file, "\centering\n");
-		fwrite($file, "\\resizebox{\\textwidth}{!}{%\n");
-		fwrite($file, "\begin{tabular}{@{}ll@{}}\n");
-		fwrite($file, "\\toprule\n");
-
-		fwrite($file, "\\textbf{Database} & \\textbf{String} \\\ \midrule\n");
-
+		fwrite($file, "\begin{itemize}\n");
 		foreach ($project->get_search_strings() as $string) {
-			fwrite($file, $string->get_database()->get_name() . " & " . $string->get_description() . " \\\ \bottomrule \n");
+			fwrite($file, "\item \\textbf{" . $string->get_database()->get_name() . ": }" . $string->get_description() . "; \n");
 		}
-
-		fwrite($file, "\\end{tabular}% \n");
-		fwrite($file, "} \n");
-		fwrite($file, "\\end{table}\n");
+		fwrite($file, "\\end{itemize}\n");
 		fwrite($file, "\n");
 
 
@@ -818,54 +804,28 @@ class Project_Controller extends Pattern_Controller
 		fwrite($file, "\n");
 
 
-
 		//Inclusion and Exclusion Criteria
 		fwrite($file, "\subsection{Inclusion and Exclusion Criteria}\n");
 
 		fwrite($file, "Inclusion Rule: " . $project->get_inclusion_rule() . "\n");
 		fwrite($file, "\n");
 
-		fwrite($file, "\begin{table}[!htb]\n");
-		fwrite($file, "\caption[Inclusion criteria used at work]{Inclusion criteria used at work.}\n");
-		fwrite($file, "\label{tab:inclusion_criteria}\n");
-		fwrite($file, "\centering\n");
-		fwrite($file, "\\resizebox{\\textwidth}{!}{%\n");
-		fwrite($file, "\begin{tabular}{@{}ll@{}}\n");
-		fwrite($file, "\\toprule\n");
-
-		fwrite($file, "\\textbf{ID} & \\textbf{Criteria} \\\ \midrule\n");
-
+		fwrite($file, "\begin{itemize}\n");
 		foreach ($project->get_inclusion_criteria() as $ic) {
-			fwrite($file, $ic->get_id() . " & " . $ic->get_description() . " \\\ \bottomrule \n");
+			fwrite($file, "\item \\textbf{" . $ic->get_id() . ": }" . $ic->get_description() . ";\n");
 		}
-
-		fwrite($file, "\\end{tabular}% \n");
-		fwrite($file, "} \n");
-		fwrite($file, "\\end{table}\n");
+		fwrite($file, "\\end{itemize}\n");
 		fwrite($file, "\n");
 
 		fwrite($file, "Exclusion Rule: " . $project->get_exclusion_rule() . "\n");
 		fwrite($file, "\n");
 
-		fwrite($file, "\begin{table}[!htb]\n");
-		fwrite($file, "\caption[Exclusion criteria used at work]{Exclusion criteria used at work.}\n");
-		fwrite($file, "\label{tab:exclusion_criteria}\n");
-		fwrite($file, "\centering\n");
-		fwrite($file, "\\resizebox{\\textwidth}{!}{%\n");
-		fwrite($file, "\begin{tabular}{@{}ll@{}}\n");
-		fwrite($file, "\\toprule\n");
-
-		fwrite($file, "\\textbf{ID} & \\textbf{Criteria} \\\ \midrule\n");
-
+		fwrite($file, "\begin{itemize}\n");
 		foreach ($project->get_exclusion_criteria() as $ic) {
-			fwrite($file, $ic->get_id() . " & " . $ic->get_description() . " \\\ \bottomrule \n");
+			fwrite($file, "\item \\textbf{" . $ic->get_id() . ": }" . $ic->get_description() . ";\n");
 		}
-
-		fwrite($file, "\\end{tabular}% \n");
-		fwrite($file, "} \n");
-		fwrite($file, "\\end{table}\n");
+		fwrite($file, "\\end{itemize}\n");
 		fwrite($file, "\n");
-
 
 		//General Scores
 		fwrite($file, "\subsection{General Scores}\n");
@@ -883,7 +843,6 @@ class Project_Controller extends Pattern_Controller
 		fwrite($file, "\caption[General Scores used at work]{General Score used at work.}\n");
 		fwrite($file, "\label{tab:genscores}\n");
 		fwrite($file, "\centering\n");
-		fwrite($file, "\\resizebox{\\textwidth}{!}{%\n");
 		fwrite($file, "\begin{tabular}{@{}lll@{}}\n");
 		fwrite($file, "\\toprule\n");
 
@@ -893,23 +852,30 @@ class Project_Controller extends Pattern_Controller
 			fwrite($file, $score->get_start_interval() . " & " . $score->get_end_interval() . " & " . $score->get_description() . " \\\ \bottomrule \n");
 		}
 
-		fwrite($file, "\\end{tabular}% \n");
-		fwrite($file, "} \n");
+		fwrite($file, "\\end{tabular}\n");
 		fwrite($file, "\\end{table}\n");
 		fwrite($file, "\n");
 
 
 		//Quality Questions
 		fwrite($file, "\subsection{Quality Questions}\n");
+
+		fwrite($file, "\begin{itemize}\n");
+		foreach ($project->get_questions_quality() as $qa) {
+			fwrite($file, "\item \\textbf{" . $qa->get_id() . ": } " . $qa->get_description() . ";\n");
+		}
+		fwrite($file, "\\end{itemize}\n");
+		fwrite($file, "\n");
+
+
 		fwrite($file, "\begin{table}[!htb]\n");
 		fwrite($file, "\caption[Quality Questions used at work]{Quality Questions used at work.}\n");
 		fwrite($file, "\label{tab:qa}\n");
 		fwrite($file, "\centering\n");
-		fwrite($file, "\\resizebox{\\textwidth}{!}{%\n");
-		fwrite($file, "\begin{tabular}{@{}lllll@{}}\n");
+		fwrite($file, "\begin{tabular}{@{}llll@{}}\n");
 		fwrite($file, "\\toprule\n");
 
-		fwrite($file, "\\textbf{ID} & \\textbf{Descrption} & \\textbf{Rules} & \\textbf{Weight} & \\textbf{\begin{tabular}[c]{@{}l@{}}Minimum\\ to\\ Approve\\end{tabular}} \\\ \midrule\n");
+		fwrite($file, "\\textbf{ID} & \\textbf{Rules} & \\textbf{Weight} & \\textbf{\begin{tabular}[c]{@{}l@{}}Minimum\\ to\\ Approve\\end{tabular}} \\\ \midrule\n");
 
 		foreach ($project->get_questions_quality() as $qa) {
 			$scores = "\begin{tabular}[c]{@{}l@{}}";
@@ -924,26 +890,32 @@ class Project_Controller extends Pattern_Controller
 				$min = $minimum->get_score_rule();
 			}
 
-			fwrite($file, $qa->get_id() . " & " . $qa->get_description() . "& " . $scores . " & " . $qa->get_weight() . " & " . $min . " \\\ \bottomrule \n");
+			fwrite($file, $qa->get_id() . "& " . $scores . " & " . $qa->get_weight() . " & " . $min . " \\\ \bottomrule \n");
 		}
 
-		fwrite($file, "\\end{tabular}% \n");
-		fwrite($file, "} \n");
+		fwrite($file, "\\end{tabular}\n");
 		fwrite($file, "\\end{table}\n");
 		fwrite($file, "\n");
 
 
 		//Extraction Questions
 		fwrite($file, "\subsection{Extraction Questions}\n");
+
+		fwrite($file, "\begin{itemize}\n");
+		foreach ($project->get_questions_extraction() as $qe) {
+			fwrite($file, "\item \\textbf{" . $qe->get_id() . ": } " . $qe->get_description() . ";\n");
+		}
+		fwrite($file, "\\end{itemize}\n");
+		fwrite($file, "\n");
+
 		fwrite($file, "\begin{table}[!htb]\n");
 		fwrite($file, "\caption[Extraction Questions used at work]{Extraction Questions used at work.}\n");
 		fwrite($file, "\label{tab:qe}\n");
 		fwrite($file, "\centering\n");
-		fwrite($file, "\\resizebox{\\textwidth}{!}{%\n");
-		fwrite($file, "\begin{tabular}{@{}llll@{}}\n");
+		fwrite($file, "\begin{tabular}{@{}lll@{}}\n");
 		fwrite($file, "\\toprule\n");
 
-		fwrite($file, "\\textbf{ID} & \\textbf{Descrption} & \\textbf{Type} & \\textbf{Options} \\\ \midrule\n");
+		fwrite($file, "\\textbf{ID} & \\textbf{Type} & \\textbf{Options} \\\ \midrule\n");
 
 		foreach ($project->get_questions_extraction() as $qe) {
 			$ops = "\begin{tabular}[c]{@{}l@{}}";
@@ -952,11 +924,10 @@ class Project_Controller extends Pattern_Controller
 			}
 			$ops .= "\\end{tabular}";
 
-			fwrite($file, $qe->get_id() . " & " . $qe->get_description() . "& " . $qe->get_type() . " & " . $ops . " \\\ \bottomrule \n");
+			fwrite($file, $qe->get_id() . "& " . $qe->get_type() . " & " . $ops . " \\\ \bottomrule \n");
 		}
 
-		fwrite($file, "\\end{tabular}% \n");
-		fwrite($file, "} \n");
+		fwrite($file, "\\end{tabular}\n");
 		fwrite($file, "\\end{table}\n");
 		fwrite($file, "\n");
 
