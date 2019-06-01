@@ -123,10 +123,13 @@ $(document).ready(function () {
 					$('#paper_abstract').text("This article does not have Abstract");
 				}
 
+				let doi = $('#paper_doi');
 				if (data['doi'] != "") {
-					$('#paper_doi').text(data['doi']);
+					doi.removeClass("disabled");
+					doi.attr("href", "https://doi.org/" + data['doi']);
 				} else {
-					$('#paper_doi').text("This article does not have Doi");
+					doi.attr("href", "");
+					doi.addClass("disabled");
 				}
 				let url = $('#paper_url');
 				if (data['url'] != "") {

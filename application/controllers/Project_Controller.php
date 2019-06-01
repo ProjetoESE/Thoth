@@ -741,7 +741,6 @@ class Project_Controller extends Pattern_Controller
 		fwrite($file, "\caption[Databases used at work]{Databases used at work.}\n");
 		fwrite($file, "\label{tab:databases}\n");
 		fwrite($file, "\centering\n");
-		fwrite($file, "\\resizebox{\\textwidth}{!}{%\n");
 		fwrite($file, "\begin{tabular}{@{}ll@{}}\n");
 		fwrite($file, "\\toprule\n");
 
@@ -757,8 +756,7 @@ class Project_Controller extends Pattern_Controller
 			}
 		}
 
-		fwrite($file, "\\end{tabular}% \n");
-		fwrite($file, "} \n");
+		fwrite($file, "\\end{tabular}\n");
 		fwrite($file, "\\end{table}\n");
 		fwrite($file, "\n");
 
