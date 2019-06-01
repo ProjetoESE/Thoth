@@ -689,6 +689,7 @@ class Project_Model extends Pattern_Model
 			$project->set_id($row->id_project);
 			$project->set_start_date($row->start_date);
 			$project->set_end_date($row->end_date);
+			$project->set_planning($row->planning);
 		}
 
 		$project->set_errors($errors);

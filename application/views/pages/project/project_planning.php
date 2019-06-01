@@ -16,6 +16,14 @@
 		<?php } ?>
 		<a href="<?= base_url('reporting/' . $project->get_id()) ?>"
 		   class="btn form-inline btn-outline-primary opt">Reporting</a>
+		<?php
+		if ($project->get_planning() == 100) {
+			?>
+			<a href="<?= base_url('export/' . $project->get_id()) ?>"
+			   class="btn form-inline btn-outline-primary opt">Export</a>
+			<?php
+		}
+		?>
 	</div>
 	<div class="card-body">
 		<h4>Planning</h4>
