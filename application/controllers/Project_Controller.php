@@ -655,7 +655,7 @@ class Project_Controller extends Pattern_Controller
 		$this->validate_level($id_project, array(1, 2, 3, 4));
 
 		$this->load->model("Project_Model");
-		$project = $this->Project_Model->get_project_export_latex($id_project, $steps);
+		$project = $this->Project_Model->get_project_export_latex($id_project);
 
 		$file = "";
 
@@ -956,6 +956,136 @@ class Project_Controller extends Pattern_Controller
 					$file .= "\n";
 
 					break;
+				case "Import":
+					$num_papers = $this->Project_Model->get_num_papers($id_project);
+					//Import
+					$file .= "\section{Import Studies}\n";
+					$file .= "\n";
+
+					//Studies per Database
+					$file .= "\subsection{Studies per Database}\n";
+					$file .= "\begin{table}[!htb]\n";
+					$file .= "\caption[Studies per Database]{Studies per Database.}\n";
+					$file .= "\label{tab:studiesDatabases}\n";
+					$file .= "\centering\n";
+					$file .= "\begin{tabular}{@{}ll@{}}\n";
+					$file .= "\\toprule\n";
+
+					$file .= "\\textbf{Database} & \\textbf{Number of Studies} \\\ \midrule\n";
+
+					foreach ($project->get_databases() as $database) {
+						$file .= $database->get_name() . " & " . $num_papers[$database->get_name()] . " \\\ \n";
+					}
+
+					$file .= "\\end{tabular}\n";
+					$file .= "\\end{table}\n";
+					$file .= "\n";
+
+					break;
+				case "Selection":
+					$cont_papers = $this->Project_Model->count_papers_by_status_sel($id_project);
+					//Selection
+					$file .= "\section{Selection Studies}\n";
+					$file .= "\n";
+
+					//Studies per Status Selection
+					$file .= "\subsection{Studies per Status Selection}\n";
+					$file .= "\begin{table}[!htb]\n";
+					$file .= "\caption[Studies per Status Selection]{Studies per Status Selection.}\n";
+					$file .= "\label{tab:studiesSelection}\n";
+					$file .= "\centering\n";
+					$file .= "\begin{tabular}{@{}ll@{}}\n";
+					$file .= "\\toprule\n";
+
+					$file .= "\\textbf{Status} & \\textbf{Number of Studies} \\\ \midrule\n";
+
+					foreach ($cont_papers as $key => $value) {
+						$status = "";
+						switch ($key) {
+							case 1:
+								$status = "Accepted";
+								break;
+							case 2:
+								$status = "Rejected";
+								break;
+							case 3:
+								$status = "Unclassified";
+								break;
+							case 4:
+								$status = "Duplicate";
+								break;
+							case 5:
+								$status = "Removed";
+								break;
+							case 6:
+								$status = "Total";
+								break;
+						}
+						$file .= $status . " & " . $value . " \\\ \n";
+					}
+
+					$file .= "\\end{tabular}\n";
+					$file .= "\\end{table}\n";
+					$file .= "\n";
+					break;
+				case "Quality":
+					$papers = $this->Project_Model->get_papers_qa($id_project);
+					$qas_score = $this->Project_Model->get_evaluation_qa($id_project);
+
+					//Quality Assessment
+					$file .= "\section{Quality Assessment}\n";
+					$file .= "\n";
+
+					$size = sizeof($project->get_questions_quality()) + 4;
+					$rows = "";
+					for ($i = 0; $i < $size; $i++) {
+						$rows .= "l";
+					}
+					$qa_rows = "";
+					foreach ($project->get_questions_quality() as $qa) {
+						$qa_rows .= "\\textbf{" . $qa->get_id() . "} &";
+					}
+
+					//Quality Assessment
+					$file .= "\subsection{Quality Assessment}\n";
+					$file .= "\begin{table}[!htb]\n";
+					$file .= "\caption[Quality Assessment]{Quality Assessment.}\n";
+					$file .= "\label{tab:studiesQuality}\n";
+					$file .= "\centering\n";
+					$file .= "\begin{tabular}{@{}$rows@{}}\n";
+					$file .= "\\toprule\n";
+
+					$file .= "\\textbf{ID} & " . $qa_rows . " \\textbf{General Score} & \\textbf{Score} & \\textbf{Status} \\\ \midrule\n";
+					foreach ($papers as $paper) {
+
+						$file .= $paper->get_id() . " &";
+
+						$qas = $qas_score[$paper->get_id()];
+						foreach ($project->get_questions_quality() as $qa) {
+							$file .= $qas[$qa->get_id()] . " &";
+						}
+						$file .= $paper->get_rule_quality() . " & " . $paper->get_score() . " & ";
+
+						$status = "Unclassified";
+						switch ($paper->get_status_quality()) {
+							case 1:
+								$status = "Accepted";
+								break;
+							case 2:
+								$status = "Rejected";
+								break;
+							case 4:
+								$status = "Removed";
+								break;
+						}
+						$status;
+
+						$file .= $status . " \\\ \n";
+					}
+					$file .= "\\end{tabular}\n";
+					$file .= "\\end{table}\n";
+					$file .= "\n";
+					break;
 			}
 		}
 
@@ -968,7 +1098,8 @@ class Project_Controller extends Pattern_Controller
 	/**
 	 *
 	 */
-	public function export_bib()
+	public
+	function export_bib()
 	{
 
 		$step = $this->input->post('step');
@@ -1150,7 +1281,8 @@ class Project_Controller extends Pattern_Controller
 	/**
 	 *
 	 */
-	public function delete_member()
+	public
+	function delete_member()
 	{
 		try {
 			$id_project = $this->input->post('id_project');
@@ -1172,7 +1304,8 @@ class Project_Controller extends Pattern_Controller
 	/**
 	 *
 	 */
-	public function edit_level()
+	public
+	function edit_level()
 	{
 		try {
 			$id_project = $this->input->post('id_project');

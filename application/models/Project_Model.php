@@ -221,7 +221,7 @@ class Project_Model extends Pattern_Model
 		return $project;
 	}
 
-	public function get_project_export_latex($id_project, $steps)
+	public function get_project_export_latex($id_project)
 	{
 		$errors = array();
 		array_push($errors, $this->update_progress_planning($id_project));
@@ -1132,7 +1132,7 @@ class Project_Model extends Pattern_Model
 		return $papers;
 	}
 
-	private function get_papers_qa($id_project)
+	public function get_papers_qa($id_project)
 	{
 		$papers = array();
 		$id_bibs = array();
