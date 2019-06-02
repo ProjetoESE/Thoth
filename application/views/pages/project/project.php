@@ -17,6 +17,14 @@
 		<?php } ?>
 		<a href="<?= base_url('reporting/' . $project->get_id()) ?>"
 		   class="btn form-inline btn-outline-primary opt">Reporting</a>
+		<?php
+		if ($project->get_planning() == 100) {
+			?>
+			<a href="<?= base_url('export/' . $project->get_id()) ?>"
+			   class="btn form-inline btn-outline-primary opt">Export</a>
+		<?php
+		}
+		?>
 	</div>
 	<div class="card-body">
 		<h4>Review</h4>
@@ -122,31 +130,6 @@
 					</div>
 				</div>
 				</br>
-				<?php
-				if ($project->get_planning() == 100) {
-					?>
-					<div class="form-inline">
-						<span class="fab fa-markdown opt fa-2x"></span>
-						<h5>Export Latex</h5>
-					</div>
-					<br>
-					<div class="text-center">
-						<form action="https://www.overleaf.com/docs" method="post" target="_blank">
-							<input type="hidden" name="snip_uri[]"
-								   value="<?= base_url("export/" . $project->get_id() . ".txt") ?>">
-							<button type="submit" class="btn btn-light">New Project in Overleaf <i
-									class="far fa-plus-square"></i></button>
-							<a target="_blank" class="btn btn-light"
-							   href="#">Open in Overleaf <i
-									class="fas fa-external-link-alt"></i></a>
-							<a target="_blank" class="btn btn-light"
-							   href="<?= base_url("export/" . $project->get_id() . ".txt") ?>">Download File <i
-									class="fas fa-file-download"></i></a>
-						</form>
-					</div>
-					<?php
-				}
-				?>
 			</div>
 			<div class="col-sm-12 col-md-6">
 				<div class="form-inline">

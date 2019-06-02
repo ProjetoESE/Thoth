@@ -221,6 +221,56 @@ class Project_Model extends Pattern_Model
 		return $project;
 	}
 
+	public function get_project_export_latex($id_project, $steps)
+	{
+		$errors = array();
+		array_push($errors, $this->update_progress_planning($id_project));
+		array_push($errors, $this->update_progress_import($id_project));
+		array_push($errors, $this->update_progress_selection($id_project));
+		array_push($errors, $this->update_progress_quality($id_project));
+		array_push($errors, $this->update_progress_extraction($id_project));
+
+		$project = new Project();
+		$this->db->select('project.*');
+		$this->db->from('project');
+		$this->db->where('id_project', $id_project);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			$project->set_title($row->title);
+			$project->set_id($row->id_project);
+			$project->set_description($row->description);
+			$project->set_objectives($row->objectives);
+			$project->set_planning($row->planning);
+			$project->set_import($row->import);
+			$project->set_selection($row->selection);
+			$project->set_quality($row->quality);
+			$project->set_extraction($row->extraction);
+		}
+
+		$project->set_members($this->get_members($id_project));
+		$project->set_errors($errors);
+		$project->set_domains($this->get_domains($id_project));
+		$project->set_languages($this->get_languages($id_project));
+		$project->set_study_types($this->get_study_types($id_project));
+		$project->set_keywords($this->get_keywords($id_project));
+		$project->set_databases($this->get_databases($id_project));
+		$project->set_research_questions($this->get_rqs($id_project));
+		$project->set_search_strategy($this->get_search_strategy($id_project));
+		$project->set_search_strings($this->get_search_strings($id_project));
+		$project->set_terms($this->get_terms($id_project));
+		$project->set_inclusion_rule($this->get_inclusion_rule($id_project));
+		$project->set_exclusion_rule($this->get_exclusion_rule($id_project));
+		$project->set_inclusion_criteria($this->get_criteria($id_project, "Inclusion"));
+		$project->set_exclusion_criteria($this->get_criteria($id_project, "Exclusion"));
+		$project->set_quality_scores($this->get_general_scores($id_project));
+		$project->set_score_min($this->get_min_to_app($id_project));
+		$project->set_questions_quality($this->get_qas($id_project));
+		$project->set_questions_extraction($this->get_qes($id_project));
+
+		return $project;
+	}
+
 	/**
 	 * @param $id_project
 	 * @return Project
@@ -689,6 +739,7 @@ class Project_Model extends Pattern_Model
 			$project->set_id($row->id_project);
 			$project->set_start_date($row->start_date);
 			$project->set_end_date($row->end_date);
+			$project->set_planning($row->planning);
 		}
 
 		$project->set_errors($errors);
@@ -2244,6 +2295,65 @@ class Project_Model extends Pattern_Model
 			}
 		}
 		return $data;
+	}
+
+	public function export_bib($id_project, $steps)
+	{
+		$papers = array();
+		$id_bibs = array();
+		$ids_project_database = $this->get_ids_project_database($id_project);
+
+		if (sizeof($ids_project_database) > 0) {
+			$id_bibs = $this->get_ids_bibs($ids_project_database);
+		}
+
+		if (sizeof($id_bibs) > 0) {
+
+			$this->db->select('title,author,year,book_title,volume,pages,num_pages,keywords,doi,journal,issn,location,isbn,address,type,bib_key,url,publisher, year');
+			$this->db->from('papers');
+			$this->db->where_in('id_bib', $id_bibs);
+
+			switch ($steps) {
+				case 'Extraction':
+					$this->db->where('status_extraction', 1);
+					break;
+				case 'Quality':
+					$this->db->where('status_qa', 1);
+					break;
+				case 'Selection':
+					$this->db->where('status_selection', 1);
+					break;
+			}
+
+
+			$query = $this->db->get();
+
+			foreach ($query->result() as $row) {
+				$p = new Paper();
+				$p->set_title($row->title);
+				$p->set_author($row->author);
+				$p->set_year($row->year);
+				$p->set_address($row->year);
+				$p->set_bib_key($row->bib_key);
+				$p->set_doi($row->doi);
+				$p->set_isbn($row->isbn);
+				$p->set_issn($row->issn);
+				$p->set_journal($row->journal);
+				$p->set_num_pages($row->num_pages);
+				$p->set_pages($row->pages);
+				$p->set_volume($row->volume);
+				$p->set_location($row->location);
+				$p->set_type($row->type);
+				$p->set_book_title($row->book_title);
+				$p->set_url($row->url);
+				$p->set_publisher($row->publisher);
+				$p->set_keywords($row->keywords);
+
+				array_push($papers, $p);
+
+			}
+		}
+		return $papers;
 	}
 
 }
