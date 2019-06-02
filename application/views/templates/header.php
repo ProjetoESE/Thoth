@@ -93,6 +93,7 @@
 	<script src="<?= base_url('assets/js/study_selection.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/objects/Extraction_Chars.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/objects/Extraction_Answer.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/export.js'); ?>"></script>
 
 </head>
 <body>

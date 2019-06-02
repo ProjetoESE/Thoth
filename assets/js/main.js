@@ -417,6 +417,7 @@ $(document).ready(function () {
 		var anchor = location.hash || $("a[data-toggle='tab']").first().attr("href");
 		$("a[href='" + anchor + "']").tab("show");
 	});
+
 });
 
 function validate_text(value) {
@@ -426,16 +427,3 @@ function validate_text(value) {
 
 	return true;
 }
-
-function export_bib() {
-
-	let element = $('#bib_tex');
-
-	let data = new Blob([element.val()], {type: 'text/plain'});
-
-	let url = window.URL.createObjectURL(data);
-
-	document.getElementById('export_bib').href = url;
-
-}
-

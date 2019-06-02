@@ -218,7 +218,6 @@ class Project_Controller extends Pattern_Controller
 			$this->validate_level($id, array(1, 2, 3, 4));
 			$this->load->model('Project_Model');
 			$data['project'] = $this->Project_Model->get_project_export($id);
-			$data['latex'] = $this->export_latex($data['project'], array("Planning", "Import", "Selection", "Quality", "Extraction", "Report"));
 
 			$this->load_views('pages/project/project_export', $data);
 
@@ -645,22 +644,30 @@ class Project_Controller extends Pattern_Controller
 	}
 
 	/**
-	 * @param $id_project
+	 * @return string
 	 */
-	private function export_latex($project, $steps)
+	public function export_latex()
 	{
+
+		$steps = $this->input->post('steps');
+		$id_project = $this->input->post('id_project');
+
+		$this->validate_level($id_project, array(1, 2, 3, 4));
+
+		$this->load->model("Project_Model");
+		$project = $this->Project_Model->get_project_export_latex($id_project, $steps);
 
 		$file = "";
 
 		//Config File Latex
-		$file.="\documentclass [11pt]{article}\n";
-		$file.="\usepackage[utf8]{inputenc}\n";
-		$file.="\usepackage{graphicx}\n";
-		$file.="\usepackage{booktabs}\n";
-		$file.="\usepackage{float}\n";
+		$file .= "\documentclass [11pt]{article}\n";
+		$file .= "\usepackage[utf8]{inputenc}\n";
+		$file .= "\usepackage{graphicx}\n";
+		$file .= "\usepackage{booktabs}\n";
+		$file .= "\usepackage{float}\n";
 
 		//Title
-		$file.="\\title{" . $project->get_title() . "}\n";
+		$file .= "\\title{" . $project->get_title() . "}\n";
 
 		//Author
 		$members = "";
@@ -673,282 +680,471 @@ class Project_Controller extends Pattern_Controller
 				$members .= $member->get_name() . " (" . $member->get_email() . "),\\\ ";
 			}
 		}
-		$file.="\\author{" . $members . "}";
-		$file.="\n";
+		$file .= "\\author{" . $members . "}";
+		$file .= "\n";
 
 		//Document
-		$file.="\begin{document}\n";
-		$file.="\maketitle\n";
-		$file.="\n";
+		$file .= "\begin{document}\n";
+		$file .= "\maketitle\n";
+		$file .= "\n";
 
 		//Abstract
-		$file.="\begin{abstract}\n";
-		$file.="\\end{abstract}\n";
-		$file.="\n";
+		$file .= "\begin{abstract}\n";
+		$file .= "\\end{abstract}\n";
+		$file .= "\n";
 
-		//Planning
-		$file.="\section{Planning}\n";
-		$file.="\n";
+		foreach ($steps as $step) {
+			switch ($step) {
+				case "Planning":
+					//Planning
+					$file .= "\section{Planning}\n";
+					$file .= "\n";
 
-		//Description
-		$file.="\subsection{Description}\n";
-		$file.=$project->get_description() . "\n";
-		$file.="\n";
+					//Description
+					$file .= "\subsection{Description}\n";
+					$file .= $project->get_description() . "\n";
+					$file .= "\n";
 
-		//Objectives
-		$file.="\subsection{Objectives}\n";
-		$file.=$project->get_objectives() . "\n";
-		$file.="\n";
+					//Objectives
+					$file .= "\subsection{Objectives}\n";
+					$file .= $project->get_objectives() . "\n";
+					$file .= "\n";
 
-		//Domains
-		$file.="\subsection{Domains}\n";
-		$file.="\begin{itemize}\n";
-		foreach ($project->get_domains() as $domain) {
-			$file.="	\item " . $domain . ";\n";
-		}
-		$file.="\\end{itemize}\n";
-		$file.="\n";
+					//Domains
+					$file .= "\subsection{Domains}\n";
+					$file .= "\begin{itemize}\n";
+					foreach ($project->get_domains() as $domain) {
+						$file .= "	\item " . $domain . ";\n";
+					}
+					$file .= "\\end{itemize}\n";
+					$file .= "\n";
 
-		//Languages
-		$file.="\subsection{Languages}\n";
-		$file.="\begin{itemize}\n";
-		foreach ($project->get_languages() as $language) {
-			$file.="	\item " . $language . ";\n";
-		}
-		$file.="\\end{itemize}\n";
-		$file.="\n";
+					//Languages
+					$file .= "\subsection{Languages}\n";
+					$file .= "\begin{itemize}\n";
+					foreach ($project->get_languages() as $language) {
+						$file .= "	\item " . $language . ";\n";
+					}
+					$file .= "\\end{itemize}\n";
+					$file .= "\n";
 
-		//Study Types
-		$file.="\subsection{Studies Types}\n";
-		$file.="\begin{itemize}\n";
-		foreach ($project->get_study_types() as $study) {
-			$file.="	\item " . $study . ";\n";
-		}
-		$file.="\\end{itemize}\n";
-		$file.="\n";
+					//Study Types
+					$file .= "\subsection{Studies Types}\n";
+					$file .= "\begin{itemize}\n";
+					foreach ($project->get_study_types() as $study) {
+						$file .= "	\item " . $study . ";\n";
+					}
+					$file .= "\\end{itemize}\n";
+					$file .= "\n";
 
-		//Keywords
-		$file.="\subsection{Keywords}\n";
-		$keywords = "";
-		$array = $project->get_keywords();
-		foreach ($array as $key => $keyword) {
-			end($array);
-			if ($key === key($array)) {
-				$keywords .= $keyword . ".";
-			} else {
-				$keywords .= $keyword . ".=";
+					//Keywords
+					$file .= "\subsection{Keywords}\n";
+					$keywords = "";
+					$array = $project->get_keywords();
+					foreach ($array as $key => $keyword) {
+						end($array);
+						if ($key === key($array)) {
+							$keywords .= $keyword . ".";
+						} else {
+							$keywords .= $keyword . ".=";
+						}
+					}
+					$file .= $keywords . "\n";
+					$file .= "\n";
+
+					//Research Questions
+					$file .= "\subsection{Research Questions}\n";
+					$file .= "\begin{itemize}\n";
+					foreach ($project->get_research_questions() as $research) {
+						$file .= "	\item \\textbf{" . $research->get_id() . "} " . $research->get_description() . ";\n";
+					}
+					$file .= "\\end{itemize}\n";
+					$file .= "\n";
+
+					//DataBases
+					$file .= "\subsection{Databases}\n";
+					$file .= "\begin{table}[!htb]\n";
+					$file .= "\caption[Databases used at work]{Databases used at work.}\n";
+					$file .= "\label{tab:databases}\n";
+					$file .= "\centering\n";
+					$file .= "\begin{tabular}{@{}ll@{}}\n";
+					$file .= "\\toprule\n";
+
+					$file .= "\\textbf{Database} & \\textbf{Link} \\\ \midrule\n";
+
+					$array = $project->get_databases();
+					foreach ($array as $key => $database) {
+						end($array);
+						if ($key === key($array)) {
+							$file .= $database->get_name() . " & " . $database->get_link() . " \\\ \bottomrule \n";
+						} else {
+							$file .= $database->get_name() . " & " . $database->get_link() . " \\\ \n";
+						}
+					}
+
+					$file .= "\\end{tabular}\n";
+					$file .= "\\end{table}\n";
+					$file .= "\n";
+
+
+					//Terms e Synonyms
+					$file .= "\subsection{Terms and Synonyms}\n";
+					$file .= "\begin{table}[H]\n";
+					$file .= "\caption[Terms and Synonyms used at work]{Terms and Synonyms used at work.}\n";
+					$file .= "\label{tab:terms}\n";
+					$file .= "\centering\n";
+					$file .= "\begin{tabular}{@{}ll@{}}\n";
+					$file .= "\\toprule\n";
+
+					$file .= "\\textbf{Term} & \\textbf{Synonyms} \\\ \midrule\n";
+
+					foreach ($project->get_terms() as $term) {
+						$synonyms = "\begin{tabular}[c]{@{}l@{}}";
+						foreach ($term->get_synonyms() as $syn) {
+							$synonyms .= $syn . "\\\\";
+						}
+						$synonyms .= "\\end{tabular}";
+						$file .= $term->get_description() . " & " . $synonyms . " \\\ \bottomrule \n";
+					}
+
+					$file .= "\\end{tabular}\n";
+					$file .= "\\end{table}\n";
+					$file .= "\n";
+
+
+					//Strings
+					$file .= "\subsection{Search Strings}\n";
+					$file .= "\begin{itemize}\n";
+					foreach ($project->get_search_strings() as $string) {
+						$file .= "\item \\textbf{" . $string->get_database()->get_name() . ": }" . $string->get_description() . "; \n";
+					}
+					$file .= "\\end{itemize}\n";
+					$file .= "\n";
+
+
+					//Search Strategy
+					$file .= "\subsection{Search Strategy}\n";
+					$file .= $project->get_search_strategy() . "\n";
+					$file .= "\n";
+
+
+					//Inclusion and Exclusion Criteria
+					$file .= "\subsection{Inclusion and Exclusion Criteria}\n";
+
+					$file .= "Inclusion Rule: " . $project->get_inclusion_rule() . "\n";
+					$file .= "\n";
+
+					$file .= "\begin{itemize}\n";
+					foreach ($project->get_inclusion_criteria() as $ic) {
+						$file .= "\item \\textbf{" . $ic->get_id() . ": }" . $ic->get_description() . ";\n";
+					}
+					$file .= "\\end{itemize}\n";
+					$file .= "\n";
+
+					$file .= "Exclusion Rule: " . $project->get_exclusion_rule() . "\n";
+					$file .= "\n";
+
+					$file .= "\begin{itemize}\n";
+					foreach ($project->get_exclusion_criteria() as $ic) {
+						$file .= "\item \\textbf{" . $ic->get_id() . ": }" . $ic->get_description() . ";\n";
+					}
+					$file .= "\\end{itemize}\n";
+					$file .= "\n";
+
+					//General Scores
+					$file .= "\subsection{General Scores}\n";
+
+					$score_min = $project->get_score_min();
+
+					if (is_null($score_min)) {
+						$file .= "Score Minimum to Approve: Not minimum.\n";
+					} else {
+						$file .= "Score Minimum to Approve: " . $score_min->get_description() . ".\n";
+					}
+					$file .= "\n";
+
+					$file .= "\begin{table}[!htb]\n";
+					$file .= "\caption[General Scores used at work]{General Score used at work.}\n";
+					$file .= "\label{tab:genscores}\n";
+					$file .= "\centering\n";
+					$file .= "\begin{tabular}{@{}lll@{}}\n";
+					$file .= "\\toprule\n";
+
+					$file .= "\\textbf{Start Interval} & \\textbf{End Interval} & \\textbf{Description} \\\ \midrule\n";
+
+					foreach ($project->get_quality_scores() as $score) {
+						$file .= $score->get_start_interval() . " & " . $score->get_end_interval() . " & " . $score->get_description() . " \\\ \bottomrule \n";
+					}
+
+					$file .= "\\end{tabular}\n";
+					$file .= "\\end{table}\n";
+					$file .= "\n";
+
+
+					//Quality Questions
+					$file .= "\subsection{Quality Questions}\n";
+
+					$file .= "\begin{itemize}\n";
+					foreach ($project->get_questions_quality() as $qa) {
+						$file .= "\item \\textbf{" . $qa->get_id() . ": } " . $qa->get_description() . ";\n";
+					}
+					$file .= "\\end{itemize}\n";
+					$file .= "\n";
+
+
+					$file .= "\begin{table}[!htb]\n";
+					$file .= "\caption[Quality Questions used at work]{Quality Questions used at work.}\n";
+					$file .= "\label{tab:qa}\n";
+					$file .= "\centering\n";
+					$file .= "\begin{tabular}{@{}llll@{}}\n";
+					$file .= "\\toprule\n";
+
+					$file .= "\\textbf{ID} & \\textbf{Rules} & \\textbf{Weight} & \\textbf{\begin{tabular}[c]{@{}l@{}}Minimum\\ to\\ Approve\\end{tabular}} \\\ \midrule\n";
+
+					foreach ($project->get_questions_quality() as $qa) {
+						$scores = "\begin{tabular}[c]{@{}l@{}}";
+						foreach ($qa->get_scores() as $s) {
+							$scores .= $s->get_score_rule() . "\\\\";
+						}
+						$scores .= "\\end{tabular}";
+
+						$minimum = $qa->get_min_to_approve();
+						$min = "Not exist minimum";
+						if ($minimum != null) {
+							$min = $minimum->get_score_rule();
+						}
+
+						$file .= $qa->get_id() . "& " . $scores . " & " . $qa->get_weight() . " & " . $min . " \\\ \bottomrule \n";
+					}
+
+					$file .= "\\end{tabular}\n";
+					$file .= "\\end{table}\n";
+					$file .= "\n";
+
+
+					//Extraction Questions
+					$file .= "\subsection{Extraction Questions}\n";
+
+					$file .= "\begin{itemize}\n";
+					foreach ($project->get_questions_extraction() as $qe) {
+						$file .= "\item \\textbf{" . $qe->get_id() . ": } " . $qe->get_description() . ";\n";
+					}
+					$file .= "\\end{itemize}\n";
+					$file .= "\n";
+
+					$file .= "\begin{table}[!htb]\n";
+					$file .= "\caption[Extraction Questions used at work]{Extraction Questions used at work.}\n";
+					$file .= "\label{tab:qe}\n";
+					$file .= "\centering\n";
+					$file .= "\begin{tabular}{@{}lll@{}}\n";
+					$file .= "\\toprule\n";
+
+					$file .= "\\textbf{ID} & \\textbf{Type} & \\textbf{Options} \\\ \midrule\n";
+
+					foreach ($project->get_questions_extraction() as $qe) {
+						$ops = "\begin{tabular}[c]{@{}l@{}}";
+						foreach ($qe->get_options() as $op) {
+							$ops .= $op . "\\\\";
+						}
+						$ops .= "\\end{tabular}";
+
+						$file .= $qe->get_id() . "& " . $qe->get_type() . " & " . $ops . " \\\ \bottomrule \n";
+					}
+
+					$file .= "\\end{tabular}\n";
+					$file .= "\\end{table}\n";
+					$file .= "\n";
+
+					break;
 			}
 		}
-		$file.=$keywords . "\n";
-		$file.="\n";
-
-		//Research Questions
-		$file.="\subsection{Research Questions}\n";
-		$file.="\begin{itemize}\n";
-		foreach ($project->get_research_questions() as $research) {
-			$file.="	\item \\textbf{" . $research->get_id() . "} " . $research->get_description() . ";\n";
-		}
-		$file.="\\end{itemize}\n";
-		$file.="\n";
-
-		//DataBases
-		$file.="\subsection{Databases}\n";
-		$file.="\begin{table}[!htb]\n";
-		$file.="\caption[Databases used at work]{Databases used at work.}\n";
-		$file.="\label{tab:databases}\n";
-		$file.="\centering\n";
-		$file.="\begin{tabular}{@{}ll@{}}\n";
-		$file.="\\toprule\n";
-
-		$file.="\\textbf{Database} & \\textbf{Link} \\\ \midrule\n";
-
-		$array = $project->get_databases();
-		foreach ($array as $key => $database) {
-			end($array);
-			if ($key === key($array)) {
-				$file.=$database->get_name() . " & " . $database->get_link() . " \\\ \bottomrule \n";
-			} else {
-				$file.=$database->get_name() . " & " . $database->get_link() . " \\\ \n";
-			}
-		}
-
-		$file.="\\end{tabular}\n";
-		$file.="\\end{table}\n";
-		$file.="\n";
-
-
-		//Terms e Synonyms
-		$file.="\subsection{Terms and Synonyms}\n";
-		$file.="\begin{table}[H]\n";
-		$file.="\caption[Terms and Synonyms used at work]{Terms and Synonyms used at work.}\n";
-		$file.="\label{tab:terms}\n";
-		$file.="\centering\n";
-		$file.="\begin{tabular}{@{}ll@{}}\n";
-		$file.="\\toprule\n";
-
-		$file.="\\textbf{Term} & \\textbf{Synonyms} \\\ \midrule\n";
-
-		foreach ($project->get_terms() as $term) {
-			$synonyms = "\begin{tabular}[c]{@{}l@{}}";
-			foreach ($term->get_synonyms() as $syn) {
-				$synonyms .= $syn . "\\\\";
-			}
-			$synonyms .= "\\end{tabular}";
-			$file.=$term->get_description() . " & " . $synonyms . " \\\ \bottomrule \n";
-		}
-
-		$file.="\\end{tabular}\n";
-		$file.="\\end{table}\n";
-		$file.="\n";
-
-
-		//Strings
-		$file.="\subsection{Search Strings}\n";
-		$file.="\begin{itemize}\n";
-		foreach ($project->get_search_strings() as $string) {
-			$file.="\item \\textbf{" . $string->get_database()->get_name() . ": }" . $string->get_description() . "; \n";
-		}
-		$file.="\\end{itemize}\n";
-		$file.="\n";
-
-
-		//Search Strategy
-		$file.="\subsection{Search Strategy}\n";
-		$file.=$project->get_search_strategy() . "\n";
-		$file.="\n";
-
-
-		//Inclusion and Exclusion Criteria
-		$file.="\subsection{Inclusion and Exclusion Criteria}\n";
-
-		$file.="Inclusion Rule: " . $project->get_inclusion_rule() . "\n";
-		$file.="\n";
-
-		$file.="\begin{itemize}\n";
-		foreach ($project->get_inclusion_criteria() as $ic) {
-			$file.="\item \\textbf{" . $ic->get_id() . ": }" . $ic->get_description() . ";\n";
-		}
-		$file.="\\end{itemize}\n";
-		$file.="\n";
-
-		$file.="Exclusion Rule: " . $project->get_exclusion_rule() . "\n";
-		$file.="\n";
-
-		$file.="\begin{itemize}\n";
-		foreach ($project->get_exclusion_criteria() as $ic) {
-			$file.="\item \\textbf{" . $ic->get_id() . ": }" . $ic->get_description() . ";\n";
-		}
-		$file.="\\end{itemize}\n";
-		$file.="\n";
-
-		//General Scores
-		$file.="\subsection{General Scores}\n";
-
-		$score_min = $project->get_score_min();
-
-		if (is_null($score_min)) {
-			$file.="Score Minimum to Approve: Not minimum.\n";
-		} else {
-			$file.="Score Minimum to Approve: " . $score_min->get_description() . ".\n";
-		}
-		$file.="\n";
-
-		$file.="\begin{table}[!htb]\n";
-		$file.="\caption[General Scores used at work]{General Score used at work.}\n";
-		$file.="\label{tab:genscores}\n";
-		$file.="\centering\n";
-		$file.="\begin{tabular}{@{}lll@{}}\n";
-		$file.="\\toprule\n";
-
-		$file.="\\textbf{Start Interval} & \\textbf{End Interval} & \\textbf{Description} \\\ \midrule\n";
-
-		foreach ($project->get_quality_scores() as $score) {
-			$file.=$score->get_start_interval() . " & " . $score->get_end_interval() . " & " . $score->get_description() . " \\\ \bottomrule \n";
-		}
-
-		$file.="\\end{tabular}\n";
-		$file.="\\end{table}\n";
-		$file.="\n";
-
-
-		//Quality Questions
-		$file.="\subsection{Quality Questions}\n";
-
-		$file.="\begin{itemize}\n";
-		foreach ($project->get_questions_quality() as $qa) {
-			$file.="\item \\textbf{" . $qa->get_id() . ": } " . $qa->get_description() . ";\n";
-		}
-		$file.="\\end{itemize}\n";
-		$file.="\n";
-
-
-		$file.="\begin{table}[!htb]\n";
-		$file.="\caption[Quality Questions used at work]{Quality Questions used at work.}\n";
-		$file.="\label{tab:qa}\n";
-		$file.="\centering\n";
-		$file.="\begin{tabular}{@{}llll@{}}\n";
-		$file.="\\toprule\n";
-
-		$file.="\\textbf{ID} & \\textbf{Rules} & \\textbf{Weight} & \\textbf{\begin{tabular}[c]{@{}l@{}}Minimum\\ to\\ Approve\\end{tabular}} \\\ \midrule\n";
-
-		foreach ($project->get_questions_quality() as $qa) {
-			$scores = "\begin{tabular}[c]{@{}l@{}}";
-			foreach ($qa->get_scores() as $s) {
-				$scores .= $s->get_score_rule() . "\\\\";
-			}
-			$scores .= "\\end{tabular}";
-
-			$minimum = $qa->get_min_to_approve();
-			$min = "Not exist minimum";
-			if ($minimum != null) {
-				$min = $minimum->get_score_rule();
-			}
-
-			$file.=$qa->get_id() . "& " . $scores . " & " . $qa->get_weight() . " & " . $min . " \\\ \bottomrule \n";
-		}
-
-		$file.="\\end{tabular}\n";
-		$file.="\\end{table}\n";
-		$file.="\n";
-
-
-		//Extraction Questions
-		$file.="\subsection{Extraction Questions}\n";
-
-		$file.="\begin{itemize}\n";
-		foreach ($project->get_questions_extraction() as $qe) {
-			$file.="\item \\textbf{" . $qe->get_id() . ": } " . $qe->get_description() . ";\n";
-		}
-		$file.="\\end{itemize}\n";
-		$file.="\n";
-
-		$file.="\begin{table}[!htb]\n";
-		$file.="\caption[Extraction Questions used at work]{Extraction Questions used at work.}\n";
-		$file.="\label{tab:qe}\n";
-		$file.="\centering\n";
-		$file.="\begin{tabular}{@{}lll@{}}\n";
-		$file.="\\toprule\n";
-
-		$file.="\\textbf{ID} & \\textbf{Type} & \\textbf{Options} \\\ \midrule\n";
-
-		foreach ($project->get_questions_extraction() as $qe) {
-			$ops = "\begin{tabular}[c]{@{}l@{}}";
-			foreach ($qe->get_options() as $op) {
-				$ops .= $op . "\\\\";
-			}
-			$ops .= "\\end{tabular}";
-
-			$file.=$qe->get_id() . "& " . $qe->get_type() . " & " . $ops . " \\\ \bottomrule \n";
-		}
-
-		$file.="\\end{tabular}\n";
-		$file.="\\end{table}\n";
-		$file.="\n";
 
 		//End Document
-		$file.="\\end{document}\n";
+		$file .= "\\end{document}\n";
 
-		return $file;
+		echo $file;
+	}
+
+	/**
+	 *
+	 */
+	public function export_bib()
+	{
+
+		$step = $this->input->post('step');
+		$id_project = $this->input->post('id_project');
+
+		$this->validate_level($id_project, array(1, 2, 3, 4));
+		$this->load->model("Project_Model");
+		$papers = $this->Project_Model->export_bib($id_project, $step);
+
+		$file = "";
+		$caracter = array(
+			"À" => "\'{A}",
+			"Á" => "\'{A}",
+			"Â" => "\^{A}",
+			"Ã" => "\~{A}",
+			"Ä" => "\\\"{A}",
+			"Å" => "\AA",
+			"à" => "\'{a}",
+			"á" => "\'{a}",
+			"â" => "\^{a}",
+			"ã" => "\~{a}",
+			"ä" => "\\\"{a}",
+			"å" => "\aa",
+			"Æ" => "\ae",
+			"æ" => "\ae",
+			"È" => "\'{E}",
+			"É" => "\'{E}",
+			"Ê" => "\^{E}",
+			"Ë" => "\\\"{E}",
+			"è" => "\'{e}",
+			"é" => "\'{e}",
+			"ê" => "\^{e}",
+			"ë" => "\\\"{e}",
+			"Ì" => "\'{I}",
+			"Í" => "\'{I}",
+			"Î" => "\^{I}",
+			"Ï" => "\\\"{I}",
+			"í" => "\'{i}",
+			"ì" => "\'{i}",
+			"î" => "\^{i}",
+			"ï" => "\\\"{i}",
+			"Ñ" => "\~{N}",
+			"ñ" => "\~{n}",
+			"Ò" => "\'{O}",
+			"Ó" => "\'{O}",
+			"Ô" => "\^{O}",
+			"Õ" => "\~{O}",
+			"Ö" => "\\\"{O}",
+			"ò" => "\'{o}",
+			"ó" => "\'{o}",
+			"ô" => "\^{o}",
+			"õ" => "\~{o}",
+			"ö" => "\\\"{o}",
+			"Ù" => "\'{U}",
+			"Ú" => "\'{U}",
+			"Û" => "\^{U}",
+			"Ü" => "\\\"{U}",
+			"ù" => "\'{u}",
+			"ú" => "\'{u}",
+			"û" => "\^{u}",
+			"ü" => "\\\"{u}",
+			"Ý" => "\'{Y}",
+			"ý" => "\'{Y}",
+			"ÿ" => "\\\"{y}",
+			"Ŕ" => "\'{R}",
+			"ŕ" => "\'{ŕ}",
+			"Ç" => "\c{C}",
+			"ç" => "\c{C}",
+			"!" => "!'",
+			"?" => "?'",
+			"$" => "\\$",
+			"#" => "\#",
+			"%" => "\%",
+			"&" => "\&",
+			"}" => "\}",
+			"{" => "\{",
+			"\\" => "$\backslash$",
+			"_" => "\_",
+		);
+
+
+		foreach ($papers as $paper) {
+
+			foreach ($caracter as $key => $value) {
+				$paper->set_title(str_replace($key, $value, $paper->get_title()));
+			}
+
+			foreach ($caracter as $key => $value) {
+				$paper->set_author(str_replace($key, $value, $paper->get_author()));
+			}
+
+			foreach ($caracter as $key => $value) {
+				$paper->set_journal(str_replace($key, $value, $paper->get_journal()));
+			}
+
+			foreach ($caracter as $key => $value) {
+				$paper->set_address(str_replace($key, $value, $paper->get_address()));
+			}
+
+			foreach ($caracter as $key => $value) {
+				$paper->set_location(str_replace($key, $value, $paper->get_location()));
+			}
+
+			foreach ($caracter as $key => $value) {
+				$paper->set_book_title(str_replace($key, $value, $paper->get_book_title()));
+			}
+
+			foreach ($caracter as $key => $value) {
+				$paper->set_publisher(str_replace($key, $value, $paper->get_publisher()));
+			}
+
+		}
+
+		foreach ($papers as $paper) {
+			//Type
+			$file .= "@";
+			$file .= $paper->get_type();
+
+			$file .= "{";
+
+			//BibKey
+			$file .= $paper->get_bib_key() . ",\n";
+
+			//Title
+			$file .= "title={" . $paper->get_title() . "},\n";
+
+			//Author
+			$file .= "author={" . $paper->get_author() . "},\n";
+
+			//Keywords
+			$file .= "keywords={" . $paper->get_keywords() . "},\n";
+
+			//Volume
+			$file .= "volume={" . $paper->get_volume() . "},\n";
+
+			//Year
+			$file .= "year={" . $paper->get_year() . "},\n";
+
+			//Publisher
+			$file .= "publisher={" . $paper->get_publisher() . "},\n";
+
+			//Journal
+			$file .= "journal={" . $paper->get_journal() . "},\n";
+
+			//Book Title
+			$file .= "booktitle={" . $paper->get_book_title() . "},\n";
+
+			//Doi
+			$file .= "doi={" . $paper->get_doi() . "},\n";
+
+			//Pages
+			$file .= "pages={" . $paper->get_pages() . "},\n";
+
+			//Num Pages
+			$file .= "numpages={" . $paper->get_num_pages() . "},\n";
+
+			//ISSN
+			$file .= "issn={" . $paper->get_issn() . "},\n";
+
+			//ISBN
+			$file .= "isbn={" . $paper->get_isbn() . "},\n";
+
+			//URL
+			$file .= "url={" . $paper->get_url() . "},\n";
+
+			//Location
+			$file .= "location={" . $paper->get_location() . "},\n";
+
+			//Address
+			$file .= "address={" . $paper->get_address() . "},\n";
+
+			$file .= "}\n";
+			$file .= "\n";
+		}
+
+		echo $file;
 	}
 
 	/**
@@ -960,7 +1156,7 @@ class Project_Controller extends Pattern_Controller
 			$id_project = $this->input->post('id_project');
 			$email = $this->input->post('email');
 
-			$this->validate_level($id_project.=array(1));
+			$this->validate_level($id_project .= array(1));
 
 			$this->load->model("Project_Model");
 			$this->Project_Model->delete_member($email, $id_project);
