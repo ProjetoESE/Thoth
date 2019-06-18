@@ -1288,7 +1288,7 @@ class Project_Controller extends Pattern_Controller
 			$id_project = $this->input->post('id_project');
 			$email = $this->input->post('email');
 
-			$this->validate_level($id_project .= array(1));
+			$this->validate_level($id_project ,array(1));
 
 			$this->load->model("Project_Model");
 			$this->Project_Model->delete_member($email, $id_project);
@@ -1304,8 +1304,7 @@ class Project_Controller extends Pattern_Controller
 	/**
 	 *
 	 */
-	public
-	function edit_level()
+	public function edit_level()
 	{
 		try {
 			$id_project = $this->input->post('id_project');
