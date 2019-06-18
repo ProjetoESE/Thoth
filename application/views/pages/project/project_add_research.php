@@ -67,10 +67,16 @@
 						} ?>
 					</td>
 					<td>
-						<button class="btn btn-danger"
-								onClick="delete_member($(this).parents('tr'))">
-							<span class="far fa-trash-alt"></span>
-						</button>
+						<?php
+						if ($mem->get_level() != "Administrator") {
+							?>
+							<button class="btn btn-danger"
+									onClick="delete_member($(this).parents('tr'))">
+								<span class="far fa-trash-alt"></span>
+							</button>
+							<?php
+						}
+						?>
 					</td>
 				</tr>
 			<?php } ?>
