@@ -19,9 +19,12 @@
 				<label for="add_level_user">Level </label>
 				<select id="add_level_user" class="form-control">
 					<option value=""></option>
-					<?php foreach ($levels as $level) { ?>
-						<option value="<?= $level ?>"><?= $level ?></option>
-					<?php } ?>
+					<?php foreach ($levels as $level) {
+						if ($level != "Administrator") {
+							?>
+							<option value="<?= $level ?>"><?= $level ?></option>
+						<?php }
+					} ?>
 				</select>
 			</div>
 			<button class="btn btn-success" type="button" onclick="add_research()"><span
@@ -44,18 +47,24 @@
 					<td><?= $mem->get_name(); ?></td>
 					<td><?= $mem->get_email(); ?></td>
 					<td>
-						<select class="form-control" onchange="edit_level(this)">
-							<?php
-							foreach ($levels as $level) {
-								$selected = "";
-								if ($level == $mem->get_level()) {
-									$selected = "selected";
-								}
-								?>
-								<option <?= $selected ?>
-									value="<?= $level ?>"><?= $level ?></option>
-							<?php } ?>
-						</select>
+						<?php
+						if ($mem->get_level() != "Administrator") {
+							?>
+							<select class="form-control" onchange="edit_level(this)">
+								<?php
+								foreach ($levels as $level) {
+									$selected = "";
+									if ($level == $mem->get_level()) {
+										$selected = "selected";
+									}
+									?>
+									<option <?= $selected ?>
+										value="<?= $level ?>"><?= $level ?></option>
+								<?php } ?>
+							</select>
+						<?php } else {
+							echo $mem->get_level();
+						} ?>
 					</td>
 					<td>
 						<button class="btn btn-danger"

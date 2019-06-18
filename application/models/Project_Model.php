@@ -1687,7 +1687,7 @@ class Project_Model extends Pattern_Model
 			foreach ($query->result() as $row) {
 				array_push($papers, $row->id_paper);
 			}
-			
+
 			foreach ($papers as $id_paper) {
 				$this->db->select('id_status');
 				$this->db->from('papers_selection');
