@@ -53,14 +53,16 @@
 							<select class="form-control" onchange="edit_level(this)">
 								<?php
 								foreach ($levels as $level) {
-									$selected = "";
-									if ($level == $mem->get_level()) {
-										$selected = "selected";
-									}
-									?>
-									<option <?= $selected ?>
-										value="<?= $level ?>"><?= $level ?></option>
-								<?php } ?>
+									if ($level != "Administrator") {
+										$selected = "";
+										if ($level == $mem->get_level()) {
+											$selected = "selected";
+										}
+										?>
+										<option <?= $selected ?>
+											value="<?= $level ?>"><?= $level ?></option>
+									<?php }
+								} ?>
 							</select>
 						<?php } else {
 							echo $mem->get_level();
