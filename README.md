@@ -2,3 +2,7 @@
 > Systematic reviews are a time consuming, logistically challenging and labour intensive undertaking. These and other challenges have led to the development of various software tools to support the systematic review process. 
 
 ...coming soon...
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE.txt](license.txt) file for details.
