@@ -198,9 +198,10 @@ function delete_term(value) {
 	});
 }
 
-function add_synonym() {
+function add_synonym(syn = null) {
 	let term = $("#list_term").val();
-	let syn = $("#synonym").val();
+	if(!syn)
+		syn = $("#synonym").val();
 	let id = "table_" + term;
 	let id_project = $("#id_project").val();
 
@@ -254,18 +255,20 @@ function modal_synonym(value) {
 	$('#modal_synonym').modal('show');
 }
 
-function related_terms(){
+async function related_terms(term){
 	const div = document.getElementById("related-terms");
 	div.innerHTML = "";
-	
-	for(let i = 0; i < 3; i++){
+	const final_terms = await getRelatedTerms(term);
+	if(!final_terms)
+		return;
+	for(let i = 0; i < final_terms.length; i++){
 		const divinp = document.createElement('div');
 		divinp.className = 'input-group ';
 		divinp.className += 'col-md-6 ';
 		divinp.className += 'offset-md-4 ';
 
 		const inp = document.createElement('input');
-		inp.value = i;
+		inp.value = final_terms[i];
 		inp.className = "form-control";
 
 		const append = document.createElement('div');
@@ -274,7 +277,10 @@ function related_terms(){
 		const btn = document.createElement('button');
 		btn.type = "button";
 		btn.className = "btn btn-success";
-		btn.onclick = ()=>{ alert(i); };
+		btn.onclick = ()=>{
+			add_synonym(final_terms[i]);
+			divinp.remove();
+		};
 
 		const add = document.createElement('span');
 		add.className = "fas fa-plus";

@@ -394,7 +394,8 @@
 			<div class="form-inline">
 				<div class="input-group col-md-4">
 					<label for="list_term" class="col-sm-12">Term</label>
-					<select class="form-control" id="list_term" onchange="related_terms();">
+					<select class="form-control" id="list_term" onchange="related_terms(this.value);">
+						<option value="" disabled selected>Select term</option>
 						<?php foreach ($project->get_terms() as $term) { ?>
 							<option value="<?= $term->get_description() ?>"><?= $term->get_description() ?></option>
 						<?php } ?>
