@@ -254,6 +254,41 @@ function modal_synonym(value) {
 	$('#modal_synonym').modal('show');
 }
 
+function related_terms(){
+	const div = document.getElementById("related-terms");
+	div.innerHTML = "";
+	
+	for(let i = 0; i < 3; i++){
+		const divinp = document.createElement('div');
+		divinp.className = 'input-group ';
+		divinp.className += 'col-md-6 ';
+		divinp.className += 'offset-md-4 ';
+
+		const inp = document.createElement('input');
+		inp.value = i;
+		inp.className = "form-control";
+
+		const append = document.createElement('div');
+		append.className = "input-group-append";
+
+		const btn = document.createElement('button');
+		btn.type = "button";
+		btn.className = "btn btn-success";
+		btn.onclick = ()=>{ alert(i); };
+
+		const add = document.createElement('span');
+		add.className = "fas fa-plus";
+
+		btn.appendChild(add);
+
+		append.appendChild(btn);
+
+		divinp.appendChild(inp);
+		divinp.appendChild(append);
+		div.appendChild(divinp);
+	}
+}
+
 function edit_synonym() {
 	let index = $('#modal_synonym #index_synonym').val();
 	let old = $('#modal_synonym #old_synonym').val();
