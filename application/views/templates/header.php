@@ -94,6 +94,7 @@
 	<script src="<?= base_url('assets/js/objects/Extraction_Chars.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/objects/Extraction_Answer.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/export.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/terms.js'); ?>"></script>
 
 </head>
 <body>

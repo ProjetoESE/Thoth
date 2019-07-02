@@ -394,22 +394,29 @@
 			<div class="form-inline">
 				<div class="input-group col-md-4">
 					<label for="list_term" class="col-sm-12">Term</label>
-					<select class="form-control" id="list_term">
+					<select class="form-control" id="list_term" onchange="related_terms(this.value);">
+						<option value="" disabled selected>Select term</option>
 						<?php foreach ($project->get_terms() as $term) { ?>
 							<option value="<?= $term->get_description() ?>"><?= $term->get_description() ?></option>
 						<?php } ?>
 					</select>
 				</div>
-				<div class="input-group col-md-6">
-					<label for="list_term" class="col-sm-12">Synonym</label>
-					<input type="text" class="form-control" placeholder="Add a Synonym to Term"
-						   id="synonym">
-					<div class="input-group-append">
-						<button class="btn btn-success" type="button" onclick="add_synonym();"><span
-								class="fas fa-plus"></span>
-						</button>
+				<div class="col-md-6">
+					<div class="input-group">
+						<label for="list_term" class="col-sm-12">Synonym</label>
+						<input type="text" class="form-control" placeholder="Add a Synonym to Term"
+							   id="synonym">
+						<div class="input-group-append">
+							<button class="btn btn-success" type="button" onclick="add_synonym();"><span
+									class="fas fa-plus"></span>
+							</button>
+						</div>
+
 					</div>
 				</div>
+			</div>
+			<div class="" id="related-terms">
+				<!-- <div  class="input-group col-md-6 col-md-offset-4" id="related-terms"></div> //-->
 			</div>
 			<br>
 			<table id="table_search_string" class="table table-responsive-sm">

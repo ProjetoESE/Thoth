@@ -54,7 +54,6 @@ function add_research() {
 				name,
 				email,
 				'<select class="form-control" onchange="edit_level(this)">' +
-				'<option value="Administrator" ' + adm + '>Administrator</option>' +
 				'<option value="Viewer"  ' + viw + '>Viewer</option>' +
 				'<option value="Researcher" ' + res + '>Researcher</option>' +
 				'<option value="Reviser" ' + rev + '>Reviser</option>' +
