@@ -477,6 +477,8 @@ class Project_Model extends Pattern_Model
 
 		if ($this->exist_row('min_to_app', $id_project)) {
 			$progress += 3.6;
+		}else {
+			array_push($errors, "Add Minimum General Score to Approve");
 		}
 
 		if ($this->exist_row('general_score', $id_project)) {
@@ -1754,7 +1756,7 @@ class Project_Model extends Pattern_Model
 			$id_bibs = $this->get_ids_bibs($project_databases);
 		}
 
-		$ids_paper = null;
+		$ids_paper = array();
 		if (sizeof($id_bibs) > 0) {
 			$ids_paper = $this->get_ID_papers($id_bibs);
 		}
@@ -1764,7 +1766,7 @@ class Project_Model extends Pattern_Model
 			$ids_qas = $this->get_ids_qas($id_project);
 		}
 
-		if (sizeof($ids_paper) > 0) {
+		if (sizeof($ids_paper) > 0 ) {
 
 			foreach ($ids_paper as $id_paper) {
 				$id = $this->get_id_paper($id_paper, $id_bibs);

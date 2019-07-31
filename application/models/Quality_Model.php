@@ -159,7 +159,6 @@ class Quality_Model extends Pattern_Model
 
 	public function add_general_quality_score($start_interval, $end_interval, $general_score_desc, $id_project)
 	{
-		var_dump($general_score_desc);
 		$data = array(
 			'start' => $start_interval,
 			'id_project' => $id_project,
@@ -168,6 +167,16 @@ class Quality_Model extends Pattern_Model
 		);
 
 		$this->db->insert('general_score', $data);
+
+		$this->db->select('*');
+		$this->db->from('general_score');
+		$this->db->where($id_project, 'id_project');
+
+		$query = $this->db->get();
+		if ($query->num_rows() < 2) {
+			$this->edit_min_score($general_score_desc, $id_project);
+		}
+
 	}
 
 	public function delete_general_quality_score($description, $id_project)
@@ -233,11 +242,6 @@ class Quality_Model extends Pattern_Model
 			$data['id_project'] = $id_project;
 			$this->db->insert('min_to_app', $data);
 		}
-
-	}
-
-	public function get_qas_ev($id_member, $id_project)
-	{
 
 	}
 

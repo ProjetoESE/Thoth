@@ -687,7 +687,6 @@
 			<div class="input-group col-md-4">
 				<label for="min_score_to_app" class="col-sm-12">Minimum General Score to Approve</label>
 				<select class="form-control" id="min_score_to_app" onchange="edit_min_score(this);">
-					<option value="null"></option>
 					<?php $mini = $project->get_score_min();
 					foreach ($project->get_quality_scores() as $scores) {
 						$selected = "";
