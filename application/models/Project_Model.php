@@ -5,11 +5,6 @@ require_once APPPATH . 'models/Pattern_Model.php';
 
 class Project_Model extends Pattern_Model
 {
-	/**
-	 * @param $id_project
-	 * @return Project
-	 *
-	 */
 	public function get_project_reviewer_selection($id_project)
 	{
 		$errors = array();
@@ -36,10 +31,6 @@ class Project_Model extends Pattern_Model
 		return $project;
 	}
 
-	/**
-	 * @param $id_project
-	 * @return Project
-	 */
 	public function get_project_quality($id_project)
 	{
 		$errors = array();
@@ -69,10 +60,6 @@ class Project_Model extends Pattern_Model
 		return $project;
 	}
 
-	/**
-	 * @param $id_project
-	 * @return Project
-	 */
 	public function get_project_extraction($id_project)
 	{
 		$errors = array();
@@ -103,10 +90,6 @@ class Project_Model extends Pattern_Model
 		return $project;
 	}
 
-	/**
-	 * @param $id_project
-	 * @return Project
-	 */
 	public function get_project_overview($id_project)
 	{
 		$errors = array();
@@ -140,10 +123,6 @@ class Project_Model extends Pattern_Model
 		return $project;
 	}
 
-	/**
-	 * @param $id_project
-	 * @return Project
-	 */
 	public function get_project_import($id_project)
 	{
 		$errors = array();
@@ -167,10 +146,6 @@ class Project_Model extends Pattern_Model
 		return $project;
 	}
 
-	/**
-	 * @param $id_project
-	 * @return Project
-	 */
 	public function get_project_export($id_project)
 	{
 		$errors = array();
@@ -271,10 +246,6 @@ class Project_Model extends Pattern_Model
 		return $project;
 	}
 
-	/**
-	 * @param $id_project
-	 * @return Project
-	 */
 	public function get_project_selection($id_project)
 	{
 		$errors = array();
@@ -412,7 +383,6 @@ class Project_Model extends Pattern_Model
 			array_push($errors, "Add Languages");
 		}
 
-
 		if ($this->exist_row('project_study_types', $id_project)) {
 			$progress += 2.75;
 		} else {
@@ -424,7 +394,6 @@ class Project_Model extends Pattern_Model
 		} else {
 			array_push($errors, "Add Keywords");
 		}
-
 
 		if ($this->exist_row('research_question', $id_project)) {
 			$progress += 11;
@@ -449,7 +418,6 @@ class Project_Model extends Pattern_Model
 		} else {
 			array_push($errors, "Add Search Strings");
 		}
-
 
 		if ($this->exist_row('search_strategy', $id_project)) {
 			$progress += 11;
@@ -492,7 +460,6 @@ class Project_Model extends Pattern_Model
 		} else {
 			array_push($errors, "Add Question Quality");
 		}
-
 
 		if ($this->exist_row('question_extraction', $id_project)) {
 			$progress += 12;
@@ -614,7 +581,7 @@ class Project_Model extends Pattern_Model
 			}
 		}
 		if ($progress == 0) {
-			array_push($errors, "Evaluate at least one job to move on to the next step");
+			array_push($errors, "Evaluate at least one paper in the selection step to move to the quality step");
 		}
 
 		$this->db->where('id_project', $id_project);
@@ -696,7 +663,7 @@ class Project_Model extends Pattern_Model
 			}
 		}
 		if ($progress == 0) {
-			array_push($errors, "Evaluate at least one job to move on to the next step");
+			array_push($errors, "Evaluate at least one paper in the quality step to move to the extraction step");
 		}
 
 		$this->db->where('id_project', $id_project);
@@ -717,7 +684,7 @@ class Project_Model extends Pattern_Model
 
 			array_push($errors, "There are still " . number_format((float)$unc, 2) . " of the articles to be evaluated in the extraction.");
 		} else {
-			array_push($errors, "Evaluate at least one job to move on to the next step");
+			array_push($errors, "Evaluate at least one paper in the extraction step to move to the reporting step");
 		}
 
 
@@ -1783,13 +1750,6 @@ class Project_Model extends Pattern_Model
 		return $papers;
 	}
 
-	/**
-	 * @param $email
-	 * @param $level
-	 * @param $id_project
-	 * @return bool
-	 * @throws Exception
-	 */
 	public function edit_level($email, $level, $id_project)
 	{
 		$this->validate_adm($email, $id_project);
@@ -1876,12 +1836,6 @@ class Project_Model extends Pattern_Model
 		}
 	}
 
-	/**
-	 * @param $email
-	 * @param $id_project
-	 * @return bool
-	 * @throws Exception
-	 */
 	private function validate_adm($email, $id_project)
 	{
 		$members = $this->get_members($id_project);

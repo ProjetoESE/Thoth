@@ -6,7 +6,7 @@
 		<a href="<?= base_url('open/' . $project->get_id()) ?>"
 		   class="btn form-inline btn-outline-primary opt">Overview</a>
 		<a href="<?= base_url('planning/' . $project->get_id()) ?>"
-		   class="btn form-inline btn-outline-primary opt">Planning</a>
+		   class="btn form-inline btn-primary opt">Planning</a>
 		<?php if ($this->session->level == "4") { ?>
 			<a href="<?= base_url('study_selection_adm/' . $project->get_id()) ?>"
 			   class="btn form-inline btn-outline-primary opt">Conducting</a>

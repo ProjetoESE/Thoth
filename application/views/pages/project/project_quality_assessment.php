@@ -8,10 +8,10 @@
 		   class="btn form-inline btn-outline-primary opt">Planning</a>
 		<?php if ($this->session->level == "4") { ?>
 			<a href="<?= base_url('study_selection_adm/' . $project->get_id()) ?>"
-			   class="btn form-inline btn-outline-primary opt">Conducting</a>
+			   class="btn form-inline btn-primary opt">Conducting</a>
 		<?php } else { ?>
 			<a href="<?= base_url('conducting/' . $project->get_id()) ?>"
-			   class="btn form-inline btn-outline-primary opt">Conducting</a>
+			   class="btn form-inline btn-primary opt">Conducting</a>
 		<?php } ?>
 		<a href="<?= base_url('reporting/' . $project->get_id()) ?>"
 		   class="btn form-inline btn-outline-primary opt">Reporting</a>
@@ -37,7 +37,7 @@
 						Selection</a>
 				</li>
 			<?php } ?>
-			<?php if ($this->session->level == "1" || $this->session->level == "4") { ?>
+			<?php if ($this->session->level == "4") { ?>
 				<li class="nav-item">
 					<a class="nav-link" href="<?= base_url('study_selection_adm/' . $project->get_id()) ?>">Review
 						Study
@@ -51,7 +51,7 @@
 						Assessment</a>
 				</li>
 			<?php } ?>
-			<?php if ($this->session->level == "1" || $this->session->level == "4") { ?>
+			<?php if ($this->session->level == "4") { ?>
 				<li class="nav-item">
 					<a class="nav-link" href="<?= base_url('quality_adm/' . $project->get_id()) ?>">Review
 						Quality Assessment</a>
@@ -229,7 +229,7 @@
 		} else {
 			?>
 			<div class="alert alert-warning container-fluid alert-dismissible fade show" role="alert">
-				<h5>Complete the pieces to advance</h5>
+				<h5>Complete these tasks to advance</h5>
 				<ul>
 					<?php
 					foreach ($project->get_errors() as $error) {

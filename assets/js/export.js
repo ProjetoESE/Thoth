@@ -23,7 +23,7 @@ $(document).ready(function () {
 				$('#bib_tex').val(bib);
 				Swal({
 					title: 'Generate Bib',
-					html: '<strong>Generate bib </strong>',
+					html: '<strong>BibTex file generated</strong>',
 					type: 'success',
 					showCancelButton: false,
 					confirmButtonText: 'Ok'
@@ -61,7 +61,7 @@ $(document).ready(function () {
 					$('#latex').val(latex);
 					Swal({
 						title: 'Generate Latex',
-						html: '<strong>Generate Latex </strong>',
+						html: '<strong>LaTex file generated</strong>',
 						type: 'success',
 						showCancelButton: false,
 						confirmButtonText: 'Ok'
