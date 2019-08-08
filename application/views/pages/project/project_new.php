@@ -12,13 +12,22 @@
 				</div>
 				<div class="form-group">
 					<label for="description">Description</label>
-					<textarea name="description" class="form-control min-height" id="description" placeholder="Description"
-						   required></textarea>
+					<textarea name="description" class="form-control min-height" id="description"
+							  placeholder="Description"
+							  required></textarea>
 				</div>
 				<div class="form-group">
 					<label for="objectives">Objectives</label>
 					<textarea name="objectives" class="form-control min-height" id="objectives" placeholder="Objectives"
 							  required></textarea>
+				</div>
+				<div class="alert alert-warning container-fluid alert-dismissible fade show" role="alert">
+					<h5>Comments</h5>
+					<p>For the creation of the project it is recommended that the user be
+						a researcher and not a reviewer or other role, because once created, your administrator role
+						cannot
+						be changed or passed on.
+					</p>
 				</div>
 				<button type="submit" class="btn btn-success">Create Project</button>
 				</form>

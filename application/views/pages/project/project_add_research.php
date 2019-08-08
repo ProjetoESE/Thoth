@@ -4,6 +4,10 @@
 		<h4> Members at <?= $project->get_title() ?></h4>
 	</div>
 	<div class="card-body">
+		<div class="alert alert-warning container-fluid alert-dismissible fade show" role="alert">
+			<h5>Comments</h5>
+			<p>Adding a member, editing its role and deleting it after starting the project can lead to problems.</p>
+		</div>
 		<div class="col-md-6">
 			<h5> Add Members</h5>
 			<div class="form-group">

@@ -1098,8 +1098,7 @@ class Project_Controller extends Pattern_Controller
 	/**
 	 *
 	 */
-	public
-	function export_bib()
+	public function export_bib()
 	{
 
 		$step = $this->input->post('step');
@@ -1281,14 +1280,13 @@ class Project_Controller extends Pattern_Controller
 	/**
 	 *
 	 */
-	public
-	function delete_member()
+	public function delete_member()
 	{
 		try {
 			$id_project = $this->input->post('id_project');
 			$email = $this->input->post('email');
 
-			$this->validate_level($id_project ,array(1));
+			$this->validate_level($id_project, array(1));
 
 			$this->load->model("Project_Model");
 			$this->Project_Model->delete_member($email, $id_project);

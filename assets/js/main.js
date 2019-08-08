@@ -342,7 +342,6 @@ $(document).ready(function () {
 			'copy', 'csv', 'excel', 'pdf', 'print',]
 	});
 
-
 	table_papers_extraction = $('#table_papers_extraction').DataTable({
 		initComplete: function () {
 			for (let i = 3; i < 5; i++) {

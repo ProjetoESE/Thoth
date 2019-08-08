@@ -390,8 +390,6 @@ class Quality_Controller extends Pattern_Controller
 			$id_qa = $this->input->post('id_qa');
 			$score = $this->input->post('score');
 
-
-
 			$this->validate_level($id_project, array(1, 3));
 
 			$this->load->model("Quality_Model");
@@ -400,7 +398,7 @@ class Quality_Controller extends Pattern_Controller
 			$data = $this->Quality_Model->calculate_score_qa_mem($id_paper, $id_project);
 			$this->Quality_Model->check_status_qa($id_paper, $id_project);
 
-			$activity = "Selected score " . $score . "to quality question " . $id_qa . " to paper " . $id_paper;
+			$activity = "Selected score " . $score . " to quality question " . $id_qa . " to paper " . $id_paper;
 			$this->insert_log($activity, 3, $id_project);
 
 			if ($data['change']) {

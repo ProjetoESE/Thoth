@@ -14,7 +14,7 @@
 			   class="btn form-inline btn-outline-primary opt">Conducting</a>
 		<?php } ?>
 		<a href="<?= base_url('reporting/' . $project->get_id()) ?>"
-		   class="btn form-inline btn-outline-primary opt">Reporting</a>
+		   class="btn form-inline btn-primary opt">Reporting</a>
 		<?php
 		if ($project->get_planning() == 100) {
 			?>
@@ -330,7 +330,7 @@
 	} else {
 		?>
 		<div class="alert alert-warning container-fluid alert-dismissible fade show" role="alert">
-			<h5>Complete the pieces to advance</h5>
+			<h5>Complete these tasks to advance</h5>
 			<ul>
 				<?php
 				foreach ($project->get_errors() as $error) {

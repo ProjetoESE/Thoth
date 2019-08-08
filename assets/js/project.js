@@ -215,41 +215,53 @@ function edit_level(element) {
 	let id_project = $("#id_project").val();
 	let row = table_members.row($(element).parents('tr'));
 
-	$.ajax({
-		type: "POST",
-		url: base_url + 'Project_Controller/edit_level/',
-		data: {
-			id_project: id_project,
-			level: level,
-			email: row.data()[1]
-		},
-		error: function (msg) {
-			Swal({
-				type: 'error',
-				title: 'Error',
-				html: msg
+	Swal.fire({
+		title: 'Are you sure?',
+		text: "Changing the role of this member will result in the loss of all actions performed by him in his old role.",
+		type: 'warning',
+		showCancelButton: true,
+		confirmButtonColor: '#28a745',
+		cancelButtonColor: '#d33',
+		confirmButtonText: 'Yes, change it!'
+	}).then((result) => {
+		if (result.value) {
+			$.ajax({
+				type: "POST",
+				url: base_url + 'Project_Controller/edit_level/',
+				data: {
+					id_project: id_project,
+					level: level,
+					email: row.data()[1]
+				},
+				error: function (msg) {
+					Swal({
+						type: 'error',
+						title: 'Error',
+						html: msg
+					});
+				},
+				success: function (msg) {
+					if (msg) {
+						Swal({
+							title: 'Warning',
+							text: msg,
+							type: 'warning',
+							showCancelButton: false,
+							confirmButtonText: 'Ok'
+						});
+					} else {
+						Swal({
+							title: 'Success',
+							text: 'The level was edited',
+							type: 'success',
+							showCancelButton: false,
+							confirmButtonText: 'Ok'
+						});
+					}
+
+
+				}
 			});
-		},
-		success: function (msg) {
-			if (msg) {
-				Swal({
-					title: 'Warning',
-					text: msg,
-					type: 'warning',
-					showCancelButton: false,
-					confirmButtonText: 'Ok'
-				});
-			} else {
-				Swal({
-					title: 'Success',
-					text: 'The level was edited',
-					type: 'success',
-					showCancelButton: false,
-					confirmButtonText: 'Ok'
-				});
-			}
-
-
 		}
 	});
 }

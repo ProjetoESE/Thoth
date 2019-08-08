@@ -1121,10 +1121,13 @@ $(document).ready(function () {
 					$('#paper_abstract_qa').text("This article does not have Abstract");
 				}
 
-				if (dados['doi'] != "") {
-					$('#paper_doi_qa').text(dados['doi']);
+				let doi = $('#paper_doi_qa');
+				if (data['doi'] != "") {
+					doi.removeClass("disabled");
+					doi.attr("href", "https://doi.org/" + data['doi']);
 				} else {
-					$('#paper_doi_qa').text("This article does not have Doi");
+					doi.attr("href", "");
+					doi.addClass("disabled");
 				}
 				let url = $('#paper_url_qa');
 				if (dados['url'] != "") {
@@ -1249,10 +1252,13 @@ $(document).ready(function () {
 					$('#paper_abstract_conf_qa').text("This article does not have Abstract");
 				}
 
+				let doi = $('#paper_doi_conf_qa');
 				if (data['doi'] != "") {
-					$('#paper_doi_conf_qa').text(data['doi']);
+					doi.removeClass("disabled");
+					doi.attr("href", "https://doi.org/" + data['doi']);
 				} else {
-					$('#paper_doi_conf_qa').text("This article does not have Doi");
+					doi.attr("href", "");
+					doi.addClass("disabled");
 				}
 				let url = $('#paper_url_conf_qa');
 				if (data['url'] != "") {

@@ -159,7 +159,6 @@ class Quality_Model extends Pattern_Model
 
 	public function add_general_quality_score($start_interval, $end_interval, $general_score_desc, $id_project)
 	{
-		var_dump($general_score_desc);
 		$data = array(
 			'start' => $start_interval,
 			'id_project' => $id_project,
@@ -168,6 +167,16 @@ class Quality_Model extends Pattern_Model
 		);
 
 		$this->db->insert('general_score', $data);
+
+		$this->db->select('*');
+		$this->db->from('general_score');
+		$this->db->where($id_project, 'id_project');
+
+		$query = $this->db->get();
+		if ($query->num_rows() < 2) {
+			$this->edit_min_score($general_score_desc, $id_project);
+		}
+
 	}
 
 	public function delete_general_quality_score($description, $id_project)
@@ -222,23 +231,8 @@ class Quality_Model extends Pattern_Model
 		$data = array(
 			'id_general_score' => $id_general_score
 		);
-
 		$this->db->where('id_project', $id_project);
-		$q = $this->db->get('min_to_app');
-
-		if ($q->num_rows() > 0) {
-			$this->db->where('id_project', $id_project);
-			$this->db->update('min_to_app', $data);
-		} else {
-			$data['id_project'] = $id_project;
-			$this->db->insert('min_to_app', $data);
-		}
-
-	}
-
-	public function get_qas_ev($id_member, $id_project)
-	{
-
+		$this->db->update('min_to_app', $data);
 	}
 
 	public function get_paper_qa($num_paper, $id_project)
@@ -378,24 +372,13 @@ class Quality_Model extends Pattern_Model
 		$id_qa = $this->get_id_paper_qa($id_paper, $id_member);
 		$id_gen = $this->get_gen_score_paper($score, $id_project);
 
-		$start = $this->get_score_min_start($id_project);
 		$change = false;
 
-		if ($score >= $start) {
-			$data = array(
-				'score' => $score,
-				'id_gen_score' => $id_gen,
-				'id_status' => $status
-			);
-
-		} else {
-			$data = array(
-				'score' => $score,
-				'id_gen_score' => $id_gen,
-				'id_status' => 2
-			);
-			$status = 2;
-		}
+		$data = array(
+			'score' => $score,
+			'id_gen_score' => $id_gen,
+			'id_status' => $status
+		);
 
 		if ($status != $this->get_status_qa($id_paper, $id_member)) {
 			$change = true;
@@ -584,10 +567,10 @@ class Quality_Model extends Pattern_Model
 
 	private function get_score_min_start($id_project)
 	{
-		$this->db->select('start');
-		$this->db->from('general_score');
-		$this->db->where('id_project', $id_project);
-		$this->db->order_by('start', 'ASC');
+		$this->db->select('general_score.start');
+		$this->db->from('min_to_app');
+		$this->db->join('general_score', 'general_score.id_general_score = min_to_app.id_general_score');
+		$this->db->where('min_to_app.id_project', $id_project);
 		$query = $this->db->get();
 
 		foreach ($query->result() as $row) {
@@ -602,8 +585,8 @@ class Quality_Model extends Pattern_Model
 		$this->db->select('id_general_score');
 		$this->db->from('general_score');
 		$this->db->where('id_project', $id_project);
-		$this->db->where('start <=', $score);
-		$this->db->where('end >=', $score);
+		$this->db->where('start <=', floatval($score));
+		$this->db->where('end >=', floatval($score));
 		$query = $this->db->get();
 
 		foreach ($query->result() as $row) {
@@ -649,6 +632,7 @@ class Quality_Model extends Pattern_Model
 		$ids_qa_null = $this->get_ids_qa_null($id_project);
 		$weights = $this->get_weights_qas($id_project);
 		$min_to_app = $this->get_min_to_app_qas($id_project);
+		$start = $this->get_score_min_start($id_project);
 
 		$user = $this->get_id_name_user($this->session->email);
 		$id_member = $this->get_id_member($user[0], $id_project);
@@ -679,6 +663,7 @@ class Quality_Model extends Pattern_Model
 				$qa_ev_not_null[$id_qa] = $row->score;
 			}
 		}
+
 		$status = 1;
 		if (sizeof($qa_ev_not_null) != sizeof($ids_qa_not_null)) {
 			$status = 2;
@@ -693,6 +678,7 @@ class Quality_Model extends Pattern_Model
 			}
 
 		}
+
 		$qa_ev_null = array();
 		foreach ($ids_qa_null as $id_qa) {
 			$this->db->select('score_quality.score');
@@ -713,7 +699,11 @@ class Quality_Model extends Pattern_Model
 			$score += $value * $weight / 100;
 		}
 
-		if (sizeof($qa_ev_null) == 0 && sizeof($qa_ev_not_null) == 0) {
+		if ($score < $start) {
+			$status = 2;
+		}
+
+		if (sizeof($qa_ev_null) < 1 && sizeof($qa_ev_not_null) < 1) {
 			$status = 3;
 		}
 
@@ -770,7 +760,7 @@ class Quality_Model extends Pattern_Model
 	private function get_min_to_app_qas($id_project)
 	{
 		$weights = array();
-		$this->db->select('question_quality.id_qa,score');
+		$this->db->select('question_quality.id_qa,score_quality.score');
 		$this->db->from('question_quality');
 		$this->db->join('score_quality', 'score_quality.id_score = question_quality.min_to_app');
 		$this->db->where('id_project', $id_project);
@@ -826,8 +816,10 @@ class Quality_Model extends Pattern_Model
 				if ($key2 != 'id') {
 					foreach ($value as $key3 => $value3) {
 						if ($key3 != 'id') {
-							if ($value2 != $value3) {
-								$aux[$key] = $value;
+							if ($value2 != 3 && $value3 != 3) {
+								if ($value2 != $value3) {
+									$aux[$key] = $value;
+								}
 							}
 						}
 					}
@@ -835,7 +827,6 @@ class Quality_Model extends Pattern_Model
 				}
 			}
 		}
-
 
 		return $aux;
 	}

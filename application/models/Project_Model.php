@@ -5,11 +5,6 @@ require_once APPPATH . 'models/Pattern_Model.php';
 
 class Project_Model extends Pattern_Model
 {
-	/**
-	 * @param $id_project
-	 * @return Project
-	 *
-	 */
 	public function get_project_reviewer_selection($id_project)
 	{
 		$errors = array();
@@ -36,10 +31,6 @@ class Project_Model extends Pattern_Model
 		return $project;
 	}
 
-	/**
-	 * @param $id_project
-	 * @return Project
-	 */
 	public function get_project_quality($id_project)
 	{
 		$errors = array();
@@ -69,10 +60,6 @@ class Project_Model extends Pattern_Model
 		return $project;
 	}
 
-	/**
-	 * @param $id_project
-	 * @return Project
-	 */
 	public function get_project_extraction($id_project)
 	{
 		$errors = array();
@@ -103,10 +90,6 @@ class Project_Model extends Pattern_Model
 		return $project;
 	}
 
-	/**
-	 * @param $id_project
-	 * @return Project
-	 */
 	public function get_project_overview($id_project)
 	{
 		$errors = array();
@@ -140,10 +123,6 @@ class Project_Model extends Pattern_Model
 		return $project;
 	}
 
-	/**
-	 * @param $id_project
-	 * @return Project
-	 */
 	public function get_project_import($id_project)
 	{
 		$errors = array();
@@ -167,10 +146,6 @@ class Project_Model extends Pattern_Model
 		return $project;
 	}
 
-	/**
-	 * @param $id_project
-	 * @return Project
-	 */
 	public function get_project_export($id_project)
 	{
 		$errors = array();
@@ -271,10 +246,6 @@ class Project_Model extends Pattern_Model
 		return $project;
 	}
 
-	/**
-	 * @param $id_project
-	 * @return Project
-	 */
 	public function get_project_selection($id_project)
 	{
 		$errors = array();
@@ -412,7 +383,6 @@ class Project_Model extends Pattern_Model
 			array_push($errors, "Add Languages");
 		}
 
-
 		if ($this->exist_row('project_study_types', $id_project)) {
 			$progress += 2.75;
 		} else {
@@ -424,7 +394,6 @@ class Project_Model extends Pattern_Model
 		} else {
 			array_push($errors, "Add Keywords");
 		}
-
 
 		if ($this->exist_row('research_question', $id_project)) {
 			$progress += 11;
@@ -449,7 +418,6 @@ class Project_Model extends Pattern_Model
 		} else {
 			array_push($errors, "Add Search Strings");
 		}
-
 
 		if ($this->exist_row('search_strategy', $id_project)) {
 			$progress += 11;
@@ -477,6 +445,8 @@ class Project_Model extends Pattern_Model
 
 		if ($this->exist_row('min_to_app', $id_project)) {
 			$progress += 3.6;
+		} else {
+			array_push($errors, "Add Minimum General Score to Approve");
 		}
 
 		if ($this->exist_row('general_score', $id_project)) {
@@ -490,7 +460,6 @@ class Project_Model extends Pattern_Model
 		} else {
 			array_push($errors, "Add Question Quality");
 		}
-
 
 		if ($this->exist_row('question_extraction', $id_project)) {
 			$progress += 12;
@@ -612,7 +581,7 @@ class Project_Model extends Pattern_Model
 			}
 		}
 		if ($progress == 0) {
-			array_push($errors, "Evaluate at least one job to move on to the next step");
+			array_push($errors, "Evaluate at least one paper in the selection step to move to the quality step");
 		}
 
 		$this->db->where('id_project', $id_project);
@@ -694,7 +663,7 @@ class Project_Model extends Pattern_Model
 			}
 		}
 		if ($progress == 0) {
-			array_push($errors, "Evaluate at least one job to move on to the next step");
+			array_push($errors, "Evaluate at least one paper in the quality step to move to the extraction step");
 		}
 
 		$this->db->where('id_project', $id_project);
@@ -715,7 +684,7 @@ class Project_Model extends Pattern_Model
 
 			array_push($errors, "There are still " . number_format((float)$unc, 2) . " of the articles to be evaluated in the extraction.");
 		} else {
-			array_push($errors, "Evaluate at least one job to move on to the next step");
+			array_push($errors, "Evaluate at least one paper in the extraction step to move to the reporting step");
 		}
 
 
@@ -1147,7 +1116,7 @@ class Project_Model extends Pattern_Model
 			$id_user = $this->get_id_name_user($this->session->email);
 			$id_member = $this->get_id_member($id_user[0], $id_project);
 
-			$this->db->select('papers.title,papers.id,papers.id_paper,papers.author,papers.year, data_base.name,papers.id_gen_score,papers.score');
+			$this->db->select('papers.title,papers.id,papers.id_paper,papers.author,papers.year, data_base.name');
 			$this->db->from('papers');
 			$this->db->join('data_base', 'papers.data_base = data_base.id_database');
 			$this->db->where_in('id_bib', $id_bibs);
@@ -1161,22 +1130,25 @@ class Project_Model extends Pattern_Model
 				$p->set_author($row->author);
 				$p->set_database($row->name);
 				$p->set_year($row->year);
-				$p->set_score($row->score);
 
-				$this->db->select('id_status');
+
+				$this->db->select('id_status,id_gen_score,score');
 				$this->db->from('papers_qa');
 				$this->db->where('id_member', $id_member);
 				$this->db->where('id_paper', $row->id_paper);
 				$query6 = $this->db->get();
+				$gen_score = null;
 
 				foreach ($query6->result() as $row2) {
 					$p->set_status_quality($row2->id_status);
+					$p->set_score($row2->score);
+					$gen_score = $row2->id_gen_score;
 				}
 
 
 				$this->db->select('description');
 				$this->db->from('general_score');
-				$this->db->where('id_general_score', $row->id_gen_score);
+				$this->db->where('id_general_score', $gen_score);
 				$query3 = $this->db->get();
 
 				foreach ($query3->result() as $row3) {
@@ -1754,7 +1726,7 @@ class Project_Model extends Pattern_Model
 			$id_bibs = $this->get_ids_bibs($project_databases);
 		}
 
-		$ids_paper = null;
+		$ids_paper = array();
 		if (sizeof($id_bibs) > 0) {
 			$ids_paper = $this->get_ID_papers($id_bibs);
 		}
@@ -1781,16 +1753,10 @@ class Project_Model extends Pattern_Model
 		return $papers;
 	}
 
-	/**
-	 * @param $email
-	 * @param $level
-	 * @param $id_project
-	 * @return bool
-	 * @throws Exception
-	 */
 	public function edit_level($email, $level, $id_project)
 	{
 		$this->validate_adm($email, $id_project);
+		$gen_score = $this->gen_score_min($id_project);
 
 		$id_level = null;
 		$this->db->select('id_level');
@@ -1802,14 +1768,14 @@ class Project_Model extends Pattern_Model
 			$id_level = $row->id_level;
 		}
 
-		$user = $this->get_id_name_user($this->session->email);
+		$user = $this->get_id_name_user($email);
 		$id_member = $this->get_id_member($user[0], $id_project);
 
 		$old_level = null;
 		$this->db->select('id_level');
 		$this->db->from('levels');
 		$this->db->join('members', 'members.level = levels.id_level');
-		$this->db->where('id_member', $id_member);
+		$this->db->where('id_members', $id_member);
 		$this->db->where('id_project', $id_project);
 		$query = $this->db->get();
 
@@ -1858,7 +1824,25 @@ class Project_Model extends Pattern_Model
 					}
 
 					$this->db->insert_batch('papers_selection', $status_selection);
+
+					$status_qa = array();
+					foreach ($id_papers as $paper) {
+						$insert = array(
+							'id_paper' => $paper,
+							'id_member' => $id_member,
+							'id_status' => 3,
+							'note' => "",
+							'score' => 0,
+							'id_gen_score' => $gen_score
+						);
+						array_push($status_qa, $insert);
+
+					}
+
+					$this->db->insert_batch('papers_qa', $status_qa);
 					$data = array(
+						'status_qa' => 3,
+						'check_qa' => false,
 						'status_selection' => 3,
 						'check_status_selection' => false,
 					);
@@ -1868,18 +1852,15 @@ class Project_Model extends Pattern_Model
 				}
 			}
 		} else {
-			$this->db->where('id_members', $id_member);
+			$this->db->where('id_member', $id_member);
 			$this->db->delete('papers_selection');
+
+			$this->db->where('id_member', $id_member);
+			$this->db->delete('papers_qa');
 
 		}
 	}
 
-	/**
-	 * @param $email
-	 * @param $id_project
-	 * @return bool
-	 * @throws Exception
-	 */
 	private function validate_adm($email, $id_project)
 	{
 		$members = $this->get_members($id_project);

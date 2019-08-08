@@ -6,7 +6,7 @@
 		<a href="<?= base_url('open/' . $project->get_id()) ?>"
 		   class="btn form-inline btn-outline-primary opt">Overview</a>
 		<a href="<?= base_url('planning/' . $project->get_id()) ?>"
-		   class="btn form-inline btn-outline-primary opt">Planning</a>
+		   class="btn form-inline btn-primary opt">Planning</a>
 		<a href="<?= base_url('reporting/' . $project->get_id()) ?>"
 		   class="btn form-inline btn-outline-primary opt">Reporting</a>
 	</div>

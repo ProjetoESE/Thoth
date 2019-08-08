@@ -21,7 +21,7 @@
 		if ($project->get_planning() == 100) {
 			?>
 			<a href="<?= base_url('export/' . $project->get_id()) ?>"
-			   class="btn form-inline btn-outline-primary opt">Export</a>
+			   class="btn form-inline btn-primary opt">Export</a>
 			<?php
 		}
 		?>
