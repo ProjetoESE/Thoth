@@ -15,9 +15,8 @@
 				<input type="hidden" id="old_status_conf">
 				<div class="form-inline">
 					<div class="col-md-6">
-						<h6>Doi</h6><a class="float-right opt"><i
-								class="fas fa-question-circle "></i></a>
-						<p id="paper_doi_conf"></p>
+						<h6>Doi</h6><a class="float-right opt"><i class="fas fa-question-circle"></i></a>
+						<a target="_blank" id="paper_doi_conf"><i class="fas fa-external-link-alt"></i></a>
 					</div>
 					<div class="col-md-6">
 						<h6>URL</h6>

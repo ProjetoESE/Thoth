@@ -311,10 +311,13 @@ $(document).ready(function () {
 					$('#paper_abstract_conf').text("This article does not have Abstract");
 				}
 
+				let doi = $('#paper_doi_conf');
 				if (data['doi'] != "") {
-					$('#paper_doi_conf').text(data['doi']);
+					doi.removeClass("disabled");
+					doi.attr("href", "https://doi.org/" + data['doi']);
 				} else {
-					$('#paper_doi_conf').text("This article does not have Doi");
+					doi.attr("href", "");
+					doi.addClass("disabled");
 				}
 				let url = $('#paper_url_conf');
 				if (data['url'] != "") {

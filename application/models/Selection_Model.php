@@ -329,7 +329,6 @@ class Selection_Model extends Pattern_Model
 				$data['notes'] = $this->get_info($row->id_paper);
 			}
 
-
 		}
 
 		return $data;
@@ -476,8 +475,10 @@ class Selection_Model extends Pattern_Model
 				if ($key2 != 'id') {
 					foreach ($value as $key3 => $value3) {
 						if ($key3 != 'id') {
-							if ($value2 != $value3) {
-								$aux[$key] = $value;
+							if ($value2 != 3 && $value3 != 3) {
+								if ($value2 != $value3) {
+									$aux[$key] = $value;
+								}
 							}
 						}
 					}

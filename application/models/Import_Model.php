@@ -146,7 +146,7 @@ class Import_Model extends Pattern_Model
 			$data['id_gen_score'] = $gen_score;
 			$data['check_qa'] = false;
 			$data['status_selection'] = 3;
-			$data['status_extraction'] = 3;
+			$data['status_extraction'] = 2;
 			$data['note'] = "";
 			$data['check_status_selection'] = false;
 

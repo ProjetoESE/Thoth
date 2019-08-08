@@ -61,10 +61,12 @@
 							Quality Assessment</a>
 					</li>
 				<?php } ?>
-				<li class="nav-item">
-					<a class=" nav-link" href="<?= base_url('data_extraction/' . $project->get_id()) ?>">Data
-						Extraction</a>
-				</li>
+				<?php if ($this->session->level != "4") { ?>
+					<li class="nav-item">
+						<a class=" nav-link" href="<?= base_url('data_extraction/' . $project->get_id()) ?>">Data
+							Extraction</a>
+					</li>
+				<?php } ?>
 			</ul>
 			<br>
 			<div class="form-inline">

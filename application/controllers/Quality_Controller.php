@@ -390,8 +390,6 @@ class Quality_Controller extends Pattern_Controller
 			$id_qa = $this->input->post('id_qa');
 			$score = $this->input->post('score');
 
-
-
 			$this->validate_level($id_project, array(1, 3));
 
 			$this->load->model("Quality_Model");
