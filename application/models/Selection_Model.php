@@ -378,6 +378,8 @@ class Selection_Model extends Pattern_Model
 			$data['keywords'] = $row->keywords;
 			$data['doi'] = $row->doi;
 			$data['url'] = $row->url;
+			$data['year'] = $row->year;
+			$data['author'] = $row->author;
 		}
 
 		$criteria = $this->get_evaluation_criteria($id_paper, $id_project);

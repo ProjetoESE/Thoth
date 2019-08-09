@@ -33,6 +33,7 @@ $(document).ready(function () {
 	table_papers.on('select', function (e, dt, type, indexes) {
 		let rowData = table_papers.rows(indexes).data().toArray();
 		let id_project = $("#id_project").val();
+		let size = table_papers.columns().data().length;
 
 		$.ajax({
 			type: "POST",
@@ -60,10 +61,10 @@ $(document).ready(function () {
 				$('#paper_id').text(rowData[0][0]);
 				$('#id_paper').val(rowData[0][0]);
 				$('#paper_title').text(rowData[0][1]);
-				$('#paper_author').text(rowData[0][2]);
-				$('#paper_year').text(rowData[0][3]);
-				$('#paper_database').text(rowData[0][4]);
-				switch (rowData[0][5]) {
+				$('#paper_author').text(data['author']);
+				$('#paper_year').text(data['year']);
+				$('#paper_database').text(rowData[0][size - 2]);
+				switch (rowData[0][size - 1]) {
 					case "Unclassified":
 						txt_sel.text("");
 						txt_sel.val(3);
@@ -76,7 +77,7 @@ $(document).ready(function () {
 						edit.hide();
 						txt_sel.removeClass("text-success");
 						txt_sel.addClass("text-danger");
-						txt_sel.text(rowData[0][5]);
+						txt_sel.text(rowData[0][size - 1]);
 						txt_sel.val(2);
 						txt_sel.show();
 						criteria_a.show();
@@ -86,7 +87,7 @@ $(document).ready(function () {
 						criteria_a.show();
 						txt_sel.removeClass("text-danger");
 						txt_sel.addClass("text-success");
-						txt_sel.text(rowData[0][5]);
+						txt_sel.text(rowData[0][size - 1]);
 						txt_sel.val(1);
 						txt_sel.show();
 						criteria_a.show();

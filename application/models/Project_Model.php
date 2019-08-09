@@ -1714,6 +1714,22 @@ class Project_Model extends Pattern_Model
 		return null;
 	}
 
+	private function get_criteria_evaluation($id_paper, $id_cri, $id_member)
+	{
+		$this->db->select('id_evaluation_criteria');
+		$this->db->from('evaluation_criteria');
+		$this->db->where('evaluation_criteria.id_paper', $id_paper);
+		$this->db->where('evaluation_criteria.id_criteria', $id_cri);
+		$this->db->where('evaluation_criteria.id_member', $id_member);
+		$query = $this->db->get();
+
+		if ($query->num_rows() > 0) {
+			return "True";
+		}
+
+		return "False";
+	}
+
 	public function get_evaluation_qa($id_project)
 	{
 		$papers = array();
@@ -1747,6 +1763,46 @@ class Project_Model extends Pattern_Model
 					$qas [$qa[1]] = $score;
 				}
 				$papers[$id_paper] = $qas;
+			}
+		}
+
+		return $papers;
+	}
+
+	public function get_evaluation_selection($id_project)
+	{
+		$papers = array();
+		$user = $this->get_id_name_user($this->session->email);
+		$id_member = $this->get_id_member($user[0], $id_project);
+		$project_databases = $this->get_ids_project_database($id_project);
+
+		$id_bibs = array();
+		if (sizeof($project_databases) > 0) {
+			$id_bibs = $this->get_ids_bibs($project_databases);
+		}
+
+		$ids_paper = array();
+		if (sizeof($id_bibs) > 0) {
+			$ids_paper = $this->get_ID_papers($id_bibs);
+		}
+
+		$criteria = null;
+		if (sizeof($id_bibs) > 0) {
+			$criteria = $this->get_criteria($id_project, "Inclusion");
+			$criteria = array_merge($criteria, $this->get_criteria($id_project, "Exclusion"));
+		}
+
+		if (sizeof($ids_paper) > 0) {
+
+			foreach ($ids_paper as $id_paper) {
+				$id = $this->get_id_paper($id_paper, $id_bibs);
+
+				foreach ($criteria as $c) {
+					$result = $this->get_criteria_evaluation($id, $this->get_ids_criteria($id_project, $c->get_id()), $id_member);
+
+					$cri [$c->get_id()] = $result;
+				}
+				$papers[$id_paper] = $cri;
 			}
 		}
 

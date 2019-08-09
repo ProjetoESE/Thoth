@@ -82,6 +82,7 @@ class Project_Controller extends Pattern_Controller
 			$this->load->model("Project_Model");
 			$data['project'] = $this->Project_Model->get_project_selection($id);
 			$data['count_papers'] = $this->Project_Model->count_papers_sel_by_user($id);
+			$data['criterias'] = $this->Project_Model->get_evaluation_selection($id);
 
 			$this->load_views('pages/project/project_study_selection', $data);
 

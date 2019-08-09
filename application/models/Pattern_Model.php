@@ -482,6 +482,20 @@ class Pattern_Model extends CI_Model
 		return $qas;
 	}
 
+	public function get_ids_criteria($id_project, $id)
+	{
+		$this->db->select('id_criteria');
+		$this->db->from('criteria');
+		$this->db->where('id_project', $id_project);
+		$this->db->where('id', $id);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			return $row->id_criteria;
+		}
+		return null;
+	}
+
 	public function get_qes($id_project)
 	{
 		$qes = array();

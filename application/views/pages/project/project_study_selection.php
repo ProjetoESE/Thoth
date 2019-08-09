@@ -188,8 +188,12 @@
 				<tr>
 					<th>ID</th>
 					<th>Title</th>
-					<th>Author</th>
-					<th>Year</th>
+					<?php foreach ($project->get_inclusion_criteria() as $ic) { ?>
+						<th><?= $ic->get_id() ?></th>
+					<?php } ?>
+					<?php foreach ($project->get_exclusion_criteria() as $ec) { ?>
+						<th><?= $ec->get_id() ?></th>
+					<?php } ?>
 					<th>Database</th>
 					<th>Status</th>
 				</tr>
@@ -199,10 +203,30 @@
 					<tr>
 						<td><?= $paper->get_id(); ?></td>
 						<td><?= $paper->get_title(); ?></td>
-						<td><?= $paper->get_author(); ?></td>
-						<td><?= $paper->get_year(); ?></td>
-						<td><?= $paper->get_database(); ?></td>
+
 						<?php
+						if (key_exists($paper->get_id(), $criterias)) {
+							$cs = $criterias[$paper->get_id()];
+							foreach ($project->get_inclusion_criteria() as $ic) { ?>
+								<td><?= $cs[$ic->get_id()] ?></td>
+
+							<?php } ?>
+							<?php foreach ($project->get_exclusion_criteria() as $ec) { ?>
+								<td><?= $cs[$ec->get_id()] ?></td>
+							<?php } ?>
+							<td><?= $paper->get_database(); ?></td>
+						<?php } else {
+							foreach ($project->get_inclusion_criteria() as $ic) { ?>
+								<td><?= "" ?></td>
+
+							<?php } ?>
+							<?php foreach ($project->get_exclusion_criteria() as $ec) { ?>
+								<td><?= "" ?></td>
+							<?php } ?>
+							<td><?= $paper->get_database(); ?></td>
+							<?php
+						}
+
 						$class = "text-dark";
 						$status = "Unclassified";
 						switch ($paper->get_status_selection()) {
@@ -230,8 +254,12 @@
 				<tr>
 					<th>ID</th>
 					<th>Title</th>
-					<th>Author</th>
-					<th>Year</th>
+					<?php foreach ($project->get_inclusion_criteria() as $ic) { ?>
+						<th><?= $ic->get_id() ?></th>
+					<?php } ?>
+					<?php foreach ($project->get_exclusion_criteria() as $ec) { ?>
+						<th><?= $ec->get_id() ?></th>
+					<?php } ?>
 					<th>Database</th>
 					<th>Status</th>
 				</tr>

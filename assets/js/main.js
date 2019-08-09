@@ -108,7 +108,8 @@ $(document).ready(function () {
 
 	table_papers = $('#table_papers').DataTable({
 		initComplete: function () {
-			for (let i = 3; i < 5; i++) {
+			let size = this.api().columns().data().length;
+			for (let i = 2; i < size; i++) {
 				this.api().columns(i).every(function () {
 					let column = this;
 					let select = $('<select id="select_status' + i + '" class="form-control" ><option value=""></option></select>')
@@ -124,31 +125,12 @@ $(document).ready(function () {
 						});
 
 					column.data().unique().sort().each(function (d, j) {
-						select.append('<option value="' + d + '">' + d + '</option>')
+						if (d != "") {
+							select.append('<option value="' + d + '">' + d + '</option>')
+						}
 					});
 				});
 			}
-			this.api().columns(5).every(function () {
-				let column = this;
-				let select = $('<select id="select_status5" class="form-control" ><option value=""></option></select>')
-					.appendTo($(column.footer()).empty())
-					.on('change', function () {
-						let val = $.fn.dataTable.util.escapeRegex(
-							$(this).val()
-						);
-
-						column
-							.search(val ? '^' + val + '$' : '', true, false)
-							.draw();
-					});
-
-				select.append('<option value="Accepted">Accepted</option>')
-				select.append('<option value="Rejected">Rejected</option>')
-				select.append('<option value="Unclassified">Unclassified</option>')
-				select.append('<option value="Duplicate">Duplicate</option>')
-				select.append('<option value="Removed">Removed</option>')
-
-			});
 		},
 		responsive: true,
 		order: [[0, "asc"]],
