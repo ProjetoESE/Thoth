@@ -109,28 +109,46 @@ $(document).ready(function () {
 	table_papers = $('#table_papers').DataTable({
 		initComplete: function () {
 			let size = this.api().columns().data().length;
-			for (let i = 2; i < size; i++) {
-				this.api().columns(i).every(function () {
-					let column = this;
-					let select = $('<select id="select_status' + i + '" class="form-control" ><option value=""></option></select>')
-						.appendTo($(column.footer()).empty())
-						.on('change', function () {
-							let val = $.fn.dataTable.util.escapeRegex(
-								$(this).val()
-							);
+			this.api().columns(size - 1).every(function () {
+				let column = this;
+				let select = $('<select id="select_status' + (size - 1) + '" class="form-control" ><option value=""></option></select>')
+					.appendTo($(column.footer()).empty())
+					.on('change', function () {
+						let val = $.fn.dataTable.util.escapeRegex(
+							$(this).val()
+						);
 
-							column
-								.search(val ? '^' + val + '$' : '', true, false)
-								.draw();
-						});
-
-					column.data().unique().sort().each(function (d, j) {
-						if (d != "") {
-							select.append('<option value="' + d + '">' + d + '</option>')
-						}
+						column
+							.search(val ? '^' + val + '$' : '', true, false)
+							.draw();
 					});
+
+				column.data().unique().sort().each(function (d, j) {
+					if (d != "") {
+						select.append('<option value="' + d + '">' + d + '</option>')
+					}
 				});
-			}
+			});
+			this.api().columns(size - 2).every(function () {
+				let column = this;
+				let select = $('<select id="select_status' + (size - 2) + '" class="form-control" ><option value=""></option></select>')
+					.appendTo($(column.footer()).empty())
+					.on('change', function () {
+						let val = $.fn.dataTable.util.escapeRegex(
+							$(this).val()
+						);
+
+						column
+							.search(val ? '^' + val + '$' : '', true, false)
+							.draw();
+					});
+
+				column.data().unique().sort().each(function (d, j) {
+					if (d != "") {
+						select.append('<option value="' + d + '">' + d + '</option>')
+					}
+				});
+			});
 		},
 		responsive: true,
 		order: [[0, "asc"]],
@@ -146,6 +164,7 @@ $(document).ready(function () {
 					let id_project = $('#id_project').val();
 					let titles = [];
 					let papers = [];
+					let size = table_papers.columns().data().length;
 					table_papers.rows().every(function (rowIdx, tableLoop, rowLoop) {
 						let data = this.data();
 						if (data[5] != 'Duplicate') {
@@ -155,7 +174,7 @@ $(document).ready(function () {
 							} else {
 								papers.push(data[0]);
 								let old_count = 0;
-								switch (data[5]) {
+								switch (data[size - 1]) {
 									case "Accepted":
 									case "1":
 										old_count = parseInt($('#count_acc').text());
@@ -187,13 +206,13 @@ $(document).ready(function () {
 										$('#count_rem').text(old_count);
 										break;
 								}
-								let paper = $(table_papers.cell(rowIdx, 5).node());
+								let paper = $(table_papers.cell(rowIdx, size - 1).node());
 								paper.removeClass("text-danger");
 								paper.removeClass("text-success");
 								paper.removeClass("text-dark");
 								paper.removeClass("text-info");
 								paper.addClass("text-warning");
-								table_papers.cell(rowIdx, 5).data("Duplicate").draw();
+								table_papers.cell(rowIdx, size - 1).data("Duplicate").draw();
 								let new_count = parseInt($('#count_dup').text());
 								new_count++;
 								$('#count_dup').text(new_count);
@@ -222,7 +241,7 @@ $(document).ready(function () {
 							},
 							success: function () {
 								let creat = true;
-								let y = document.getElementById("select_status5").options;
+								let y = document.getElementById("select_status" + (size - 1)).options;
 								for (let i = 0; i < y.length; i++) {
 									if (y[i].value == "Duplicate") {
 										creat = false;

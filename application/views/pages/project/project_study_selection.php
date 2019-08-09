@@ -205,28 +205,15 @@
 						<td><?= $paper->get_title(); ?></td>
 
 						<?php
-						if (key_exists($paper->get_id(), $criterias)) {
-							$cs = $criterias[$paper->get_id()];
-							foreach ($project->get_inclusion_criteria() as $ic) { ?>
-								<td><?= $cs[$ic->get_id()] ?></td>
-
-							<?php } ?>
-							<?php foreach ($project->get_exclusion_criteria() as $ec) { ?>
-								<td><?= $cs[$ec->get_id()] ?></td>
-							<?php } ?>
-							<td><?= $paper->get_database(); ?></td>
-						<?php } else {
-							foreach ($project->get_inclusion_criteria() as $ic) { ?>
-								<td><?= "" ?></td>
-
-							<?php } ?>
-							<?php foreach ($project->get_exclusion_criteria() as $ec) { ?>
-								<td><?= "" ?></td>
-							<?php } ?>
-							<td><?= $paper->get_database(); ?></td>
-							<?php
-						}
-
+						$cs = $criterias[$paper->get_id()];
+						foreach ($project->get_inclusion_criteria() as $ic) { ?>
+							<td><?= $cs[$ic->get_id()] =="True"?"<i class=\"fas fa-check text-success\"></i> True":"<i class=\"fas fa-times text-danger\"></i> False" ?></td>
+						<?php } ?>
+						<?php foreach ($project->get_exclusion_criteria() as $ec) { ?>
+							<td><?= $cs[$ec->get_id()] =="True"?"<i class=\"fas fa-check text-success\"></i> True":"<i class=\"fas fa-times text-danger\"></i> False" ?></td>
+						<?php } ?>
+						<td><?= $paper->get_database(); ?></td>
+						<?php
 						$class = "text-dark";
 						$status = "Unclassified";
 						switch ($paper->get_status_selection()) {

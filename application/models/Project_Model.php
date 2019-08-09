@@ -1723,7 +1723,7 @@ class Project_Model extends Pattern_Model
 		$this->db->where('evaluation_criteria.id_member', $id_member);
 		$query = $this->db->get();
 
-		if ($query->num_rows() > 0) {
+		foreach ($query->result() as $row) {
 			return "True";
 		}
 
@@ -1783,8 +1783,9 @@ class Project_Model extends Pattern_Model
 
 		$ids_paper = array();
 		if (sizeof($id_bibs) > 0) {
-			$ids_paper = $this->get_ID_papers($id_bibs);
+			$ids_paper = $this->get_ID_papers_to_selection($id_bibs);
 		}
+
 
 		$criteria = null;
 		if (sizeof($id_bibs) > 0) {

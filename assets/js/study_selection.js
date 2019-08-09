@@ -649,6 +649,8 @@ function change_new_status(id_paper, status, index) {
 	let edit = $('#edit_status_selection');
 	let text = $('#text_selection');
 
+	let size = table_papers.columns().data().length;
+
 	switch (status) {
 		case "1":
 			text.val(1);
@@ -659,8 +661,7 @@ function change_new_status(id_paper, status, index) {
 			paper.removeClass("text-dark");
 			paper.removeClass("text-info");
 			paper.removeClass("text-warning");
-			table_papers.cell(index, 5).data("Accepted");
-			//	paper.html("Accepted");
+			table_papers.cell(index, (size - 1)).data("Accepted");
 			paper.addClass("text-success");
 			text.text("Accepted");
 			text.show();
@@ -679,8 +680,7 @@ function change_new_status(id_paper, status, index) {
 			paper.removeClass("text-dark");
 			paper.removeClass("text-info");
 			paper.removeClass("text-warning");
-			table_papers.cell(index, 5).data("Rejected");
-			//paper.html("Rejected");
+			table_papers.cell(index, (size - 1)).data("Rejected");
 			text.text("Rejected");
 			paper.addClass("text-danger");
 			text.show();
@@ -697,8 +697,7 @@ function change_new_status(id_paper, status, index) {
 			paper.removeClass("text-success");
 			paper.removeClass("text-info");
 			paper.removeClass("text-warning");
-			table_papers.cell(index, 5).data("Unclassified");
-			//paper.html("Unclassified");
+			table_papers.cell(index, (size - 1)).data("Unclassified");
 			paper.addClass("text-dark");
 			edit.val(3);
 			edit.show();
@@ -716,7 +715,6 @@ function change_new_status(id_paper, status, index) {
 			paper.removeClass("text-dark");
 			paper.removeClass("text-info");
 			table_papers.cell(index, 5).data("Duplicate");
-			//paper.html("Duplicate");
 			paper.addClass("text-warning");
 			edit.val(4);
 			edit.show();
@@ -733,8 +731,7 @@ function change_new_status(id_paper, status, index) {
 			paper.removeClass("text-success");
 			paper.removeClass("text-dark");
 			paper.removeClass("text-warning");
-			table_papers.cell(index, 5).data("Removed");
-			//paper.html("Removed");
+			table_papers.cell(index, (size - 1)).data("Removed");
 			paper.addClass("text-info");
 			edit.val(5);
 			edit.show();
@@ -783,6 +780,16 @@ function evaluation_criteria(indexes, selected, inclusion) {
 
 		success: function (data) {
 			data = JSON.parse(data);
+			let cont = 0;
+			let colum = 0;
+			table_papers.columns().every(function () {
+				if (this.title() == id) {
+					colum = cont;
+				}
+				cont++;
+			});
+
+			table_papers.cell(index, colum).data(selected ? '<i class=\"fas fa-check text-success\"></i> True' : '<i class=\"fas fa-times text-danger\"></i> False');
 
 			if (data.change) {
 				change_old_status(old_status.toString());
