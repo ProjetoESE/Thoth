@@ -216,6 +216,20 @@ class Pattern_Model extends CI_Model
 		return $id_papers;
 	}
 
+	public function get_ID_papers_to_selection($id_bib)
+	{
+		$id_papers = array();
+		$this->db->select('id');
+		$this->db->from('papers');
+		$this->db->where_in('id_bib', $id_bib);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			array_push($id_papers, $row->id);
+		}
+		return $id_papers;
+	}
+
 	public function get_ids_project_database($id_project)
 	{
 		$ids_project_database = array();
@@ -480,6 +494,20 @@ class Pattern_Model extends CI_Model
 			array_push($qas, array($row->id_qa, $row->id));
 		}
 		return $qas;
+	}
+
+	public function get_ids_criteria($id_project, $id)
+	{
+		$this->db->select('id_criteria');
+		$this->db->from('criteria');
+		$this->db->where('id_project', $id_project);
+		$this->db->where('id', $id);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			return $row->id_criteria;
+		}
+		return null;
 	}
 
 	public function get_qes($id_project)

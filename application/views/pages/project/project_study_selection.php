@@ -188,8 +188,12 @@
 				<tr>
 					<th>ID</th>
 					<th>Title</th>
-					<th>Author</th>
-					<th>Year</th>
+					<?php foreach ($project->get_inclusion_criteria() as $ic) { ?>
+						<th><?= $ic->get_id() ?></th>
+					<?php } ?>
+					<?php foreach ($project->get_exclusion_criteria() as $ec) { ?>
+						<th><?= $ec->get_id() ?></th>
+					<?php } ?>
 					<th>Database</th>
 					<th>Status</th>
 				</tr>
@@ -199,8 +203,15 @@
 					<tr>
 						<td><?= $paper->get_id(); ?></td>
 						<td><?= $paper->get_title(); ?></td>
-						<td><?= $paper->get_author(); ?></td>
-						<td><?= $paper->get_year(); ?></td>
+
+						<?php
+						$cs = $criterias[$paper->get_id()];
+						foreach ($project->get_inclusion_criteria() as $ic) { ?>
+							<td><?= $cs[$ic->get_id()] =="True"?"<i class=\"fas fa-check text-success\"></i> True":"<i class=\"fas fa-times text-danger\"></i> False" ?></td>
+						<?php } ?>
+						<?php foreach ($project->get_exclusion_criteria() as $ec) { ?>
+							<td><?= $cs[$ec->get_id()] =="True"?"<i class=\"fas fa-check text-success\"></i> True":"<i class=\"fas fa-times text-danger\"></i> False" ?></td>
+						<?php } ?>
 						<td><?= $paper->get_database(); ?></td>
 						<?php
 						$class = "text-dark";
@@ -230,8 +241,12 @@
 				<tr>
 					<th>ID</th>
 					<th>Title</th>
-					<th>Author</th>
-					<th>Year</th>
+					<?php foreach ($project->get_inclusion_criteria() as $ic) { ?>
+						<th><?= $ic->get_id() ?></th>
+					<?php } ?>
+					<?php foreach ($project->get_exclusion_criteria() as $ec) { ?>
+						<th><?= $ec->get_id() ?></th>
+					<?php } ?>
 					<th>Database</th>
 					<th>Status</th>
 				</tr>
