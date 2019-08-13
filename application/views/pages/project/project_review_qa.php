@@ -196,21 +196,21 @@
 						<?php foreach ($conflicts['head'] as $mem) {
 							$class = "text-dark";
 							$status = "Unclassified";
-							switch ($paper[$mem[0]]) {
+							switch ($paper[$mem[0]][0]) {
 								case 1:
 									$class = "text-success";
-									$status = "Accepted";
+									$score = $paper[$mem[0]][1];
 									break;
 								case 2:
 									$class = "text-danger";
-									$status = "Rejected";
+									$score = $paper[$mem[0]][1];
 									break;
 								case 4:
 									$class = "text-info";
-									$status = "Removed";
+									$score = $paper[$mem[0]][1];
 									break;
 							} ?>
-							<td id="<?= $paper['id']; ?>" class="font-weight-bold <?= $class ?>"><?= $status ?></td>
+							<td id="<?= $paper['id']; ?>" class="font-weight-bold <?= $class ?>"><?= $score ?></td>
 						<?php } ?>
 					</tr>
 				<?php } ?>

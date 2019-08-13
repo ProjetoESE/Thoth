@@ -424,6 +424,7 @@ class Quality_Model extends Pattern_Model
 	public function check_status_qa($id, $id_project)
 	{
 		$project_databases = $this->get_ids_project_database($id_project);
+		$qas_score = $this->get_evaluation_qa_per_paper($id, $id_project);
 
 		$id_bibs = array();
 		if (sizeof($project_databases) > 0) {
@@ -455,6 +456,51 @@ class Quality_Model extends Pattern_Model
 		for ($i = 0; $i < (sizeof($status) - 1); $i++) {
 			if ($status[$i] != $status[$i + 1]) {
 				$status_qa = 3;
+			}
+		}
+
+		foreach ($qas_score as $key => $value) {
+			foreach ($qas_score as $key2 => $value2) {
+				if ($key != $key2) {
+					foreach ($value as $key3 => $value3) {
+						foreach ($value2 as $key4 => $value4) {
+							if ($key3 == $key4) {
+								if ($value3 !== $value4) {
+									$status_qa = 3;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+
+		$user = $this->get_id_name_user($this->session->email);
+		$id_member = $this->get_id_member($user[0], $id_project);
+
+		if ($status_qa != 3) {
+			$answers = array();
+			$aux = $qas_score[$id_member];
+			foreach ($aux as $key2 => $value2) {
+				$id_answer = $this->get_id_score_evaluation($id_paper, $key2, $id_member);
+				$data2 = array(
+					'id_paper' => $id_paper,
+					'id_question' => $key2,
+					'id_answer' => $id_answer
+				);
+				array_push($answers, $data2);
+			}
+			$id_papers_qa_answer = $this->get_id_papers_qa_answer($id_paper);
+			if (sizeof($id_papers_qa_answer) > 0) {
+				$this->db->where_in('id_papers_qa_answer', $id_papers_qa_answer);
+				$this->db->delete('papers_qa_answer');
+			}
+			$this->db->insert_batch('papers_qa_answer', $answers);
+		} else {
+			$id_papers_qa_answer = $this->get_id_papers_qa_answer($id_paper);
+			if (sizeof($id_papers_qa_answer) > 0) {
+				$this->db->where_in('id_papers_qa_answer', $id_papers_qa_answer);
+				$this->db->delete('papers_qa_answer');
 			}
 		}
 
@@ -611,6 +657,21 @@ class Quality_Model extends Pattern_Model
 		return null;
 	}
 
+	private function get_id_papers_qa_answer($id_paper)
+	{
+		$data = array();
+		$this->db->select('id_papers_qa_answer');
+		$this->db->from('papers_qa_answer');
+		$this->db->where('id_paper', $id_paper);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			array_push($data, $row->id_papers_qa_answer);
+		}
+
+		return $data;
+	}
+
 	private function get_id_score_qa($id_qa, $score)
 	{
 		$this->db->select('id_score');
@@ -665,9 +726,6 @@ class Quality_Model extends Pattern_Model
 		}
 
 		$status = 1;
-		if (sizeof($qa_ev_not_null) != sizeof($ids_qa_not_null)) {
-			$status = 2;
-		}
 
 		$score = 0.0;
 		foreach ($qa_ev_not_null as $key => $value) {
@@ -703,7 +761,11 @@ class Quality_Model extends Pattern_Model
 			$status = 2;
 		}
 
-		if (sizeof($qa_ev_null) < 1 && sizeof($qa_ev_not_null) < 1) {
+		if (sizeof($qa_ev_null) != sizeof($ids_qa_null)) {
+			$status = 3;
+		}
+
+		if (sizeof($qa_ev_not_null) != sizeof($ids_qa_not_null)) {
 			$status = 3;
 		}
 
@@ -796,7 +858,7 @@ class Quality_Model extends Pattern_Model
 
 		$data = array();
 		foreach ($id_papers as $id_paper) {
-			$this->db->select('id_member,id_status,id');
+			$this->db->select('id_member,id_status,id,papers_qa.score');
 			$this->db->from('papers_qa');
 			$this->db->join('papers', 'papers.id_paper = papers_qa.id_paper');
 			$this->db->where('papers_qa.id_paper', $id_paper);
@@ -805,7 +867,7 @@ class Quality_Model extends Pattern_Model
 			$paper = array();
 			foreach ($query->result() as $row) {
 				$paper['id'] = $row->id;
-				$paper[$row->id_member] = $row->id_status;
+				$paper[$row->id_member] = array($row->id_status, $row->score);
 			}
 			$data[$id_paper] = $paper;
 		}
@@ -827,6 +889,28 @@ class Quality_Model extends Pattern_Model
 				}
 			}
 		}
+
+		foreach ($data as $key5 => $value5) {
+			if (!array_keys($aux, $key5)) {
+				$qas_score = $this->get_evaluation_qa_per_paper($value5['id'], $id_project);
+				foreach ($qas_score as $key => $value) {
+					foreach ($qas_score as $key2 => $value2) {
+						if ($key != $key2) {
+							foreach ($value as $key3 => $value3) {
+								foreach ($value2 as $key4 => $value4) {
+									if ($key3 == $key4) {
+										if ($value3 != $value4) {
+											$aux[$key5] = $value5;;
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+
 
 		return $aux;
 	}

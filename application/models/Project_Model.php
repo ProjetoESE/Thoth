@@ -1697,23 +1697,6 @@ class Project_Model extends Pattern_Model
 		}
 	}
 
-	private function get_score_evaluation($id_paper, $id_qa, $id_member)
-	{
-		$this->db->select('score_rule');
-		$this->db->from('evaluation_qa');
-		$this->db->join('score_quality', 'score_quality.id_score = evaluation_qa.id_score_qa');
-		$this->db->where('evaluation_qa.id_paper', $id_paper);
-		$this->db->where('evaluation_qa.id_qa', $id_qa);
-		$this->db->where('evaluation_qa.id_member', $id_member);
-		$query = $this->db->get();
-
-		foreach ($query->result() as $row) {
-			return $row->score_rule;
-		}
-
-		return null;
-	}
-
 	private function get_criteria_evaluation($id_paper, $id_cri, $id_member)
 	{
 		$this->db->select('id_evaluation_criteria');
@@ -1728,45 +1711,6 @@ class Project_Model extends Pattern_Model
 		}
 
 		return "False";
-	}
-
-	public function get_evaluation_qa($id_project)
-	{
-		$papers = array();
-		$user = $this->get_id_name_user($this->session->email);
-		$id_member = $this->get_id_member($user[0], $id_project);
-		$project_databases = $this->get_ids_project_database($id_project);
-
-		$id_bibs = array();
-		if (sizeof($project_databases) > 0) {
-			$id_bibs = $this->get_ids_bibs($project_databases);
-		}
-
-		$ids_paper = array();
-		if (sizeof($id_bibs) > 0) {
-			$ids_paper = $this->get_ID_papers($id_bibs);
-		}
-
-		$ids_qas = null;
-		if (sizeof($id_bibs) > 0) {
-			$ids_qas = $this->get_ids_qas($id_project);
-		}
-
-		if (sizeof($ids_paper) > 0) {
-
-			foreach ($ids_paper as $id_paper) {
-				$id = $this->get_id_paper($id_paper, $id_bibs);
-
-				foreach ($ids_qas as $qa) {
-					$score = $this->get_score_evaluation($id, $qa[0], $id_member);
-
-					$qas [$qa[1]] = $score;
-				}
-				$papers[$id_paper] = $qas;
-			}
-		}
-
-		return $papers;
 	}
 
 	public function get_evaluation_selection($id_project)

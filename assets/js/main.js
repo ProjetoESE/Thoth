@@ -167,7 +167,7 @@ $(document).ready(function () {
 					let size = table_papers.columns().data().length;
 					table_papers.rows().every(function (rowIdx, tableLoop, rowLoop) {
 						let data = this.data();
-						if (data[5] != 'Duplicate') {
+						if (data[size - 1] != 'Duplicate') {
 							let title = data[1].replace(/[^a-zA-Z0-9]/g, '');
 							if (titles.indexOf(title) == -1) {
 								titles.push(title);

@@ -400,7 +400,6 @@ class Quality_Controller extends Pattern_Controller
 
 			$activity = "Selected score " . $score . " to quality question " . $id_qa . " to paper " . $id_paper;
 			$this->insert_log($activity, 3, $id_project);
-
 			if ($data['change']) {
 				$activity = "Edited status quality to paper " . $id_paper;
 				$this->insert_log($activity, 3, $id_project);
