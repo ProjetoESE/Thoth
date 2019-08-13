@@ -954,7 +954,7 @@ class Quality_Model extends Pattern_Model
 	private function get_info($id_paper)
 	{
 		$note = array();
-		$this->db->select('note,id_status,papers_qa.id_member');
+		$this->db->select('note,id_status,papers_qa.id_member,score');
 		$this->db->from('papers_qa');
 		$this->db->join('members', 'members.id_members = papers_qa.id_member');
 		$this->db->where('id_paper', $id_paper);
@@ -972,7 +972,7 @@ class Quality_Model extends Pattern_Model
 				$name = $row2->name;
 			}
 
-			array_push($note, array($row->note, $name, $row->id_status, $row->id_member));
+			array_push($note, array($row->note, $name, $row->id_status, $row->id_member, $row->score));
 		}
 
 		return $note;

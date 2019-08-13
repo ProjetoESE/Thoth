@@ -55,6 +55,61 @@
 				<hr>
 				<div id="notes_qa">
 				</div>
+				<h6>Quality Questions Answer</h6>
+				<table class="table table-responsive-sm" id="">
+					<thead>
+					<tr>
+						<th>Research</th>
+						<?php foreach ($project->get_questions_quality() as $qa) { ?>
+							<th><?= $qa->get_id() ?></th>
+						<?php } ?>
+						<th>Score</th>
+						<th>Status</th>
+					</tr>
+					</thead>
+				</table>
+				<hr>
+				<h5>Quality Questions</h5>
+				<div class="form-inline">
+					<h6>Score: </h6> <h6 class="font-weight-bold" id="score_paper_qa">0</h6>
+				</div>
+				<div class="form-inline">
+					<h6>General Score: </h6> <h6 class="font-weight-bold" id="gen_score_qa"></h6>
+				</div>
+				<table class="table table-responsive-sm" id="table_qa_eva">
+					<caption>List of Quality Questions</caption>
+					<thead>
+					<tr>
+						<th>ID</th>
+						<th>Description</th>
+						<th>Minimum to Approve</th>
+						<th>Score</th>
+					</tr>
+					</thead>
+					<tbody>
+					<?php foreach ($project->get_questions_quality() as $qa) { ?>
+						<tr>
+							<td><?= $qa->get_id() ?></td>
+							<td><?= $qa->get_description() ?></td>
+							<td><?= is_null($qa->get_min_to_approve()) ? "" : $qa->get_min_to_approve()->get_score_rule() ?></td>
+							<td>
+								<select class="form-control" data-qa="<?= $qa->get_id() ?>"
+										id="<?= str_replace(" ", "", $qa->get_id()); ?>">
+									<option value=""></option>
+									<?php foreach ($qa->get_scores() as $score) { ?>
+										<option
+											data-toggle="tooltip" data-placement="top"
+											title="<?= $score->get_description() ?>"
+											value="<?= $score->get_score_rule() ?>">
+											<?= $score->get_score_rule() ?>
+										</option>
+									<?php } ?>
+								</select>
+							</td>
+						</tr>
+					<?php } ?>
+					</tbody>
+				</table>
 			</div>
 		</div>
 	</div>

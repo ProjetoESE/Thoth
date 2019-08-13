@@ -1283,35 +1283,6 @@ $(document).ready(function () {
 						notes.append(name);
 					}
 
-					let status = null;
-					if (document.getElementById("status_" + data['notes'][i][3])) {
-						status = document.getElementById("status_" + data['notes'][i][3]);
-						status.id = "status_" + data['notes'][i][3];
-					} else {
-						status = document.createElement('p');
-						status.id = "status_" + data['notes'][i][3];
-						notes.append(status);
-					}
-
-					switch (data['notes'][i][2]) {
-						case "1":
-							status.className = 'text-success';
-							status.innerText = "Accepted";
-							break;
-						case "2":
-							status.className = 'text-danger';
-							status.innerText = "Rejected";
-							break;
-						case "3":
-							status.className = 'text-dark';
-							status.innerText = "Unclassified";
-							break;
-						case "4":
-							status.className = 'text-info';
-							status.innerText = "Removed";
-							break;
-					}
-
 					if (document.getElementById("txt_" + data['notes'][i][3])) {
 						let txt = document.getElementById("txt_" + data['notes'][i][3]);
 						txt.id = "txt_" + data['notes'][i][3];
