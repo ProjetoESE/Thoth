@@ -414,6 +414,37 @@ class Quality_Controller extends Pattern_Controller
 	/**
 	 *
 	 */
+	public function evaluation_qa_conf()
+	{
+		try {
+			$id_paper = $this->input->post('id_paper');
+			$id_project = $this->input->post('id_project');
+			$id_qa = $this->input->post('id_qa');
+			$score = $this->input->post('score');
+
+			$this->validate_level($id_project, array(1, 3, 4));
+
+			$this->load->model("Quality_Model");
+
+			$this->Quality_Model->selected_qa_score_conf($id_paper, $id_qa, $score, $id_project);
+			$data = $this->Quality_Model->calculate_score_qa($id_paper, $id_project);
+
+			$activity = "Selected score " . $score . " to quality question " . $id_qa . " to paper " . $id_paper;
+			$this->insert_log($activity, 3, $id_project);
+			if ($data['change']) {
+				$activity = "Edited status quality to paper " . $id_paper;
+				$this->insert_log($activity, 3, $id_project);
+			}
+
+			echo json_encode($data);
+		} catch (Exception $e) {
+			$this->session->set_flashdata('error', $e->getMessage());
+		}
+	}
+
+	/**
+	 *
+	 */
 	public function update_note_qa()
 	{
 		try {

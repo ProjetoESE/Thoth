@@ -34,14 +34,6 @@
 						<h6>Database</h6>
 						<p id="paper_database_conf_qa"></p>
 					</div>
-					<div id="paper_status_selection_conf_qa" class="col-md-12">
-						<h6>Status Selection</h6>
-						<select class="form-control col-md-3" id="status_conflict_qa">
-							<?php foreach ($status as $st) { ?>
-								<option value="<?= $st[0] ?>"><?= $st[1] ?></option>
-							<?php } ?>
-						</select>
-					</div>
 					</hr>
 					<div class="col-md-12">
 						<h6>Abstract</h6>
@@ -56,7 +48,7 @@
 				<div id="notes_qa">
 				</div>
 				<h6>Quality Questions Answer</h6>
-				<table class="table table-responsive-sm" id="">
+				<table class="table table-responsive-sm" id="table_qa_answer">
 					<thead>
 					<tr>
 						<th>Research</th>
@@ -64,6 +56,7 @@
 							<th><?= $qa->get_id() ?></th>
 						<?php } ?>
 						<th>Score</th>
+						<th>General Score</th>
 						<th>Status</th>
 					</tr>
 					</thead>
@@ -71,12 +64,12 @@
 				<hr>
 				<h5>Quality Questions</h5>
 				<div class="form-inline">
-					<h6>Score: </h6> <h6 class="font-weight-bold" id="score_paper_qa">0</h6>
+					<h6>Score: </h6> <h6 class="font-weight-bold" id="score_paper_qa_conf">0</h6>
 				</div>
 				<div class="form-inline">
-					<h6>General Score: </h6> <h6 class="font-weight-bold" id="gen_score_qa"></h6>
+					<h6>General Score: </h6> <h6 class="font-weight-bold" id="gen_score_qa_conf"></h6>
 				</div>
-				<table class="table table-responsive-sm" id="table_qa_eva">
+				<table class="table table-responsive-sm" id="table_qa_eva_conf">
 					<caption>List of Quality Questions</caption>
 					<thead>
 					<tr>
@@ -94,7 +87,7 @@
 							<td><?= is_null($qa->get_min_to_approve()) ? "" : $qa->get_min_to_approve()->get_score_rule() ?></td>
 							<td>
 								<select class="form-control" data-qa="<?= $qa->get_id() ?>"
-										id="<?= str_replace(" ", "", $qa->get_id()); ?>">
+										id="conf_<?= str_replace(" ", "", $qa->get_id()); ?>">
 									<option value=""></option>
 									<?php foreach ($qa->get_scores() as $score) { ?>
 										<option

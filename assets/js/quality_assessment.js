@@ -1237,7 +1237,8 @@ $(document).ready(function () {
 				$('#paper_year_conf_qa').text(data['year']);
 				$('#paper_database_conf_qa').text(data['database']);
 
-				$('#status_conflict_qa').val(data['status']);
+				$('#gen_score_qa_conf').text(data['gen_score']);
+				$('#score_paper_qa_conf').text(data['score']);
 				$('#old_status_conf_qa').val(data['status']);
 
 				if (data['keywords'] != "") {
@@ -1270,8 +1271,47 @@ $(document).ready(function () {
 				}
 
 				let notes = $('#notes_qa');
-				for (let i = 0; i < data['notes'].length; i++) {
+				table_qa_answer.clear();
 
+				for (let i = 0; i < data['ans'].length; i++) {
+					let ans = [];
+					let sta = "";
+					let cla = "";
+
+					switch (data['ans'][i][1]) {
+						case "3":
+							sta = "Unclassified";
+							cla = "text-dark";
+							break;
+						case "2":
+							sta = "Rejected";
+							cla = "text-danger";
+							break;
+						case "1":
+							sta = "Accepted";
+							cla = "text-success";
+							break;
+						case "4":
+							sta = "Removed";
+							cla = "text-info";
+							break;
+					}
+
+					ans.push(data['ans'][i][0]);
+					for (let o = 4; o < data['ans'][i].length; o++) {
+						ans.push(data['ans'][i][o]);
+					}
+
+					ans.push(data['ans'][i][2]);
+					ans.push(data['ans'][i][3]);
+					ans.push("<p class='" + cla + "'>" + sta + "</p>");
+
+					table_qa_answer.row.add(ans);
+				}
+				table_qa_answer.draw();
+
+
+				for (let i = 0; i < data['notes'].length; i++) {
 					if (document.getElementById("name_" + data['notes'][i][3])) {
 						let name = document.getElementById("name_" + data['notes'][i][3]);
 						name.innerText = data['notes'][i][1];
@@ -1306,42 +1346,69 @@ $(document).ready(function () {
 
 					}
 				}
+				let size = table_qa_answer.columns().data().length;
+				for (let i = 1; i < (size - 3); i++) {
+					let id_qa = table_qa_answer.column(i).title().replace(" ", "");
+					let select = $('#conf_' + id_qa);
+
+					select.on('change', function () {
+
+						let cont = 0;
+						let id_qa = this.dataset.qa;
+						let colum = 0;
+						table_papers_quality.columns().every(function () {
+							if (this.title() == id_qa) {
+								colum = cont;
+							}
+							cont++;
+						});
+
+						let score = this.value;
+
+						let id_project = $('#id_project').val();
+						let id_paper = $('#id_paper_conf_qa').val();
+						let index = $('#index_paper_conf_qa').val();
+						let old_status = $('#old_status_conf_qa').val();
+
+
+						$.ajax({
+							type: "POST",
+							url: base_url + 'Quality_Controller/evaluation_qa_conf/',
+							data: {
+								id_project: id_project,
+								id_qa: id_qa,
+								id_paper: id_paper,
+								score: score
+							}, error: function () {
+								Swal({
+									type: 'error',
+									title: 'Error',
+									html: 'Something caused an <label class="font-weight-bold text-danger">Error</label>',
+									showCancelButton: false,
+									confirmButtonText: 'Ok'
+								});
+							},
+							success: function (result) {
+								console.log(result);
+								let dados = JSON.parse(result);
+								if (dados.change) {
+									table_conf_paper_qa.row(index).remove().draw();
+									change_new_qa_conf(dados.s, dados.gen);
+									new_status_paper_qa(old_status, dados.status.toString());
+									status_paper_qa(dados.status.toString());
+								}
+
+
+							}
+						});
+
+					});
+				}
+
 				$('#modal_paper_conflict_qa').modal('show');
 			}
 		});
 	});
-
-	$("#status_conflict_qa").on('change', function () {
-		let status = this.value;
-		let id_paper = $('#id_paper_conf_qa').val();
-		let id_project = $('#id_project').val();
-		let index = $('#index_paper_conf_qa').val();
-		let old_status = $('#old_status_conf_qa').val();
-		$.ajax({
-			type: "POST",
-			url: base_url + 'Quality_Controller/edit_status_paper/',
-			data: {
-				id_project: id_project,
-				id_paper: id_paper,
-				status: status
-			},
-			error: function () {
-				Swal({
-					type: 'error',
-					title: 'Error',
-					html: 'Something caused an <label class="font-weight-bold text-danger">Error</label>',
-					showCancelButton: false,
-					confirmButtonText: 'Ok'
-				});
-			},
-			success: function () {
-				table_conf_paper_qa.row(index).remove().draw();
-				new_status_paper_qa(old_status, status);
-				status_paper_qa(status);
-			}
-		});
-	});
-
 
 });
 
@@ -1596,6 +1663,17 @@ function change_new_status_qa(id_paper, status, index, size) {
 			update_progress_qa();
 			break;
 	}
+}
+
+function change_new_qa_conf(score, gen) {
+	let text_score = $('#score_paper_qa_conf');
+	let text_gen = $('#gen_score_qa_conf');
+
+	text_score.val(score);
+	text_score.text(score);
+
+	text_gen.val(gen);
+	text_gen.text(gen);
 }
 
 function change_new_qa(status, index, size, score, gen, score_rule, colum) {

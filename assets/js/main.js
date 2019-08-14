@@ -66,6 +66,40 @@ $(document).ready(function () {
 		info: false,
 		searching: false,
 	});
+	table_qa_eva_conf = $('#table_qa_eva_conf').DataTable({
+		columnDefs: [{
+			orderable: false,
+			targets: 2
+		}, {
+			width: '20%',
+			orderable: false,
+			targets: 3
+		}],
+		autoWidth: false,
+		language: lang,
+		responsive: true,
+		order: [[0, "asc"]],
+		paginate: false,
+		info: false,
+		searching: false,
+	});
+	table_qa_answer = $('#table_qa_answer').DataTable({
+		columnDefs: [{
+			orderable: false,
+			targets: 2
+		}, {
+			width: '20%',
+			orderable: false,
+			targets: 3
+		}],
+		autoWidth: false,
+		language: lang,
+		responsive: true,
+		order: [[0, "asc"]],
+		paginate: false,
+		info: false,
+		searching: false,
+	});
 
 	table_domains = $('#table_domains').DataTable(configDataTables);
 	table_languages = $('#table_languages').DataTable(configDataTables);
