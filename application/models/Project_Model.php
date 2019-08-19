@@ -2358,7 +2358,7 @@ class Project_Model extends Pattern_Model
 
 		if (sizeof($id_bibs) > 0) {
 
-			$this->db->select('title,author,year,book_title,volume,pages,num_pages,keywords,doi,journal,issn,location,isbn,address,type,bib_key,url,publisher, year');
+			$this->db->select('id,title,author,year,book_title,volume,pages,num_pages,keywords,doi,journal,issn,location,isbn,address,type,bib_key,url,publisher, year');
 			$this->db->from('papers');
 			$this->db->where_in('id_bib', $id_bibs);
 
@@ -2379,6 +2379,7 @@ class Project_Model extends Pattern_Model
 
 			foreach ($query->result() as $row) {
 				$p = new Paper();
+				$p->set_id($row->id);
 				$p->set_title($row->title);
 				$p->set_author($row->author);
 				$p->set_year($row->year);
