@@ -653,7 +653,7 @@ class Project_Controller extends Pattern_Controller
 		$steps = $this->input->post('steps');
 		$id_project = $this->input->post('id_project');
 
-		$this->validate_level($id_project, array(1, 2, 3, 4));
+		$this->validate_level($id_project, array(1, 3, 4));
 
 		$this->load->model("Project_Model");
 		$project = $this->Project_Model->get_project_export_latex($id_project);
@@ -1030,8 +1030,8 @@ class Project_Controller extends Pattern_Controller
 					$file .= "\n";
 					break;
 				case "Quality":
-					$papers = $this->Project_Model->get_papers_qa($id_project);
-					$qas_score = $this->Project_Model->get_evaluation_qa($id_project);
+					$papers = $this->Project_Model->get_papers_qa_latex($id_project);
+					$qas_score = $this->Project_Model->get_evaluation_qa_latex($id_project);
 
 					//Quality Assessment
 					$file .= "\section{Quality Assessment}\n";
