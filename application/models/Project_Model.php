@@ -223,7 +223,7 @@ class Project_Model extends Pattern_Model
 			$project->set_extraction($row->extraction);
 		}
 
-		$project->set_members($this->get_members($id_project));
+		$project->set_members($this->get_researchs($id_project));
 		$project->set_errors($errors);
 		$project->set_domains($this->get_domains($id_project));
 		$project->set_languages($this->get_languages($id_project));
@@ -635,6 +635,28 @@ class Project_Model extends Pattern_Model
 		$this->db->join('user', 'user.id_user = members.id_user');
 		$this->db->join('levels', 'levels.id_level = members.level');
 		$this->db->where('id_project', $id_project);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			$user = new User();
+			$user->set_email($row->email);
+			$user->set_level($row->level);
+			$user->set_name($row->name);
+			array_push($members, $user);
+		}
+
+		return $members;
+	}
+
+	private function get_researchs($id_project)
+	{
+		$members = array();
+		$this->db->select('name,email,levels.level');
+		$this->db->from('members');
+		$this->db->join('user', 'user.id_user = members.id_user');
+		$this->db->join('levels', 'levels.id_level = members.level');
+		$this->db->where('id_project', $id_project);
+		$this->db->where_in('members.level', array(1, 3, 4));
 		$query = $this->db->get();
 
 		foreach ($query->result() as $row) {
@@ -1144,6 +1166,52 @@ class Project_Model extends Pattern_Model
 					$p->set_score($row2->score);
 					$gen_score = $row2->id_gen_score;
 				}
+
+
+				$this->db->select('description');
+				$this->db->from('general_score');
+				$this->db->where('id_general_score', $gen_score);
+				$query3 = $this->db->get();
+
+				foreach ($query3->result() as $row3) {
+					$p->set_rule_quality($row3->description);
+				}
+				array_push($papers, $p);
+
+			}
+		}
+		return $papers;
+	}
+
+	public function get_papers_qa_latex($id_project)
+	{
+		$papers = array();
+		$id_bibs = array();
+		$ids_project_database = $this->get_ids_project_database($id_project);
+
+		if (sizeof($ids_project_database) > 0) {
+			$id_bibs = $this->get_ids_bibs($ids_project_database);
+		}
+
+		if (sizeof($id_bibs) > 0) {
+
+			$this->db->select('papers.title,papers.id,papers.id_paper,papers.author,papers.year, data_base.name,status_qa,score,id_gen_score');
+			$this->db->from('papers');
+			$this->db->join('data_base', 'papers.data_base = data_base.id_database');
+			$this->db->where_in('id_bib', $id_bibs);
+			$this->db->where('status_qa', 1);
+			$query = $this->db->get();
+
+			foreach ($query->result() as $row) {
+				$p = new Paper();
+				$p->set_id($row->id);
+				$p->set_title($row->title);
+				$p->set_author($row->author);
+				$p->set_database($row->name);
+				$p->set_year($row->year);
+				$p->set_status_quality($row->status_qa);
+				$p->set_score($row->score);
+				$gen_score = $row->id_gen_score;
 
 
 				$this->db->select('description');
@@ -1697,23 +1765,6 @@ class Project_Model extends Pattern_Model
 		}
 	}
 
-	private function get_score_evaluation($id_paper, $id_qa, $id_member)
-	{
-		$this->db->select('score_rule');
-		$this->db->from('evaluation_qa');
-		$this->db->join('score_quality', 'score_quality.id_score = evaluation_qa.id_score_qa');
-		$this->db->where('evaluation_qa.id_paper', $id_paper);
-		$this->db->where('evaluation_qa.id_qa', $id_qa);
-		$this->db->where('evaluation_qa.id_member', $id_member);
-		$query = $this->db->get();
-
-		foreach ($query->result() as $row) {
-			return $row->score_rule;
-		}
-
-		return null;
-	}
-
 	private function get_criteria_evaluation($id_paper, $id_cri, $id_member)
 	{
 		$this->db->select('id_evaluation_criteria');
@@ -1728,45 +1779,6 @@ class Project_Model extends Pattern_Model
 		}
 
 		return "False";
-	}
-
-	public function get_evaluation_qa($id_project)
-	{
-		$papers = array();
-		$user = $this->get_id_name_user($this->session->email);
-		$id_member = $this->get_id_member($user[0], $id_project);
-		$project_databases = $this->get_ids_project_database($id_project);
-
-		$id_bibs = array();
-		if (sizeof($project_databases) > 0) {
-			$id_bibs = $this->get_ids_bibs($project_databases);
-		}
-
-		$ids_paper = array();
-		if (sizeof($id_bibs) > 0) {
-			$ids_paper = $this->get_ID_papers($id_bibs);
-		}
-
-		$ids_qas = null;
-		if (sizeof($id_bibs) > 0) {
-			$ids_qas = $this->get_ids_qas($id_project);
-		}
-
-		if (sizeof($ids_paper) > 0) {
-
-			foreach ($ids_paper as $id_paper) {
-				$id = $this->get_id_paper($id_paper, $id_bibs);
-
-				foreach ($ids_qas as $qa) {
-					$score = $this->get_score_evaluation($id, $qa[0], $id_member);
-
-					$qas [$qa[1]] = $score;
-				}
-				$papers[$id_paper] = $qas;
-			}
-		}
-
-		return $papers;
 	}
 
 	public function get_evaluation_selection($id_project)
@@ -2346,7 +2358,7 @@ class Project_Model extends Pattern_Model
 
 		if (sizeof($id_bibs) > 0) {
 
-			$this->db->select('title,author,year,book_title,volume,pages,num_pages,keywords,doi,journal,issn,location,isbn,address,type,bib_key,url,publisher, year');
+			$this->db->select('id,title,author,year,book_title,volume,pages,num_pages,keywords,doi,journal,issn,location,isbn,address,type,bib_key,url,publisher, year');
 			$this->db->from('papers');
 			$this->db->where_in('id_bib', $id_bibs);
 
@@ -2367,6 +2379,7 @@ class Project_Model extends Pattern_Model
 
 			foreach ($query->result() as $row) {
 				$p = new Paper();
+				$p->set_id($row->id);
 				$p->set_title($row->title);
 				$p->set_author($row->author);
 				$p->set_year($row->year);

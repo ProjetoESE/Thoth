@@ -66,6 +66,40 @@ $(document).ready(function () {
 		info: false,
 		searching: false,
 	});
+	table_qa_eva_conf = $('#table_qa_eva_conf').DataTable({
+		columnDefs: [{
+			orderable: false,
+			targets: 2
+		}, {
+			width: '20%',
+			orderable: false,
+			targets: 3
+		}],
+		autoWidth: false,
+		language: lang,
+		responsive: true,
+		order: [[0, "asc"]],
+		paginate: false,
+		info: false,
+		searching: false,
+	});
+	table_qa_answer = $('#table_qa_answer').DataTable({
+		columnDefs: [{
+			orderable: false,
+			targets: 2
+		}, {
+			width: '20%',
+			orderable: false,
+			targets: 3
+		}],
+		autoWidth: false,
+		language: lang,
+		responsive: true,
+		order: [[0, "asc"]],
+		paginate: false,
+		info: false,
+		searching: false,
+	});
 
 	table_domains = $('#table_domains').DataTable(configDataTables);
 	table_languages = $('#table_languages').DataTable(configDataTables);
@@ -167,7 +201,7 @@ $(document).ready(function () {
 					let size = table_papers.columns().data().length;
 					table_papers.rows().every(function (rowIdx, tableLoop, rowLoop) {
 						let data = this.data();
-						if (data[5] != 'Duplicate') {
+						if (data[size - 1] != 'Duplicate') {
 							let title = data[1].replace(/[^a-zA-Z0-9]/g, '');
 							if (titles.indexOf(title) == -1) {
 								titles.push(title);
@@ -253,7 +287,7 @@ $(document).ready(function () {
 									let op = document.createElement("option");
 									op.text = "Duplicate";
 									op.value = "Duplicate";
-									let select = document.getElementById("select_status5");
+									let select = document.getElementById("select_status" + (size - 1));
 									select.add(op);
 								}
 								Swal({

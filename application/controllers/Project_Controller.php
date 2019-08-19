@@ -653,7 +653,7 @@ class Project_Controller extends Pattern_Controller
 		$steps = $this->input->post('steps');
 		$id_project = $this->input->post('id_project');
 
-		$this->validate_level($id_project, array(1, 2, 3, 4));
+		$this->validate_level($id_project, array(1, 3, 4));
 
 		$this->load->model("Project_Model");
 		$project = $this->Project_Model->get_project_export_latex($id_project);
@@ -666,6 +666,21 @@ class Project_Controller extends Pattern_Controller
 		$file .= "\usepackage{graphicx}\n";
 		$file .= "\usepackage{booktabs}\n";
 		$file .= "\usepackage{float}\n";
+		$file .= "\usepackage[alf]{abntex2cite}\n";
+		$file .= "\usepackage[brazilian,hyperpageref]{backref}\n";
+
+
+		$file .= "\\renewcommand{\backrefpagesname}{Citado na(s) página(s):~}\n";
+		$file .= "\\renewcommand{\backref}{}\n";
+		$file .= "\\renewcommand*{\backrefalt}[4]{\n";
+		$file .= "\ifcase #1 %\n";
+		$file .= "Nenhuma citação no texto.%\n";
+		$file .= "\or\n";
+		$file .= "Citado na página #2.%\n";
+		$file .= "\\else\n";
+		$file .= "Citado #1 vezes nas páginas #2.%\n";
+		$file .= "\\fi}%\n";
+		$file .= "\n";
 
 		//Title
 		$file .= "\\title{" . $project->get_title() . "}\n";
@@ -1030,8 +1045,8 @@ class Project_Controller extends Pattern_Controller
 					$file .= "\n";
 					break;
 				case "Quality":
-					$papers = $this->Project_Model->get_papers_qa($id_project);
-					$qas_score = $this->Project_Model->get_evaluation_qa($id_project);
+					$papers = $this->Project_Model->get_papers_qa_latex($id_project);
+					$qas_score = $this->Project_Model->get_evaluation_qa_latex($id_project);
 
 					//Quality Assessment
 					$file .= "\section{Quality Assessment}\n";
@@ -1059,7 +1074,7 @@ class Project_Controller extends Pattern_Controller
 					$file .= "\\textbf{ID} & " . $qa_rows . " \\textbf{General Score} & \\textbf{Score} & \\textbf{Status} \\\ \midrule\n";
 					foreach ($papers as $paper) {
 
-						$file .= $paper->get_id() . " &";
+						$file .= "\citeonline{" . $paper->get_id() . "} &";
 
 						$qas = $qas_score[$paper->get_id()];
 						foreach ($project->get_questions_quality() as $qa) {
@@ -1089,6 +1104,8 @@ class Project_Controller extends Pattern_Controller
 					break;
 			}
 		}
+		//End Document
+		$file .= "\\bibliography{Bib}\n";
 
 		//End Document
 		$file .= "\\end{document}\n";
@@ -1221,7 +1238,7 @@ class Project_Controller extends Pattern_Controller
 			$file .= "{";
 
 			//BibKey
-			$file .= $paper->get_bib_key() . ",\n";
+			$file .= $paper->get_id() . ",\n";
 
 			//Title
 			$file .= "title={" . $paper->get_title() . "},\n";

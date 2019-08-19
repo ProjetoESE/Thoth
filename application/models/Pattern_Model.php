@@ -216,6 +216,160 @@ class Pattern_Model extends CI_Model
 		return $id_papers;
 	}
 
+	public function get_evaluation_qa($id_project)
+	{
+		$papers = array();
+		$user = $this->get_id_name_user($this->session->email);
+		$id_member = $this->get_id_member($user[0], $id_project);
+		$project_databases = $this->get_ids_project_database($id_project);
+
+		$id_bibs = array();
+		if (sizeof($project_databases) > 0) {
+			$id_bibs = $this->get_ids_bibs($project_databases);
+		}
+
+		$ids_paper = array();
+		if (sizeof($id_bibs) > 0) {
+			$ids_paper = $this->get_ID_papers($id_bibs);
+		}
+
+		$ids_qas = null;
+		if (sizeof($id_bibs) > 0) {
+			$ids_qas = $this->get_ids_qas($id_project);
+		}
+
+		if (sizeof($ids_paper) > 0) {
+
+			foreach ($ids_paper as $id_paper) {
+				$id = $this->get_id_paper($id_paper, $id_bibs);
+
+				foreach ($ids_qas as $qa) {
+					$score = $this->get_score_evaluation($id, $qa[0], $id_member);
+
+					$qas [$qa[1]] = $score;
+				}
+				$papers[$id_paper] = $qas;
+			}
+		}
+
+		return $papers;
+	}
+
+	public function get_evaluation_qa_latex($id_project)
+	{
+		$papers = array();
+		$project_databases = $this->get_ids_project_database($id_project);
+
+		$id_bibs = array();
+		if (sizeof($project_databases) > 0) {
+			$id_bibs = $this->get_ids_bibs($project_databases);
+		}
+
+		$ids_paper = array();
+		if (sizeof($id_bibs) > 0) {
+			$ids_paper = $this->get_ID_papers($id_bibs);
+		}
+
+		$ids_qas = null;
+		if (sizeof($id_bibs) > 0) {
+			$ids_qas = $this->get_ids_qas($id_project);
+		}
+
+		if (sizeof($ids_paper) > 0) {
+
+			foreach ($ids_paper as $id_paper) {
+				$id = $this->get_id_paper($id_paper, $id_bibs);
+
+				foreach ($ids_qas as $qa) {
+					$score = $this->get_score_evaluation_latex($id, $qa[0]);
+
+					$qas [$qa[1]] = $score;
+				}
+				$papers[$id_paper] = $qas;
+			}
+		}
+
+		return $papers;
+	}
+
+	public function get_score_evaluation($id_paper, $id_qa, $id_member)
+	{
+		$this->db->select('score_rule');
+		$this->db->from('evaluation_qa');
+		$this->db->join('score_quality', 'score_quality.id_score = evaluation_qa.id_score_qa');
+		$this->db->where('evaluation_qa.id_paper', $id_paper);
+		$this->db->where('evaluation_qa.id_qa', $id_qa);
+		$this->db->where('evaluation_qa.id_member', $id_member);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			return $row->score_rule;
+		}
+
+		return null;
+	}
+
+	public function get_score_evaluation_latex($id_paper, $id_qa)
+	{
+		$this->db->select('score_rule');
+		$this->db->from('papers_qa_answer');
+		$this->db->join('score_quality', 'score_quality.id_score = papers_qa_answer.id_answer');
+		$this->db->where('papers_qa_answer.id_paper', $id_paper);
+		$this->db->where('papers_qa_answer.id_question', $id_qa);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			return $row->score_rule;
+		}
+
+		return null;
+	}
+
+	public function get_id_score_evaluation($id_paper, $id_qa, $id_member)
+	{
+		$this->db->select('id_score_qa');
+		$this->db->from('evaluation_qa');
+		$this->db->where('evaluation_qa.id_paper', $id_paper);
+		$this->db->where('evaluation_qa.id_qa', $id_qa);
+		$this->db->where('evaluation_qa.id_member', $id_member);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			return $row->id_score_qa;
+		}
+
+		return null;
+	}
+
+	public function get_evaluation_qa_per_paper($id, $id_project)
+	{
+		$paper = array();
+		$user = $this->get_id_researches($id_project);
+		$project_databases = $this->get_ids_project_database($id_project);
+
+		$id_bibs = array();
+		if (sizeof($project_databases) > 0) {
+			$id_bibs = $this->get_ids_bibs($project_databases);
+		}
+
+		$ids_qas = null;
+		if (sizeof($id_bibs) > 0) {
+			$ids_qas = $this->get_ids_qas($id_project);
+		}
+
+		$id_paper = $this->get_id_paper($id, $id_bibs);
+
+		foreach ($user as $mem) {
+			foreach ($ids_qas as $qa) {
+				$score = $this->get_score_evaluation($id_paper, $qa[0], $mem);
+				$qas [$qa[0]] = $score;
+			}
+			$paper[$mem] = $qas;
+		}
+
+		return $paper;
+	}
+
 	public function get_ID_papers_to_selection($id_bib)
 	{
 		$id_papers = array();
@@ -482,6 +636,23 @@ class Pattern_Model extends CI_Model
 		return $names;
 	}
 
+
+	public function get_id_researches($id_project)
+	{
+		$names = array();
+		$this->db->select('id_members');
+		$this->db->from('members');
+		$this->db->where('id_project', $id_project);
+		$this->db->where_in('level', array(1, 3));
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			array_push($names, $row->id_members);
+		}
+
+		return $names;
+	}
+
 	public function get_ids_qas($id_project)
 	{
 		$qas = array();
@@ -538,6 +709,4 @@ class Pattern_Model extends CI_Model
 		}
 		return $qes;
 	}
-
-
 }
