@@ -1049,7 +1049,7 @@ class Quality_Model extends Pattern_Model
 
 		$data = array();
 		foreach ($id_papers as $id_paper) {
-			$this->db->select('id_member,id_status,id,papers_qa.score');
+			$this->db->select('id_member,id_status,papers.id,papers_qa.score');
 			$this->db->from('papers_qa');
 			$this->db->join('papers', 'papers.id_paper = papers_qa.id_paper');
 			$this->db->where('papers_qa.id_paper', $id_paper);
@@ -1060,7 +1060,10 @@ class Quality_Model extends Pattern_Model
 				$paper['id'] = $row->id;
 				$paper[$row->id_member] = array($row->id_status, $row->score);
 			}
-			$data[$id_paper] = $paper;
+			if (sizeof($paper) > 0) {
+				$data[$id_paper] = $paper;
+			}
+
 		}
 
 		$aux = array();
@@ -1069,8 +1072,8 @@ class Quality_Model extends Pattern_Model
 				if ($key2 != 'id') {
 					foreach ($value as $key3 => $value3) {
 						if ($key3 != 'id') {
-							if ($value2 != 3 && $value3 != 3) {
-								if ($value2 != $value3) {
+							if ($value2[0] != 3 && $value3[0] != 3) {
+								if ($value2[0] != $value3[0]) {
 									$aux[$key] = $value;
 								}
 							}
@@ -1083,15 +1086,17 @@ class Quality_Model extends Pattern_Model
 
 		foreach ($data as $key5 => $value5) {
 			if (!array_keys($aux, $key5)) {
-				$qas_score = $this->get_evaluation_qa_per_paper($value5['id'], $id_project);
+				$qas_score = $this->get_evaluation_qa_per_paper($value5["id"], $id_project);
 				foreach ($qas_score as $key => $value) {
 					foreach ($qas_score as $key2 => $value2) {
 						if ($key != $key2) {
 							foreach ($value as $key3 => $value3) {
 								foreach ($value2 as $key4 => $value4) {
 									if ($key3 == $key4) {
-										if ($value3 != $value4) {
-											$aux[$key5] = $value5;;
+										if ($value3 != null && $value4 != null) {
+											if ($value3 != $value4) {
+												$aux[$key5] = $value5;
+											}
 										}
 									}
 								}

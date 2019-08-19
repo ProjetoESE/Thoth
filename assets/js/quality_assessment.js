@@ -1236,10 +1236,48 @@ $(document).ready(function () {
 				$('#paper_author_conf_qa').text(data['author']);
 				$('#paper_year_conf_qa').text(data['year']);
 				$('#paper_database_conf_qa').text(data['database']);
+				let score_qa = $('#score_paper_qa_conf');
+				let gen_qa = $('#gen_score_qa_conf');
 
-				$('#gen_score_qa_conf').text(data['gen_score']);
-				$('#score_paper_qa_conf').text(data['score']);
+				gen_qa.text(data['gen_score']);
+				score_qa.text(data['score']);
+
 				$('#old_status_conf_qa').val(data['status']);
+
+				switch (data['status']) {
+					case "3":
+						score_qa.removeClass('text-success');
+						score_qa.removeClass('text-danger');
+						score_qa.addClass('text-dark');
+						gen_qa.removeClass('text-success');
+						gen_qa.removeClass('text-danger');
+						gen_qa.addClass('text-dark');
+						break;
+					case "2":
+						score_qa.removeClass('text-success');
+						score_qa.removeClass('text-dark');
+						score_qa.addClass('text-danger');
+						gen_qa.removeClass('text-success');
+						gen_qa.removeClass('text-dark');
+						gen_qa.addClass('text-danger');
+						break;
+					case "1":
+						score_qa.removeClass('text-dark');
+						score_qa.removeClass('text-danger');
+						score_qa.addClass('text-success');
+						gen_qa.removeClass('text-dark');
+						gen_qa.removeClass('text-danger');
+						gen_qa.addClass('text-success');
+						break;
+					case "4":
+						score_qa.removeClass('text-dark');
+						score_qa.removeClass('text-danger');
+						score_qa.addClass('text-success');
+						gen_qa.removeClass('text-dark');
+						gen_qa.removeClass('text-danger');
+						gen_qa.addClass('text-success');
+						break;
+				}
 
 				if (data['keywords'] != "") {
 					$('#paper_keywords_conf_qa').text(data['keywords']);
@@ -1350,7 +1388,7 @@ $(document).ready(function () {
 				for (let i = 1; i < (size - 3); i++) {
 					let id_qa = table_qa_answer.column(i).title().replace(" ", "");
 					let select = $('#conf_' + id_qa);
-
+					select.val("");
 					select.on('change', function () {
 
 						let cont = 0;
@@ -1393,7 +1431,7 @@ $(document).ready(function () {
 								let dados = JSON.parse(result);
 								if (dados.change) {
 									table_conf_paper_qa.row(index).remove().draw();
-									change_new_qa_conf(dados.s, dados.gen);
+									change_new_qa_conf(dados.s, dados.gen, dados.status.toString());
 									new_status_paper_qa(old_status, dados.status.toString());
 									status_paper_qa(dados.status.toString());
 								}
@@ -1665,15 +1703,39 @@ function change_new_status_qa(id_paper, status, index, size) {
 	}
 }
 
-function change_new_qa_conf(score, gen) {
+function change_new_qa_conf(score, gen, status) {
 	let text_score = $('#score_paper_qa_conf');
 	let text_gen = $('#gen_score_qa_conf');
 
-	text_score.val(score);
 	text_score.text(score);
-
-	text_gen.val(gen);
 	text_gen.text(gen);
+
+	switch (status) {
+		case "1":
+			text_gen.removeClass("text-dark");
+			text_gen.removeClass("text-danger");
+			text_gen.addClass("text-success");
+			text_score.removeClass("text-dark");
+			text_score.removeClass("text-danger");
+			text_score.addClass("text-success");
+			break;
+		case "2":
+			text_gen.removeClass("text-dark");
+			text_gen.removeClass("text-success");
+			text_gen.addClass("text-danger");
+			text_score.removeClass("text-dark");
+			text_score.removeClass("text-success");
+			text_score.addClass("text-danger");
+			break;
+		case "3":
+			text_gen.removeClass("text-danger");
+			text_gen.removeClass("text-success");
+			text_gen.addClass("text-dark");
+			text_score.removeClass("text-danger");
+			text_score.removeClass("text-success");
+			text_score.addClass("text-dark");
+			break;
+	}
 }
 
 function change_new_qa(status, index, size, score, gen, score_rule, colum) {

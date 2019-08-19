@@ -287,7 +287,7 @@ $(document).ready(function () {
 									let op = document.createElement("option");
 									op.text = "Duplicate";
 									op.value = "Duplicate";
-									let select = document.getElementById("select_status5");
+									let select = document.getElementById("select_status" + (size - 1));
 									select.add(op);
 								}
 								Swal({
