@@ -3,25 +3,25 @@
 		<h4><?= $project->get_title(); ?></h4>
 		<input type="hidden" id="id_project" value="<?= $project->get_id(); ?>">
 		<a href="<?= base_url('open/' . $project->get_id()) ?>"
-		   class="btn form-inline btn-outline-primary opt">Overview</a>
+		   class="btn form-inline btn-outline-primary opt">Overview <i class="fas fa-binoculars"></i></a>
 
 		<a href="<?= base_url('planning/' . $project->get_id()) ?>"
-		   class="btn form-inline btn-outline-primary opt">Planning</a>
+		   class="btn form-inline btn-outline-primary opt">Planning <i class="fas fa-list"></i></a>
 
 		<?php if ($this->session->level == "4") { ?>
 			<a href="<?= base_url('study_selection_adm/' . $project->get_id()) ?>"
-			   class="btn form-inline btn-outline-primary opt">Conducting</a>
+			   class="btn form-inline btn-outline-primary opt">Conducting <i class="fas fa-play-circle"></i></a>
 		<?php } else { ?>
 			<a href="<?= base_url('conducting/' . $project->get_id()) ?>"
-			   class="btn form-inline btn-outline-primary opt">Conducting</a>
+			   class="btn form-inline btn-outline-primary opt">Conducting <i class="fas fa-play-circle"></i></a>
 		<?php } ?>
 		<a href="<?= base_url('reporting/' . $project->get_id()) ?>"
-		   class="btn form-inline btn-outline-primary opt">Reporting</a>
+		   class="btn form-inline btn-outline-primary opt">Reporting <i class="fas fa-chart-line"></i></a>
 		<?php
 		if ($project->get_planning() == 100) {
 			?>
 			<a href="<?= base_url('export/' . $project->get_id()) ?>"
-			   class="btn form-inline btn-primary opt">Export</a>
+			   class="btn form-inline btn-primary opt">Export <i class="fas fa-file-download"></i></a>
 			<?php
 		}
 		?>
@@ -29,10 +29,7 @@
 	<div class="card-body">
 		<div class="row">
 			<div class="col-md-6">
-				<div class="form-inline">
-					<span class="fab fa-markdown opt fa-2x"></span>
-					<h5>Latex</h5>
-				</div>
+				<h5><i class="fab fa-markdown opt fa-2x"></i> Latex</h5>
 				<br>
 				<div class="text-center">
 					<?php
@@ -87,10 +84,7 @@
 			if ($project->get_import() == 100) {
 				?>
 				<div class="col-md-6">
-					<div class="form-inline">
-						<span class="fas fa-book opt fa-2x"></span>
-						<h5>BibTex</h5>
-					</div>
+					<h5><i class="fas fa-book opt fa-2x"></i> BibTex</h5>
 					<br>
 					<div class="text-center">
 						<?php

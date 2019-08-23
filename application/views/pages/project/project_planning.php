@@ -4,23 +4,23 @@
 		<input type="hidden" id="id_project" value="<?= $project->get_id(); ?>">
 		<br>
 		<a href="<?= base_url('open/' . $project->get_id()) ?>"
-		   class="btn form-inline btn-outline-primary opt">Overview</a>
+		   class="btn form-inline btn-outline-primary opt">Overview <i class="fas fa-binoculars"></i></a>
 		<a href="<?= base_url('planning/' . $project->get_id()) ?>"
-		   class="btn form-inline btn-primary opt">Planning</a>
+		   class="btn form-inline btn-primary opt">Planning <i class="fas fa-list"></i></a>
 		<?php if ($this->session->level == "4") { ?>
 			<a href="<?= base_url('study_selection_adm/' . $project->get_id()) ?>"
-			   class="btn form-inline btn-outline-primary opt">Conducting</a>
+			   class="btn form-inline btn-outline-primary opt">Conducting <i class="fas fa-play-circle"></i></a>
 		<?php } else { ?>
 			<a href="<?= base_url('conducting/' . $project->get_id()) ?>"
-			   class="btn form-inline btn-outline-primary opt">Conducting</a>
+			   class="btn form-inline btn-outline-primary opt">Conducting <i class="fas fa-play-circle"></i></a>
 		<?php } ?>
 		<a href="<?= base_url('reporting/' . $project->get_id()) ?>"
-		   class="btn form-inline btn-outline-primary opt">Reporting</a>
+		   class="btn form-inline btn-outline-primary opt">Reporting <i class="fas fa-chart-line"></i></a>
 		<?php
 		if ($project->get_planning() == 100) {
 			?>
 			<a href="<?= base_url('export/' . $project->get_id()) ?>"
-			   class="btn form-inline btn-outline-primary opt">Export</a>
+			   class="btn form-inline btn-outline-primary opt">Export <i class="fas fa-file-download"></i></a>
 			<?php
 		}
 		?>
@@ -29,29 +29,29 @@
 		<h4>Planning</h4>
 		<ul class="nav nav-pills nav-justified">
 			<li class="nav-item">
-				<a data-toggle="pill" class="nav-link active" href="#tab_overall">Overall information</a>
+				<a data-toggle="pill" class="nav-link active" href="#tab_overall">Overall information <i class="fas fa-info-circle"></i></a>
 			</li>
 			<li class="nav-item">
-				<a data-toggle="pill" class="nav-link" href="#tab_research">Research Questions</a>
+				<a data-toggle="pill" class="nav-link" href="#tab_research">Research Questions <i class="fas fa-graduation-cap"></i></a>
 			</li>
 			<li class="nav-item">
-				<a data-toggle="pill" class="nav-link" href="#tab_databases">Data Bases</a>
+				<a data-toggle="pill" class="nav-link" href="#tab_databases">Data Bases <i class="fas fa-database"></i></a>
 			</li>
 			<li class="nav-item">
 				<a data-toggle="pill" class="nav-link" href="#tab_search_string">Search
-					String</a>
+					String <i class="fas fa-search-plus"></i></a>
 			</li>
 			<li class="nav-item">
-				<a data-toggle="pill" class="nav-link" href="#tab_search_strategy">Search Strategy</a>
+				<a data-toggle="pill" class="nav-link" href="#tab_search_strategy">Search Strategy <i class="fas fa-chess"></i></a>
 			</li>
 			<li class="nav-item">
-				<a data-toggle="pill" class="nav-link" href="#tab_criteria">Criteria</a>
+				<a data-toggle="pill" class="nav-link" href="#tab_criteria">Criteria <i class="fas fa-check-double"></i></a>
 			</li>
 			<li class="nav-item">
-				<a data-toggle="pill" class="nav-link" href="#tab_quality">Quality Assessment</a>
+				<a data-toggle="pill" class="nav-link" href="#tab_quality">Quality Assessment <i class="far fa-star"></i></a>
 			</li>
 			<li class="nav-item">
-				<a data-toggle="pill" class="nav-link" href="#tab_data">Data Extraction</a>
+				<a data-toggle="pill" class="nav-link" href="#tab_data">Data Extraction <i class="fas fa-table"></i></a>
 			</li>
 		</ul>
 	</div>

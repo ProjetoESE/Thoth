@@ -191,8 +191,12 @@ $(document).ready(function () {
 		},
 		dom: 'Bfrtip',
 		buttons: [
-			'copy', 'csv', 'excel', 'pdf', 'print', {
-				text: 'Check Duplicates',
+			{ extend: 'copy', text: '<i class="fas fa-copy fa-2x"></i>' },
+			{ extend: 'csv', text: '<i class="fas fa-file-csv fa-2x"></i>' },
+			{ extend: 'excel', text: '<i class="fas fa-file-excel fa-2x"></i>' },
+			{ extend: 'pdf', text: '<i class="fas fa-file-pdf fa-2x"></i>' },
+			{ extend: 'print', text: '<i class="fas fa-print fa-2x"></i>' }, {
+				text: '<i class="far fa-clone fa-2x"></i>',
 				action: function () {
 					exibe_loading();
 					let id_project = $('#id_project').val();
@@ -374,7 +378,11 @@ $(document).ready(function () {
 		},
 		dom: 'Bfrtip',
 		buttons: [
-			'copy', 'csv', 'excel', 'pdf', 'print',]
+			{ extend: 'copy', text: '<i class="fas fa-copy fa-2x"></i>' },
+			{ extend: 'csv', text: '<i class="fas fa-file-csv fa-2x"></i>' },
+			{ extend: 'excel', text: '<i class="fas fa-file-excel fa-2x"></i>' },
+			{ extend: 'pdf', text: '<i class="fas fa-file-pdf fa-2x"></i>' },
+			{ extend: 'print', text: '<i class="fas fa-print fa-2x"></i>' }]
 	});
 
 	table_papers_extraction = $('#table_papers_extraction').DataTable({
