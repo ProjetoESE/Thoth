@@ -65,9 +65,13 @@
 		<div class="card card-body">
 			<p>This section of Thoth aims to give an overview of the project.</p>
 			<h6>Description <i class="fas fa-align-justify"></i></h6>
+			<p>This field is responsible for displaying the project description.</p>
 			<h6>Members <i class="fas fa-users"></i></h6>
+			<p>All project members are displayed here.</p>
 			<h6>Progress of Systematic Review <i class="fas fa-tasks"></i></h6>
+			<p>Here the project progress is displayed for each step from 0% to 100%.</p>
 			<h6>Activity Record <i class="fas fa-history"></i> </h6>
+			<p>Here is a log of project member activities. With the date, time and activity performed by the member.</p>
 		</div>
 	</div>
 	<div class="card card-header" data-toggle="collapse" href="#planning">
