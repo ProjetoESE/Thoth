@@ -228,11 +228,29 @@ class Quality_Model extends Pattern_Model
 			$id_general_score = $row->id_general_score;
 		}
 
-		$data = array(
-			'id_general_score' => $id_general_score
-		);
+		var_dump($id_general_score);
+		var_dump($score);
+		var_dump($id_project);
+
+		$this->db->select('*');
+		$this->db->from('min_to_app');
 		$this->db->where('id_project', $id_project);
-		$this->db->update('min_to_app', $data);
+		$query = $this->db->get();
+
+		if ($query->num_rows() > 0) {
+			$data = array(
+				'id_general_score' => $id_general_score
+			);
+			$this->db->where('id_project', $id_project);
+			$this->db->update('min_to_app', $data);
+		} else {
+			$data = array(
+				'id_general_score' => $id_general_score,
+				'id_project' => $id_project
+			);
+			$this->db->insert('min_to_app', $data);
+		}
+
 	}
 
 	public function get_paper_qa($num_paper, $id_project)

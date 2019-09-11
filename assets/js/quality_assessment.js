@@ -399,7 +399,7 @@ function add_qa() {
 
 function modal_qa(value) {
 	let row = table_qa.row(value);
-	$('#modal_question_quality #index_score').val(row.index());
+	$('#modal_question_quality #index_qa').val(row.index());
 	$('#modal_question_quality #edit_id_qa').val(row.data()[0]);
 	$('#modal_question_quality #old_id_qa').val(row.data()[0]);
 	$('#modal_question_quality #edit_desc_qa').val(row.data()[1]);
@@ -509,6 +509,8 @@ function validate_qa(id, qa, weight, index) {
 
 	let data = table_qa.rows().data().toArray();
 
+	console.log(index);
+
 	for (let i = 0; i < data.length; i++) {
 		if (i != index) {
 			if (id.toLowerCase().trim() == data[i][0].toLowerCase().trim()) {
@@ -554,7 +556,7 @@ function validate_qa(id, qa, weight, index) {
 }
 
 function edit_qa() {
-	let index = $("#index_score").val();
+	let index = $("#index_qa").val();
 	let id = $("#edit_id_qa").val();
 	let qa = $("#edit_desc_qa").val();
 	let weight = $("#edit_weight_qa").val();
