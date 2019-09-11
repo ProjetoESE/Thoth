@@ -49,7 +49,6 @@
 	<script src="<?= base_url('assets/js/dataTables.select.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/dataTables.buttons.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/buttons.bootstrap4.min.js'); ?>"></script>
-
 	<script src="<?= base_url('assets/js/jszip.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/pdfmake.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/vfs_fonts.js'); ?>"></script>
@@ -66,6 +65,7 @@
 	<script src="<?= base_url('assets/js/venn.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/exporting.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/export-data.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/pattern-fill.js'); ?>"></script>
 
 
 	<!-- SweetAlert -->
