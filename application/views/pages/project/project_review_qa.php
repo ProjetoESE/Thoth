@@ -53,14 +53,16 @@
 			<?php } ?>
 			<?php if ($this->session->level == "4") { ?>
 				<li class="nav-item">
-					<a class="nav-link flex-sm-fill text-sm-center" href="<?= base_url('quality_adm/' . $project->get_id()) ?>">Review
+					<a class="nav-link active flex-sm-fill text-sm-center" href="<?= base_url('quality_adm/' . $project->get_id()) ?>">Review
 						Quality Assessment <i class="fas fa-book-reader"></i></a>
 				</li>
 			<?php } ?>
-			<li class="nav-item">
-				<a class=" nav-link flex-sm-fill text-sm-center" href="<?= base_url('data_extraction/' . $project->get_id()) ?>">Data
-					Extraction <i class="fas fa-table"></i></a>
-			</li>
+			<?php if ($this->session->level != "4") { ?>
+				<li class="nav-item ">
+					<a class=" nav-link flex-sm-fill text-sm-center" href="<?= base_url('data_extraction/' . $project->get_id()) ?>">Data
+						Extraction <i class="fas fa-table"></i></a>
+				</li>
+			<?php } ?>
 		</ul>
 		<br>
 		<div class="form-inline">
