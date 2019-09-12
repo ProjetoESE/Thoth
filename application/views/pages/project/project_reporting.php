@@ -101,7 +101,7 @@
                     series:  <?=json_encode($activity['series'])?>
                 });
 
-
+				<?php if ($project->get_import() > 0){?>
                 Highcharts.chart('papers_per_database', {
                     chart: {
                         plotBackgroundColor: null,
@@ -137,8 +137,9 @@
                         data: <?= json_encode($databases); ?>
                     }]
                 });
+				<?php } ?>
 
-
+				<?php if ($project->get_selection() > 0){?>
                 Highcharts.chart('papers_per_selection', {
                     chart: {
                         plotBackgroundColor: null,
@@ -171,8 +172,9 @@
                         data: <?= json_encode($status_selection); ?>
                     }]
                 });
+				<?php}?>
 
-
+				<?php if ($project->get_quality() > 0) {?>
                 Highcharts.chart('papers_per_quality', {
                     chart: {
                         plotBackgroundColor: null,
@@ -238,7 +240,7 @@
                     }]
                 });
 
-
+				<?php } ?>
                 let qe = null;
 				<?php if ($project->get_extraction() > 0) {
 				foreach ($extraction as $qe){
@@ -266,22 +268,31 @@
 				<a data-toggle="pill" class="nav-link active flex-sm-fill text-sm-center" href="#tab_over">Overview <i
 						class="fas fa-binoculars"></i></a>
 			</li>
-			<li class="nav-item">
-				<a data-toggle="pill" class="nav-link flex-sm-fill text-sm-center" href="#tab_import">Import Studies <i
-						class="fas fa-upload"></i></a>
-			</li>
-			<li class="nav-item">
-				<a data-toggle="pill" class="nav-link flex-sm-fill text-sm-center" href="#tab_selection">Study Selection
-					<i class="fas fa-clipboard-check"></i></a>
-			</li>
-			<li class="nav-item">
-				<a data-toggle="pill" class="nav-link flex-sm-fill text-sm-center" href="#tab_qa">Quality Assessment <i
-						class="fas fa-star-half-alt"></i></a>
-			</li>
+			<?php if ($project->get_import() > 0) { ?>
+				<li class="nav-item">
+					<a data-toggle="pill" class="nav-link flex-sm-fill text-sm-center" href="#tab_import">Import Studies
+						<i
+							class="fas fa-upload"></i></a>
+				</li>
+			<?php } ?>
+			<?php if ($project->get_selection() > 0) { ?>
+				<li class="nav-item">
+					<a data-toggle="pill" class="nav-link flex-sm-fill text-sm-center" href="#tab_selection">Study
+						Selection
+						<i class="fas fa-clipboard-check"></i></a>
+				</li>
+			<?php } ?>
+			<?php if ($project->get_quality() > 0) { ?>
+				<li class="nav-item">
+					<a data-toggle="pill" class="nav-link flex-sm-fill text-sm-center" href="#tab_qa">Quality Assessment
+						<i
+							class="fas fa-star-half-alt"></i></a>
+				</li>
+			<?php } ?>
 			<?php if ($project->get_extraction() > 0) { ?>
 				<li class="nav-item">
 					<a data-toggle="pill" class="nav-link flex-sm-fill text-sm-center" href="#tab_ex">Data Extraction <i
-							class="fas fa-external-link-square-alt"></i></a>
+							class="fas fas fa-table"></i></a>
 				</li>
 			<?php } ?>
 		</ul>

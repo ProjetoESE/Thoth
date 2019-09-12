@@ -6,13 +6,6 @@
 		   class="btn form-inline btn-outline-primary opt">Overview <i class="fas fa-binoculars"></i></a>
 		<a href="<?= base_url('planning/' . $project->get_id()) ?>"
 		   class="btn form-inline btn-outline-primary opt">Planning <i class="fas fa-list"></i></a>
-		<?php if ($this->session->level == "4") { ?>
-			<a href="<?= base_url('study_selection_adm/' . $project->get_id()) ?>"
-			   class="btn form-inline btn-outline-primary opt">Conducting <i class="fas fa-play-circle"></i></a>
-		<?php } else { ?>
-			<a href="<?= base_url('conducting/' . $project->get_id()) ?>"
-			   class="btn form-inline btn-outline-primary opt">Conducting <i class="fas fa-play-circle"></i></a>
-		<?php } ?>
 		<a href="<?= base_url('reporting/' . $project->get_id()) ?>"
 		   class="btn form-inline btn-primary opt">Reporting <i class="fas fa-chart-line"></i></a>
 		<?php
@@ -278,7 +271,7 @@
 			</li>
 			<li class="nav-item">
 				<a data-toggle="pill" class="nav-link flex-sm-fill text-sm-center" href="#tab_ex">Data Extraction <i
-						class="fas fa-external-link-square-alt"></i></a>
+						class="fas fa-table"></i></a>
 			</li>
 		</ul>
 	</div>
