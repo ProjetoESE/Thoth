@@ -1146,6 +1146,73 @@ $(document).ready(function () {
 
 	});
 
+	table_papers_quality_rep.on('select', function (e, dt, type, indexes) {
+		let rowData = table_papers_quality_rep.rows(indexes).data().toArray();
+		let id_project = $("#id_project").val();
+		let size = table_papers_quality_rep.columns().data().length;
+		$.ajax({
+			type: "POST",
+			url: base_url + 'Quality_Controller/get_paper_qa/',
+			data: {
+				id_project: id_project,
+				id: rowData[0][0]
+			}, error: function () {
+				Swal({
+					type: 'error',
+					title: 'Error',
+					html: 'Something caused an <label class="font-weight-bold text-danger">Error</label>',
+					showCancelButton: false,
+					confirmButtonText: 'Ok'
+				});
+			},
+			success: function (data) {
+
+				let dados = JSON.parse(data);
+
+				$('#index_paper_rep').val(indexes);
+				$('#paper_id_rep').text(rowData[0][0]);
+				$('#id_paper_rep').val(rowData[0][0]);
+				$('#paper_title_rep').text(rowData[0][1]);
+
+				$('#paper_author_rep').text(dados['author']);
+				$('#paper_year_rep').text(dados['year']);
+				$('#paper_database_rep').text(dados['database']);
+
+				if (dados['keywords'] != "") {
+					$('#paper_keywords_rep').text(dados['keywords']);
+				} else {
+					$('#paper_keywords_rep').text("This article does not have Keywords");
+				}
+
+				if (dados['abstract'] != "") {
+					$('#paper_abstract_rep').text(dados['abstract']);
+				} else {
+					$('#paper_abstract_rep').text("This article does not have Abstract");
+				}
+
+				let doi = $('#paper_doi_rep');
+				if (data['doi'] != "") {
+					doi.removeClass("disabled");
+					doi.attr("href", "https://doi.org/" + data['doi']);
+				} else {
+					doi.attr("href", "");
+					doi.addClass("disabled");
+				}
+				let url = $('#paper_url_rep');
+				if (dados['url'] != "") {
+					url.removeClass("disabled");
+					url.attr("href", dados['url']);
+				} else {
+					url.attr("href", "");
+					url.addClass("disabled");
+				}
+
+				$('#modal_paper_rep').modal('show');
+			}
+		});
+
+	});
+
 	$('#paper_status_qa').on('change', function () {
 		let status = $('#edit_status_qa').val();
 		let old_status = $('#text_qa').val();

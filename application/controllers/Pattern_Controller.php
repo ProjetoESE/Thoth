@@ -61,10 +61,10 @@ class Pattern_Controller extends CI_Controller
 						break;
 				}
 			} else {
-				load_templates($view . '_visitor', $data);
+				redirect(base_url());
 			}
 		} else {
-			load_templates($view . '_visitor', $data);
+			redirect(base_url());
 		}
 	}
 
@@ -81,7 +81,7 @@ class Pattern_Controller extends CI_Controller
 
 		foreach ($levels as $l) {
 			if ($l == $res_level) {
-				return;
+				return $res_level;
 			}
 		}
 
