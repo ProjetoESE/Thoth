@@ -309,6 +309,7 @@ class Project_Model extends Pattern_Model
 		$this->db->insert('inclusion_rule', $data);
 		$this->db->insert('exclusion_rule', $data);
 
+
 		$data = array(
 			'id_project' => $id_project,
 			'id_user' => $created_by,

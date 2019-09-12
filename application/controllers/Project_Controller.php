@@ -235,7 +235,9 @@ class Project_Controller extends Pattern_Controller
 	{
 		try {
 			$this->logged_in();
-			load_templates('pages/project/project_new', null);
+			$this->load->model("User_Model");
+			$data['projects'] = $this->User_Model->get_projects_new($this->session->email);
+			load_templates('pages/project/project_new', $data);
 		} catch (Exception $e) {
 			$this->session->set_flashdata('error', $e->getMessage());
 			redirect(base_url());
@@ -293,9 +295,14 @@ class Project_Controller extends Pattern_Controller
 			$title = $this->input->post('title');
 			$description = $this->input->post('description');
 			$objectives = $this->input->post('objectives');
+			$protocol = $this->input->post('protocol');
 
 			$this->load->model("Project_Model");
 			$id_project = $this->Project_Model->created_project($title, $description, $objectives, $this->session->email);
+
+			if ($protocol != "") {
+				$this->copy_protocol($id_project, $protocol);
+			}
 
 			$activity = "Created the project " . $title;
 			$this->insert_log($activity, 1, $id_project);
@@ -308,10 +315,113 @@ class Project_Controller extends Pattern_Controller
 		}
 	}
 
+	private function copy_protocol($id_project, $protocol)
+	{
+		$this->load->model("Project_Model");
+		$copy_project = $this->Project_Model->get_project_planning($protocol);
+
+		$this->load->model("Overall_Model");
+
+		foreach ($copy_project->get_domains() as $d) {
+			$this->Overall_Model->add_domain($d, $id_project);
+		}
+
+		foreach ($copy_project->get_languages() as $l) {
+			$this->Overall_Model->add_language($l, $id_project);
+		}
+
+		foreach ($copy_project->get_study_types() as $s) {
+			$this->Overall_Model->add_study_type($s, $id_project);
+		}
+
+		foreach ($copy_project->get_keywords() as $k) {
+			$this->Overall_Model->add_keywords($k, $id_project);
+		}
+
+		$this->Overall_Model->add_date($copy_project->get_start_date(), $copy_project->get_end_date(), $id_project);
+
+
+		$this->load->model("Research_Model");
+		foreach ($copy_project->get_research_questions() as $r) {
+			$this->Research_Model->add_research_question($r->get_id(), $r->get_description(), $id_project);
+		}
+
+		$this->load->model("Database_Model");
+		foreach ($copy_project->get_databases() as $d) {
+			$this->Database_Model->add_database($d->get_name(), $id_project);
+		}
+
+		$this->load->model("Search_String_Model");
+		foreach ($copy_project->get_terms() as $t) {
+			$this->Search_String_Model->add_term($t->get_description(), $id_project);
+
+			foreach ($t->get_synonyms() as $s) {
+				$this->Search_String_Model->add_synonym($s, $t->get_description(), $id_project);
+
+			}
+		}
+		$ok = true;
+		foreach ($copy_project->get_search_strings() as $s) {
+			if ($ok) {
+				$this->Search_String_Model->generate_string_generic($s->get_description(), $id_project);
+				$ok = false;
+			} else {
+				$id_database = $this->Search_String_Model->get_id_database($s->get_database()->get_name());
+				$id_project_database = $this->Search_String_Model->get_id_project_database($id_database, $id_project);
+				$this->Search_String_Model->generate_string($s->get_description(), $id_project_database);
+			}
+		}
+		$this->Search_String_Model->edit_search_strategy($copy_project->get_search_strategy(), $id_project);
+
+		$this->load->model("Criteria_Model");
+		$this->Criteria_Model->edit_inclusion_rule($copy_project->get_inclusion_rule(), $id_project);
+		$this->Criteria_Model->edit_exclusion_rule($copy_project->get_exclusion_rule(), $id_project);
+
+		foreach ($copy_project->get_inclusion_criteria() as $ic) {
+			$this->Criteria_Model->add_criteria($ic->get_id(), $ic->get_description(), $ic->get_pre_selected(), $id_project, "Inclusion");
+		}
+
+		foreach ($copy_project->get_exclusion_criteria() as $ec) {
+			$this->Criteria_Model->add_criteria($ec->get_id(), $ec->get_description(), $ec->get_pre_selected(), $id_project, "Exclusion");
+		}
+
+		$this->load->model("Quality_Model");
+		foreach ($copy_project->get_quality_scores() as $gen) {
+			$this->Quality_Model->add_general_quality_score($gen->get_start_interval(), $gen->get_end_interval(), $gen->get_description(), $id_project);
+		}
+
+		$this->Quality_Model->edit_min_score($copy_project->get_score_min()->get_description(), $id_project);
+
+		foreach ($copy_project->get_questions_quality() as $qa) {
+			$this->Quality_Model->add_qa($qa->get_id(), $qa->get_description(), $qa->get_weight(), $id_project);
+
+			foreach ($qa->get_scores() as $s) {
+				$this->Quality_Model->add_score_quality($s->get_score_rule(), $s->get_score(), $s->get_description(), $id_project, $qa->get_id());
+			}
+
+			if ($qa->get_min_to_approve() != null) {
+				$this->Quality_Model->edit_min_score_qa($qa->get_min_to_approve()->get_score(), $id_project);
+			}
+		}
+
+		$this->load->model("Extraction_Model");
+		foreach ($copy_project->get_questions_extraction() as $qe) {
+			$this->Extraction_Model->add_question_extraction($qe->get_id(), $qe->get_description(), $qe->get_type(), $id_project);
+
+			if (sizeof($qe->get_options()) > 0) {
+				foreach ($qe->get_options() as $op) {
+					$this->Extraction_Model->add_option($qe->get_id(), $op, $id_project);
+				}
+			}
+		}
+
+	}
+
 	/**
 	 *
 	 */
-	public function add_member()
+	public
+	function add_member()
 	{
 		try {
 			$email = $this->input->post('email');
@@ -337,7 +447,8 @@ class Project_Controller extends Pattern_Controller
 	/**
 	 *
 	 */
-	public function edited_project()
+	public
+	function edited_project()
 	{
 		try {
 			$title = $this->input->post('title');
@@ -362,7 +473,8 @@ class Project_Controller extends Pattern_Controller
 	/**
 	 *
 	 */
-	public function deleted_project()
+	public
+	function deleted_project()
 	{
 		try {
 			$id_project = $this->input->post('id_project');
@@ -384,7 +496,8 @@ class Project_Controller extends Pattern_Controller
 	/**
 	 * @param $id_project
 	 */
-	private function export_doc($id_project)
+	private
+	function export_doc($id_project)
 	{
 		try {
 			require_once(APPPATH . 'third_party/vendor/autoload.php');
@@ -647,7 +760,8 @@ class Project_Controller extends Pattern_Controller
 	/**
 	 * @return string
 	 */
-	public function export_latex()
+	public
+	function export_latex()
 	{
 
 		$steps = $this->input->post('steps');
@@ -1116,7 +1230,8 @@ class Project_Controller extends Pattern_Controller
 	/**
 	 *
 	 */
-	public function export_bib()
+	public
+	function export_bib()
 	{
 
 		$step = $this->input->post('step');
@@ -1298,7 +1413,8 @@ class Project_Controller extends Pattern_Controller
 	/**
 	 *
 	 */
-	public function delete_member()
+	public
+	function delete_member()
 	{
 		try {
 			$id_project = $this->input->post('id_project');
@@ -1320,7 +1436,8 @@ class Project_Controller extends Pattern_Controller
 	/**
 	 *
 	 */
-	public function edit_level()
+	public
+	function edit_level()
 	{
 		try {
 			$id_project = $this->input->post('id_project');

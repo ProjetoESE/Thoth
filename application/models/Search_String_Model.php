@@ -1,7 +1,8 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
+require_once APPPATH . 'models/Pattern_Model.php';
 
-class Search_String_Model extends CI_Model
+class Search_String_Model extends Pattern_Model
 {
 	public function add_term($term, $id_project)
 	{

@@ -61,6 +61,29 @@ class User_Model extends CI_Model
 		return $projects;
 	}
 
+	public function get_projects_new($email)
+	{
+
+		$projects = array();
+		$id_user = $this->get_id_user($email);
+
+		$this->db->select('project.id_project, project.title');
+		$this->db->from('project');
+		$this->db->join('members', 'project.id_project = members.id_project');
+		$this->db->where('members.id_user', $id_user);
+		$this->db->where('project.planning', 100);
+		$query = $this->db->get();
+
+		foreach ($query->result() as $row) {
+			$project = new Project();
+			$project->set_id($row->id_project);
+			$project->set_title($row->title);
+			array_push($projects, $project);
+		}
+
+		return $projects;
+	}
+
 	public function insert_log($activity, $module, $id_project)
 	{
 		$id_user = $this->get_id_user($this->session->email);

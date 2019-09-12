@@ -228,10 +228,6 @@ class Quality_Model extends Pattern_Model
 			$id_general_score = $row->id_general_score;
 		}
 
-		var_dump($id_general_score);
-		var_dump($score);
-		var_dump($id_project);
-
 		$this->db->select('*');
 		$this->db->from('min_to_app');
 		$this->db->where('id_project', $id_project);
