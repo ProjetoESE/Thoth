@@ -32,108 +32,6 @@
 		<script>
 
             $(document).ready(function () {
-                Highcharts.chart('papers_per_database', {
-                    chart: {
-                        plotBackgroundColor: null,
-                        plotBorderWidth: null,
-                        plotShadow: false,
-                        type: 'pie'
-                    },
-                    title: {
-                        text: 'Papers per Database'
-                    },
-                    tooltip: {
-                        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b> ({point.y})'
-                    },
-                    plotOptions: {
-                        column: {
-                            colorByPoint: true
-                        },
-                        pie: {
-                            allowPointSelect: true,
-                            cursor: 'pointer',
-                            dataLabels: {
-                                enabled: true,
-                                format: '<b>{point.name}</b>: {point.percentage:.1f} %',
-                                style: {
-                                    color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
-                                }
-                            }
-                        }
-                    },
-                    series: [{
-                        name: 'Brands',
-                        colorByPoint: true,
-                        data: <?= json_encode($databases); ?>
-                    }]
-                });
-
-                Highcharts.chart('papers_per_selection', {
-                    chart: {
-                        plotBackgroundColor: null,
-                        plotBorderWidth: null,
-                        plotShadow: false,
-                        type: 'pie'
-                    },
-                    title: {
-                        text: 'Papers per Status Selection'
-                    },
-                    tooltip: {
-                        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b> ({point.y})'
-                    },
-                    plotOptions: {
-                        pie: {
-                            allowPointSelect: true,
-                            cursor: 'pointer',
-                            dataLabels: {
-                                enabled: true,
-                                format: '<b>{point.name}</b>: {point.percentage:.1f} %',
-                                style: {
-                                    color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
-                                }
-                            }
-                        }
-                    },
-                    series: [{
-                        name: 'Brands',
-                        colorByPoint: true,
-                        data: <?= json_encode($status_selection); ?>
-                    }]
-                });
-
-                Highcharts.chart('papers_per_quality', {
-                    chart: {
-                        plotBackgroundColor: null,
-                        plotBorderWidth: null,
-                        plotShadow: false,
-                        type: 'pie'
-                    },
-                    title: {
-                        text: 'Papers per Status Quality'
-                    },
-                    tooltip: {
-                        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b> ({point.y})'
-                    },
-                    plotOptions: {
-                        pie: {
-                            allowPointSelect: true,
-                            cursor: 'pointer',
-                            dataLabels: {
-                                enabled: true,
-                                format: '<b>{point.name}</b>: {point.percentage:.1f} %',
-                                style: {
-                                    color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
-                                }
-                            }
-                        }
-                    },
-                    series: [{
-                        name: 'Brands',
-                        colorByPoint: true,
-                        data: <?= json_encode($status_qa); ?>
-                    }]
-                });
-
                 Highcharts.chart('funnel', {
                     chart: {
                         type: 'funnel'
@@ -177,7 +75,6 @@
                         }]
                     }
                 });
-
                 Highcharts.chart('act', {
                     chart: {
                         type: 'line'
@@ -204,6 +101,110 @@
                     series:  <?=json_encode($activity['series'])?>
                 });
 
+
+                Highcharts.chart('papers_per_database', {
+                    chart: {
+                        plotBackgroundColor: null,
+                        plotBorderWidth: null,
+                        plotShadow: false,
+                        type: 'pie'
+                    },
+                    title: {
+                        text: 'Papers per Database'
+                    },
+                    tooltip: {
+                        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b> ({point.y})'
+                    },
+                    plotOptions: {
+                        column: {
+                            colorByPoint: true
+                        },
+                        pie: {
+                            allowPointSelect: true,
+                            cursor: 'pointer',
+                            dataLabels: {
+                                enabled: true,
+                                format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                                style: {
+                                    color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                                }
+                            }
+                        }
+                    },
+                    series: [{
+                        name: 'Brands',
+                        colorByPoint: true,
+                        data: <?= json_encode($databases); ?>
+                    }]
+                });
+
+
+                Highcharts.chart('papers_per_selection', {
+                    chart: {
+                        plotBackgroundColor: null,
+                        plotBorderWidth: null,
+                        plotShadow: false,
+                        type: 'pie'
+                    },
+                    title: {
+                        text: 'Papers per Status Selection'
+                    },
+                    tooltip: {
+                        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b> ({point.y})'
+                    },
+                    plotOptions: {
+                        pie: {
+                            allowPointSelect: true,
+                            cursor: 'pointer',
+                            dataLabels: {
+                                enabled: true,
+                                format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                                style: {
+                                    color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                                }
+                            }
+                        }
+                    },
+                    series: [{
+                        name: 'Brands',
+                        colorByPoint: true,
+                        data: <?= json_encode($status_selection); ?>
+                    }]
+                });
+
+
+                Highcharts.chart('papers_per_quality', {
+                    chart: {
+                        plotBackgroundColor: null,
+                        plotBorderWidth: null,
+                        plotShadow: false,
+                        type: 'pie'
+                    },
+                    title: {
+                        text: 'Papers per Status Quality'
+                    },
+                    tooltip: {
+                        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b> ({point.y})'
+                    },
+                    plotOptions: {
+                        pie: {
+                            allowPointSelect: true,
+                            cursor: 'pointer',
+                            dataLabels: {
+                                enabled: true,
+                                format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                                style: {
+                                    color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                                }
+                            }
+                        }
+                    },
+                    series: [{
+                        name: 'Brands',
+                        colorByPoint: true,
+                        data: <?= json_encode($status_qa); ?>
+                    }]
+                });
                 Highcharts.chart('papers_gen_score', {
                     chart: {
                         plotBackgroundColor: null,
@@ -236,8 +237,10 @@
                         data: <?= json_encode($gen_score); ?>
                     }]
                 });
+
+
                 let qe = null;
-				<?php
+				<?php if ($project->get_extraction() > 0) {
 				foreach ($extraction as $qe){
 				?>
                 qe = new Extraction_Chars('<?=$qe['id']?>', '<?=$qe['type']?>',<?=json_encode($qe['data'])?>);
@@ -254,8 +257,7 @@
                 qe.show();
 				<?php
 				}
-				?>
-
+				} ?>
             });
 
 		</script>
@@ -276,10 +278,12 @@
 				<a data-toggle="pill" class="nav-link flex-sm-fill text-sm-center" href="#tab_qa">Quality Assessment <i
 						class="fas fa-star-half-alt"></i></a>
 			</li>
-			<li class="nav-item">
-				<a data-toggle="pill" class="nav-link flex-sm-fill text-sm-center" href="#tab_ex">Data Extraction <i
-						class="fas fa-external-link-square-alt"></i></a>
-			</li>
+			<?php if ($project->get_extraction() > 0) { ?>
+				<li class="nav-item">
+					<a data-toggle="pill" class="nav-link flex-sm-fill text-sm-center" href="#tab_ex">Data Extraction <i
+							class="fas fa-external-link-square-alt"></i></a>
+				</li>
+			<?php } ?>
 		</ul>
 	</div>
 	<div class="tab-content">
@@ -824,8 +828,10 @@
 				</div>
 			</div>
 		</div>
-		<div class="tab-pane container-fluid" id="tab_ex">
-		</div>
+		<?php if ($project->get_extraction() > 0) { ?>
+			<div class="tab-pane container-fluid" id="tab_ex">
+			</div>
+		<?php } ?>
 	</div>
 	<br>
 	<?php
