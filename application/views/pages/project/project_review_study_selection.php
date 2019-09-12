@@ -26,19 +26,19 @@
 	</div>
 	<div class="card-body">
 		<h4>Conducting</h4>
-		<ul class="nav nav-pills nav-justified">
+		<ul class="nav nav-pills nav-justified flex-column flex-sm-row">
 			<?php if ($this->session->level != "4") { ?>
 				<li class="nav-item">
-					<a class="nav-link "
+					<a class="nav-link flex-sm-fill text-sm-center"
 					   href="<?= base_url('conducting/' . $project->get_id()) ?>">Import Studies</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="<?= base_url('study_selection/' . $project->get_id()) ?>">Study
+					<a class="nav-link flex-sm-fill text-sm-center" href="<?= base_url('study_selection/' . $project->get_id()) ?>">Study
 						Selection</a>
 				</li>
 			<?php } ?>
 			<?php if ($this->session->level == "4") { ?>
-				<li class="nav-item">
+				<li class="nav-item flex-sm-fill text-sm-center">
 					<a class="nav-link active" href="<?= base_url('study_selection_adm/' . $project->get_id()) ?>">Review
 						Study
 						Selection</a>
@@ -46,20 +46,20 @@
 			<?php } ?>
 			<?php if ($this->session->level != "4") { ?>
 				<li class="nav-item">
-					<a class="nav-link"
+					<a class="nav-link flex-sm-fill text-sm-center"
 					   href="<?= base_url('quality_assessment/' . $project->get_id()) ?>">Quality
 						Assessment</a>
 				</li>
 			<?php } ?>
 			<?php if ($this->session->level == "4") { ?>
 				<li class="nav-item">
-					<a class="nav-link" href="<?= base_url('quality_adm/' . $project->get_id()) ?>">Review
+					<a class="nav-link flex-sm-fill text-sm-center" href="<?= base_url('quality_adm/' . $project->get_id()) ?>">Review
 						Quality Assessment</a>
 				</li>
 			<?php } ?>
 			<?php if ($this->session->level != "4") { ?>
 				<li class="nav-item">
-					<a class=" nav-link" href="<?= base_url('data_extraction/' . $project->get_id()) ?>">Data
+					<a class=" nav-link flex-sm-fill text-sm-center" href="<?= base_url('data_extraction/' . $project->get_id()) ?>">Data
 						Extraction</a>
 				</li>
 			<?php } ?>

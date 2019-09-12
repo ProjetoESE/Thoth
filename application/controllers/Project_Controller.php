@@ -110,6 +110,13 @@ class Project_Controller extends Pattern_Controller
 			$data['gen_score'] = $this->Project_Model->get_papers_score_quality($id);
 			$data['extraction'] = $this->Project_Model->get_data_qes_select($id);
 			$data['multiple'] = $this->Project_Model->get_data_qes_multiple($id);
+			$data['count_project'] = $this->Project_Model->count_papers_by_status_qa($id);
+			$data['papers'] = $this->Project_Model->get_papers_qa_visitor($id);
+			$data['qas_score']  = $this->Project_Model->get_evaluation_qa_latex($id);
+			$data['count_papers'] = $this->Project_Model->count_papers_reviewer_qa($id);
+			$data['count_project_sel'] = $this->Project_Model->count_papers_by_status_sel($id);
+			$data['count_papers_sel'] = $this->Project_Model->count_papers_reviewer($id);
+
 
 			$this->load_views('pages/project/project_reporting', $data);
 
@@ -175,12 +182,13 @@ class Project_Controller extends Pattern_Controller
 	public function quality_assessment($id)
 	{
 		try {
-			$this->validate_level($id, array(1, 2, 3, 4));
+			$level = $this->validate_level($id, array(1, 2, 3, 4));
 
 			$this->load->model("Project_Model");
 			$data['project'] = $this->Project_Model->get_project_quality($id);
 			$data['count_papers'] = $this->Project_Model->count_papers_qa_by_user($id);
 			$data['qas_score'] = $this->Project_Model->get_evaluation_qa($id);
+
 
 			$this->load_views('pages/project/project_quality_assessment', $data);
 

@@ -349,6 +349,43 @@ $(document).ready(function () {
 		searching: false
 	});
 
+
+	table_papers_quality_rep = $('#table_papers_quality_rep').DataTable({
+		initComplete: function () {
+			let size = this.api().columns().data().length;
+			this.api().columns(size - 1).every(function () {
+				let column = this;
+				let select = $('<select id="select_status5" class="form-control" ><option value=""></option></select>')
+					.appendTo($(column.footer()).empty())
+					.on('change', function () {
+						let val = $.fn.dataTable.util.escapeRegex(
+							$(this).val()
+						);
+
+						column.search(val ? '^' + val + '$' : '', true, false).draw();
+					});
+
+				select.append('<option value="Accepted">Accepted</option>');
+				select.append('<option value="Rejected">Rejected</option>');
+				select.append('<option value="Unclassified">Unclassified</option>');
+				select.append('<option value="Removed">Removed</option>');
+
+			});
+		},
+		responsive: true,
+		order: [[0, "asc"]],
+		select: {
+			style: 'single'
+		},
+		dom: 'Bfrtip',
+		buttons: [
+			{ extend: 'copy', text: '<i class="fas fa-copy fa-2x"></i>' },
+			{ extend: 'csv', text: '<i class="fas fa-file-csv fa-2x"></i>' },
+			{ extend: 'excel', text: '<i class="fas fa-file-excel fa-2x"></i>' },
+			{ extend: 'pdf', text: '<i class="fas fa-file-pdf fa-2x"></i>' },
+			{ extend: 'print', text: '<i class="fas fa-print fa-2x"></i>' }]
+	});
+
 	table_papers_quality = $('#table_papers_quality').DataTable({
 		initComplete: function () {
 			let size = this.api().columns().data().length;
@@ -430,8 +467,11 @@ $(document).ready(function () {
 		},
 		dom: 'Bfrtip',
 		buttons: [
-			'copy', 'csv', 'excel', 'pdf', 'print'
-		]
+			{ extend: 'copy', text: '<i class="fas fa-copy fa-2x"></i>' },
+			{ extend: 'csv', text: '<i class="fas fa-file-csv fa-2x"></i>' },
+			{ extend: 'excel', text: '<i class="fas fa-file-excel fa-2x"></i>' },
+			{ extend: 'pdf', text: '<i class="fas fa-file-pdf fa-2x"></i>' },
+			{ extend: 'print', text: '<i class="fas fa-print fa-2x"></i>' }]
 	});
 
 
