@@ -21,6 +21,15 @@
 					<textarea name="objectives" class="form-control min-height" id="objectives" placeholder="Objectives"
 							  required></textarea>
 				</div>
+				<div class="form-group">
+					<label for="protocol">Copy Planning </label>
+					<select id="protocol"  name="protocol" class="form-control">
+						<option value=""></option>
+						<?php foreach ($projects as $p) { ?>
+							<option value="<?= $p->get_id() ?>"><?= $p->get_title() ?></option>
+						<?php } ?>
+					</select>
+				</div>
 				<div class="alert alert-warning container-fluid alert-dismissible fade show" role="alert">
 					<h5>Comments</h5>
 					<p>For the creation of the project it is recommended that the user be

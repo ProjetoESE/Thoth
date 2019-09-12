@@ -447,6 +447,11 @@ $(document).ready(function () {
 		allowClear: true
 	});
 
+	$('#protocol').select2({
+		placeholder: 'Select an project to copy planning',
+		allowClear: true
+	});
+
 	$('#add_level_user').select2({
 		placeholder: 'Select an level',
 		allowClear: true
