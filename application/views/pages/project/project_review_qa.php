@@ -3,23 +3,23 @@
 		<h4><?= $project->get_title(); ?></h4>
 		<input type="hidden" id="id_project" value="<?= $project->get_id(); ?>">
 		<a href="<?= base_url('open/' . $project->get_id()) ?>"
-		   class="btn form-inline btn-outline-primary opt">Overview</a>
+		   class="btn form-inline btn-outline-primary opt">Overview <i class="fas fa-binoculars"></i></a>
 		<a href="<?= base_url('planning/' . $project->get_id()) ?>"
-		   class="btn form-inline btn-outline-primary opt">Planning</a>
+		   class="btn form-inline btn-outline-primary opt">Planning <i class="fas fa-list"></i></a>
 		<?php if ($this->session->level == "4") { ?>
 			<a href="<?= base_url('study_selection_adm/' . $project->get_id()) ?>"
-			   class="btn form-inline btn-primary opt">Conducting</a>
+			   class="btn form-inline btn-primary opt">Conducting <i class="fas fa-play-circle"></i></a>
 		<?php } else { ?>
 			<a href="<?= base_url('conducting/' . $project->get_id()) ?>"
-			   class="btn form-inline btn-primary opt">Conducting</a>
+			   class="btn form-inline btn-primary opt">Conducting <i class="fas fa-play-circle"></i></a>
 		<?php } ?>
 		<a href="<?= base_url('reporting/' . $project->get_id()) ?>"
-		   class="btn form-inline btn-outline-primary opt">Reporting</a>
+		   class="btn form-inline btn-outline-primary opt">Reporting <i class="fas fa-chart-line"></i></a>
 		<?php
 		if ($project->get_planning() == 100) {
 			?>
 			<a href="<?= base_url('export/' . $project->get_id()) ?>"
-			   class="btn form-inline btn-outline-primary opt">Export</a>
+			   class="btn form-inline btn-outline-primary opt">Export <i class="fas fa-file-download"></i></a>
 			<?php
 		}
 		?>
@@ -30,39 +30,37 @@
 			<?php if ($this->session->level != "4") { ?>
 				<li class="nav-item">
 					<a class="nav-link flex-sm-fill text-sm-center"
-					   href="<?= base_url('conducting/' . $project->get_id()) ?>">Import Studies</a>
+					   href="<?= base_url('conducting/' . $project->get_id()) ?>">Import Studies <i class="fas fa-upload"></i></a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link flex-sm-fill text-sm-center" href="<?= base_url('study_selection/' . $project->get_id()) ?>">Study
-						Selection</a>
+					<a class="nav-link active flex-sm-fill text-sm-center" href="<?= base_url('study_selection/' . $project->get_id()) ?>">Study
+						Selection <i class="fas fa-clipboard-check"></i></a>
 				</li>
 			<?php } ?>
 			<?php if ($this->session->level == "4") { ?>
 				<li class="nav-item">
 					<a class="nav-link flex-sm-fill text-sm-center" href="<?= base_url('study_selection_adm/' . $project->get_id()) ?>">Review
 						Study
-						Selection</a>
+						Selection <i class="fas fa-book-reader"></i></a>
 				</li>
 			<?php } ?>
 			<?php if ($this->session->level != "4") { ?>
 				<li class="nav-item">
 					<a class="nav-link flex-sm-fill text-sm-center"
 					   href="<?= base_url('quality_assessment/' . $project->get_id()) ?>">Quality
-						Assessment</a>
+						Assessment <i class="fas fa-star-half-alt"></i></a>
 				</li>
 			<?php } ?>
 			<?php if ($this->session->level == "4") { ?>
 				<li class="nav-item">
-					<a class="nav-link active flex-sm-fill text-sm-center" href="<?= base_url('quality_adm/' . $project->get_id()) ?>">Review
-						Quality Assessment</a>
+					<a class="nav-link flex-sm-fill text-sm-center" href="<?= base_url('quality_adm/' . $project->get_id()) ?>">Review
+						Quality Assessment <i class="fas fa-book-reader"></i></a>
 				</li>
 			<?php } ?>
-			<?php if ($this->session->level != "4") { ?>
-				<li class="nav-item">
-					<a class=" nav-link flex-sm-fill text-sm-center" href="<?= base_url('data_extraction/' . $project->get_id()) ?>">Data
-						Extraction</a>
-				</li>
-			<?php } ?>
+			<li class="nav-item">
+				<a class=" nav-link flex-sm-fill text-sm-center" href="<?= base_url('data_extraction/' . $project->get_id()) ?>">Data
+					Extraction <i class="fas fa-table"></i></a>
+			</li>
 		</ul>
 		<br>
 		<div class="form-inline">

@@ -27,7 +27,7 @@
 	<div class="card-body">
 		<h4>Reporting</h4>
 		<?php
-		if ($project->get_planning() == 100 && $project->get_import() == 100 && $project->get_selection() > 0 && $project->get_quality() > 0 && $project->get_extraction() == 100) { ?>
+		if ($project->get_planning() == 100 && $project->get_import() == 100 && $project->get_selection() > 0 || $project->get_quality() > 0 || $project->get_extraction() > 0) { ?>
 
 		<script>
 
