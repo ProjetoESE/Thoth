@@ -467,6 +467,8 @@
 			</table>
 			<br>
 			<div id="strings">
+				<h6><strong><a target="_blank" href="https://stringimprover.herokuapp.com/index.html">String Improver</a><strong></h6>
+				<br>
 				<div class="form-inline">
 					<label><strong>Strings</strong></label>
 					<a onclick="modal_help('modal_help_strings')" class="float-right opt"><i
