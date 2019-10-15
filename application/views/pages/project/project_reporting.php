@@ -261,6 +261,7 @@
             });
 
 		</script>
+
 		<ul class="nav nav-pills nav-justified flex-column flex-sm-row">
 			<li class="nav-item">
 				<a data-toggle="pill" class="nav-link active flex-sm-fill text-sm-center" href="#tab_over">Overview <i
@@ -852,7 +853,6 @@
 		<?php
 	}
 	?>
-</div>
 </div>
 <?php
 $this->load->view('modal/modal_paper_rep');

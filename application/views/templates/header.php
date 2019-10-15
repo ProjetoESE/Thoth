@@ -33,7 +33,6 @@
 
 	<!-- My CSS Files -->
 	<link rel="stylesheet" href="<?= base_url('assets/css/main.css'); ?>">
-
 	<link rel="preload" href="<?= base_url('assets/img/loading.gif'); ?>" as="image">
 
 	<!-- JQuery-->
@@ -102,3 +101,4 @@
 <div id="loading" class="load">
 	<img src="<?= base_url('assets/img/loading.gif'); ?>">
 </div>
+</body>
