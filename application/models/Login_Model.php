@@ -8,7 +8,7 @@ class Login_Model extends CI_Model
 	{
 		$this->db->select('*');
 		$this->db->from('user');
-		$this->db->where(array('email =' => $email));
+		$this->db->where('email', $email);
 		$query = $this->db->count_all_results();
 
 		if ($query > 0) {

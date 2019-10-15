@@ -27,37 +27,43 @@
 	</div>
 	<div class="card-body">
 		<h4>Planning</h4>
-		<ul class="nav nav-pills nav-justified flex-column flex-sm-row">
+		<ul class="nav nav-pills nav-justified flex-column flex-sm-row" role="tablist">
 			<li class="nav-item">
-				<a data-toggle="pill" class="nav-link active flex-sm-fill text-sm-center" href="#tab_overall">Overall information <i class="fas fa-info-circle"></i></a>
+				<a data-toggle="pill" class="nav-link active flex-sm-fill text-sm-center" href="#tab_overall">Overall
+					information <i class="fas fa-info-circle"></i></a>
 			</li>
 			<li class="nav-item">
-				<a data-toggle="pill" class="nav-link flex-sm-fill text-sm-center" href="#tab_research">Research Questions <i class="fas fa-graduation-cap"></i></a>
+				<a data-toggle="pill" class="nav-link flex-sm-fill text-sm-center" href="#tab_research">Research
+					Questions <i class="fas fa-graduation-cap"></i></a>
 			</li>
 			<li class="nav-item">
-				<a data-toggle="pill" class="nav-link flex-sm-fill text-sm-center" href="#tab_databases">Data Bases <i class="fas fa-database"></i></a>
+				<a data-toggle="pill" class="nav-link flex-sm-fill text-sm-center" href="#tab_databases">Data Bases <i
+						class="fas fa-database"></i></a>
 			</li>
 			<li class="nav-item">
 				<a data-toggle="pill" class="nav-link flex-sm-fill text-sm-center" href="#tab_search_string">Search
 					String <i class="fas fa-search-plus"></i></a>
 			</li>
 			<li class="nav-item">
-				<a data-toggle="pill" class="nav-link flex-sm-fill text-sm-center" href="#tab_search_strategy">Search Strategy <i class="fas fa-chess"></i></a>
+				<a data-toggle="pill" class="nav-link flex-sm-fill text-sm-center" href="#tab_search_strategy">Search
+					Strategy <i class="fas fa-chess"></i></a>
 			</li>
 			<li class="nav-item">
-				<a data-toggle="pill" class="nav-link flex-sm-fill text-sm-center" href="#tab_criteria">Criteria <i class="fas fa-check-double"></i></a>
+				<a data-toggle="pill" class="nav-link flex-sm-fill text-sm-center" href="#tab_criteria">Criteria <i
+						class="fas fa-check-double"></i></a>
 			</li>
 			<li class="nav-item">
-				<a data-toggle="pill" class="nav-link flex-sm-fill text-sm-center" href="#tab_quality">Quality Assessment <i class="far fa-star"></i></a>
+				<a data-toggle="pill" class="nav-link flex-sm-fill text-sm-center" href="#tab_quality">Quality
+					Assessment <i class="far fa-star"></i></a>
 			</li>
 			<li class="nav-item">
-				<a data-toggle="pill" class="nav-link flex-sm-fill text-sm-center" href="#tab_data">Data Extraction <i class="fas fa-table"></i></a>
+				<a data-toggle="pill" class="nav-link flex-sm-fill text-sm-center" href="#tab_data">Data Extraction <i
+						class="fas fa-table"></i></a>
 			</li>
 		</ul>
 	</div>
-
 	<div class="tab-content">
-		<div class="tab-pane active container-fluid" id="tab_overall">
+		<div class="tab-pane active container-fluid" role="tabpanel" id="tab_overall">
 			<div class="row">
 				<div class="col-sm-12 col-md-6">
 					<label for="domain"><strong>Domains</strong></label>
@@ -66,7 +72,8 @@
 					<div class="input-group">
 						<input type="text" class="form-control" id="domain">
 						<div class="input-group-append">
-							<button type="button" class="btn btn-success" id="add_domain" onclick="add_domain();"><span
+							<button type="button" class="btn btn-success" id="add_domain"
+									onclick="add_domain();"><span
 									class="fas fa-plus"></span></button>
 						</div>
 					</div>
@@ -85,7 +92,8 @@
 							<tr>
 								<td><?= $domain ?></td>
 								<td>
-									<button class="btn btn-warning opt" onClick="modal_domain($(this).parents('tr'));">
+									<button class="btn btn-warning opt"
+											onClick="modal_domain($(this).parents('tr'));">
 										<span class="fas fa-edit"></span>
 									</button>
 									<button class="btn btn-danger" onClick="delete_domain($(this).parents('tr'));">
@@ -131,7 +139,8 @@
 							<tr>
 								<td><?= $language ?></td>
 								<td>
-									<button class="btn btn-danger" onClick="delete_language($(this).parents('tr'));">
+									<button class="btn btn-danger"
+											onClick="delete_language($(this).parents('tr'));">
 										<span class="far fa-trash-alt"></span>
 									</button>
 								</td>
@@ -174,7 +183,8 @@
 							<tr>
 								<td><?= $types ?></td>
 								<td>
-									<button class="btn btn-danger" onClick="delete_study_type($(this).parents('tr'));">
+									<button class="btn btn-danger"
+											onClick="delete_study_type($(this).parents('tr'));">
 										<span class="far fa-trash-alt"></span>
 									</button>
 								</td>
@@ -212,7 +222,8 @@
 											onClick="modal_keywords($(this).parents('tr'));">
 										<span class="fas fa-edit"></span>
 									</button>
-									<button class="btn btn-danger" onClick="delete_keywords($(this).parents('tr'));">
+									<button class="btn btn-danger"
+											onClick="delete_keywords($(this).parents('tr'));">
 										<span class="far fa-trash-alt"></span>
 									</button>
 								</td>
@@ -249,7 +260,7 @@
 				<a class="btn btn-secondary" href="#tab_research">Next <span class="fas fa-forward"></span></a>
 			</div>
 		</div>
-		<div class="tab-pane container-fluid" id="tab_research">
+		<div class="tab-pane container-fluid" role="tabpanel" id="tab_research">
 			<div class="form-inline">
 				<label for="id_research_question"><strong>Research Questions</strong></label>
 				<span onclick="modal_help('modal_help_rq')" class="float-right opt"><i
@@ -306,7 +317,7 @@
 				<a href="#tab_databases" class="btn btn-secondary">Next <span class="fas fa-forward"></span></a>
 			</div>
 		</div>
-		<div class="tab-pane container-fluid" id="tab_databases">
+		<div class="tab-pane container-fluid" role="tabpanel" id="tab_databases">
 			<div class="form-inline">
 				<label for="databases"><strong>Data Bases</strong></label>
 				<a onclick="modal_help('modal_help_database')" class="float-right opt"><i
@@ -371,7 +382,7 @@
 						class="fas fa-forward"></span></a>
 			</div>
 		</div>
-		<div class="tab-pane container-fluid" id="tab_search_string">
+		<div class="tab-pane container-fluid" role="tabpanel" id="tab_search_string">
 			<div class="form-inline">
 				<label for="term"><strong>Search String</strong></label>
 				<a onclick="modal_help('modal_help_ss')" class="float-right opt"><i
@@ -466,9 +477,10 @@
 				</tbody>
 			</table>
 			<br>
+			<h6><strong><a target="_blank" href="https://stringimprover.herokuapp.com/index.html">String
+						Improver</a></strong></h6>
+			<br>
 			<div id="strings">
-				<h6><strong><a target="_blank" href="https://stringimprover.herokuapp.com/index.html">String Improver</a><strong></h6>
-				<br>
 				<div class="form-inline">
 					<label><strong>Strings</strong></label>
 					<a onclick="modal_help('modal_help_strings')" class="float-right opt"><i
@@ -495,7 +507,7 @@
 						class="fas fa-forward"></span></a>
 			</div>
 		</div>
-		<div class="tab-pane container-fluid" id="tab_search_strategy">
+		<div class="tab-pane container-fluid" role="tabpanel" id="tab_search_strategy">
 			<div class="form-inline">
 				<label for="search_strategy"><strong>Search Strategy</strong></label>
 				<a onclick="modal_help('modal_help_strategy')" class="float-right opt"><i
@@ -512,7 +524,7 @@
 						class="fas fa-forward"></span></a>
 			</div>
 		</div>
-		<div class="tab-pane container-fluid" id="tab_criteria">
+		<div class="tab-pane container-fluid" role="tabpanel" id="tab_criteria">
 			<div class="form-inline">
 				<label for="id_criteria"><strong>Criteria</strong></label>
 				<a onclick="modal_help('modal_help_criteria')" class="float-right opt"><i
@@ -663,7 +675,7 @@
 						class="fas fa-forward"></span></a>
 			</div>
 		</div>
-		<div class="tab-pane container-fluid" id="tab_quality">
+		<div class="tab-pane container-fluid" role="tabpanel" id="tab_quality">
 			<div class="form-inline">
 				<label for="start_interval"><strong>General Score</strong></label>
 				<a onclick="modal_help('modal_help_general_score')" class="float-right opt"><i
@@ -873,7 +885,7 @@
 						class="fas fa-forward"></span></a>
 			</div>
 		</div>
-		<div class="tab-pane container-fluid" id="tab_data">
+		<div class="tab-pane container-fluid" role="tabpanel" id="tab_data">
 			<div class="form-inline">
 				<label for="id_data_extraction"><strong>Data Extraction</strong></label>
 				<a onclick="modal_help('modal_help_data_extraction')" class="float-right opt"><i
@@ -969,7 +981,8 @@
 							</td>
 						<?php } ?>
 						<td>
-							<button class="btn btn-warning opt" onClick="modal_extraction($(this).parents('tr'));"><span
+							<button class="btn btn-warning opt"
+									onClick="modal_extraction($(this).parents('tr'));"><span
 									class="fas fa-edit"></span>
 							</button>
 							<button class="btn btn-danger" onClick="delete_extraction($(this).parents('tr'));"><span
