@@ -748,7 +748,7 @@ class Project
 	public function set_quality_scores($quality_scores)
 	{
 		if (is_null($quality_scores)) {
-			throw  new  InvalidArgumentException("Project Members Invalid!");
+			throw  new  InvalidArgumentException("Quality Scores Invalid!");
 		}
 		$this->quality_scores = $quality_scores;
 	}
