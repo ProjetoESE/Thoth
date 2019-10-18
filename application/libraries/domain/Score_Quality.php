@@ -34,7 +34,7 @@ class Score_Quality
 	 */
 	public function set_score_rule($score_rule)
 	{
-		if (is_null($score_rule)) {
+		if (is_null($score_rule) || empty($score_rule)) {
 			throw  new  InvalidArgumentException("Score Quality Score Rule Invalid!");
 		}
 		$this->score_rule = $score_rule;
